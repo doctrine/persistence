@@ -1,0 +1,44 @@
+{
+    "name": "doctrine/persistence",
+    "type": "library",
+    "description": "Doctrine Persistence abstractions.",
+    "keywords": ["persistence"],
+    "homepage": "http://www.doctrine-project.org",
+    "license": "MIT",
+    "authors": [
+        {"name": "Guilherme Blanco", "email": "guilhermeblanco@gmail.com"},
+        {"name": "Roman Borschel", "email": "roman@code-factory.org"},
+        {"name": "Benjamin Eberlei", "email": "kontakt@beberlei.de"},
+        {"name": "Jonathan Wage", "email": "jonwage@gmail.com"},
+        {"name": "Johannes Schmitt", "email": "schmittjoh@gmail.com"},
+        {"name": "Marco Pivetta", "email": "ocramius@gmail.com"}
+    ],
+    "require": {
+        "php": "~7.1",
+        "doctrine/annotations": "^1.6",
+        "doctrine/cache": "^1.7",
+        "doctrine/collections": "^1.5",
+        "doctrine/common": "^2.8"
+    },
+    "require-dev": {
+        "doctrine/coding-standard": "^1.0",
+        "phpstan/phpstan": "^0.8",
+        "phpunit/phpunit": "^7.0",
+        "squizlabs/php_codesniffer": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Doctrine\\Common\\": "lib/Doctrine/Common"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Doctrine\\Tests\\": "tests/Doctrine/Tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

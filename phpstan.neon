@@ -1,0 +1,10 @@
+parameters:
+    autoload_files:
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/ObjectManagerDecoratorTest.php
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/PersistentObjectTest.php
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/Mapping/ClassMetadataFactoryTest.php
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/Mapping/_files/annotation/TestClass.php
+    excludes_analyse:
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/Mapping/_files/TestEntity.php
+    ignoreErrors:
+        - '#Call to an undefined method Doctrine\\Tests\\Common\\Persistence\\TestObject#'
