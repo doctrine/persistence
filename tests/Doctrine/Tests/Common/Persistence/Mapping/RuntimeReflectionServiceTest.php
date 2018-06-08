@@ -1,20 +1,22 @@
 <?php
+
 namespace Doctrine\Tests\Common\Persistence\Mapping;
 
 use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\Common\Persistence\Mapping\RuntimeReflectionService;
 use Doctrine\Common\Reflection\RuntimePublicReflectionProperty;
+use PHPUnit\Framework\TestCase;
+use function count;
 
 /**
  * @group DCOM-93
  */
-class RuntimeReflectionServiceTest extends \PHPUnit\Framework\TestCase
+class RuntimeReflectionServiceTest extends TestCase
 {
-    /**
-     * @var RuntimeReflectionService
-     */
+    /** @var RuntimeReflectionService */
     private $reflectionService;
 
+    /** @var mixed */
     public $unusedPublicProperty;
 
     public function setUp()
@@ -24,7 +26,7 @@ class RuntimeReflectionServiceTest extends \PHPUnit\Framework\TestCase
 
     public function testShortname()
     {
-        self::assertEquals("RuntimeReflectionServiceTest", $this->reflectionService->getClassShortName(__CLASS__));
+        self::assertEquals('RuntimeReflectionServiceTest', $this->reflectionService->getClassShortName(__CLASS__));
     }
 
     public function testClassNamespaceName()
@@ -35,7 +37,7 @@ class RuntimeReflectionServiceTest extends \PHPUnit\Framework\TestCase
     public function testGetParentClasses()
     {
         $classes = $this->reflectionService->getParentClasses(__CLASS__);
-        self::assertTrue(count($classes) >= 1, "The test class " . __CLASS__ . " should have at least one parent.");
+        self::assertTrue(count($classes) >= 1, 'The test class ' . __CLASS__ . ' should have at least one parent.');
     }
 
     public function testGetParentClassesForAbsentClass()
@@ -47,22 +49,22 @@ class RuntimeReflectionServiceTest extends \PHPUnit\Framework\TestCase
     public function testGetReflectionClass()
     {
         $class = $this->reflectionService->getClass(__CLASS__);
-        self::assertInstanceOf("ReflectionClass", $class);
+        self::assertInstanceOf('ReflectionClass', $class);
     }
 
     public function testGetMethods()
     {
-        self::assertTrue($this->reflectionService->hasPublicMethod(__CLASS__, "testGetMethods"));
-        self::assertFalse($this->reflectionService->hasPublicMethod(__CLASS__, "testGetMethods2"));
+        self::assertTrue($this->reflectionService->hasPublicMethod(__CLASS__, 'testGetMethods'));
+        self::assertFalse($this->reflectionService->hasPublicMethod(__CLASS__, 'testGetMethods2'));
     }
 
     public function testGetAccessibleProperty()
     {
-        $reflProp = $this->reflectionService->getAccessibleProperty(__CLASS__, "reflectionService");
+        $reflProp = $this->reflectionService->getAccessibleProperty(__CLASS__, 'reflectionService');
         self::assertInstanceOf(\ReflectionProperty::class, $reflProp);
         self::assertInstanceOf(RuntimeReflectionService::class, $reflProp->getValue($this));
 
-        $reflProp = $this->reflectionService->getAccessibleProperty(__CLASS__, "unusedPublicProperty");
+        $reflProp = $this->reflectionService->getAccessibleProperty(__CLASS__, 'unusedPublicProperty');
         self::assertInstanceOf(RuntimePublicReflectionProperty::class, $reflProp);
     }
 }

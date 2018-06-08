@@ -2,10 +2,11 @@
 
 namespace Doctrine\Tests\Common\Persistence\Mapping;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\Mapping\Driver\FileDriver;
 use Doctrine\Common\Persistence\Mapping\Driver\FileLocator;
 use Doctrine\Tests\DoctrineTestCase;
-use Doctrine\Common\Persistence\Mapping\Driver\FileDriver;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use function strpos;
 
 class FileDriverTest extends DoctrineTestCase
 {
@@ -15,14 +16,14 @@ class FileDriverTest extends DoctrineTestCase
 
         self::assertNull($driver->getGlobalBasename());
 
-        $driver->setGlobalBasename("global");
-        self::assertEquals("global", $driver->getGlobalBasename());
+        $driver->setGlobalBasename('global');
+        self::assertEquals('global', $driver->getGlobalBasename());
     }
 
     public function testGetElementFromGlobalFile()
     {
         $driver = new TestFileDriver($this->newLocator());
-        $driver->setGlobalBasename("global");
+        $driver->setGlobalBasename('global');
 
         $element = $driver->getElement('stdGlobal');
 
@@ -64,7 +65,7 @@ class FileDriverTest extends DoctrineTestCase
     public function testGetAllClassNamesGlobalBasename()
     {
         $driver = new TestFileDriver($this->newLocator());
-        $driver->setGlobalBasename("global");
+        $driver->setGlobalBasename('global');
 
         $classNames = $driver->getAllClassNames();
 
@@ -93,7 +94,7 @@ class FileDriverTest extends DoctrineTestCase
                 ->with($this->equalTo('global'))
                 ->will($this->returnValue(['stdClass']));
         $driver = new TestFileDriver($locator);
-        $driver->setGlobalBasename("global");
+        $driver->setGlobalBasename('global');
 
         $classNames = $driver->getAllClassNames();
 
@@ -109,7 +110,7 @@ class FileDriverTest extends DoctrineTestCase
                 ->will($this->returnValue(true));
 
         $driver = new TestFileDriver($locator);
-        $driver->setGlobalBasename("global");
+        $driver->setGlobalBasename('global');
 
         self::assertFalse($driver->isTransient('stdClass'));
         self::assertFalse($driver->isTransient('stdGlobal'));
@@ -140,7 +141,7 @@ class FileDriverTest extends DoctrineTestCase
     {
         $locator = $this->createMock(FileLocator::class);
         $locator->expects($this->any())->method('getFileExtension')->will($this->returnValue('.yml'));
-        $locator->expects($this->any())->method('getPaths')->will($this->returnValue([__DIR__ . "/_files"]));
+        $locator->expects($this->any())->method('getPaths')->will($this->returnValue([__DIR__ . '/_files']));
         return $locator;
     }
 }
@@ -149,7 +150,7 @@ class TestFileDriver extends FileDriver
 {
     protected function loadMappingFile($file)
     {
-        if (strpos($file, "global.yml") !== false) {
+        if (strpos($file, 'global.yml') !== false) {
             return ['stdGlobal' => 'stdGlobal', 'stdGlobal2' => 'stdGlobal2'];
         }
         return ['stdClass' => 'stdClass'];

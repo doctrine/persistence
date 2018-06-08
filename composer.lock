@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "656993b18b82bb26fb792f0006e7dafa",
+    "content-hash": "134e63a953d47cf07bd6424b9ad26cb3",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -481,27 +481,28 @@
         },
         {
             "name": "doctrine/coding-standard",
-            "version": "1.0.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/coding-standard.git",
-                "reference": "d0af8acc36d69f315d550eef78a9607bba24a6da"
+                "reference": "0469c18a1a4724c278f2879c0dd7b1fa860b52de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/coding-standard/zipball/d0af8acc36d69f315d550eef78a9607bba24a6da",
-                "reference": "d0af8acc36d69f315d550eef78a9607bba24a6da",
+                "url": "https://api.github.com/repos/doctrine/coding-standard/zipball/0469c18a1a4724c278f2879c0dd7b1fa860b52de",
+                "reference": "0469c18a1a4724c278f2879c0dd7b1fa860b52de",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.2",
                 "php": "^7.1",
-                "squizlabs/php_codesniffer": "~3.0"
+                "slevomat/coding-standard": "^4.5.0",
+                "squizlabs/php_codesniffer": "^3.2.3"
             },
             "type": "phpcodesniffer-standard",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1-dev"
+                    "dev-master": "3.0.x-dev"
                 }
             },
             "autoload": {
@@ -534,7 +535,7 @@
                 "standard",
                 "style"
             ],
-            "time": "2017-08-20T01:30:16+00:00"
+            "time": "2018-03-03T23:49:15+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -2566,6 +2567,45 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
+        },
+        {
+            "name": "slevomat/coding-standard",
+            "version": "4.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slevomat/coding-standard.git",
+                "reference": "95436f14d4a6fe8638bcba09d3a8e19266846ee4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/95436f14d4a6fe8638bcba09d3a8e19266846ee4",
+                "reference": "95436f14d4a6fe8638bcba09d3a8e19266846ee4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "squizlabs/php_codesniffer": "^3.2.3"
+            },
+            "require-dev": {
+                "jakub-onderka/php-parallel-lint": "1.0.0",
+                "phing/phing": "2.16.1",
+                "phpstan/phpstan": "0.9.2",
+                "phpstan/phpstan-phpunit": "0.9.4",
+                "phpstan/phpstan-strict-rules": "0.9",
+                "phpunit/phpunit": "7.1.5"
+            },
+            "type": "phpcodesniffer-standard",
+            "autoload": {
+                "psr-4": {
+                    "SlevomatCodingStandard\\": "SlevomatCodingStandard"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
+            "time": "2018-05-15T21:21:12+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

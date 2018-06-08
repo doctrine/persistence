@@ -1,4 +1,5 @@
 <?php
+
 namespace Doctrine\Common\Persistence;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
@@ -16,16 +17,11 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
  * and increase the coupling of database and objects.
  *
  * Every ObjectManager has to implement this functionality itself.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
  */
 interface ObjectManagerAware
 {
     /**
      * Injects responsible ObjectManager and the ClassMetadata into this persistent object.
-     *
-     * @param ObjectManager $objectManager
-     * @param ClassMetadata $classMetadata
      *
      * @return void
      */

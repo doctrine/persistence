@@ -1,13 +1,9 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Mapping;
 
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
- *
- * @link   www.doctrine-project.org
- * @since  2.1
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Jonathan Wage <jonwage@gmail.com>
  */
 interface ClassMetadataFactory
 {
@@ -33,14 +29,14 @@ interface ClassMetadataFactory
      *
      * @param string $className
      *
-     * @return boolean TRUE if the metadata of the class in question is already loaded, FALSE otherwise.
+     * @return bool TRUE if the metadata of the class in question is already loaded, FALSE otherwise.
      */
     public function hasMetadataFor($className);
 
     /**
      * Sets the metadata descriptor for a specific class.
      *
-     * @param string $className
+     * @param string        $className
      *
      * @param ClassMetadata $class
      */
@@ -52,7 +48,7 @@ interface ClassMetadataFactory
      *
      * @param string $className
      *
-     * @return boolean
+     * @return bool
      */
     public function isTransient($className);
 }

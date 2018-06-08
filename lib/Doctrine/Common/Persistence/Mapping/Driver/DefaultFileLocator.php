@@ -1,23 +1,27 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Mapping\Driver;
 
 use Doctrine\Common\Persistence\Mapping\MappingException;
+use const DIRECTORY_SEPARATOR;
+use function array_merge;
+use function array_unique;
+use function is_dir;
+use function is_file;
+use function str_replace;
 
 /**
  * Locates the file that contains the metadata information for a given class name.
  *
  * This behavior is independent of the actual content of the file. It just detects
  * the file which is responsible for the given class name.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
 class DefaultFileLocator implements FileLocator
 {
     /**
      * The paths where to look for mapping files.
      *
-     * @var array
+     * @var string[]
      */
     protected $paths = [];
 
@@ -32,8 +36,8 @@ class DefaultFileLocator implements FileLocator
      * Initializes a new FileDriver that looks in the given path(s) for mapping
      * documents and operates in the specified operating mode.
      *
-     * @param string|array $paths         One or multiple paths where mapping documents can be found.
-     * @param string|null  $fileExtension The file extension of mapping documents, usually prefixed with a dot.
+     * @param string|string[] $paths         One or multiple paths where mapping documents can be found.
+     * @param string|null     $fileExtension The file extension of mapping documents, usually prefixed with a dot.
      */
     public function __construct($paths, $fileExtension = null)
     {
@@ -44,7 +48,7 @@ class DefaultFileLocator implements FileLocator
     /**
      * Appends lookup paths to metadata driver.
      *
-     * @param array $paths
+     * @param string[] $paths
      *
      * @return void
      */
@@ -56,7 +60,7 @@ class DefaultFileLocator implements FileLocator
     /**
      * Retrieves the defined metadata lookup paths.
      *
-     * @return array
+     * @return string[]
      */
     public function getPaths()
     {
@@ -111,7 +115,7 @@ class DefaultFileLocator implements FileLocator
 
         if ($this->paths) {
             foreach ($this->paths as $path) {
-                if ( ! is_dir($path)) {
+                if (! is_dir($path)) {
                     throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
                 }
 
@@ -123,7 +127,7 @@ class DefaultFileLocator implements FileLocator
                 foreach ($iterator as $file) {
                     $fileName = $file->getBasename($this->fileExtension);
 
-                    if ($fileName == $file->getBasename() || $fileName == $globalBasename) {
+                    if ($fileName === $file->getBasename() || $fileName === $globalBasename) {
                         continue;
                     }
 

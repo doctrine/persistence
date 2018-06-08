@@ -1,23 +1,29 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Mapping;
+
+use Exception;
+use function implode;
+use function sprintf;
 
 /**
  * A MappingException indicates that something is wrong with the mapping setup.
- *
- * @since 2.2
  */
-class MappingException extends \Exception
+class MappingException extends Exception
 {
     /**
-     * @param string $className
-     * @param array  $namespaces
+     * @param string   $className
+     * @param string[] $namespaces
      *
      * @return self
      */
     public static function classNotFoundInNamespaces($className, $namespaces)
     {
-        return new self("The class '" . $className . "' was not found in the " .
-            "chain configured namespaces " . implode(", ", $namespaces));
+        return new self(sprintf(
+            "The class '%s' was not found in the chain configured namespaces %s",
+            $className,
+            implode(', ', $namespaces)
+        ));
     }
 
     /**
@@ -25,8 +31,8 @@ class MappingException extends \Exception
      */
     public static function pathRequired()
     {
-        return new self("Specifying the paths to your entities is required " .
-            "in the AnnotationDriver to retrieve all class names.");
+        return new self('Specifying the paths to your entities is required ' .
+            'in the AnnotationDriver to retrieve all class names.');
     }
 
     /**
@@ -36,14 +42,15 @@ class MappingException extends \Exception
      */
     public static function fileMappingDriversRequireConfiguredDirectoryPath($path = null)
     {
-        if ( ! empty($path)) {
+        if (! empty($path)) {
             $path = '[' . $path . ']';
         }
 
-        return new self(
+        return new self(sprintf(
             'File mapping drivers must have a valid directory path, ' .
-            'however the given path ' . $path . ' seems to be incorrect!'
-        );
+            'however the given path %s seems to be incorrect!',
+            $path
+        ));
     }
 
     /**
@@ -54,7 +61,11 @@ class MappingException extends \Exception
      */
     public static function mappingFileNotFound($entityName, $fileName)
     {
-        return new self("No mapping file found named '$fileName' for class '$entityName'.");
+        return new self(sprintf(
+            "No mapping file found named '%s' for class '%s'.",
+            $fileName,
+            $entityName
+        ));
     }
 
     /**
@@ -65,7 +76,11 @@ class MappingException extends \Exception
      */
     public static function invalidMappingFile($entityName, $fileName)
     {
-        return new self("Invalid mapping file '$fileName' for class '$entityName'.");
+        return new self(sprintf(
+            "Invalid mapping file '%s' for class '%s'.",
+            $fileName,
+            $entityName
+        ));
     }
 
     /**
@@ -75,6 +90,6 @@ class MappingException extends \Exception
      */
     public static function nonExistingClass($className)
     {
-        return new self("Class '$className' does not exist");
+        return new self(sprintf("Class '%s' does not exist", $className));
     }
 }

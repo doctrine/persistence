@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\ObjectManagerAware;
 use Doctrine\Tests\Common\Persistence\Mapping\TestClassMetadataFactory;
 use Doctrine\Tests\DoctrineTestCase;
 use ReflectionException;
+use function call_user_func;
 
 /**
  * @groups DCOM-270
@@ -17,9 +18,7 @@ use ReflectionException;
  */
 class ManagerRegistryTest extends DoctrineTestCase
 {
-    /**
-     * @var TestManagerRegistry
-     */
+    /** @var TestManagerRegistry */
     private $mr;
 
     /**
@@ -93,12 +92,25 @@ class ManagerRegistryTest extends DoctrineTestCase
 
 class TestManagerRegistry extends AbstractManagerRegistry
 {
+    /** @var object[] */
     private $services;
 
+    /** @var callable */
     private $managerFactory;
 
-    public function __construct($name, array $connections, array $managers, $defaultConnection, $defaultManager, $proxyInterfaceName, callable $managerFactory)
-    {
+    /**
+     * @param string[] $connections
+     * @param string[] $managers
+     */
+    public function __construct(
+        $name,
+        array $connections,
+        array $managers,
+        $defaultConnection,
+        $defaultManager,
+        $proxyInterfaceName,
+        callable $managerFactory
+    ) {
         $this->managerFactory = $managerFactory;
 
         parent::__construct($name, $connections, $managers, $defaultConnection, $defaultManager, $proxyInterfaceName);
@@ -106,7 +118,7 @@ class TestManagerRegistry extends AbstractManagerRegistry
 
     protected function getService($name)
     {
-        if ( ! isset($this->services[$name])) {
+        if (! isset($this->services[$name])) {
             $this->services[$name] = call_user_func($this->managerFactory);
         }
 

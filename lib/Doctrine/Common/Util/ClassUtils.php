@@ -1,14 +1,18 @@
 <?php
+
 namespace Doctrine\Common\Util;
 
 use Doctrine\Common\Persistence\Proxy;
+use function get_class;
+use function get_parent_class;
+use function ltrim;
+use function rtrim;
+use function strrpos;
+use function substr;
 
 /**
  * Class and reflection related functionality for objects that
  * might or not be proxy objects at the moment.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Johannes Schmitt <schmittjoh@gmail.com>
  */
 class ClassUtils
 {
@@ -21,7 +25,9 @@ class ClassUtils
      */
     public static function getRealClass($class)
     {
-        if (false === $pos = strrpos($class, '\\' . Proxy::MARKER . '\\')) {
+        $pos = strrpos($class, '\\' . Proxy::MARKER . '\\');
+
+        if ($pos === false) {
             return $class;
         }
 

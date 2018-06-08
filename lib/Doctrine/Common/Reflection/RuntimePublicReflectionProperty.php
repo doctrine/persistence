@@ -1,4 +1,5 @@
 <?php
+
 namespace Doctrine\Common\Reflection;
 
 use Doctrine\Common\Proxy\Proxy;
@@ -6,9 +7,6 @@ use ReflectionProperty;
 
 /**
  * PHP Runtime Reflection Public Property - special overrides for public properties.
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @since  2.4
  */
 class RuntimePublicReflectionProperty extends ReflectionProperty
 {
@@ -26,7 +24,7 @@ class RuntimePublicReflectionProperty extends ReflectionProperty
         if ($object instanceof Proxy && ! $object->__isInitialized()) {
             $originalInitializer = $object->__getInitializer();
             $object->__setInitializer(null);
-            $val = isset($object->$name) ? $object->$name : null;
+            $val = $object->$name ?? null;
             $object->__setInitializer($originalInitializer);
 
             return $val;
@@ -44,7 +42,7 @@ class RuntimePublicReflectionProperty extends ReflectionProperty
      */
     public function setValue($object, $value = null)
     {
-        if ( ! ($object instanceof Proxy && ! $object->__isInitialized())) {
+        if (! ($object instanceof Proxy && ! $object->__isInitialized())) {
             parent::setValue($object, $value);
 
             return;

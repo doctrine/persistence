@@ -7,12 +7,17 @@
     <arg name="colors" />
 
     <!-- Ignore warnings and show progress of the run -->
-    <arg value="np"/>
+    <arg value="nps"/>
 
     <file>lib</file>
     <file>tests</file>
 
-    <rule ref="Doctrine"/>
+    <rule ref="Doctrine">
+        <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>
+        <exclude name="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly.ReferencedGeneralException"/>
+    </rule>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>*/tests/*</exclude-pattern>
@@ -20,5 +25,22 @@
 
     <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
         <exclude-pattern>tests/Doctrine/Tests/Common/Util/ClassUtilsTest.php</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.Classes.ClassFileName.NoMatch">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming">
+        <exclude-pattern>lib/Doctrine/Common/Persistence/AbstractManagerRegistry.php</exclude-pattern>
+        <exclude-pattern>lib/Doctrine/Common/Persistence/Mapping/AbstractClassMetadataFactory.php</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix">
+        <exclude-pattern>lib/Doctrine/Common/Persistence/Mapping/MappingException.php</exclude-pattern>
     </rule>
 </ruleset>

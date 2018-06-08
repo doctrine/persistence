@@ -1,14 +1,9 @@
 <?php
+
 namespace Doctrine\Common\Persistence;
 
 /**
  * Contract covering object managers for a Doctrine persistence layer ManagerRegistry class to implement.
- *
- * @link   www.doctrine-project.org
- * @since  2.2
- * @author Fabien Potencier <fabien@symfony.com>
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Lukas Kahwe Smith <smith@pooteeweet.org>
  */
 interface ManagerRegistry extends ConnectionRegistry
 {
@@ -24,14 +19,14 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @param string $name The object manager name (null for the default one).
      *
-     * @return \Doctrine\Common\Persistence\ObjectManager
+     * @return ObjectManager
      */
     public function getManager($name = null);
 
     /**
      * Gets an array of all registered object managers.
      *
-     * @return \Doctrine\Common\Persistence\ObjectManager[] An array of ObjectManager instances
+     * @return ObjectManager[] An array of ObjectManager instances
      */
     public function getManagers();
 
@@ -50,7 +45,7 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @param string|null $name The object manager name (null for the default one).
      *
-     * @return \Doctrine\Common\Persistence\ObjectManager
+     * @return ObjectManager
      */
     public function resetManager($name = null);
 
@@ -68,7 +63,7 @@ interface ManagerRegistry extends ConnectionRegistry
     /**
      * Gets all object manager names.
      *
-     * @return array An array of object manager names.
+     * @return string[] An array of object manager names.
      */
     public function getManagerNames();
 
@@ -78,7 +73,7 @@ interface ManagerRegistry extends ConnectionRegistry
      * @param string $persistentObject      The name of the persistent object.
      * @param string $persistentManagerName The object manager name (null for the default one).
      *
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return ObjectRepository
      */
     public function getRepository($persistentObject, $persistentManagerName = null);
 
@@ -87,7 +82,7 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @param string $class A persistent object class name.
      *
-     * @return \Doctrine\Common\Persistence\ObjectManager|null
+     * @return ObjectManager|null
      */
     public function getManagerForClass($class);
 }
