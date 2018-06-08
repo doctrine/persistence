@@ -1,4 +1,5 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Event;
 
 use Doctrine\Common\EventArgs;
@@ -6,27 +7,16 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Provides event arguments for the onClear event.
- *
- * @link   www.doctrine-project.org
- * @since  2.2
- * @author Roman Borschel <roman@code-factory.de>
- * @author Benjamin Eberlei <kontakt@beberlei.de>
  */
 class OnClearEventArgs extends EventArgs
 {
-    /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
-     */
+    /** @var ObjectManager */
     private $objectManager;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $entityClass;
 
     /**
-     * Constructor.
-     *
      * @param ObjectManager $objectManager The object manager.
      * @param string|null   $entityClass   The optional entity class.
      */
@@ -39,7 +29,7 @@ class OnClearEventArgs extends EventArgs
     /**
      * Retrieves the associated ObjectManager.
      *
-     * @return \Doctrine\Common\Persistence\ObjectManager
+     * @return ObjectManager
      */
     public function getObjectManager()
     {
@@ -63,6 +53,6 @@ class OnClearEventArgs extends EventArgs
      */
     public function clearsAllEntities()
     {
-        return ($this->entityClass === null);
+        return $this->entityClass === null;
     }
 }

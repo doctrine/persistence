@@ -1,7 +1,13 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Mapping\Driver;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\MappingException;
+use function array_keys;
+use function array_merge;
+use function is_file;
+use function str_replace;
 
 /**
  * Base driver for file-based metadata drivers.
@@ -10,38 +16,25 @@ use Doctrine\Common\Persistence\Mapping\MappingException;
  * classes on demand. This requires the user to adhere to the convention of 1 mapping
  * file per class and the file names of the mapping files must correspond to the full
  * class name, including namespace, with the namespace delimiters '\', replaced by dots '.'.
- *
- * @link   www.doctrine-project.org
- * @since  2.2
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author Jonathan H. Wage <jonwage@gmail.com>
- * @author Roman Borschel <roman@code-factory.org>
  */
 abstract class FileDriver implements MappingDriver
 {
-    /**
-     * @var FileLocator
-     */
+    /** @var FileLocator */
     protected $locator;
 
-    /**
-     * @var array|null
-     */
+    /** @var ClassMetadata[]|null */
     protected $classCache;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     protected $globalBasename;
 
     /**
      * Initializes a new FileDriver that looks in the given path(s) for mapping
      * documents and operates in the specified operating mode.
      *
-     * @param string|array|FileLocator $locator       A FileLocator or one/multiple paths
+     * @param string|string[]|FileLocator $locator       A FileLocator or one/multiple paths
      *                                                where mapping documents can be found.
-     * @param string|null              $fileExtension
+     * @param string|null                 $fileExtension
      */
     public function __construct($locator, $fileExtension = null)
     {
@@ -80,7 +73,7 @@ abstract class FileDriver implements MappingDriver
      *
      * @param string $className
      *
-     * @return array The element of schema meta data.
+     * @return ClassMetadata The element of schema meta data.
      *
      * @throws MappingException
      */
@@ -95,7 +88,7 @@ abstract class FileDriver implements MappingDriver
         }
 
         $result = $this->loadMappingFile($this->locator->findMappingFile($className));
-        if ( ! isset($result[$className])) {
+        if (! isset($result[$className])) {
             throw MappingException::invalidMappingFile($className, str_replace('\\', '.', $className) . $this->locator->getFileExtension());
         }
 
@@ -129,7 +122,7 @@ abstract class FileDriver implements MappingDriver
             $this->initialize();
         }
 
-        if ( ! $this->classCache) {
+        if (! $this->classCache) {
             return (array) $this->locator->getAllClassNames($this->globalBasename);
         }
 
@@ -145,7 +138,7 @@ abstract class FileDriver implements MappingDriver
      *
      * @param string $file The mapping file to load.
      *
-     * @return array
+     * @return ClassMetadata[]
      */
     abstract protected function loadMappingFile($file);
 
@@ -163,16 +156,20 @@ abstract class FileDriver implements MappingDriver
     protected function initialize()
     {
         $this->classCache = [];
-        if (null !== $this->globalBasename) {
-            foreach ($this->locator->getPaths() as $path) {
-                $file = $path . '/' . $this->globalBasename . $this->locator->getFileExtension();
-                if (is_file($file)) {
-                    $this->classCache = array_merge(
-                        $this->classCache,
-                        $this->loadMappingFile($file)
-                    );
-                }
+        if ($this->globalBasename === null) {
+            return;
+        }
+
+        foreach ($this->locator->getPaths() as $path) {
+            $file = $path . '/' . $this->globalBasename . $this->locator->getFileExtension();
+            if (! is_file($file)) {
+                continue;
             }
+
+            $this->classCache = array_merge(
+                $this->classCache,
+                $this->loadMappingFile($file)
+            );
         }
     }
 
@@ -188,8 +185,6 @@ abstract class FileDriver implements MappingDriver
 
     /**
      * Sets the locator used to discover mapping files by className.
-     *
-     * @param FileLocator $locator
      */
     public function setLocator(FileLocator $locator)
     {

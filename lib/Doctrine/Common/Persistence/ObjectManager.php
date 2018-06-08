@@ -1,13 +1,12 @@
 <?php
+
 namespace Doctrine\Common\Persistence;
+
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 
 /**
  * Contract for a Doctrine persistence layer ObjectManager class to implement.
- *
- * @link   www.doctrine-project.org
- * @since  2.1
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Jonathan Wage <jonwage@gmail.com>
  */
 interface ObjectManager
 {
@@ -106,7 +105,7 @@ interface ObjectManager
      *
      * @param string $className
      *
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return ObjectRepository
      */
     public function getRepository($className);
 
@@ -118,14 +117,14 @@ interface ObjectManager
      *
      * @param string $className
      *
-     * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata
+     * @return ClassMetadata
      */
     public function getClassMetadata($className);
 
     /**
      * Gets the metadata factory used to gather the metadata of classes.
      *
-     * @return \Doctrine\Common\Persistence\Mapping\ClassMetadataFactory
+     * @return ClassMetadataFactory
      */
     public function getMetadataFactory();
 

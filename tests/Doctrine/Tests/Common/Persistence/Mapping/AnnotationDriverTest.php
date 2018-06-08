@@ -3,12 +3,13 @@
 namespace Doctrine\Tests\Common\Persistence\Mapping;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Persistence\Mapping\Driver\AnnotationDriver;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\Mapping\Driver\AnnotationDriver;
 use Doctrine\Entity;
 use Doctrine\TestClass;
+use PHPUnit\Framework\TestCase;
 
-class AnnotationDriverTest extends \PHPUnit\Framework\TestCase
+class AnnotationDriverTest extends TestCase
 {
     public function testGetAllClassNames()
     {
@@ -23,6 +24,7 @@ class AnnotationDriverTest extends \PHPUnit\Framework\TestCase
 
 class SimpleAnnotationDriver extends AnnotationDriver
 {
+    /** @var bool[] */
     protected $entityAnnotationClasses = [Entity::class => true];
 
     public function loadMetadataForClass($className, ClassMetadata $metadata)

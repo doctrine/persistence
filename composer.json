@@ -21,7 +21,7 @@
         "doctrine/common": "^2.8"
     },
     "require-dev": {
-        "doctrine/coding-standard": "^1.0",
+        "doctrine/coding-standard": "^4.0",
         "phpstan/phpstan": "^0.8",
         "phpunit/phpunit": "^7.0",
         "squizlabs/php_codesniffer": "^3.0"

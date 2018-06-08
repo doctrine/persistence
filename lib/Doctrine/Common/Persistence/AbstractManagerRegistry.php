@@ -1,56 +1,41 @@
 <?php
+
 namespace Doctrine\Common\Persistence;
+
+use function explode;
+use function sprintf;
+use function strpos;
 
 /**
  * Abstract implementation of the ManagerRegistry contract.
- *
- * @link   www.doctrine-project.org
- * @since  2.2
- * @author Fabien Potencier <fabien@symfony.com>
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Lukas Kahwe Smith <smith@pooteeweet.org>
  */
 abstract class AbstractManagerRegistry implements ManagerRegistry
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
-    /**
-     * @var array
-     */
+    /** @var string[] */
     private $connections;
 
-    /**
-     * @var array
-     */
+    /** @var string[] */
     private $managers;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $defaultConnection;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $defaultManager;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $proxyInterfaceName;
 
     /**
-     * Constructor.
-     *
-     * @param string $name
-     * @param array  $connections
-     * @param array  $managers
-     * @param string $defaultConnection
-     * @param string $defaultManager
-     * @param string $proxyInterfaceName
+     * @param string   $name
+     * @param string[] $connections
+     * @param string[] $managers
+     * @param string   $defaultConnection
+     * @param string   $defaultManager
+     * @param string   $proxyInterfaceName
      */
     public function __construct($name, array $connections, array $managers, $defaultConnection, $defaultManager, $proxyInterfaceName)
     {
@@ -99,11 +84,11 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      */
     public function getConnection($name = null)
     {
-        if (null === $name) {
+        if ($name === null) {
             $name = $this->defaultConnection;
         }
 
-        if ( ! isset($this->connections[$name])) {
+        if (! isset($this->connections[$name])) {
             throw new \InvalidArgumentException(sprintf('Doctrine %s Connection named "%s" does not exist.', $this->name, $name));
         }
 
@@ -154,11 +139,11 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      */
     public function getManager($name = null)
     {
-        if (null === $name) {
+        if ($name === null) {
             $name = $this->defaultManager;
         }
 
-        if ( ! isset($this->managers[$name])) {
+        if (! isset($this->managers[$name])) {
             throw new \InvalidArgumentException(sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name));
         }
 
@@ -179,7 +164,9 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         $proxyClass = new \ReflectionClass($class);
 
         if ($proxyClass->implementsInterface($this->proxyInterfaceName)) {
-            if ( ! $parentClass = $proxyClass->getParentClass()) {
+            $parentClass = $proxyClass->getParentClass();
+
+            if (! $parentClass) {
                 return null;
             }
 
@@ -189,7 +176,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         foreach ($this->managers as $id) {
             $manager = $this->getService($id);
 
-            if ( ! $manager->getMetadataFactory()->isTransient($class)) {
+            if (! $manager->getMetadataFactory()->isTransient($class)) {
                 return $manager;
             }
         }
@@ -229,11 +216,11 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      */
     public function resetManager($name = null)
     {
-        if (null === $name) {
+        if ($name === null) {
             $name = $this->defaultManager;
         }
 
-        if ( ! isset($this->managers[$name])) {
+        if (! isset($this->managers[$name])) {
             throw new \InvalidArgumentException(sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name));
         }
 

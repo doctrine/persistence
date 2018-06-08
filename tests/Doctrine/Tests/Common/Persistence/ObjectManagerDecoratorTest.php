@@ -2,8 +2,12 @@
 
 namespace Doctrine\Tests\Common\Persistence;
 
-use Doctrine\Common\Persistence\ObjectManagerDecorator;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManagerDecorator;
+use PHPUnit\Framework\TestCase;
+use function array_fill;
+use function call_user_func_array;
+use function in_array;
 
 class NullObjectManagerDecorator extends ObjectManagerDecorator
 {
@@ -13,12 +17,12 @@ class NullObjectManagerDecorator extends ObjectManagerDecorator
     }
 }
 
-class ObjectManagerDecoratorTest extends \PHPUnit\Framework\TestCase
+class ObjectManagerDecoratorTest extends TestCase
 {
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ObjectManager
-     */
+    /** @var \PHPUnit_Framework_MockObject_MockObject|ObjectManager */
     private $wrapped;
+
+    /** @var NullObjectManagerDecorator */
     private $decorated;
 
     public function setUp()
@@ -48,9 +52,11 @@ class ObjectManagerDecoratorTest extends \PHPUnit\Framework\TestCase
             } elseif ($method->getNumberOfRequiredParameters() > 0) {
                 $methods[] = [$method->getName(), array_fill(0, $method->getNumberOfRequiredParameters(), 'req') ?: [], $isVoidMethod];
             }
-            if ($method->getNumberOfParameters() != $method->getNumberOfRequiredParameters()) {
-                $methods[] = [$method->getName(), array_fill(0, $method->getNumberOfParameters(), 'all') ?: [], $isVoidMethod];
+            if ($method->getNumberOfParameters() === $method->getNumberOfRequiredParameters()) {
+                continue;
             }
+
+            $methods[] = [$method->getName(), array_fill(0, $method->getNumberOfParameters(), 'all') ?: [], $isVoidMethod];
         }
 
         return $methods;
@@ -58,6 +64,10 @@ class ObjectManagerDecoratorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider getMethodParameters
+     *
+     * @param string  $method
+     * @param mixed[] $parameters
+     * @param bool    $isVoidMethod
      */
     public function testAllMethodCallsAreDelegatedToTheWrappedInstance($method, array $parameters, $isVoidMethod)
     {

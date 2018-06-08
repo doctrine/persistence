@@ -1,4 +1,5 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Mapping;
 
 /**
@@ -6,8 +7,6 @@ namespace Doctrine\Common\Persistence\Mapping;
  *
  * This is required inside metadata layers that may require either
  * static or runtime reflection.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
  */
 interface ReflectionService
 {
@@ -16,9 +15,9 @@ interface ReflectionService
      *
      * @param string $class
      *
-     * @throws \Doctrine\Common\Persistence\Mapping\MappingException
+     * @throws MappingException
      *
-     * @return array
+     * @return string[]
      */
     public function getParentClasses($class);
 
