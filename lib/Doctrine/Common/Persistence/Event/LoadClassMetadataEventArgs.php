@@ -1,4 +1,5 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Event;
 
 use Doctrine\Common\EventArgs;
@@ -7,28 +8,15 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class that holds event arguments for a loadMetadata event.
- *
- * @author Jonathan H. Wage <jonwage@gmail.com>
- * @since  2.2
  */
 class LoadClassMetadataEventArgs extends EventArgs
 {
-    /**
-     * @var ClassMetadata
-     */
+    /** @var ClassMetadata */
     private $classMetadata;
 
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $objectManager;
 
-    /**
-     * Constructor.
-     *
-     * @param ClassMetadata $classMetadata
-     * @param ObjectManager $objectManager
-     */
     public function __construct(ClassMetadata $classMetadata, ObjectManager $objectManager)
     {
         $this->classMetadata = $classMetadata;

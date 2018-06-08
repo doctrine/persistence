@@ -6,7 +6,6 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\Common\Persistence\Mapping\MappingException;
-use Doctrine\Tests\Common\Persistence\Mapping;
 use Doctrine\Tests\DoctrineTestCase;
 
 class DriverChainTest extends DoctrineTestCase
@@ -14,19 +13,19 @@ class DriverChainTest extends DoctrineTestCase
     public function testDelegateToMatchingNamespaceDriver()
     {
         $className = DriverChainEntity::class;
-        /* @var $classMetadata ClassMetadata|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var ClassMetadata|\PHPUnit_Framework_MockObject_MockObject $classMetadata */
         $classMetadata = $this->createMock(ClassMetadata::class);
 
         $chain = new MappingDriverChain();
 
-        /* @var $driver1 MappingDriver|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var MappingDriver|\PHPUnit_Framework_MockObject_MockObject $driver1 */
         $driver1 = $this->createMock(MappingDriver::class);
         $driver1->expects($this->never())
                 ->method('loadMetadataForClass');
         $driver1->expectS($this->never())
                 ->method('isTransient');
 
-        /* @var $driver2 MappingDriver|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var MappingDriver|\PHPUnit_Framework_MockObject_MockObject $driver2 */
         $driver2 = $this->createMock(MappingDriver::class);
         $driver2->expects($this->at(0))
                 ->method('loadMetadataForClass')
@@ -47,7 +46,7 @@ class DriverChainTest extends DoctrineTestCase
     public function testLoadMetadataShouldThrowMappingExceptionWhenNoDelegatorWasFound()
     {
         $className = DriverChainEntity::class;
-        /* @var $classMetadata ClassMetadata|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var ClassMetadata|\PHPUnit_Framework_MockObject_MockObject $classMetadata */
         $classMetadata = $this->createMock(ClassMetadata::class);
 
         $chain = new MappingDriverChain();
@@ -60,13 +59,13 @@ class DriverChainTest extends DoctrineTestCase
     {
         $chain = new MappingDriverChain();
 
-        /* @var $driver1 MappingDriver|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var MappingDriver|\PHPUnit_Framework_MockObject_MockObject $driver1 */
         $driver1 = $this->createMock(MappingDriver::class);
         $driver1->expects($this->once())
                 ->method('getAllClassNames')
                 ->will($this->returnValue(['Doctrine\Tests\Models\Company\Foo']));
 
-        /* @var $driver2 MappingDriver|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var MappingDriver|\PHPUnit_Framework_MockObject_MockObject $driver2 */
         $driver2 = $this->createMock(MappingDriver::class);
         $driver2->expects($this->once())
                 ->method('getAllClassNames')
@@ -78,7 +77,7 @@ class DriverChainTest extends DoctrineTestCase
         self::assertEquals([
             'Doctrine\Tests\Models\Company\Foo',
             'Doctrine\Tests\ORM\Mapping\Bar',
-            'Doctrine\Tests\ORM\Mapping\Baz'
+            'Doctrine\Tests\ORM\Mapping\Baz',
         ], $chain->getAllClassNames());
     }
 
@@ -87,12 +86,12 @@ class DriverChainTest extends DoctrineTestCase
      */
     public function testIsTransient()
     {
-        /* @var $driver1 MappingDriver|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var MappingDriver|\PHPUnit_Framework_MockObject_MockObject $driver1 */
         $driver1 = $this->createMock(MappingDriver::class);
         $chain   = new MappingDriverChain();
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\CMS');
 
-        self::assertTrue($chain->isTransient('stdClass'), "stdClass isTransient");
+        self::assertTrue($chain->isTransient('stdClass'), 'stdClass isTransient');
     }
 
     /**
@@ -133,9 +132,9 @@ class DriverChainTest extends DoctrineTestCase
 
     public function testDefaultDriverGetAllClassNames()
     {
-        /* @var $companyDriver MappingDriver|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var MappingDriver|\PHPUnit_Framework_MockObject_MockObject $companyDriver */
         $companyDriver = $this->createMock(MappingDriver::class);
-        /* @var $defaultDriver MappingDriver|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var MappingDriver|\PHPUnit_Framework_MockObject_MockObject $defaultDriver */
         $defaultDriver = $this->createMock(MappingDriver::class);
         $chain         = new MappingDriverChain();
 
@@ -158,5 +157,4 @@ class DriverChainTest extends DoctrineTestCase
 
 class DriverChainEntity
 {
-
 }

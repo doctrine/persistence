@@ -1,13 +1,9 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Mapping;
 
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
- *
- * @link   www.doctrine-project.org
- * @since  2.1
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Jonathan Wage <jonwage@gmail.com>
  */
 interface ClassMetadata
 {
@@ -23,7 +19,7 @@ interface ClassMetadata
      *
      * The returned structure is an array of the identifier field names.
      *
-     * @return array
+     * @return mixed[]
      */
     public function getIdentifier();
 
@@ -39,7 +35,7 @@ interface ClassMetadata
      *
      * @param string $fieldName
      *
-     * @return boolean
+     * @return bool
      */
     public function isIdentifier($fieldName);
 
@@ -48,7 +44,7 @@ interface ClassMetadata
      *
      * @param string $fieldName
      *
-     * @return boolean
+     * @return bool
      */
     public function hasField($fieldName);
 
@@ -57,7 +53,7 @@ interface ClassMetadata
      *
      * @param string $fieldName
      *
-     * @return boolean
+     * @return bool
      */
     public function hasAssociation($fieldName);
 
@@ -66,7 +62,7 @@ interface ClassMetadata
      *
      * @param string $fieldName
      *
-     * @return boolean
+     * @return bool
      */
     public function isSingleValuedAssociation($fieldName);
 
@@ -75,7 +71,7 @@ interface ClassMetadata
      *
      * @param string $fieldName
      *
-     * @return boolean
+     * @return bool
      */
     public function isCollectionValuedAssociation($fieldName);
 
@@ -84,14 +80,14 @@ interface ClassMetadata
      *
      * This array includes identifier fields if present on this class.
      *
-     * @return array
+     * @return string[]
      */
     public function getFieldNames();
 
     /**
      * Returns an array of identifier field names numerically indexed.
      *
-     * @return array
+     * @return string[]
      */
     public function getIdentifierFieldNames();
 
@@ -100,7 +96,7 @@ interface ClassMetadata
      *
      * This array includes identifier associations if present on this class.
      *
-     * @return array
+     * @return string[]
      */
     public function getAssociationNames();
 
@@ -130,7 +126,7 @@ interface ClassMetadata
      *
      * @param string $assocName
      *
-     * @return boolean
+     * @return bool
      */
     public function isAssociationInverseSide($assocName);
 
@@ -150,7 +146,7 @@ interface ClassMetadata
      *
      * @param object $object
      *
-     * @return array
+     * @return mixed[]
      */
     public function getIdentifierValues($object);
 }

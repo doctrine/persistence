@@ -1,10 +1,14 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Mapping;
+
+use function strpos;
+use function strrev;
+use function strrpos;
+use function substr;
 
 /**
  * PHP Runtime Reflection Service.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
  */
 class StaticReflectionService implements ReflectionService
 {
@@ -22,7 +26,7 @@ class StaticReflectionService implements ReflectionService
     public function getClassShortName($className)
     {
         if (strpos($className, '\\') !== false) {
-            $className = substr($className, strrpos($className, "\\") + 1);
+            $className = substr($className, strrpos($className, '\\') + 1);
         }
         return $className;
     }

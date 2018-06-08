@@ -1,4 +1,5 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Mapping\Driver;
 
 /**
@@ -6,9 +7,6 @@ namespace Doctrine\Common\Persistence\Mapping\Driver;
  *
  * This behavior is independent of the actual content of the file. It just detects
  * the file which is responsible for the given class name.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
 interface FileLocator
 {
@@ -26,7 +24,7 @@ interface FileLocator
      *
      * @param string $globalBasename Passed to allow excluding the basename.
      *
-     * @return array
+     * @return string[]
      */
     public function getAllClassNames($globalBasename);
 
@@ -42,7 +40,7 @@ interface FileLocator
     /**
      * Gets all the paths that this file locator looks for mapping files.
      *
-     * @return array
+     * @return string[]
      */
     public function getPaths();
 

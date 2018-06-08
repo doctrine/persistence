@@ -1,4 +1,5 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Event;
 
 use Doctrine\Common\EventArgs;
@@ -7,29 +8,17 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Lifecycle Events are triggered by the UnitOfWork during lifecycle transitions
  * of entities.
- *
- * @link   www.doctrine-project.org
- * @since  2.2
- * @author Roman Borschel <roman@code-factory.de>
- * @author Benjamin Eberlei <kontakt@beberlei.de>
  */
 class LifecycleEventArgs extends EventArgs
 {
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $objectManager;
 
-    /**
-     * @var object
-     */
+    /** @var object */
     private $object;
 
     /**
-     * Constructor.
-     *
-     * @param object        $object
-     * @param ObjectManager $objectManager
+     * @param object $object
      */
     public function __construct($object, ObjectManager $objectManager)
     {

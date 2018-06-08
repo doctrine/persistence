@@ -3,29 +3,37 @@
 namespace Doctrine\Tests\Common\Persistence;
 
 use BadMethodCallException;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\PersistentObject;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\ReflectionService;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\PersistentObject;
+use Doctrine\Tests\DoctrineTestCase;
 use InvalidArgumentException;
 use RuntimeException;
+use function count;
+use function in_array;
 
 /**
  * @group DDC-1448
  */
-class PersistentObjectTest extends \Doctrine\Tests\DoctrineTestCase
+class PersistentObjectTest extends DoctrineTestCase
 {
+    /** @var TestObjectMetadata */
     private $cm;
+
+    /** @var ObjectManager|\PHPUnit_Framework_MockObject_MockObject */
     private $om;
+
+    /** @var TestObject */
     private $object;
 
     public function setUp()
     {
-        $this->cm = new TestObjectMetadata;
+        $this->cm = new TestObjectMetadata();
         $this->om = $this->createMock(ObjectManager::class);
         $this->om->expects($this->any())->method('getClassMetadata')
                  ->will($this->returnValue($this->cm));
-        $this->object = new TestObject;
+        $this->object = new TestObject();
         PersistentObject::setObjectManager($this->om);
         $this->object->injectObjectManager($this->om, $this->cm);
     }
@@ -49,8 +57,8 @@ class PersistentObjectTest extends \Doctrine\Tests\DoctrineTestCase
 
     public function testSetField()
     {
-        $this->object->setName("test");
-        self::assertEquals("test", $this->object->getName());
+        $this->object->setName('test');
+        self::assertEquals('test', $this->object->getName());
     }
 
     public function testGetIdentifier()
@@ -67,7 +75,7 @@ class PersistentObjectTest extends \Doctrine\Tests\DoctrineTestCase
     public function testSetUnknownField()
     {
         $this->expectException(BadMethodCallException::class);
-        $this->object->setUnknown("test");
+        $this->object->setUnknown('test');
     }
 
     public function testGetUnknownField()
@@ -79,8 +87,8 @@ class PersistentObjectTest extends \Doctrine\Tests\DoctrineTestCase
     public function testUndefinedMethod()
     {
         $this->expectException(BadMethodCallException::class);
-        $this->expectExceptionMessage("There is no method");
-        (new TestObject)->undefinedMethod();
+        $this->expectExceptionMessage('There is no method');
+        (new TestObject())->undefinedMethod();
     }
 
     public function testGetToOneAssociation()
@@ -137,7 +145,7 @@ class PersistentObjectTest extends \Doctrine\Tests\DoctrineTestCase
         $child = new TestObject();
 
         $this->expectException(RuntimeException::class);
-        $child->setName("test");
+        $child->setName('test');
     }
 
     public function testInvalidMethod()
@@ -155,15 +163,21 @@ class PersistentObjectTest extends \Doctrine\Tests\DoctrineTestCase
 
 class TestObject extends PersistentObject
 {
-    protected $id   = 1;
+    /** @var int */
+    protected $id = 1;
+
+    /** @var string */
     protected $name = 'beberlei';
+
+    /** @var TestObject */
     protected $parent;
+
+    /** @var TestObject */
     protected $children;
 }
 
 class TestObjectMetadata implements ClassMetadata
 {
-
     public function getAssociationMappedByTargetField($assocName)
     {
         $assoc = ['children' => 'parent'];
@@ -218,12 +232,12 @@ class TestObjectMetadata implements ClassMetadata
 
     public function isAssociationInverseSide($assocName)
     {
-        return ($assocName === 'children');
+        return $assocName === 'children';
     }
 
     public function isCollectionValuedAssociation($fieldName)
     {
-        return ($fieldName === 'children');
+        return $fieldName === 'children';
     }
 
     public function isIdentifier($fieldName)

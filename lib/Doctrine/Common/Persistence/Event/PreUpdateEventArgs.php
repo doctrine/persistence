@@ -1,29 +1,22 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Event;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use function get_class;
+use function sprintf;
 
 /**
  * Class that holds event arguments for a preUpdate event.
- *
- * @author Guilherme Blanco <guilehrmeblanco@hotmail.com>
- * @author Roman Borschel <roman@code-factory.org>
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.2
  */
 class PreUpdateEventArgs extends LifecycleEventArgs
 {
-    /**
-     * @var array
-     */
+    /** @var mixed[][] */
     private $entityChangeSet;
 
     /**
-     * Constructor.
-     *
-     * @param object        $entity
-     * @param ObjectManager $objectManager
-     * @param array         $changeSet
+     * @param object    $entity
+     * @param mixed[][] $changeSet
      */
     public function __construct($entity, ObjectManager $objectManager, array &$changeSet)
     {
@@ -35,7 +28,7 @@ class PreUpdateEventArgs extends LifecycleEventArgs
     /**
      * Retrieves the entity changeset.
      *
-     * @return array
+     * @return mixed[][]
      */
     public function getEntityChangeSet()
     {
@@ -47,7 +40,7 @@ class PreUpdateEventArgs extends LifecycleEventArgs
      *
      * @param string $field
      *
-     * @return boolean
+     * @return bool
      */
     public function hasChangedField($field)
     {
@@ -108,7 +101,7 @@ class PreUpdateEventArgs extends LifecycleEventArgs
      */
     private function assertValidField($field)
     {
-        if ( ! isset($this->entityChangeSet[$field])) {
+        if (! isset($this->entityChangeSet[$field])) {
             throw new \InvalidArgumentException(sprintf(
                 'Field "%s" is not a valid field of the entity "%s" in PreUpdateEventArgs.',
                 $field,

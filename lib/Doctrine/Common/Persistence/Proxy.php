@@ -1,11 +1,9 @@
 <?php
+
 namespace Doctrine\Common\Persistence;
 
 /**
  * Interface for proxy classes.
- *
- * @author Roman Borschel <roman@code-factory.org>
- * @since  2.2
  */
 interface Proxy
 {
@@ -14,14 +12,14 @@ interface Proxy
      *
      * @var string
      */
-    const MARKER = '__CG__';
+    public const MARKER = '__CG__';
 
     /**
      * Length of the proxy marker.
      *
      * @var integer
      */
-    const MARKER_LENGTH = 6;
+    public const MARKER_LENGTH = 6;
 
     /**
      * Initializes this proxy if its not yet initialized.

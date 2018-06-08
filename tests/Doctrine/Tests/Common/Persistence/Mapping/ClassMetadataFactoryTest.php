@@ -2,23 +2,21 @@
 
 namespace Doctrine\Tests\Common\Persistence\Mapping;
 
+use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Common\Persistence\Mapping\MappingException;
-use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Common\Persistence\Mapping\ReflectionService;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory;
-use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Tests\DoctrineTestCase;
 
 /**
  * @covers \Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory
  */
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
-    /**
-     * @var TestClassMetadataFactory
-     */
+    /** @var TestClassMetadataFactory */
     private $cmf;
 
     public function setUp()
@@ -140,14 +138,14 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
      */
     public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances()
     {
-        /* @var $cacheDriver Cache|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var Cache|\PHPUnit_Framework_MockObject_MockObject $cacheDriver */
         $cacheDriver = $this->createMock(Cache::class);
 
         $this->cmf->setCacheDriver($cacheDriver);
 
         $cacheDriver->expects(self::once())->method('fetch')->with('Foo$CLASSMETADATA')->willReturn(new \stdClass());
 
-        /* @var $metadata ClassMetadata */
+        /** @var ClassMetadata $metadata */
         $metadata = $this->createMock(ClassMetadata::class);
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|\stdClass|callable $fallbackCallback */
@@ -163,7 +161,10 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
 class TestClassMetadataFactory extends AbstractClassMetadataFactory
 {
+    /** @var MappingDriver */
     public $driver;
+
+    /** @var ClassMetadata|null */
     public $metadata;
 
     /** @var callable|null */
@@ -175,6 +176,9 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
         $this->metadata = $metadata;
     }
 
+    /**
+     * @param string[] $nonSuperclassParents
+     */
     protected function doLoadMetadata($class, $parent, $rootEntityFound, array $nonSuperclassParents)
     {
     }
@@ -212,11 +216,11 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
 
     protected function onNotFoundMetadata($className)
     {
-        if ( ! $fallback = $this->fallbackCallback) {
+        if (! $this->fallbackCallback) {
             return null;
         }
 
-        return $fallback();
+        return ($this->fallbackCallback)();
     }
 
     public function isTransient($class)
@@ -227,10 +231,8 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
 
 class RootEntity
 {
-
 }
 
 class ChildEntity extends RootEntity
 {
-
 }

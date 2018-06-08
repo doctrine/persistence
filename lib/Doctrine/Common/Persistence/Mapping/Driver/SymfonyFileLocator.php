@@ -1,30 +1,39 @@
 <?php
+
 namespace Doctrine\Common\Persistence\Mapping\Driver;
 
 use Doctrine\Common\Persistence\Mapping\MappingException;
+use const DIRECTORY_SEPARATOR;
+use function array_keys;
+use function array_merge;
+use function is_dir;
+use function is_file;
+use function realpath;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function strrpos;
+use function strtr;
+use function substr;
 
 /**
  * The Symfony File Locator makes a simplifying assumptions compared
  * to the DefaultFileLocator. By assuming paths only contain entities of a certain
  * namespace the mapping files consists of the short classname only.
- *
- * @author  Fabien Potencier <fabien@symfony.com>
- * @author  Benjamin Eberlei <kontakt@beberlei.de>
- * @license MIT
  */
 class SymfonyFileLocator implements FileLocator
 {
     /**
      * The paths where to look for mapping files.
      *
-     * @var array
+     * @var string[]
      */
     protected $paths = [];
 
     /**
      * A map of mapping directory path to namespace prefix used to expand class shortnames.
      *
-     * @var array
+     * @var string[]
      */
     protected $prefixes = [];
 
@@ -43,11 +52,9 @@ class SymfonyFileLocator implements FileLocator
     private $nsSeparator;
 
     /**
-     * Constructor.
-     *
-     * @param array       $prefixes
+     * @param string[]    $prefixes
      * @param string|null $fileExtension
-     * @param string      $nsSeparator String which would be used when converting FQCN to filename and vice versa. Should not be empty
+     * @param string      $nsSeparator   String which would be used when converting FQCN to filename and vice versa. Should not be empty
      */
     public function __construct(array $prefixes, $fileExtension = null, $nsSeparator = '.')
     {
@@ -64,7 +71,7 @@ class SymfonyFileLocator implements FileLocator
     /**
      * Adds Namespace Prefixes.
      *
-     * @param array $prefixes
+     * @param string[] $prefixes
      *
      * @return void
      */
@@ -77,7 +84,7 @@ class SymfonyFileLocator implements FileLocator
     /**
      * Gets Namespace Prefixes.
      *
-     * @return array
+     * @return string[]
      */
     public function getNamespacePrefixes()
     {
@@ -119,7 +126,7 @@ class SymfonyFileLocator implements FileLocator
     {
         $defaultFileName = str_replace('\\', $this->nsSeparator, $className) . $this->fileExtension;
         foreach ($this->paths as $path) {
-            if ( ! isset($this->prefixes[$path])) {
+            if (! isset($this->prefixes[$path])) {
                 // global namespace class
                 if (is_file($path . DIRECTORY_SEPARATOR . $defaultFileName)) {
                     return true;
@@ -130,7 +137,7 @@ class SymfonyFileLocator implements FileLocator
 
             $prefix = $this->prefixes[$path];
 
-            if (0 !== strpos($className, $prefix . '\\')) {
+            if (strpos($className, $prefix . '\\') !== 0) {
                 continue;
             }
 
@@ -152,7 +159,7 @@ class SymfonyFileLocator implements FileLocator
 
         if ($this->paths) {
             foreach ((array) $this->paths as $path) {
-                if ( ! is_dir($path)) {
+                if (! is_dir($path)) {
                     throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
                 }
 
@@ -164,7 +171,7 @@ class SymfonyFileLocator implements FileLocator
                 foreach ($iterator as $file) {
                     $fileName = $file->getBasename($this->fileExtension);
 
-                    if ($fileName == $file->getBasename() || $fileName == $globalBasename) {
+                    if ($fileName === $file->getBasename() || $fileName === $globalBasename) {
                         continue;
                     }
 
@@ -195,7 +202,7 @@ class SymfonyFileLocator implements FileLocator
     {
         $defaultFileName = str_replace('\\', $this->nsSeparator, $className) . $this->fileExtension;
         foreach ($this->paths as $path) {
-            if ( ! isset($this->prefixes[$path])) {
+            if (! isset($this->prefixes[$path])) {
                 if (is_file($path . DIRECTORY_SEPARATOR . $defaultFileName)) {
                     return $path . DIRECTORY_SEPARATOR . $defaultFileName;
                 }
@@ -205,7 +212,7 @@ class SymfonyFileLocator implements FileLocator
 
             $prefix = $this->prefixes[$path];
 
-            if (0 !== strpos($className, $prefix . '\\')) {
+            if (strpos($className, $prefix . '\\') !== 0) {
                 continue;
             }
 
