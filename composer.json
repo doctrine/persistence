@@ -18,6 +18,7 @@
         "doctrine/common": "^2.9@dev"
     },
     "require-dev": {
+        "phpstan/phpstan": "^0.8",
         "doctrine/coding-standard": "^4.0",
         "phpunit/phpunit": "^7.0"
     },
