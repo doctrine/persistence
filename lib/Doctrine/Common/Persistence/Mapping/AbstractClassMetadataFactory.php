@@ -4,12 +4,14 @@ namespace Doctrine\Common\Persistence\Mapping;
 
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
-use Doctrine\Common\Util\ClassUtils;
+use Doctrine\Common\Persistence\Proxy;
 use ReflectionException;
 use function array_reverse;
 use function array_unshift;
 use function explode;
 use function strpos;
+use function strrpos;
+use function substr;
 
 /**
  * The ClassMetadataFactory is used to create ClassMetadata objects that contain all the
@@ -160,7 +162,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
             $realClassName = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         } else {
-            $realClassName = ClassUtils::getRealClass($className);
+            $realClassName = $this->getRealClass($className);
         }
 
         if (isset($this->loadedMetadata[$realClassName])) {
@@ -393,5 +395,19 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             $this->reflectionService = new RuntimeReflectionService();
         }
         return $this->reflectionService;
+    }
+
+    /**
+     * Gets the real class name of a class name that could be a proxy.
+     */
+    private function getRealClass(string $class) : string
+    {
+        $pos = strrpos($class, '\\' . Proxy::MARKER . '\\');
+
+        if ($pos === false) {
+            return $class;
+        }
+
+        return substr($class, $pos + Proxy::MARKER_LENGTH + 2);
     }
 }
