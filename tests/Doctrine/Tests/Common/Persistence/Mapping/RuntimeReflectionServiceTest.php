@@ -26,12 +26,12 @@ class RuntimeReflectionServiceTest extends TestCase
 
     public function testShortname()
     {
-        self::assertEquals('RuntimeReflectionServiceTest', $this->reflectionService->getClassShortName(__CLASS__));
+        self::assertSame('RuntimeReflectionServiceTest', $this->reflectionService->getClassShortName(__CLASS__));
     }
 
     public function testClassNamespaceName()
     {
-        self::assertEquals('Doctrine\Tests\Common\Persistence\Mapping', $this->reflectionService->getClassNamespace(__CLASS__));
+        self::assertSame('Doctrine\Tests\Common\Persistence\Mapping', $this->reflectionService->getClassNamespace(__CLASS__));
     }
 
     public function testGetParentClasses()

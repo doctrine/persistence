@@ -21,13 +21,13 @@ class StaticReflectionServiceTest extends TestCase
 
     public function testShortname()
     {
-        self::assertEquals('StaticReflectionServiceTest', $this->reflectionService->getClassShortName(__CLASS__));
+        self::assertSame('StaticReflectionServiceTest', $this->reflectionService->getClassShortName(__CLASS__));
     }
 
     public function testClassNamespaceName()
     {
-        self::assertEquals('', $this->reflectionService->getClassNamespace(\stdClass::class));
-        self::assertEquals(__NAMESPACE__, $this->reflectionService->getClassNamespace(__CLASS__));
+        self::assertSame('', $this->reflectionService->getClassNamespace(\stdClass::class));
+        self::assertSame(__NAMESPACE__, $this->reflectionService->getClassNamespace(__CLASS__));
     }
 
     public function testGetParentClasses()

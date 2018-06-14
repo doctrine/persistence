@@ -17,7 +17,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertNull($driver->getGlobalBasename());
 
         $driver->setGlobalBasename('global');
-        self::assertEquals('global', $driver->getGlobalBasename());
+        self::assertSame('global', $driver->getGlobalBasename());
     }
 
     public function testGetElementFromGlobalFile()
@@ -27,7 +27,7 @@ class FileDriverTest extends DoctrineTestCase
 
         $element = $driver->getElement('stdGlobal');
 
-        self::assertEquals('stdGlobal', $element);
+        self::assertSame('stdGlobal', $element);
     }
 
     public function testGetElementFromFile()
@@ -40,7 +40,7 @@ class FileDriverTest extends DoctrineTestCase
 
         $driver = new TestFileDriver($locator);
 
-        self::assertEquals('stdClass', $driver->getElement('stdClass'));
+        self::assertSame('stdClass', $driver->getElement('stdClass'));
     }
 
     public function testGetElementUpdatesClassCache()
@@ -56,10 +56,10 @@ class FileDriverTest extends DoctrineTestCase
         $driver = new TestFileDriver($locator);
 
         // not cached
-        self::assertEquals('stdClass', $driver->getElement('stdClass'));
+        self::assertSame('stdClass', $driver->getElement('stdClass'));
 
         // cached call
-        self::assertEquals('stdClass', $driver->getElement('stdClass'));
+        self::assertSame('stdClass', $driver->getElement('stdClass'));
     }
 
     public function testGetAllClassNamesGlobalBasename()
@@ -69,7 +69,7 @@ class FileDriverTest extends DoctrineTestCase
 
         $classNames = $driver->getAllClassNames();
 
-        self::assertEquals(['stdGlobal', 'stdGlobal2'], $classNames);
+        self::assertSame(['stdGlobal', 'stdGlobal2'], $classNames);
     }
 
     public function testGetAllClassNamesFromMappingFile()
@@ -83,7 +83,7 @@ class FileDriverTest extends DoctrineTestCase
 
         $classNames = $driver->getAllClassNames();
 
-        self::assertEquals(['stdClass'], $classNames);
+        self::assertSame(['stdClass'], $classNames);
     }
 
     public function testGetAllClassNamesBothSources()
@@ -98,7 +98,7 @@ class FileDriverTest extends DoctrineTestCase
 
         $classNames = $driver->getAllClassNames();
 
-        self::assertEquals(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
+        self::assertSame(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
     }
 
     public function testIsNotTransient()

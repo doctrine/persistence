@@ -18,7 +18,7 @@ class AnnotationDriverTest extends TestCase
 
         $classes = $driver->getAllClassNames();
 
-        self::assertEquals([TestClass::class], $classes);
+        self::assertSame([TestClass::class], $classes);
     }
 }
 

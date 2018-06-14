@@ -52,18 +52,18 @@ class PersistentObjectTest extends DoctrineTestCase
 
     public function testGetField()
     {
-        self::assertEquals('beberlei', $this->object->getName());
+        self::assertSame('beberlei', $this->object->getName());
     }
 
     public function testSetField()
     {
         $this->object->setName('test');
-        self::assertEquals('test', $this->object->getName());
+        self::assertSame('test', $this->object->getName());
     }
 
     public function testGetIdentifier()
     {
-        self::assertEquals(1, $this->object->getId());
+        self::assertSame(1, $this->object->getId());
     }
 
     public function testSetIdentifier()
@@ -125,12 +125,12 @@ class PersistentObjectTest extends DoctrineTestCase
         $this->object->addChildren($child);
 
         self::assertSame($this->object, $child->getParent());
-        self::assertEquals(1, count($this->object->getChildren()));
+        self::assertSame(1, count($this->object->getChildren()));
 
         $child = new TestObject();
         $this->object->addChildren($child);
 
-        self::assertEquals(2, count($this->object->getChildren()));
+        self::assertSame(2, count($this->object->getChildren()));
     }
 
     public function testAddInvalidToManyAssociation()
