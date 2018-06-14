@@ -26,6 +26,9 @@
         "doctrine/coding-standard": "^4.0",
         "phpunit/phpunit": "^7.0"
     },
+    "conflict": {
+        "doctrine/common": "<2.9@dev"
+    },
     "autoload": {
         "psr-4": {
             "Doctrine\\Common\\": "lib/Doctrine/Common"
