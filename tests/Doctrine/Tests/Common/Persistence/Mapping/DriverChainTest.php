@@ -74,7 +74,7 @@ class DriverChainTest extends DoctrineTestCase
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\Company');
         $chain->addDriver($driver2, 'Doctrine\Tests\ORM\Mapping');
 
-        self::assertEquals([
+        self::assertSame([
             'Doctrine\Tests\Models\Company\Foo',
             'Doctrine\Tests\ORM\Mapping\Bar',
             'Doctrine\Tests\ORM\Mapping\Baz',
@@ -151,7 +151,7 @@ class DriverChainTest extends DoctrineTestCase
 
         $classNames = $chain->getAllClassNames();
 
-        self::assertEquals(['Doctrine\Tests\Models\Company\Foo', 'Other\Class'], $classNames);
+        self::assertSame(['Doctrine\Tests\Models\Company\Foo', 'Other\Class'], $classNames);
     }
 }
 
