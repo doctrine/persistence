@@ -18,7 +18,7 @@ interface ObjectManager
      * @param string $className The class name of the object to find.
      * @param mixed  $id        The identity of the object to find.
      *
-     * @return object The found object.
+     * @return object|null The found object.
      */
     public function find($className, $id);
 
