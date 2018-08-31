@@ -1,8 +1,14 @@
 {
     "name": "doctrine/persistence",
     "type": "library",
-    "description": "Doctrine Persistence abstractions.",
-    "keywords": ["persistence"],
+    "description": "The Doctrine Persistence project is a set of shared interfaces and functionality that the different Doctrine object mappers share.",
+    "keywords": [
+        "persistence",
+        "object",
+        "mapper",
+        "orm",
+        "odm"
+    ],
     "homepage": "https://doctrine-project.org/projects/persistence.html",
     "license": "MIT",
     "authors": [
