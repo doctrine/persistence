@@ -4,6 +4,7 @@ namespace Doctrine\Tests\Common\Persistence\Mapping;
 
 use Doctrine\Common\Persistence\Mapping\StaticReflectionService;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use function count;
 
 /**
@@ -21,36 +22,36 @@ class StaticReflectionServiceTest extends TestCase
 
     public function testShortname()
     {
-        self::assertSame('StaticReflectionServiceTest', $this->reflectionService->getClassShortName(__CLASS__));
+        self::assertSame('StaticReflectionServiceTest', $this->reflectionService->getClassShortName(self::class));
     }
 
     public function testClassNamespaceName()
     {
-        self::assertSame('', $this->reflectionService->getClassNamespace(\stdClass::class));
-        self::assertSame(__NAMESPACE__, $this->reflectionService->getClassNamespace(__CLASS__));
+        self::assertSame('', $this->reflectionService->getClassNamespace(stdClass::class));
+        self::assertSame(__NAMESPACE__, $this->reflectionService->getClassNamespace(self::class));
     }
 
     public function testGetParentClasses()
     {
-        $classes = $this->reflectionService->getParentClasses(__CLASS__);
-        self::assertTrue(count($classes) === 0, 'The test class ' . __CLASS__ . ' should have no parents according to static reflection.');
+        $classes = $this->reflectionService->getParentClasses(self::class);
+        self::assertTrue(count($classes) === 0, 'The test class ' . self::class . ' should have no parents according to static reflection.');
     }
 
     public function testGetReflectionClass()
     {
-        $class = $this->reflectionService->getClass(__CLASS__);
+        $class = $this->reflectionService->getClass(self::class);
         self::assertNull($class);
     }
 
     public function testGetMethods()
     {
-        self::assertTrue($this->reflectionService->hasPublicMethod(__CLASS__, 'testGetMethods'));
-        self::assertTrue($this->reflectionService->hasPublicMethod(__CLASS__, 'testGetMethods2'));
+        self::assertTrue($this->reflectionService->hasPublicMethod(self::class, 'testGetMethods'));
+        self::assertTrue($this->reflectionService->hasPublicMethod(self::class, 'testGetMethods2'));
     }
 
     public function testGetAccessibleProperty()
     {
-        $reflProp = $this->reflectionService->getAccessibleProperty(__CLASS__, 'reflectionService');
+        $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'reflectionService');
         self::assertNull($reflProp);
     }
 }

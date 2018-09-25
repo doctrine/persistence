@@ -10,6 +10,8 @@ use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\Common\Persistence\Mapping\ReflectionService;
 use Doctrine\Tests\DoctrineTestCase;
+use PHPUnit_Framework_MockObject_MockObject;
+use stdClass;
 
 /**
  * @covers \Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory
@@ -111,7 +113,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     {
         $classMetadata = $this->createMock(ClassMetadata::class);
 
-        $this->cmf->fallbackCallback = function () use ($classMetadata) {
+        $this->cmf->fallbackCallback = static function () use ($classMetadata) {
             return $classMetadata;
         };
 
@@ -122,7 +124,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
     public function testWillFailOnFallbackFailureWithNotLoadedMetadata()
     {
-        $this->cmf->fallbackCallback = function () {
+        $this->cmf->fallbackCallback = static function () {
             return null;
         };
 
@@ -138,18 +140,18 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
      */
     public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances()
     {
-        /** @var Cache|\PHPUnit_Framework_MockObject_MockObject $cacheDriver */
+        /** @var Cache|PHPUnit_Framework_MockObject_MockObject $cacheDriver */
         $cacheDriver = $this->createMock(Cache::class);
 
         $this->cmf->setCacheDriver($cacheDriver);
 
-        $cacheDriver->expects(self::once())->method('fetch')->with('Foo$CLASSMETADATA')->willReturn(new \stdClass());
+        $cacheDriver->expects(self::once())->method('fetch')->with('Foo$CLASSMETADATA')->willReturn(new stdClass());
 
         /** @var ClassMetadata $metadata */
         $metadata = $this->createMock(ClassMetadata::class);
 
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\stdClass|callable $fallbackCallback */
-        $fallbackCallback = $this->getMockBuilder(\stdClass::class)->setMethods(['__invoke'])->getMock();
+        /** @var PHPUnit_Framework_MockObject_MockObject|stdClass|callable $fallbackCallback */
+        $fallbackCallback = $this->getMockBuilder(stdClass::class)->setMethods(['__invoke'])->getMock();
 
         $fallbackCallback->expects(self::any())->method('__invoke')->willReturn($metadata);
 

@@ -3,6 +3,9 @@
 namespace Doctrine\Common\Persistence\Mapping\Driver;
 
 use Doctrine\Common\Persistence\Mapping\MappingException;
+use InvalidArgumentException;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use const DIRECTORY_SEPARATOR;
 use function array_keys;
 use function array_merge;
@@ -62,7 +65,7 @@ class SymfonyFileLocator implements FileLocator
         $this->fileExtension = $fileExtension;
 
         if (empty($nsSeparator)) {
-            throw new \InvalidArgumentException('Namespace separator should not be empty');
+            throw new InvalidArgumentException('Namespace separator should not be empty');
         }
 
         $this->nsSeparator = (string) $nsSeparator;
@@ -163,9 +166,9 @@ class SymfonyFileLocator implements FileLocator
                     throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
                 }
 
-                $iterator = new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($path),
-                    \RecursiveIteratorIterator::LEAVES_ONLY
+                $iterator = new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($path),
+                    RecursiveIteratorIterator::LEAVES_ONLY
                 );
 
                 foreach ($iterator as $file) {
