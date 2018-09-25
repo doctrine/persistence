@@ -13,8 +13,9 @@ use ReflectionException;
 use function call_user_func;
 
 /**
- * @groups DCOM-270
  * @uses Doctrine\Tests\Common\Persistence\TestObject
+ *
+ * @groups DCOM-270
  */
 class ManagerRegistryTest extends DoctrineTestCase
 {

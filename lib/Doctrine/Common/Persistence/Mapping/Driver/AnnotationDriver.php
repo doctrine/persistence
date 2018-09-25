@@ -4,6 +4,12 @@ namespace Doctrine\Common\Persistence\Mapping\Driver;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Persistence\Mapping\MappingException;
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RecursiveRegexIterator;
+use ReflectionClass;
+use RegexIterator;
 use function array_merge;
 use function array_unique;
 use function get_class;
@@ -167,7 +173,7 @@ abstract class AnnotationDriver implements MappingDriver
      */
     public function isTransient($className)
     {
-        $classAnnotations = $this->reader->getClassAnnotations(new \ReflectionClass($className));
+        $classAnnotations = $this->reader->getClassAnnotations(new ReflectionClass($className));
 
         foreach ($classAnnotations as $annot) {
             if (isset($this->entityAnnotationClasses[get_class($annot)])) {
@@ -198,13 +204,13 @@ abstract class AnnotationDriver implements MappingDriver
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
 
-            $iterator = new \RegexIterator(
-                new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
-                    \RecursiveIteratorIterator::LEAVES_ONLY
+            $iterator = new RegexIterator(
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+                    RecursiveIteratorIterator::LEAVES_ONLY
                 ),
                 '/^.+' . preg_quote($this->fileExtension) . '$/i',
-                \RecursiveRegexIterator::GET_MATCH
+                RecursiveRegexIterator::GET_MATCH
             );
 
             foreach ($iterator as $file) {
@@ -232,7 +238,7 @@ abstract class AnnotationDriver implements MappingDriver
         $declared = get_declared_classes();
 
         foreach ($declared as $className) {
-            $rc         = new \ReflectionClass($className);
+            $rc         = new ReflectionClass($className);
             $sourceFile = $rc->getFileName();
             if (! in_array($sourceFile, $includedFiles) || $this->isTransient($className)) {
                 continue;

@@ -9,7 +9,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\PersistentObject;
 use Doctrine\Tests\DoctrineTestCase;
 use InvalidArgumentException;
+use PHPUnit_Framework_MockObject_MockObject;
+use ReflectionClass;
 use RuntimeException;
+use stdClass;
 use function count;
 use function in_array;
 
@@ -21,7 +24,7 @@ class PersistentObjectTest extends DoctrineTestCase
     /** @var TestObjectMetadata */
     private $cm;
 
-    /** @var ObjectManager|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ObjectManager|PHPUnit_Framework_MockObject_MockObject */
     private $om;
 
     /** @var TestObject */
@@ -105,7 +108,7 @@ class PersistentObjectTest extends DoctrineTestCase
 
     public function testSetInvalidToOneAssociation()
     {
-        $parent = new \stdClass();
+        $parent = new stdClass();
 
         $this->expectException(InvalidArgumentException::class);
         $this->object->setParent($parent);
@@ -136,7 +139,7 @@ class PersistentObjectTest extends DoctrineTestCase
     public function testAddInvalidToManyAssociation()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->object->addChildren(new \stdClass());
+        $this->object->addChildren(new stdClass());
     }
 
     public function testNoObjectManagerSet()
@@ -157,7 +160,7 @@ class PersistentObjectTest extends DoctrineTestCase
     public function testAddInvalidCollection()
     {
         $this->expectException(BadMethodCallException::class);
-        $this->object->addAsdf(new \stdClass());
+        $this->object->addAsdf(new stdClass());
     }
 }
 
@@ -211,7 +214,7 @@ class TestObjectMetadata implements ClassMetadata
 
     public function getReflectionClass()
     {
-        return new \ReflectionClass($this->getName());
+        return new ReflectionClass($this->getName());
     }
 
     public function getTypeOfField($fieldName)

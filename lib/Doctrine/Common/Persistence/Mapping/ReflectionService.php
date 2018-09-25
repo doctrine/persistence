@@ -2,6 +2,9 @@
 
 namespace Doctrine\Common\Persistence\Mapping;
 
+use ReflectionClass;
+use ReflectionProperty;
+
 /**
  * Very simple reflection service abstraction.
  *
@@ -15,9 +18,9 @@ interface ReflectionService
      *
      * @param string $class
      *
-     * @throws MappingException
-     *
      * @return string[]
+     *
+     * @throws MappingException
      */
     public function getParentClasses($class);
 
@@ -42,7 +45,7 @@ interface ReflectionService
      *
      * @param string $class
      *
-     * @return \ReflectionClass|null
+     * @return ReflectionClass|null
      */
     public function getClass($class);
 
@@ -52,7 +55,7 @@ interface ReflectionService
      * @param string $class
      * @param string $property
      *
-     * @return \ReflectionProperty|null
+     * @return ReflectionProperty|null
      */
     public function getAccessibleProperty($class, $property);
 

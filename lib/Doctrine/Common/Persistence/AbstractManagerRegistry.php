@@ -2,6 +2,8 @@
 
 namespace Doctrine\Common\Persistence;
 
+use InvalidArgumentException;
+use ReflectionClass;
 use function explode;
 use function sprintf;
 use function strpos;
@@ -89,7 +91,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         }
 
         if (! isset($this->connections[$name])) {
-            throw new \InvalidArgumentException(sprintf('Doctrine %s Connection named "%s" does not exist.', $this->name, $name));
+            throw new InvalidArgumentException(sprintf('Doctrine %s Connection named "%s" does not exist.', $this->name, $name));
         }
 
         return $this->getService($this->connections[$name]);
@@ -135,7 +137,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritdoc}
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function getManager($name = null)
     {
@@ -144,7 +146,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         }
 
         if (! isset($this->managers[$name])) {
-            throw new \InvalidArgumentException(sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name));
+            throw new InvalidArgumentException(sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name));
         }
 
         return $this->getService($this->managers[$name]);
@@ -157,11 +159,11 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     {
         // Check for namespace alias
         if (strpos($class, ':') !== false) {
-            list($namespaceAlias, $simpleClassName) = explode(':', $class, 2);
-            $class                                  = $this->getAliasNamespace($namespaceAlias) . '\\' . $simpleClassName;
+            [$namespaceAlias, $simpleClassName] = explode(':', $class, 2);
+            $class                              = $this->getAliasNamespace($namespaceAlias) . '\\' . $simpleClassName;
         }
 
-        $proxyClass = new \ReflectionClass($class);
+        $proxyClass = new ReflectionClass($class);
 
         if ($proxyClass->implementsInterface($this->proxyInterfaceName)) {
             $parentClass = $proxyClass->getParentClass();
@@ -221,7 +223,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         }
 
         if (! isset($this->managers[$name])) {
-            throw new \InvalidArgumentException(sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name));
+            throw new InvalidArgumentException(sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name));
         }
 
         // force the creation of a new document manager

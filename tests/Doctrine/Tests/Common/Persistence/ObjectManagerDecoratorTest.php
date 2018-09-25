@@ -5,6 +5,8 @@ namespace Doctrine\Tests\Common\Persistence;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectManagerDecorator;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
+use ReflectionClass;
 use function array_fill;
 use function call_user_func_array;
 use function in_array;
@@ -19,7 +21,7 @@ class NullObjectManagerDecorator extends ObjectManagerDecorator
 
 class ObjectManagerDecoratorTest extends TestCase
 {
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ObjectManager */
+    /** @var PHPUnit_Framework_MockObject_MockObject|ObjectManager */
     private $wrapped;
 
     /** @var NullObjectManagerDecorator */
@@ -33,7 +35,7 @@ class ObjectManagerDecoratorTest extends TestCase
 
     public function getMethodParameters()
     {
-        $class       = new \ReflectionClass(ObjectManager::class);
+        $class       = new ReflectionClass(ObjectManager::class);
         $voidMethods = [
             'persist',
             'remove',
@@ -63,11 +65,11 @@ class ObjectManagerDecoratorTest extends TestCase
     }
 
     /**
-     * @dataProvider getMethodParameters
-     *
      * @param string  $method
      * @param mixed[] $parameters
      * @param bool    $isVoidMethod
+     *
+     * @dataProvider getMethodParameters
      */
     public function testAllMethodCallsAreDelegatedToTheWrappedInstance($method, array $parameters, $isVoidMethod)
     {

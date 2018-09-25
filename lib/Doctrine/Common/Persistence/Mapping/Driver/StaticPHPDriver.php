@@ -4,6 +4,9 @@ namespace Doctrine\Common\Persistence\Mapping\Driver;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\MappingException;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use ReflectionClass;
 use function array_merge;
 use function array_unique;
 use function get_declared_classes;
@@ -62,6 +65,7 @@ class StaticPHPDriver implements MappingDriver
 
     /**
      * {@inheritDoc}
+     *
      * @todo Same code exists in AnnotationDriver, should we re-use it somehow or not worry about it?
      */
     public function getAllClassNames()
@@ -82,9 +86,9 @@ class StaticPHPDriver implements MappingDriver
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
 
-            $iterator = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($path),
-                \RecursiveIteratorIterator::LEAVES_ONLY
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($path),
+                RecursiveIteratorIterator::LEAVES_ONLY
             );
 
             foreach ($iterator as $file) {
@@ -101,7 +105,7 @@ class StaticPHPDriver implements MappingDriver
         $declared = get_declared_classes();
 
         foreach ($declared as $className) {
-            $rc         = new \ReflectionClass($className);
+            $rc         = new ReflectionClass($className);
             $sourceFile = $rc->getFileName();
             if (! in_array($sourceFile, $includedFiles) || $this->isTransient($className)) {
                 continue;

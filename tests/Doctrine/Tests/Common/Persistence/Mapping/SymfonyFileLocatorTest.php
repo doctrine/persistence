@@ -95,12 +95,12 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
     }
 
     /**
-     * @dataProvider customNamespaceSeparatorProvider
-     *
      * @param string $separator Directory separator to test against
      * @param string $dir       Path to load mapping data from
      *
      * @throws MappingException
+     *
+     * @dataProvider customNamespaceSeparatorProvider
      */
     public function testGetClassNamesWithCustomNsSeparator($separator, $dir)
     {
@@ -138,12 +138,14 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         ];
     }
 
-    /** @dataProvider customNamespaceLookupQueryProvider
+    /**
      * @param string   $separator Directory separator to test against
      * @param string   $dir       Path to load mapping data from
      * @param string[] $files     Files to lookup classnames
      *
      * @throws MappingException
+     *
+     * @dataProvider customNamespaceLookupQueryProvider
      */
     public function testFindMappingFileWithCustomNsSeparator($separator, $dir, $files)
     {
