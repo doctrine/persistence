@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\Common\Persistence\Mapping\ReflectionService;
 use Doctrine\Tests\DoctrineTestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 use stdClass;
 
 /**
@@ -140,7 +140,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
      */
     public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances()
     {
-        /** @var Cache|PHPUnit_Framework_MockObject_MockObject $cacheDriver */
+        /** @var Cache|MockObject $cacheDriver */
         $cacheDriver = $this->createMock(Cache::class);
 
         $this->cmf->setCacheDriver($cacheDriver);
@@ -150,7 +150,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         /** @var ClassMetadata $metadata */
         $metadata = $this->createMock(ClassMetadata::class);
 
-        /** @var PHPUnit_Framework_MockObject_MockObject|stdClass|callable $fallbackCallback */
+        /** @var MockObject|stdClass|callable $fallbackCallback */
         $fallbackCallback = $this->getMockBuilder(stdClass::class)->setMethods(['__invoke'])->getMock();
 
         $fallbackCallback->expects(self::any())->method('__invoke')->willReturn($metadata);
@@ -158,6 +158,35 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf->fallbackCallback = $fallbackCallback;
 
         self::assertSame($metadata, $this->cmf->getMetadataFor('Foo'));
+    }
+
+    public function testFallbackMetadataShouldBeCached() : void
+    {
+        /** @var Cache|MockObject $cacheDriver */
+        $cacheDriver = $this->createMock(Cache::class);
+        $cacheDriver->expects(self::once())->method('save');
+
+        $this->cmf->setCacheDriver($cacheDriver);
+
+        $classMetadata = $this->createMock(ClassMetadata::class);
+
+        $this->cmf->fallbackCallback = static function () use ($classMetadata) {
+            return $classMetadata;
+        };
+
+        $this->cmf->getMetadataFor('Foo');
+    }
+
+    public function testSetMetadataForShouldUpdateCache() : void
+    {
+        /** @var Cache|MockObject $cacheDriver */
+        $cacheDriver = $this->createMock(Cache::class);
+        $cacheDriver->expects(self::once())->method('save');
+
+        $this->cmf->setCacheDriver($cacheDriver);
+
+        $classMetadata = $this->createMock(ClassMetadata::class);
+        $this->cmf->setMetadataFor('Foo', $classMetadata);
     }
 }
 
