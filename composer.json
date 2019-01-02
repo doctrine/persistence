@@ -37,7 +37,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Doctrine\\Common\\": "lib/Doctrine/Common"
+            "Doctrine\\": "lib/Doctrine"
         }
     },
     "autoload-dev": {
