@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Common;
+namespace Doctrine\Persistence;
 
 /**
  * Contract for classes that are potential listeners of a {@see NotifyPropertyChanged}

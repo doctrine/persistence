@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Common;
+namespace Doctrine\Persistence;
 
 /**
  * Interface for classes that notify event listeners of changes to their managed properties.
