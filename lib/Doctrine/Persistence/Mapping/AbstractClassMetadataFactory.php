@@ -392,12 +392,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
     /**
      * Gets the real class name of a class name that could be a proxy or alias.
-     *
-     * @param string $className
-     *
-     * @return string
      */
-    private function getRealClassName($className)
+    protected function getRealClassName(string $className) : string
     {
         if (isset($this->aliasesMap[$className])) {
             return $this->aliasesMap[$className];
