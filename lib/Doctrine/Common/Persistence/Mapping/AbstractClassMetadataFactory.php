@@ -35,6 +35,9 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /** @var ClassMetadata[] */
     private $loadedMetadata = [];
 
+    /** @var string[] */
+    protected $aliasesMap = [];
+
     /** @var bool */
     protected $initialized = false;
 
@@ -152,58 +155,35 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function getMetadataFor($className)
     {
+        $className = $this->getRealClassName($className);
+
         if (isset($this->loadedMetadata[$className])) {
             return $this->loadedMetadata[$className];
-        }
-
-        // Check for namespace alias
-        if (strpos($className, ':') !== false) {
-            [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
-
-            $realClassName = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
-        } else {
-            $realClassName = $this->getRealClass($className);
-        }
-
-        if (isset($this->loadedMetadata[$realClassName])) {
-            // We do not have the alias name in the map, include it
-            return $this->loadedMetadata[$className] = $this->loadedMetadata[$realClassName];
         }
 
         $loadingException = null;
 
         try {
             if ($this->cacheDriver) {
-                $cached = $this->cacheDriver->fetch($realClassName . $this->cacheSalt);
+                $cached = $this->cacheDriver->fetch($className . $this->cacheSalt);
                 if ($cached instanceof ClassMetadata) {
-                    $this->loadedMetadata[$realClassName] = $cached;
+                    $this->loadedMetadata[$className] = $cached;
 
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
-                    foreach ($this->loadMetadata($realClassName) as $loadedClassName) {
-                        $this->cacheDriver->save(
-                            $loadedClassName . $this->cacheSalt,
-                            $this->loadedMetadata[$loadedClassName],
-                            null
-                        );
-                    }
+                    $this->loadMetadata($className);
                 }
             } else {
-                $this->loadMetadata($realClassName);
+                $this->loadMetadata($className);
             }
         } catch (MappingException $loadingException) {
-            $fallbackMetadataResponse = $this->onNotFoundMetadata($realClassName);
+            $fallbackMetadataResponse = $this->onNotFoundMetadata($className);
 
             if (! $fallbackMetadataResponse) {
                 throw $loadingException;
             }
 
-            $this->loadedMetadata[$realClassName] = $fallbackMetadataResponse;
-        }
-
-        if ($className !== $realClassName) {
-            // We do not have the alias name in the map, include it
-            $this->loadedMetadata[$className] = $this->loadedMetadata[$realClassName];
+            $this->setMetadataFor($className, $fallbackMetadataResponse);
         }
 
         return $this->loadedMetadata[$className];
@@ -218,6 +198,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function hasMetadataFor($className)
     {
+        $className = $this->getRealClassName($className);
+
         return isset($this->loadedMetadata[$className]);
     }
 
@@ -233,7 +215,18 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function setMetadataFor($className, $class)
     {
+        $className                        = $this->getRealClassName($className);
         $this->loadedMetadata[$className] = $class;
+
+        if ($this->cacheDriver === null) {
+            return;
+        }
+
+        $this->cacheDriver->save(
+            $className . $this->cacheSalt,
+            $this->loadedMetadata[$className],
+            null
+        );
     }
 
     /**
@@ -303,8 +296,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             $this->initializeReflection($class, $reflService);
 
             $this->doLoadMetadata($class, $parent, $rootEntityFound, $visited);
-
-            $this->loadedMetadata[$className] = $class;
+            $this->setMetadataFor($className, $class);
 
             $parent = $class;
 
@@ -399,16 +391,28 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     }
 
     /**
-     * Gets the real class name of a class name that could be a proxy.
+     * Gets the real class name of a class name that could be a proxy or alias.
      */
-    private function getRealClass(string $class) : string
+    protected function getRealClassName(string $className) : string
     {
-        $pos = strrpos($class, '\\' . Proxy::MARKER . '\\');
-
-        if ($pos === false) {
-            return $class;
+        if (isset($this->aliasesMap[$className])) {
+            return $this->aliasesMap[$className];
         }
 
-        return substr($class, $pos + Proxy::MARKER_LENGTH + 2);
+        switch (true) {
+            case strpos($className, ':') !== false: // Check for namespace alias
+                [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
+                $realClassName                      = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
+                break;
+            case $pos = strrpos($className, '\\' . Proxy::MARKER . '\\') !== false: // Check for namespace proxy
+                $realClassName = substr($className, $pos + Proxy::MARKER_LENGTH + 2);
+                break;
+            default:
+                $realClassName = $className;
+        }
+
+        $this->aliasesMap[$className] = $realClassName;
+
+        return $realClassName;
     }
 }
