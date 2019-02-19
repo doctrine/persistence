@@ -224,8 +224,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
         $this->cacheDriver->save(
             $className . $this->cacheSalt,
-            $this->loadedMetadata[$className],
-            null
+            $this->loadedMetadata[$className]
         );
     }
 
