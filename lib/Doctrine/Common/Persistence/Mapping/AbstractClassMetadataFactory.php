@@ -402,10 +402,11 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
         if (strpos($className, ':') !== false) {
             [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
-            $realClassName = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
+            $realClassName                      = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         }
 
-        if ($pos = strrpos($className, '\\' . Proxy::MARKER . '\\') !== false) {
+        $pos = strrpos($className, '\\' . Proxy::MARKER . '\\');
+        if ($pos !== false) {
             $realClassName = substr($className, $pos + Proxy::MARKER_LENGTH + 2);
         }
 
