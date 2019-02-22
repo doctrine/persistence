@@ -36,7 +36,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     private $loadedMetadata = [];
 
     /** @var string[] */
-    protected $aliasesMap = [];
+    private $aliasesMap = [];
 
     /** @var bool */
     protected $initialized = false;
@@ -398,16 +398,15 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             return $this->aliasesMap[$className];
         }
 
-        switch (true) {
-            case strpos($className, ':') !== false: // Check for namespace alias
-                [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
-                $realClassName                      = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
-                break;
-            case $pos = strrpos($className, '\\' . Proxy::MARKER . '\\') !== false: // Check for namespace proxy
-                $realClassName = substr($className, $pos + Proxy::MARKER_LENGTH + 2);
-                break;
-            default:
-                $realClassName = $className;
+        $realClassName = $className;
+
+        if (strpos($className, ':') !== false) {
+            [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
+            $realClassName = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
+        }
+
+        if ($pos = strrpos($className, '\\' . Proxy::MARKER . '\\') !== false) {
+            $realClassName = substr($className, $pos + Proxy::MARKER_LENGTH + 2);
         }
 
         $this->aliasesMap[$className] = $realClassName;
