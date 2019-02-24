@@ -175,10 +175,10 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
                     $this->loadedMetadata[$realClassName] = $cached;
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
-                    $this->loadMetadata($className);
+                    $this->loadMetadata($realClassName);
                 }
             } else {
-                $this->loadMetadata($className);
+                $this->loadMetadata($realClassName);
             }
         } catch (MappingException $loadingException) {
             $fallbackMetadataResponse = $this->onNotFoundMetadata($className);
@@ -188,6 +188,10 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             }
 
             $this->setMetadataFor($className, $fallbackMetadataResponse);
+        }
+
+        if ($className !== $realClassName) {
+            $this->setMetadataFor($className, $this->loadedMetadata[$realClassName]);
         }
 
         return $this->loadedMetadata[$className];
