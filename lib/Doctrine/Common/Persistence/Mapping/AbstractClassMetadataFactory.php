@@ -155,20 +155,24 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function getMetadataFor($className)
     {
-        $className = $this->getRealClassName($className);
-
         if (isset($this->loadedMetadata[$className])) {
             return $this->loadedMetadata[$className];
+        }
+
+        $realClassName = $this->getRealClassName($className);
+
+        if (isset($this->loadedMetadata[$realClassName])) {
+            // We do not have the alias name in the map, include it
+            return $this->loadedMetadata[$className] = $this->loadedMetadata[$realClassName];
         }
 
         $loadingException = null;
 
         try {
             if ($this->cacheDriver) {
-                $cached = $this->cacheDriver->fetch($className . $this->cacheSalt);
+                $cached = $this->cacheDriver->fetch($realClassName . $this->cacheSalt);
                 if ($cached instanceof ClassMetadata) {
-                    $this->loadedMetadata[$className] = $cached;
-
+                    $this->loadedMetadata[$realClassName] = $cached;
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
                     $this->loadMetadata($className);
@@ -198,8 +202,6 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function hasMetadataFor($className)
     {
-        $className = $this->getRealClassName($className);
-
         return isset($this->loadedMetadata[$className]);
     }
 
@@ -215,7 +217,6 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function setMetadataFor($className, $class)
     {
-        $className                        = $this->getRealClassName($className);
         $this->loadedMetadata[$className] = $class;
 
         if ($this->cacheDriver === null) {
