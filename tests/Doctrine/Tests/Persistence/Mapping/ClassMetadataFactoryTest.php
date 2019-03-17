@@ -203,6 +203,7 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     {
         return $this->driver;
     }
+
     protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService)
     {
     }
