@@ -75,12 +75,14 @@ class MappingDriverChain implements MappingDriver
         foreach ($this->drivers as $namespace => $driver) {
             if (strpos($className, $namespace) === 0) {
                 $driver->loadMetadataForClass($className, $metadata);
+
                 return;
             }
         }
 
         if ($this->defaultDriver !== null) {
             $this->defaultDriver->loadMetadataForClass($className, $metadata);
+
             return;
         }
 
