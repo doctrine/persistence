@@ -29,7 +29,7 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^0.8",
-        "doctrine/coding-standard": "^5.0",
+        "doctrine/coding-standard": "^6.0",
         "phpunit/phpunit": "^7.0"
     },
     "conflict": {

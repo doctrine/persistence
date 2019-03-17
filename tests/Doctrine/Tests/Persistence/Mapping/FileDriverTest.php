@@ -142,6 +142,7 @@ class FileDriverTest extends DoctrineTestCase
         $locator = $this->createMock(FileLocator::class);
         $locator->expects($this->any())->method('getFileExtension')->will($this->returnValue('.yml'));
         $locator->expects($this->any())->method('getPaths')->will($this->returnValue([__DIR__ . '/_files']));
+
         return $locator;
     }
 }
@@ -153,6 +154,7 @@ class TestFileDriver extends FileDriver
         if (strpos($file, 'global.yml') !== false) {
             return ['stdGlobal' => 'stdGlobal', 'stdGlobal2' => 'stdGlobal2'];
         }
+
         return ['stdClass' => 'stdClass'];
     }
 

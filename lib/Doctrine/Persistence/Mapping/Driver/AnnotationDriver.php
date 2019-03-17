@@ -180,6 +180,7 @@ abstract class AnnotationDriver implements MappingDriver
                 return false;
             }
         }
+
         return true;
     }
 

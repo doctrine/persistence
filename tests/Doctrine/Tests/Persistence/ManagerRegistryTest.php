@@ -81,7 +81,8 @@ class ManagerRegistryTest extends DoctrineTestCase
     private function getManagerFactory()
     {
         return function () {
-            $mock     = $this->createMock(ObjectManager::class);
+            $mock = $this->createMock(ObjectManager::class);
+
             $driver   = $this->createMock(MappingDriver::class);
             $metadata = $this->createMock(ClassMetadata::class);
             $mock->method('getMetadataFactory')->willReturn(new TestClassMetadataFactory($driver, $metadata));
