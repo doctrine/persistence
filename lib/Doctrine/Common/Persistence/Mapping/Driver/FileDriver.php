@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\MappingException;
 use function array_keys;
 use function array_merge;
+use function array_unique;
 use function is_file;
 use function str_replace;
 
@@ -126,10 +127,10 @@ abstract class FileDriver implements MappingDriver
             return (array) $this->locator->getAllClassNames($this->globalBasename);
         }
 
-        return array_merge(
+        return array_unique(array_merge(
             array_keys($this->classCache),
             (array) $this->locator->getAllClassNames($this->globalBasename)
-        );
+        ));
     }
 
     /**
