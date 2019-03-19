@@ -101,6 +101,22 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
     }
 
+    public function testGetAllClassNamesBothSourcesNoDupes() : void
+    {
+        $locator = $this->newLocator();
+        $locator->expects($this->once())
+                ->method('getAllClassNames')
+                ->with($this->equalTo('global'))
+                ->willReturn(['stdClass']);
+        $driver = new TestFileDriver($locator);
+        $driver->setGlobalBasename('global');
+
+        $driver->getElement('stdClass');
+        $classNames = $driver->getAllClassNames();
+
+        self::assertSame(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
+    }
+
     public function testIsNotTransient()
     {
         $locator = $this->newLocator();
