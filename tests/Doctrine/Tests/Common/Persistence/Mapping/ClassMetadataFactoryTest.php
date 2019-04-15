@@ -4,11 +4,9 @@ namespace Doctrine\Tests\Common\Persistence\Mapping;
 
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache;
-use Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Common\Persistence\Mapping\MappingException;
-use Doctrine\Common\Persistence\Mapping\ReflectionService;
 use Doctrine\Tests\DoctrineTestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use stdClass;
@@ -158,76 +156,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf->fallbackCallback = $fallbackCallback;
 
         self::assertSame($metadata, $this->cmf->getMetadataFor('Foo'));
-    }
-}
-
-class TestClassMetadataFactory extends AbstractClassMetadataFactory
-{
-    /** @var MappingDriver */
-    public $driver;
-
-    /** @var ClassMetadata|null */
-    public $metadata;
-
-    /** @var callable|null */
-    public $fallbackCallback;
-
-    public function __construct($driver, $metadata)
-    {
-        $this->driver   = $driver;
-        $this->metadata = $metadata;
-    }
-
-    /**
-     * @param string[] $nonSuperclassParents
-     */
-    protected function doLoadMetadata($class, $parent, $rootEntityFound, array $nonSuperclassParents)
-    {
-    }
-
-    protected function getFqcnFromAlias($namespaceAlias, $simpleClassName)
-    {
-        return __NAMESPACE__ . '\\' . $simpleClassName;
-    }
-
-    protected function initialize()
-    {
-    }
-
-    protected function newClassMetadataInstance($className)
-    {
-        return $this->metadata;
-    }
-
-    protected function getDriver()
-    {
-        return $this->driver;
-    }
-    protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService)
-    {
-    }
-
-    protected function initializeReflection(ClassMetadata $class, ReflectionService $reflService)
-    {
-    }
-
-    protected function isEntity(ClassMetadata $class)
-    {
-        return true;
-    }
-
-    protected function onNotFoundMetadata($className)
-    {
-        if (! $this->fallbackCallback) {
-            return null;
-        }
-
-        return ($this->fallbackCallback)();
-    }
-
-    public function isTransient($class)
-    {
-        return true;
     }
 }
 
