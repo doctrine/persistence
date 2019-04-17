@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Mapping;
 
 use Doctrine\Common\Reflection\RuntimePublicReflectionProperty;
@@ -18,7 +20,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getParentClasses($class)
+    public function getParentClasses(string $class) : array
     {
         if (! class_exists($class)) {
             throw MappingException::nonExistingClass($class);
@@ -30,7 +32,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClassShortName($class)
+    public function getClassShortName(string $class) : string
     {
         $reflectionClass = new ReflectionClass($class);
 
@@ -40,7 +42,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClassNamespace($class)
+    public function getClassNamespace(string $class) : string
     {
         $reflectionClass = new ReflectionClass($class);
 
@@ -50,7 +52,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClass($class)
+    public function getClass(string $class) : ?ReflectionClass
     {
         return new ReflectionClass($class);
     }
@@ -58,7 +60,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getAccessibleProperty($class, $property)
+    public function getAccessibleProperty(string $class, string $property) : ?ReflectionProperty
     {
         $reflectionProperty = new ReflectionProperty($class, $property);
 
@@ -74,7 +76,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function hasPublicMethod($class, $method)
+    public function hasPublicMethod(string $class, string $method) : bool
     {
         try {
             $reflectionMethod = new ReflectionMethod($class, $method);

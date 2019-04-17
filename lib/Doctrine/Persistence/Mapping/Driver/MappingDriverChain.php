@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -26,32 +28,24 @@ class MappingDriverChain implements MappingDriver
 
     /**
      * Gets the default driver.
-     *
-     * @return MappingDriver|null
      */
-    public function getDefaultDriver()
+    public function getDefaultDriver() : ?MappingDriver
     {
         return $this->defaultDriver;
     }
 
     /**
      * Set the default driver.
-     *
-     * @return void
      */
-    public function setDefaultDriver(MappingDriver $driver)
+    public function setDefaultDriver(MappingDriver $driver) : void
     {
         $this->defaultDriver = $driver;
     }
 
     /**
      * Adds a nested driver.
-     *
-     * @param string $namespace
-     *
-     * @return void
      */
-    public function addDriver(MappingDriver $nestedDriver, $namespace)
+    public function addDriver(MappingDriver $nestedDriver, string $namespace) : void
     {
         $this->drivers[$namespace] = $nestedDriver;
     }
@@ -61,7 +55,7 @@ class MappingDriverChain implements MappingDriver
      *
      * @return MappingDriver[] $drivers
      */
-    public function getDrivers()
+    public function getDrivers() : array
     {
         return $this->drivers;
     }
@@ -69,7 +63,7 @@ class MappingDriverChain implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function loadMetadataForClass($className, ClassMetadata $metadata)
+    public function loadMetadataForClass(string $className, ClassMetadata $metadata) : void
     {
         /** @var MappingDriver $driver */
         foreach ($this->drivers as $namespace => $driver) {
@@ -92,7 +86,7 @@ class MappingDriverChain implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function getAllClassNames()
+    public function getAllClassNames() : array
     {
         $classNames    = [];
         $driverClasses = [];
@@ -126,7 +120,7 @@ class MappingDriverChain implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function isTransient($className)
+    public function isTransient(string $className) : bool
     {
         /** @var MappingDriver $driver */
         foreach ($this->drivers as $namespace => $driver) {

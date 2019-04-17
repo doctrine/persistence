@@ -1,86 +1,191 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Persistence;
 
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManagerDecorator;
+use Doctrine\Persistence\ObjectRepository;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
-use ReflectionClass;
-use function array_fill;
-use function call_user_func_array;
-use function in_array;
-
-class NullObjectManagerDecorator extends ObjectManagerDecorator
-{
-    public function __construct(ObjectManager $wrapped)
-    {
-        $this->wrapped = $wrapped;
-    }
-}
 
 class ObjectManagerDecoratorTest extends TestCase
 {
-    /** @var PHPUnit_Framework_MockObject_MockObject|ObjectManager */
+    /** @var ObjectManager|MockObject */
     private $wrapped;
 
     /** @var NullObjectManagerDecorator */
     private $decorated;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->wrapped   = $this->createMock(ObjectManager::class);
         $this->decorated = new NullObjectManagerDecorator($this->wrapped);
     }
 
-    public function getMethodParameters()
+    public function testFind() : void
     {
-        $class       = new ReflectionClass(ObjectManager::class);
-        $voidMethods = [
-            'persist',
-            'remove',
-            'clear',
-            'detach',
-            'refresh',
-            'flush',
-            'initializeObject',
-        ];
+        $object = new TestObject();
 
-        $methods = [];
-        foreach ($class->getMethods() as $method) {
-            $isVoidMethod = in_array($method->getName(), $voidMethods, true);
-            if ($method->getNumberOfRequiredParameters() === 0) {
-                $methods[] = [$method->getName(), [], $isVoidMethod];
-            } elseif ($method->getNumberOfRequiredParameters() > 0) {
-                $methods[] = [$method->getName(), array_fill(0, $method->getNumberOfRequiredParameters(), 'req') ?: [], $isVoidMethod];
-            }
-            if ($method->getNumberOfParameters() === $method->getNumberOfRequiredParameters()) {
-                continue;
-            }
+        $this->wrapped->expects(self::once())
+            ->method('find')
+            ->with(TestObject::class, 1)
+            ->willReturn($object);
 
-            $methods[] = [$method->getName(), array_fill(0, $method->getNumberOfParameters(), 'all') ?: [], $isVoidMethod];
-        }
-
-        return $methods;
+        self::assertSame($object, $this->decorated->find(TestObject::class, 1));
     }
 
-    /**
-     * @param string  $method
-     * @param mixed[] $parameters
-     * @param bool    $isVoidMethod
-     *
-     * @dataProvider getMethodParameters
-     */
-    public function testAllMethodCallsAreDelegatedToTheWrappedInstance($method, array $parameters, $isVoidMethod)
+    public function testPersist() : void
     {
-        $returnedValue = $isVoidMethod ? null : 'INNER VALUE FROM ' . $method;
-        $stub          = $this->wrapped
-            ->expects($this->once())
-            ->method($method)
-            ->will($this->returnValue($returnedValue));
+        $object = new TestObject();
 
-        call_user_func_array([$stub, 'with'], $parameters);
+        $this->wrapped->expects(self::once())
+            ->method('persist')
+            ->with($object);
 
-        self::assertSame($returnedValue, call_user_func_array([$this->decorated, $method], $parameters));
+        $this->decorated->persist($object);
+    }
+
+    public function testRemove() : void
+    {
+        $object = new TestObject();
+
+        $this->wrapped->expects(self::once())
+            ->method('remove')
+            ->with($object);
+
+        $this->decorated->remove($object);
+    }
+
+    public function testMerge() : void
+    {
+        $object1 = new TestObject();
+        $object2 = new TestObject();
+
+        $this->wrapped->expects(self::once())
+            ->method('merge')
+            ->with($object1)
+            ->willReturn($object2);
+
+        self::assertSame($object2, $this->decorated->merge($object1));
+    }
+
+    public function testClearWithNoArgument() : void
+    {
+        $this->wrapped->expects(self::once())
+            ->method('clear');
+
+        $this->decorated->clear();
+    }
+
+    public function testClearWithArgument() : void
+    {
+        $this->wrapped->expects(self::once())
+            ->method('clear')
+            ->with(TestObject::class);
+
+        $this->decorated->clear(TestObject::class);
+    }
+
+    public function testDetach() : void
+    {
+        $object = new TestObject();
+
+        $this->wrapped->expects(self::once())
+            ->method('detach')
+            ->with($object);
+
+        $this->decorated->detach($object);
+    }
+
+    public function testRefresh() : void
+    {
+        $object = new TestObject();
+
+        $this->wrapped->expects(self::once())
+            ->method('refresh')
+            ->with($object);
+
+        $this->decorated->refresh($object);
+    }
+
+    public function testFlush() : void
+    {
+        $this->wrapped->expects(self::once())
+            ->method('flush');
+
+        $this->decorated->flush();
+    }
+
+    public function testGetRepository() : void
+    {
+        $repository = $this->createMock(ObjectRepository::class);
+
+        $this->wrapped->expects(self::once())
+            ->method('getRepository')
+            ->with(TestObject::class)
+            ->willReturn($repository);
+
+        self::assertSame($repository, $this->decorated->getRepository(TestObject::class));
+    }
+
+    public function testGetClassMetadata() : void
+    {
+        $classMetadata = $this->createMock(ClassMetadata::class);
+
+        $this->wrapped->expects(self::once())
+            ->method('getClassMetadata')
+            ->with(TestObject::class)
+            ->willReturn($classMetadata);
+
+        self::assertSame($classMetadata, $this->decorated->getClassMetadata(TestObject::class));
+    }
+
+    public function testGetClassMetadataFactory() : void
+    {
+        $classMetadataFactory = $this->createMock(ClassMetadataFactory::class);
+
+        $this->wrapped->expects(self::once())
+            ->method('getMetadataFactory')
+            ->willReturn($classMetadataFactory);
+
+        self::assertSame($classMetadataFactory, $this->decorated->getMetadataFactory());
+    }
+
+    public function testInitializeObject() : void
+    {
+        $object = new TestObject();
+
+        $this->wrapped->expects(self::once())
+            ->method('initializeObject')
+            ->with($object);
+
+        $this->decorated->initializeObject($object);
+    }
+
+    public function testContains() : void
+    {
+        $object = new TestObject();
+
+        $this->wrapped->expects(self::once())
+            ->method('contains')
+            ->with($object)
+            ->willReturn(true);
+
+        self::assertTrue($this->decorated->contains($object));
+    }
+}
+
+class NullObjectManagerDecorator extends ObjectManagerDecorator
+{
+    /**
+     * @param ObjectManager|MockObject $wrapped
+     */
+    public function __construct(ObjectManager $wrapped)
+    {
+        $this->wrapped = $wrapped;
     }
 }

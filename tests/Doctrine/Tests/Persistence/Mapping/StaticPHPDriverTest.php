@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
 use Doctrine\Tests\DoctrineTestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class StaticPHPDriverTest extends DoctrineTestCase
 {
-    public function testLoadMetadata()
+    public function testLoadMetadata() : void
     {
-        /** @var ClassMetadata|PHPUnit_Framework_MockObject_MockObject $metadata */
+        /** @var ClassMetadata|MockObject $metadata */
         $metadata = $this->createMock(ClassMetadata::class);
-        $metadata->expects($this->once())->method('getFieldNames');
+        $metadata->expects(self::once())->method('getFieldNames');
 
         $driver = new StaticPHPDriver([__DIR__]);
         $driver->loadMetadataForClass(TestEntity::class, $metadata);
     }
 
-    public function testGetAllClassNames()
+    public function testGetAllClassNames() : void
     {
         $driver     = new StaticPHPDriver([__DIR__]);
         $classNames = $driver->getAllClassNames();
@@ -30,7 +32,7 @@ class StaticPHPDriverTest extends DoctrineTestCase
 
 class TestEntity
 {
-    public static function loadMetadata($metadata)
+    public static function loadMetadata(ClassMetadata $metadata) : void
     {
         $metadata->getFieldNames();
     }

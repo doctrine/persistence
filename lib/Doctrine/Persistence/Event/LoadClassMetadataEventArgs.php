@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Event;
 
 use Doctrine\Common\EventArgs;
@@ -25,20 +27,16 @@ class LoadClassMetadataEventArgs extends EventArgs
 
     /**
      * Retrieves the associated ClassMetadata.
-     *
-     * @return ClassMetadata
      */
-    public function getClassMetadata()
+    public function getClassMetadata() : ClassMetadata
     {
         return $this->classMetadata;
     }
 
     /**
      * Retrieves the associated ObjectManager.
-     *
-     * @return ObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager() : ObjectManager
     {
         return $this->objectManager;
     }

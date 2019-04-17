@@ -1,7 +1,23 @@
 parameters:
+    level: 7
+
+    paths:
+        - lib
+        - tests
+
     autoload_files:
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/ObjectManagerDecoratorTest.php
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/ClassMetadataFactoryTest.php
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/annotation/TestClass.php
+
     excludes_analyse:
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
+
+    ignoreErrors:
+        # looks like a bug in phpstan since method_exists first argument accepts a string
+        - '#Call to function method_exists\(\) with string and (.*) will always evaluate to false#'
+
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon

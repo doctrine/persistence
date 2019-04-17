@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Persistence;
 
 use Doctrine\Persistence\AbstractManagerRegistry;
@@ -28,7 +30,7 @@ class ManagerRegistryTest extends DoctrineTestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->mr = new TestManagerRegistry(
             'ORM',
@@ -41,7 +43,7 @@ class ManagerRegistryTest extends DoctrineTestCase
         );
     }
 
-    public function testGetManagerForClass()
+    public function testGetManagerForClass() : void
     {
         self::assertInstanceOf(
             ObjectManager::class,
@@ -49,12 +51,12 @@ class ManagerRegistryTest extends DoctrineTestCase
         );
     }
 
-    public function testGetManagerForProxyInterface()
+    public function testGetManagerForProxyInterface() : void
     {
         self::assertNull($this->mr->getManagerForClass(ObjectManagerAware::class));
     }
 
-    public function testGetManagerForInvalidClass()
+    public function testGetManagerForInvalidClass() : void
     {
         $this->expectException(ReflectionException::class);
         $this->expectExceptionMessage('Class Doctrine\Tests\Persistence\TestObjectInexistent does not exist');
@@ -62,7 +64,7 @@ class ManagerRegistryTest extends DoctrineTestCase
         $this->mr->getManagerForClass('prefix:TestObjectInexistent');
     }
 
-    public function testGetManagerForAliasedClass()
+    public function testGetManagerForAliasedClass() : void
     {
         self::assertInstanceOf(
             ObjectManager::class,
@@ -70,7 +72,7 @@ class ManagerRegistryTest extends DoctrineTestCase
         );
     }
 
-    public function testGetManagerForInvalidAliasedClass()
+    public function testGetManagerForInvalidAliasedClass() : void
     {
         $this->expectException(ReflectionException::class);
         $this->expectExceptionMessage('Class Doctrine\Tests\Persistence\TestObject:Foo does not exist');
@@ -78,31 +80,30 @@ class ManagerRegistryTest extends DoctrineTestCase
         $this->mr->getManagerForClass('prefix:TestObject:Foo');
     }
 
-    public function testResetManager()
+    public function testResetManager() : void
     {
         $manager    = $this->mr->getManager();
         $newManager = $this->mr->resetManager();
 
-        self::assertInstanceOf(ObjectManager::class, $newManager);
         self::assertNotSame($manager, $newManager);
     }
 
-    public function testGetRepository()
+    public function testGetRepository() : void
     {
         $repository = $this->createMock(ObjectRepository::class);
 
         /** @var MockObject $defaultManager */
         $defaultManager = $this->mr->getManager();
         $defaultManager
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getRepository')
-            ->with($this->equalTo(TestObject::class))
-            ->will($this->returnValue($repository));
+            ->with(self::equalTo(TestObject::class))
+            ->will(self::returnValue($repository));
 
         self::assertSame($repository, $this->mr->getRepository(TestObject::class));
     }
 
-    public function testGetRepositoryWithSpecificManagerName()
+    public function testGetRepositoryWithSpecificManagerName() : void
     {
         $this->mr = new TestManagerRegistry(
             'ORM',
@@ -119,21 +120,21 @@ class ManagerRegistryTest extends DoctrineTestCase
         /** @var MockObject $defaultManager */
         $defaultManager = $this->mr->getManager();
         $defaultManager
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('getRepository');
 
         /** @var MockObject $otherManager */
         $otherManager = $this->mr->getManager('other');
         $otherManager
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getRepository')
-            ->with($this->equalTo(TestObject::class))
-            ->will($this->returnValue($repository));
+            ->with(self::equalTo(TestObject::class))
+            ->will(self::returnValue($repository));
 
         self::assertSame($repository, $this->mr->getRepository(TestObject::class, 'other'));
     }
 
-    public function testGetRepositoryWithManagerDetection()
+    public function testGetRepositoryWithManagerDetection() : void
     {
         $this->mr = new TestManagerRegistry(
             'ORM',
@@ -150,21 +151,21 @@ class ManagerRegistryTest extends DoctrineTestCase
         /** @var MockObject $defaultManager */
         $defaultManager = $this->mr->getManager();
         $defaultManager
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('getRepository');
 
         /** @var MockObject $otherManager */
         $otherManager = $this->mr->getManager('other');
         $otherManager
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getRepository')
-            ->with($this->equalTo(OtherTestObject::class))
-            ->will($this->returnValue($repository));
+            ->with(self::equalTo(OtherTestObject::class))
+            ->will(self::returnValue($repository));
 
         self::assertSame($repository, $this->mr->getRepository(OtherTestObject::class));
     }
 
-    private function getManagerFactory()
+    private function getManagerFactory() : callable
     {
         return function (string $name) {
             $mock = $this->createMock(ObjectManager::class);
@@ -173,7 +174,7 @@ class ManagerRegistryTest extends DoctrineTestCase
             $metadata = $this->createMock(ClassMetadata::class);
 
             $metadata
-                ->expects($this->any())
+                ->expects(self::any())
                 ->method('getName')
                 ->willReturn($name === 'other_manager' ? OtherTestObject::class : TestObject::class);
 
@@ -197,20 +198,27 @@ class TestManagerRegistry extends AbstractManagerRegistry
      * @param string[] $managers
      */
     public function __construct(
-        $name,
+        string $name,
         array $connections,
         array $managers,
-        $defaultConnection,
-        $defaultManager,
-        $proxyInterfaceName,
+        string $defaultConnection,
+        string $defaultManager,
+        string $proxyInterfaceName,
         callable $managerFactory
     ) {
         $this->managerFactory = $managerFactory;
 
-        parent::__construct($name, $connections, $managers, $defaultConnection, $defaultManager, $proxyInterfaceName);
+        parent::__construct(
+            $name,
+            $connections,
+            $managers,
+            $defaultConnection,
+            $defaultManager,
+            $proxyInterfaceName
+        );
     }
 
-    protected function getService($name)
+    protected function getService(string $name) : object
     {
         if (! isset($this->services[$name])) {
             $this->services[$name] = call_user_func($this->managerFactory, $name);
@@ -219,12 +227,12 @@ class TestManagerRegistry extends AbstractManagerRegistry
         return $this->services[$name];
     }
 
-    protected function resetService($name)
+    protected function resetService(string $name) : void
     {
         unset($this->services[$name]);
     }
 
-    public function getAliasNamespace($alias)
+    public function getAliasNamespace(string $alias) : string
     {
         return __NAMESPACE__;
     }

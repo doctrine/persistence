@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -24,19 +26,19 @@ class StaticPHPDriver implements MappingDriver
     /**
      * Paths of entity directories.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     private $paths = [];
 
     /**
      * Map of all class names.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     private $classNames;
 
     /**
-     * @param string[]|string $paths
+     * @param array<int, string>|string $paths
      */
     public function __construct($paths)
     {
@@ -44,13 +46,9 @@ class StaticPHPDriver implements MappingDriver
     }
 
     /**
-     * Adds paths.
-     *
-     * @param string[] $paths
-     *
-     * @return void
+     * @param array<int, string> $paths
      */
-    public function addPaths(array $paths)
+    public function addPaths(array $paths) : void
     {
         $this->paths = array_unique(array_merge($this->paths, $paths));
     }
@@ -58,7 +56,7 @@ class StaticPHPDriver implements MappingDriver
     /**
      * {@inheritdoc}
      */
-    public function loadMetadataForClass($className, ClassMetadata $metadata)
+    public function loadMetadataForClass(string $className, ClassMetadata $metadata) : void
     {
         $className::loadMetadata($metadata);
     }
@@ -68,13 +66,13 @@ class StaticPHPDriver implements MappingDriver
      *
      * @todo Same code exists in AnnotationDriver, should we re-use it somehow or not worry about it?
      */
-    public function getAllClassNames()
+    public function getAllClassNames() : array
     {
         if ($this->classNames !== null) {
             return $this->classNames;
         }
 
-        if (! $this->paths) {
+        if ($this->paths === []) {
             throw MappingException::pathRequired();
         }
 
@@ -105,9 +103,11 @@ class StaticPHPDriver implements MappingDriver
         $declared = get_declared_classes();
 
         foreach ($declared as $className) {
-            $rc         = new ReflectionClass($className);
+            $rc = new ReflectionClass($className);
+
             $sourceFile = $rc->getFileName();
-            if (! in_array($sourceFile, $includedFiles) || $this->isTransient($className)) {
+
+            if (! in_array($sourceFile, $includedFiles, true) || $this->isTransient($className)) {
                 continue;
             }
 
@@ -122,7 +122,7 @@ class StaticPHPDriver implements MappingDriver
     /**
      * {@inheritdoc}
      */
-    public function isTransient($className)
+    public function isTransient(string $className) : bool
     {
         return ! method_exists($className, 'loadMetadata');
     }

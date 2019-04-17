@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Event;
 
 use Doctrine\Common\EventArgs;
@@ -20,10 +22,8 @@ class ManagerEventArgs extends EventArgs
 
     /**
      * Retrieves the associated ObjectManager.
-     *
-     * @return ObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager() : ObjectManager
     {
         return $this->objectManager;
     }
