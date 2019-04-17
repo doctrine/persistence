@@ -164,21 +164,6 @@ class PersistentObjectTest extends DoctrineTestCase
     }
 }
 
-class TestObject extends PersistentObject
-{
-    /** @var int */
-    protected $id = 1;
-
-    /** @var string */
-    protected $name = 'beberlei';
-
-    /** @var TestObject */
-    protected $parent;
-
-    /** @var TestObject */
-    protected $children;
-}
-
 class TestObjectMetadata implements ClassMetadata
 {
     public function getAssociationMappedByTargetField($assocName)
