@@ -7,8 +7,11 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManagerAware;
+use Doctrine\Persistence\ObjectRepository;
+use Doctrine\Persistence\Proxy;
 use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\TestClassMetadataFactory;
+use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionException;
 use function call_user_func;
 
@@ -78,13 +81,96 @@ class ManagerRegistryTest extends DoctrineTestCase
         self::assertNotSame($manager, $newManager);
     }
 
+    public function testGetRepository()
+    {
+        $repository = $this->createMock(ObjectRepository::class);
+
+        /** @var MockObject $defaultManager */
+        $defaultManager = $this->mr->getManager();
+        $defaultManager
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo(TestObject::class))
+            ->will($this->returnValue($repository));
+
+        self::assertSame($repository, $this->mr->getRepository(TestObject::class));
+    }
+
+    public function testGetRepositoryWithSpecificManagerName()
+    {
+        $this->mr = new TestManagerRegistry(
+            'ORM',
+            ['default' => 'default_connection'],
+            ['default' => 'default_manager', 'other' => 'other_manager'],
+            'default',
+            'default',
+            ObjectManagerAware::class,
+            $this->getManagerFactory()
+        );
+
+        $repository = $this->createMock(ObjectRepository::class);
+
+        /** @var MockObject $defaultManager */
+        $defaultManager = $this->mr->getManager();
+        $defaultManager
+            ->expects($this->never())
+            ->method('getRepository');
+
+        /** @var MockObject $otherManager */
+        $otherManager = $this->mr->getManager('other');
+        $otherManager
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo(TestObject::class))
+            ->will($this->returnValue($repository));
+
+        self::assertSame($repository, $this->mr->getRepository(TestObject::class, 'other'));
+    }
+
+    public function testGetRepositoryWithManagerDetection()
+    {
+        $this->mr = new TestManagerRegistry(
+            'ORM',
+            ['default' => 'default_connection'],
+            ['default' => 'default_manager', 'other' => 'other_manager'],
+            'default',
+            'default',
+            Proxy::class,
+            $this->getManagerFactory()
+        );
+
+        $repository = $this->createMock(ObjectRepository::class);
+
+        /** @var MockObject $defaultManager */
+        $defaultManager = $this->mr->getManager();
+        $defaultManager
+            ->expects($this->never())
+            ->method('getRepository');
+
+        /** @var MockObject $otherManager */
+        $otherManager = $this->mr->getManager('other');
+        $otherManager
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo(OtherTestObject::class))
+            ->will($this->returnValue($repository));
+
+        self::assertSame($repository, $this->mr->getRepository(OtherTestObject::class));
+    }
+
     private function getManagerFactory()
     {
-        return function () {
+        return function (string $name) {
             $mock = $this->createMock(ObjectManager::class);
 
             $driver   = $this->createMock(MappingDriver::class);
             $metadata = $this->createMock(ClassMetadata::class);
+
+            $metadata
+                ->expects($this->any())
+                ->method('getName')
+                ->willReturn($name === 'other_manager' ? OtherTestObject::class : TestObject::class);
+
             $mock->method('getMetadataFactory')->willReturn(new TestClassMetadataFactory($driver, $metadata));
 
             return $mock;
@@ -121,7 +207,7 @@ class TestManagerRegistry extends AbstractManagerRegistry
     protected function getService($name)
     {
         if (! isset($this->services[$name])) {
-            $this->services[$name] = call_user_func($this->managerFactory);
+            $this->services[$name] = call_user_func($this->managerFactory, $name);
         }
 
         return $this->services[$name];

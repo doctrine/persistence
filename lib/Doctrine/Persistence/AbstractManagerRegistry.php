@@ -210,7 +210,9 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      */
     public function getRepository($persistentObjectName, $persistentManagerName = null)
     {
-        return $this->getManager($persistentManagerName)->getRepository($persistentObjectName);
+        return $this
+            ->selectManager($persistentObjectName, $persistentManagerName)
+            ->getRepository($persistentObjectName);
     }
 
     /**
@@ -231,5 +233,14 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         $this->resetService($this->managers[$name]);
 
         return $this->getManager($name);
+    }
+
+    private function selectManager(string $persistentObjectName, ?string $persistentManagerName = null) : ?ObjectManager
+    {
+        if ($persistentManagerName !== null) {
+            return $this->getManager($persistentManagerName);
+        }
+
+        return $this->getManagerForClass($persistentObjectName) ?? $this->getManager();
     }
 }
