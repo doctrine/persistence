@@ -28,6 +28,9 @@ use function substr;
  * 5. Only the inverse side associations get autoset on the owning side as well. Setting objects on the owning side
  *    will not set the inverse side associations.
  *
+ * @deprecated Deprecated `PersistentObject` class in 1.2. Please implement this functionality
+ *             directly in your application if you want ActiveRecord style functionality.
+ *
  * @example
  *
  *  PersistentObject::setObjectManager($em);
