@@ -52,6 +52,10 @@ interface ObjectManager
      * of this ObjectManager and returns the managed copy of the object.
      * The object passed to merge will not become associated/managed with this ObjectManager.
      *
+     * @deprecated Merge operation is deprecated and will be removed in Persistence 2.0.
+     *             Merging should be part of the business domain of an application rather than
+     *             a generic operation of ObjectManager.
+     *
      * @param object $object
      *
      * @return object
@@ -74,6 +78,9 @@ interface ObjectManager
      * (including removal of the object), will not be synchronized to the database.
      * Objects which previously referenced the detached object will continue to
      * reference it.
+     *
+     * @deprecated Detach operation is deprecated and will be removed in Persistence 2.0. Please use
+     *             {@see ObjectManager::clear()} instead.
      *
      * @param object $object The object to detach.
      *
