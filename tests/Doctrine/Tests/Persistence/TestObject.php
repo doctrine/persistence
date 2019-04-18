@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Persistence;
 
-use Doctrine\Persistence\PersistentObject;
-
-class TestObject extends PersistentObject
+class TestObject
 {
     /** @var int */
     protected $id = 1;
