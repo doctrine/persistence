@@ -36,14 +36,17 @@ class ManagerRegistryTest extends DoctrineTestCase
             ['default' => 'default_manager'],
             'default',
             'default',
-            ObjectManagerAware::class,
+            Proxy::class,
             $this->getManagerFactory()
         );
     }
 
     public function testGetManagerForClass()
     {
-        self::assertNull($this->mr->getManagerForClass(TestObject::class));
+        self::assertInstanceOf(
+            ObjectManager::class,
+            $this->mr->getManagerForClass(TestObject::class)
+        );
     }
 
     public function testGetManagerForProxyInterface()
@@ -61,7 +64,10 @@ class ManagerRegistryTest extends DoctrineTestCase
 
     public function testGetManagerForAliasedClass()
     {
-        self::assertNull($this->mr->getManagerForClass('prefix:TestObject'));
+        self::assertInstanceOf(
+            ObjectManager::class,
+            $this->mr->getManagerForClass('prefix:TestObject')
+        );
     }
 
     public function testGetManagerForInvalidAliasedClass()
