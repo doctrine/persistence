@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Event;
 
 use Doctrine\Common\EventArgs;
@@ -17,10 +19,7 @@ class LifecycleEventArgs extends EventArgs
     /** @var object */
     private $object;
 
-    /**
-     * @param object $object
-     */
-    public function __construct($object, ObjectManager $objectManager)
+    public function __construct(object $object, ObjectManager $objectManager)
     {
         $this->object        = $object;
         $this->objectManager = $objectManager;
@@ -30,30 +29,24 @@ class LifecycleEventArgs extends EventArgs
      * Retrieves the associated entity.
      *
      * @deprecated
-     *
-     * @return object
      */
-    public function getEntity()
+    public function getEntity() : object
     {
         return $this->object;
     }
 
     /**
      * Retrieves the associated object.
-     *
-     * @return object
      */
-    public function getObject()
+    public function getObject() : object
     {
         return $this->object;
     }
 
     /**
      * Retrieves the associated ObjectManager.
-     *
-     * @return ObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager() : ObjectManager
     {
         return $this->objectManager;
     }

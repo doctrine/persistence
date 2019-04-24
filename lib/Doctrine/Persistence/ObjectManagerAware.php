@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -22,8 +24,9 @@ interface ObjectManagerAware
 {
     /**
      * Injects responsible ObjectManager and the ClassMetadata into this persistent object.
-     *
-     * @return void
      */
-    public function injectObjectManager(ObjectManager $objectManager, ClassMetadata $classMetadata);
+    public function injectObjectManager(
+        ObjectManager $objectManager,
+        ClassMetadata $classMetadata
+    ) : void;
 }

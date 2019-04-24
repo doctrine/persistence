@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\MappingException;
@@ -8,8 +10,10 @@ use RecursiveIteratorIterator;
 use const DIRECTORY_SEPARATOR;
 use function array_merge;
 use function array_unique;
+use function assert;
 use function is_dir;
 use function is_file;
+use function is_string;
 use function str_replace;
 
 /**
@@ -23,7 +27,7 @@ class DefaultFileLocator implements FileLocator
     /**
      * The paths where to look for mapping files.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $paths = [];
 
@@ -38,10 +42,12 @@ class DefaultFileLocator implements FileLocator
      * Initializes a new FileDriver that looks in the given path(s) for mapping
      * documents and operates in the specified operating mode.
      *
-     * @param string|string[] $paths         One or multiple paths where mapping documents can be found.
-     * @param string|null     $fileExtension The file extension of mapping documents, usually prefixed with a dot.
+     * @param string|array<int, string> $paths         One or multiple paths where mapping documents
+     *                                                 can be found.
+     * @param string|null               $fileExtension The file extension of mapping documents,
+     *                                                 usually prefixed with a dot.
      */
-    public function __construct($paths, $fileExtension = null)
+    public function __construct($paths, ?string $fileExtension = null)
     {
         $this->addPaths((array) $paths);
         $this->fileExtension = $fileExtension;
@@ -50,11 +56,9 @@ class DefaultFileLocator implements FileLocator
     /**
      * Appends lookup paths to metadata driver.
      *
-     * @param string[] $paths
-     *
-     * @return void
+     * @param array<int, string> $paths
      */
-    public function addPaths(array $paths)
+    public function addPaths(array $paths) : void
     {
         $this->paths = array_unique(array_merge($this->paths, $paths));
     }
@@ -62,19 +66,17 @@ class DefaultFileLocator implements FileLocator
     /**
      * Retrieves the defined metadata lookup paths.
      *
-     * @return string[]
+     * @return array<int, string>
      */
-    public function getPaths()
+    public function getPaths() : array
     {
         return $this->paths;
     }
 
     /**
      * Gets the file extension used to look for mapping files under.
-     *
-     * @return string|null
      */
-    public function getFileExtension()
+    public function getFileExtension() : ?string
     {
         return $this->fileExtension;
     }
@@ -83,10 +85,8 @@ class DefaultFileLocator implements FileLocator
      * Sets the file extension used to look for mapping files under.
      *
      * @param string|null $fileExtension The file extension to set.
-     *
-     * @return void
      */
-    public function setFileExtension($fileExtension)
+    public function setFileExtension(?string $fileExtension) : void
     {
         $this->fileExtension = $fileExtension;
     }
@@ -94,7 +94,7 @@ class DefaultFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function findMappingFile($className)
+    public function findMappingFile(string $className) : string
     {
         $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
 
@@ -111,31 +111,37 @@ class DefaultFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function getAllClassNames($globalBasename)
+    public function getAllClassNames(string $globalBasename) : array
     {
+        if ($this->paths === []) {
+            return [];
+        }
+
         $classes = [];
 
-        if ($this->paths) {
-            foreach ($this->paths as $path) {
-                if (! is_dir($path)) {
-                    throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
+        foreach ($this->paths as $path) {
+            if (! is_dir($path)) {
+                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
+            }
+
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($path),
+                RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($iterator as $file) {
+                $fileName = $file->getBasename($this->fileExtension);
+
+                if ($fileName === $file->getBasename() || $fileName === $globalBasename) {
+                    continue;
                 }
 
-                $iterator = new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($path),
-                    RecursiveIteratorIterator::LEAVES_ONLY
-                );
+                // NOTE: All files found here means classes are not transient!
 
-                foreach ($iterator as $file) {
-                    $fileName = $file->getBasename($this->fileExtension);
+                $class = str_replace('.', '\\', $fileName);
+                assert(is_string($class));
 
-                    if ($fileName === $file->getBasename() || $fileName === $globalBasename) {
-                        continue;
-                    }
-
-                    // NOTE: All files found here means classes are not transient!
-                    $classes[] = str_replace('.', '\\', $fileName);
-                }
+                $classes[] = $class;
             }
         }
 
@@ -145,12 +151,12 @@ class DefaultFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function fileExists($className)
+    public function fileExists(string $className) : bool
     {
         $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
 
         // Check whether file exists
-        foreach ((array) $this->paths as $path) {
+        foreach ($this->paths as $path) {
             if (is_file($path . DIRECTORY_SEPARATOR . $fileName)) {
                 return true;
             }

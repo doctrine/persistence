@@ -14,3 +14,7 @@ The namespace has been renamed from `Doctrine\Common\Persistence` to `Doctrine\P
 
 Please implement this functionality directly in your application if you want
 ActiveRecord style functionality.
+
+## Strict Typing
+
+Proper type hints have been added to all method signatures and strict types have been enabled.

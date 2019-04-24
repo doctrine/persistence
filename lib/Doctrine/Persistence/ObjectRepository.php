@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence;
 
 use UnexpectedValueException;
@@ -16,14 +18,14 @@ interface ObjectRepository
      *
      * @return object|null The object.
      */
-    public function find($id);
+    public function find($id) : ?object;
 
     /**
      * Finds all objects in the repository.
      *
      * @return object[] The objects.
      */
-    public function findAll();
+    public function findAll() : array;
 
     /**
      * Finds objects by a set of criteria.
@@ -34,14 +36,17 @@ interface ObjectRepository
      *
      * @param mixed[]       $criteria
      * @param string[]|null $orderBy
-     * @param int|null      $limit
-     * @param int|null      $offset
      *
      * @return object[] The objects.
      *
      * @throws UnexpectedValueException
      */
-    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null);
+    public function findBy(
+        array $criteria,
+        ?array $orderBy = null,
+        ?int $limit = null,
+        ?int $offset = null
+    ) : array;
 
     /**
      * Finds a single object by a set of criteria.
@@ -50,12 +55,10 @@ interface ObjectRepository
      *
      * @return object|null The object.
      */
-    public function findOneBy(array $criteria);
+    public function findOneBy(array $criteria) : ?object;
 
     /**
      * Returns the class name of the object managed by the repository.
-     *
-     * @return string
      */
-    public function getClassName();
+    public function getClassName() : string;
 }

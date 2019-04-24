@@ -14,13 +14,13 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     /** @var MappingDriver */
     public $driver;
 
-    /** @var ClassMetadata|null */
+    /** @var ClassMetadata */
     public $metadata;
 
     /** @var callable|null */
     public $fallbackCallback;
 
-    public function __construct(MappingDriver $driver, ?ClassMetadata $metadata)
+    public function __construct(MappingDriver $driver, ClassMetadata $metadata)
     {
         $this->driver   = $driver;
         $this->metadata = $metadata;
@@ -29,52 +29,56 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     /**
      * @param string[] $nonSuperclassParents
      */
-    protected function doLoadMetadata($class, $parent, $rootEntityFound, array $nonSuperclassParents)
-    {
+    protected function doLoadMetadata(
+        ClassMetadata $class,
+        ?ClassMetadata $parent,
+        bool $rootEntityFound,
+        array $nonSuperclassParents
+    ) : void {
     }
 
-    protected function getFqcnFromAlias($namespaceAlias, $simpleClassName)
+    protected function getFqcnFromAlias(string $namespaceAlias, string $simpleClassName) : string
     {
         return __NAMESPACE__ . '\\' . $simpleClassName;
     }
 
-    protected function initialize()
+    protected function initialize() : void
     {
     }
 
-    protected function newClassMetadataInstance($className)
+    protected function newClassMetadataInstance(string $className) : ClassMetadata
     {
         return $this->metadata;
     }
 
-    protected function getDriver()
+    protected function getDriver() : MappingDriver
     {
         return $this->driver;
     }
 
-    protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService)
+    protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService) : void
     {
     }
 
-    protected function initializeReflection(ClassMetadata $class, ReflectionService $reflService)
+    protected function initializeReflection(ClassMetadata $class, ReflectionService $reflService) : void
     {
     }
 
-    protected function isEntity(ClassMetadata $class)
+    protected function isEntity(ClassMetadata $class) : bool
     {
         return true;
     }
 
-    protected function onNotFoundMetadata($className)
+    protected function onNotFoundMetadata(string $className) : ?ClassMetadata
     {
-        if (! $this->fallbackCallback) {
+        if ($this->fallbackCallback === null) {
             return null;
         }
 
         return ($this->fallbackCallback)();
     }
 
-    public function isTransient($class)
+    public function isTransient(string $class) : bool
     {
         $name = $this->metadata->getName();
 

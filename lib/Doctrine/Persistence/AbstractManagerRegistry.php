@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence;
 
 use InvalidArgumentException;
@@ -16,10 +18,10 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /** @var string */
     private $name;
 
-    /** @var string[] */
+    /** @var array<string, string> */
     private $connections;
 
-    /** @var string[] */
+    /** @var array<string, string> */
     private $managers;
 
     /** @var string */
@@ -32,15 +34,17 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     private $proxyInterfaceName;
 
     /**
-     * @param string   $name
-     * @param string[] $connections
-     * @param string[] $managers
-     * @param string   $defaultConnection
-     * @param string   $defaultManager
-     * @param string   $proxyInterfaceName
+     * @param array<string, string> $connections
+     * @param array<string, string> $managers
      */
-    public function __construct($name, array $connections, array $managers, $defaultConnection, $defaultManager, $proxyInterfaceName)
-    {
+    public function __construct(
+        string $name,
+        array $connections,
+        array $managers,
+        string $defaultConnection,
+        string $defaultManager,
+        string $proxyInterfaceName
+    ) {
         $this->name               = $name;
         $this->connections        = $connections;
         $this->managers           = $managers;
@@ -58,7 +62,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      *
      * @return object The instance of the given service.
      */
-    abstract protected function getService($name);
+    abstract protected function getService(string $name) : object;
 
     /**
      * Resets the given services.
@@ -66,17 +70,13 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      * A service in this context is connection or a manager instance.
      *
      * @param string $name The name of the service.
-     *
-     * @return void
      */
-    abstract protected function resetService($name);
+    abstract protected function resetService(string $name) : void;
 
     /**
      * Gets the name of the registry.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -84,14 +84,16 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritdoc}
      */
-    public function getConnection($name = null)
+    public function getConnection(?string $name = null) : object
     {
         if ($name === null) {
             $name = $this->defaultConnection;
         }
 
         if (! isset($this->connections[$name])) {
-            throw new InvalidArgumentException(sprintf('Doctrine %s Connection named "%s" does not exist.', $this->name, $name));
+            throw new InvalidArgumentException(
+                sprintf('Doctrine %s Connection named "%s" does not exist.', $this->name, $name)
+            );
         }
 
         return $this->getService($this->connections[$name]);
@@ -100,7 +102,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritdoc}
      */
-    public function getConnectionNames()
+    public function getConnectionNames() : array
     {
         return $this->connections;
     }
@@ -108,7 +110,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritdoc}
      */
-    public function getConnections()
+    public function getConnections() : array
     {
         $connections = [];
         foreach ($this->connections as $name => $id) {
@@ -121,7 +123,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritdoc}
      */
-    public function getDefaultConnectionName()
+    public function getDefaultConnectionName() : string
     {
         return $this->defaultConnection;
     }
@@ -129,7 +131,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritdoc}
      */
-    public function getDefaultManagerName()
+    public function getDefaultManagerName() : string
     {
         return $this->defaultManager;
     }
@@ -139,28 +141,34 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      *
      * @throws InvalidArgumentException
      */
-    public function getManager($name = null)
+    public function getManager(?string $name = null) : ObjectManager
     {
         if ($name === null) {
             $name = $this->defaultManager;
         }
 
         if (! isset($this->managers[$name])) {
-            throw new InvalidArgumentException(sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name));
+            throw new InvalidArgumentException(
+                sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name)
+            );
         }
 
-        return $this->getService($this->managers[$name]);
+        /** @var ObjectManager $objectManager */
+        $objectManager = $this->getService($this->managers[$name]);
+
+        return $objectManager;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getManagerForClass($class)
+    public function getManagerForClass(string $class) : ?ObjectManager
     {
         // Check for namespace alias
         if (strpos($class, ':') !== false) {
             [$namespaceAlias, $simpleClassName] = explode(':', $class, 2);
-            $class                              = $this->getAliasNamespace($namespaceAlias) . '\\' . $simpleClassName;
+
+            $class = $this->getAliasNamespace($namespaceAlias) . '\\' . $simpleClassName;
         }
 
         $proxyClass = new ReflectionClass($class);
@@ -168,7 +176,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         if ($proxyClass->implementsInterface($this->proxyInterfaceName)) {
             $parentClass = $proxyClass->getParentClass();
 
-            if (! $parentClass) {
+            if ($parentClass === false) {
                 return null;
             }
 
@@ -176,18 +184,21 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         }
 
         foreach ($this->managers as $id) {
+            /** @var ObjectManager $manager */
             $manager = $this->getService($id);
 
             if (! $manager->getMetadataFactory()->isTransient($class)) {
                 return $manager;
             }
         }
+
+        return null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getManagerNames()
+    public function getManagerNames() : array
     {
         return $this->managers;
     }
@@ -195,21 +206,27 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritdoc}
      */
-    public function getManagers()
+    public function getManagers() : array
     {
-        $dms = [];
+        $managers = [];
+
         foreach ($this->managers as $name => $id) {
-            $dms[$name] = $this->getService($id);
+            /** @var ObjectManager $manager */
+            $manager = $this->getService($id);
+
+            $managers[$name] = $manager;
         }
 
-        return $dms;
+        return $managers;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRepository($persistentObjectName, $persistentManagerName = null)
-    {
+    public function getRepository(
+        string $persistentObjectName,
+        ?string $persistentManagerName = null
+    ) : ObjectRepository {
         return $this
             ->selectManager($persistentObjectName, $persistentManagerName)
             ->getRepository($persistentObjectName);
@@ -218,7 +235,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritdoc}
      */
-    public function resetManager($name = null)
+    public function resetManager(?string $name = null) : ObjectManager
     {
         if ($name === null) {
             $name = $this->defaultManager;
@@ -235,8 +252,10 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $this->getManager($name);
     }
 
-    private function selectManager(string $persistentObjectName, ?string $persistentManagerName = null) : ObjectManager
-    {
+    private function selectManager(
+        string $persistentObjectName,
+        ?string $persistentManagerName = null
+    ) : ObjectManager {
         if ($persistentManagerName !== null) {
             return $this->getManager($persistentManagerName);
         }

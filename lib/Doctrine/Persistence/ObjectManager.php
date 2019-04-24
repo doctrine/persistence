@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -20,7 +22,7 @@ interface ObjectManager
      *
      * @return object|null The found object.
      */
-    public function find($className, $id);
+    public function find(string $className, $id) : ?object;
 
     /**
      * Tells the ObjectManager to make an instance managed and persistent.
@@ -31,10 +33,8 @@ interface ObjectManager
      * this ObjectManager as NEW. Do not pass detached objects to the persist operation.
      *
      * @param object $object The instance to make managed and persistent.
-     *
-     * @return void
      */
-    public function persist($object);
+    public function persist(object $object) : void;
 
     /**
      * Removes an object instance.
@@ -42,10 +42,8 @@ interface ObjectManager
      * A removed object will be removed from the database as a result of the flush operation.
      *
      * @param object $object The object instance to remove.
-     *
-     * @return void
      */
-    public function remove($object);
+    public function remove(object $object) : void;
 
     /**
      * Merges the state of a detached object into the persistence context
@@ -55,22 +53,16 @@ interface ObjectManager
      * @deprecated Merge operation is deprecated and will be removed in Persistence 2.0.
      *             Merging should be part of the business domain of an application rather than
      *             a generic operation of ObjectManager.
-     *
-     * @param object $object
-     *
-     * @return object
      */
-    public function merge($object);
+    public function merge(object $object) : object;
 
     /**
      * Clears the ObjectManager. All objects that are currently managed
      * by this ObjectManager become detached.
      *
      * @param string|null $objectName if given, only objects of this type will get detached.
-     *
-     * @return void
      */
-    public function clear($objectName = null);
+    public function clear(?string $objectName = null) : void;
 
     /**
      * Detaches an object from the ObjectManager, causing a managed object to
@@ -83,75 +75,51 @@ interface ObjectManager
      *             {@see ObjectManager::clear()} instead.
      *
      * @param object $object The object to detach.
-     *
-     * @return void
      */
-    public function detach($object);
+    public function detach(object $object) : void;
 
     /**
      * Refreshes the persistent state of an object from the database,
      * overriding any local changes that have not yet been persisted.
      *
      * @param object $object The object to refresh.
-     *
-     * @return void
      */
-    public function refresh($object);
+    public function refresh(object $object) : void;
 
     /**
      * Flushes all changes to objects that have been queued up to now to the database.
      * This effectively synchronizes the in-memory state of managed objects with the
      * database.
-     *
-     * @return void
      */
-    public function flush();
+    public function flush() : void;
 
     /**
      * Gets the repository for a class.
-     *
-     * @param string $className
-     *
-     * @return ObjectRepository
      */
-    public function getRepository($className);
+    public function getRepository(string $className) : ObjectRepository;
 
     /**
      * Returns the ClassMetadata descriptor for a class.
      *
      * The class name must be the fully-qualified class name without a leading backslash
      * (as it is returned by get_class($obj)).
-     *
-     * @param string $className
-     *
-     * @return ClassMetadata
      */
-    public function getClassMetadata($className);
+    public function getClassMetadata(string $className) : ClassMetadata;
 
     /**
      * Gets the metadata factory used to gather the metadata of classes.
-     *
-     * @return ClassMetadataFactory
      */
-    public function getMetadataFactory();
+    public function getMetadataFactory() : ClassMetadataFactory;
 
     /**
      * Helper method to initialize a lazy loading proxy or persistent collection.
      *
      * This method is a no-op for other objects.
-     *
-     * @param object $obj
-     *
-     * @return void
      */
-    public function initializeObject($obj);
+    public function initializeObject(object $obj) : void;
 
     /**
      * Checks if the object is part of the current UnitOfWork and therefore managed.
-     *
-     * @param object $object
-     *
-     * @return bool
      */
-    public function contains($object);
+    public function contains(object $object) : bool;
 }

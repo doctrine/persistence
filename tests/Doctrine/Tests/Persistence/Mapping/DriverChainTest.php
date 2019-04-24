@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -7,34 +9,35 @@ use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class DriverChainTest extends DoctrineTestCase
 {
-    public function testDelegateToMatchingNamespaceDriver()
+    public function testDelegateToMatchingNamespaceDriver() : void
     {
         $className = DriverChainEntity::class;
-        /** @var ClassMetadata|PHPUnit_Framework_MockObject_MockObject $classMetadata */
+
+        /** @var ClassMetadata|MockObject $classMetadata */
         $classMetadata = $this->createMock(ClassMetadata::class);
 
         $chain = new MappingDriverChain();
 
-        /** @var MappingDriver|PHPUnit_Framework_MockObject_MockObject $driver1 */
+        /** @var MappingDriver|MockObject $driver1 */
         $driver1 = $this->createMock(MappingDriver::class);
-        $driver1->expects($this->never())
+        $driver1->expects(self::never())
                 ->method('loadMetadataForClass');
-        $driver1->expectS($this->never())
+        $driver1->expects(self::never())
                 ->method('isTransient');
 
-        /** @var MappingDriver|PHPUnit_Framework_MockObject_MockObject $driver2 */
+        /** @var MappingDriver|MockObject $driver2 */
         $driver2 = $this->createMock(MappingDriver::class);
-        $driver2->expects($this->at(0))
+        $driver2->expects(self::at(0))
                 ->method('loadMetadataForClass')
-                ->with($this->equalTo($className), $this->equalTo($classMetadata));
-        $driver2->expects($this->at(1))
+                ->with(self::equalTo($className), self::equalTo($classMetadata));
+        $driver2->expects(self::at(1))
                 ->method('isTransient')
-                ->with($this->equalTo($className))
-                ->will($this->returnValue(true));
+                ->with(self::equalTo($className))
+                ->will(self::returnValue(true));
 
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\Company');
         $chain->addDriver($driver2, 'Doctrine\Tests\Persistence\Mapping');
@@ -44,10 +47,10 @@ class DriverChainTest extends DoctrineTestCase
         self::assertTrue($chain->isTransient($className));
     }
 
-    public function testLoadMetadataShouldThrowMappingExceptionWhenNoDelegatorWasFound()
+    public function testLoadMetadataShouldThrowMappingExceptionWhenNoDelegatorWasFound() : void
     {
         $className = DriverChainEntity::class;
-        /** @var ClassMetadata|PHPUnit_Framework_MockObject_MockObject $classMetadata */
+        /** @var ClassMetadata|MockObject $classMetadata */
         $classMetadata = $this->createMock(ClassMetadata::class);
 
         $chain = new MappingDriverChain();
@@ -56,21 +59,21 @@ class DriverChainTest extends DoctrineTestCase
         $chain->loadMetadataForClass($className, $classMetadata);
     }
 
-    public function testGatherAllClassNames()
+    public function testGatherAllClassNames() : void
     {
         $chain = new MappingDriverChain();
 
-        /** @var MappingDriver|PHPUnit_Framework_MockObject_MockObject $driver1 */
+        /** @var MappingDriver|MockObject $driver1 */
         $driver1 = $this->createMock(MappingDriver::class);
-        $driver1->expects($this->once())
+        $driver1->expects(self::once())
                 ->method('getAllClassNames')
-                ->will($this->returnValue(['Doctrine\Tests\Models\Company\Foo']));
+                ->will(self::returnValue(['Doctrine\Tests\Models\Company\Foo']));
 
-        /** @var MappingDriver|PHPUnit_Framework_MockObject_MockObject $driver2 */
+        /** @var MappingDriver|MockObject $driver2 */
         $driver2 = $this->createMock(MappingDriver::class);
-        $driver2->expects($this->once())
+        $driver2->expects(self::once())
                 ->method('getAllClassNames')
-                ->will($this->returnValue(['Doctrine\Tests\ORM\Mapping\Bar', 'Doctrine\Tests\ORM\Mapping\Baz', 'FooBarBaz']));
+                ->will(self::returnValue(['Doctrine\Tests\ORM\Mapping\Bar', 'Doctrine\Tests\ORM\Mapping\Baz', 'FooBarBaz']));
 
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\Company');
         $chain->addDriver($driver2, 'Doctrine\Tests\ORM\Mapping');
@@ -85,9 +88,9 @@ class DriverChainTest extends DoctrineTestCase
     /**
      * @group DDC-706
      */
-    public function testIsTransient()
+    public function testIsTransient() : void
     {
-        /** @var MappingDriver|PHPUnit_Framework_MockObject_MockObject $driver1 */
+        /** @var MappingDriver|MockObject $driver1 */
         $driver1 = $this->createMock(MappingDriver::class);
         $chain   = new MappingDriverChain();
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\CMS');
@@ -98,7 +101,7 @@ class DriverChainTest extends DoctrineTestCase
     /**
      * @group DDC-1412
      */
-    public function testDefaultDriver()
+    public function testDefaultDriver() : void
     {
         $companyDriver    = $this->createMock(MappingDriver::class);
         $defaultDriver    = $this->createMock(MappingDriver::class);
@@ -106,46 +109,49 @@ class DriverChainTest extends DoctrineTestCase
         $managerClassName = 'Doctrine\Tests\Models\Company\CompanyManager';
         $chain            = new MappingDriverChain();
 
-        $companyDriver->expects($this->never())
+        $companyDriver->expects(self::never())
             ->method('loadMetadataForClass');
-        $companyDriver->expects($this->once())
+        $companyDriver->expects(self::once())
             ->method('isTransient')
-            ->with($this->equalTo($managerClassName))
-            ->will($this->returnValue(false));
+            ->with(self::equalTo($managerClassName))
+            ->will(self::returnValue(false));
 
-        $defaultDriver->expects($this->never())
+        $defaultDriver->expects(self::never())
             ->method('loadMetadataForClass');
-        $defaultDriver->expects($this->once())
+        $defaultDriver->expects(self::once())
             ->method('isTransient')
-            ->with($this->equalTo($entityClassName))
-            ->will($this->returnValue(true));
+            ->with(self::equalTo($entityClassName))
+            ->will(self::returnValue(true));
 
         self::assertNull($chain->getDefaultDriver());
 
         $chain->setDefaultDriver($defaultDriver);
         $chain->addDriver($companyDriver, 'Doctrine\Tests\Models\Company');
 
-        self::assertSame($defaultDriver, $chain->getDefaultDriver());
+        /** @var MappingDriver|MockObject $driver */
+        $driver = $chain->getDefaultDriver();
+
+        self::assertSame($defaultDriver, $driver);
 
         self::assertTrue($chain->isTransient($entityClassName));
         self::assertFalse($chain->isTransient($managerClassName));
     }
 
-    public function testDefaultDriverGetAllClassNames()
+    public function testDefaultDriverGetAllClassNames() : void
     {
-        /** @var MappingDriver|PHPUnit_Framework_MockObject_MockObject $companyDriver */
+        /** @var MappingDriver|MockObject $companyDriver */
         $companyDriver = $this->createMock(MappingDriver::class);
-        /** @var MappingDriver|PHPUnit_Framework_MockObject_MockObject $defaultDriver */
+        /** @var MappingDriver|MockObject $defaultDriver */
         $defaultDriver = $this->createMock(MappingDriver::class);
         $chain         = new MappingDriverChain();
 
-        $companyDriver->expects($this->once())
+        $companyDriver->expects(self::once())
             ->method('getAllClassNames')
-            ->will($this->returnValue(['Doctrine\Tests\Models\Company\Foo']));
+            ->will(self::returnValue(['Doctrine\Tests\Models\Company\Foo']));
 
-        $defaultDriver->expects($this->once())
+        $defaultDriver->expects(self::once())
             ->method('getAllClassNames')
-            ->will($this->returnValue(['Other\Class']));
+            ->will(self::returnValue(['Other\Class']));
 
         $chain->setDefaultDriver($defaultDriver);
         $chain->addDriver($companyDriver, 'Doctrine\Tests\Models\Company');

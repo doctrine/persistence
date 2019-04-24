@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Mapping;
 
+use ReflectionClass;
+use ReflectionProperty;
 use function strpos;
 use function strrev;
 use function strrpos;
@@ -15,7 +19,7 @@ class StaticReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getParentClasses($class)
+    public function getParentClasses(string $class) : array
     {
         return [];
     }
@@ -23,10 +27,13 @@ class StaticReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClassShortName($className)
+    public function getClassShortName(string $className) : string
     {
         if (strpos($className, '\\') !== false) {
-            $className = substr($className, strrpos($className, '\\') + 1);
+            /** @var int $pos */
+            $pos = strrpos($className, '\\');
+
+            $className = substr($className, $pos + 1);
         }
 
         return $className;
@@ -35,11 +42,15 @@ class StaticReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClassNamespace($className)
+    public function getClassNamespace(string $className) : string
     {
         $namespace = '';
+
         if (strpos($className, '\\') !== false) {
-            $namespace = strrev(substr(strrev($className), strpos(strrev($className), '\\') + 1));
+            /** @var int $pos */
+            $pos = strpos(strrev($className), '\\');
+
+            $namespace = strrev(substr(strrev($className), $pos + 1));
         }
 
         return $namespace;
@@ -48,7 +59,7 @@ class StaticReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClass($class)
+    public function getClass(string $class) : ?ReflectionClass
     {
         return null;
     }
@@ -56,7 +67,7 @@ class StaticReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getAccessibleProperty($class, $property)
+    public function getAccessibleProperty(string $class, string $property) : ?ReflectionProperty
     {
         return null;
     }
@@ -64,7 +75,7 @@ class StaticReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function hasPublicMethod($class, $method)
+    public function hasPublicMethod(string $class, string $method) : bool
     {
         return true;
     }
