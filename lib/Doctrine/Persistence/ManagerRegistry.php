@@ -26,7 +26,7 @@ interface ManagerRegistry extends ConnectionRegistry
     /**
      * Gets an array of all registered object managers.
      *
-     * @return ObjectManager[] An array of ObjectManager instances
+     * @return array<string, ObjectManager> An array of ObjectManager instances
      */
     public function getManagers() : array;
 

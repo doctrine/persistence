@@ -21,7 +21,7 @@ interface ClassMetadata
      *
      * The returned structure is an array of the identifier field names.
      *
-     * @return mixed[]
+     * @return array<int, string>
      */
     public function getIdentifier() : array;
 
@@ -108,7 +108,7 @@ interface ClassMetadata
      *
      * Has to return an empty array if no identifier isset.
      *
-     * @return mixed[]
+     * @return array<string, mixed>
      */
     public function getIdentifierValues(object $object) : array;
 }

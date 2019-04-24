@@ -23,7 +23,7 @@ class MappingDriverChain implements MappingDriver
      */
     private $defaultDriver;
 
-    /** @var MappingDriver[] */
+    /** @var array<string, MappingDriver> */
     private $drivers = [];
 
     /**
@@ -53,7 +53,7 @@ class MappingDriverChain implements MappingDriver
     /**
      * Gets the array of nested drivers.
      *
-     * @return MappingDriver[] $drivers
+     * @return array<string, MappingDriver> $drivers
      */
     public function getDrivers() : array
     {

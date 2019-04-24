@@ -23,7 +23,7 @@ interface ObjectRepository
     /**
      * Finds all objects in the repository.
      *
-     * @return object[] The objects.
+     * @return array<int, object> The objects.
      */
     public function findAll() : array;
 
@@ -34,10 +34,10 @@ interface ObjectRepository
      * an UnexpectedValueException if certain values of the sorting or limiting details are
      * not supported.
      *
-     * @param mixed[]       $criteria
-     * @param string[]|null $orderBy
+     * @param array<string, mixed>  $criteria
+     * @param array<string, string> $orderBy
      *
-     * @return object[] The objects.
+     * @return array<int, object> The objects.
      *
      * @throws UnexpectedValueException
      */
@@ -51,7 +51,7 @@ interface ObjectRepository
     /**
      * Finds a single object by a set of criteria.
      *
-     * @param mixed[] $criteria The criteria.
+     * @param array<string, mixed> $criteria The criteria.
      *
      * @return object|null The object.
      */

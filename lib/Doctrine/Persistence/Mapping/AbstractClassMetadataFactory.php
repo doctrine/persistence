@@ -34,7 +34,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /** @var Cache|null */
     private $cacheDriver;
 
-    /** @var ClassMetadata[] */
+    /** @var array<string, ClassMetadata> */
     private $loadedMetadata = [];
 
     /** @var bool */
@@ -73,7 +73,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * Forces the factory to load the metadata of all classes known to the underlying
      * mapping driver.
      *
-     * @return ClassMetadata[] The ClassMetadata instances of all mapped classes.
+     * @return array<int, ClassMetadata> The ClassMetadata instances of all mapped classes.
      */
     public function getAllMetadata() : array
     {
@@ -222,7 +222,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * Gets an array of parent classes for the given entity class.
      *
-     * @return string[]
+     * @return array<int, string>
      */
     protected function getParentClasses(string $name) : array
     {
@@ -255,7 +255,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      *
      * @param string $name The name of the class for which the metadata should get loaded.
      *
-     * @return string[]
+     * @return array<int, string>
      */
     protected function loadMetadata(string $name) : array
     {
@@ -323,8 +323,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * Actually loads the metadata from the underlying metadata.
      *
-     * @param string[] $nonSuperclassParents All parent class names
-     *                                       that are not marked as mapped superclasses.
+     * @param array<int, string> $nonSuperclassParents All parent class names that are not marked as mapped superclasses.
      */
     abstract protected function doLoadMetadata(
         ClassMetadata $class,
