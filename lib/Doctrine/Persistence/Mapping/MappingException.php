@@ -14,7 +14,7 @@ use function sprintf;
 class MappingException extends Exception
 {
     /**
-     * @param string[] $namespaces
+     * @param array<int, string> $namespaces
      */
     public static function classNotFoundInNamespaces(
         string $className,
