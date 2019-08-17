@@ -23,9 +23,11 @@ interface ObjectRepository
     /**
      * Finds all objects in the repository.
      *
+     * @param array<string, string> $orderBy
+     *
      * @return array<int, object> The objects.
      */
-    public function findAll() : array;
+    public function findAll(?array $orderBy) : array;
 
     /**
      * Finds objects by a set of criteria.
