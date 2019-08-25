@@ -27,7 +27,7 @@ interface ObjectRepository
      *
      * @return array<int, object> The objects.
      */
-    public function findAll(?array $orderBy = null) : array;
+    public function findAll(?array $orderBy = []) : array;
 
     /**
      * Finds objects by a set of criteria.
