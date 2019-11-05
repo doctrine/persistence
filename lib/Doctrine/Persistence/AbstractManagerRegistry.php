@@ -183,13 +183,13 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
             $class = $parentClass->getName();
         }
 
-        if($this->defaultManager) {
+        if (!empty($this->defaultManager)) {
             /** @var ObjectManager $manager */
-          $manager = $this->getManager($this->defaultManager);
+            $manager = $this->getManager($this->defaultManager);
 
-          if (! $manager->getMetadataFactory()->isTransient($class)) {
-            return $manager;
-          }
+            if (! $manager->getMetadataFactory()->isTransient($class)) {
+                return $manager;
+            }
         }
 
         foreach ($this->managers as $id) {
