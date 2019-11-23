@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
+use BadMethodCallException;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Proxy;
+use Doctrine\Persistence\SimpleCacheAdapter;
+use Psr\SimpleCache\CacheInterface;
 use ReflectionException;
+use const E_USER_DEPRECATED;
 use function array_reverse;
 use function array_unshift;
 use function explode;
+use function sprintf;
+use function str_replace;
 use function strpos;
 use function strrpos;
 use function substr;
+use function trigger_error;
 
 /**
  * The ClassMetadataFactory is used to create ClassMetadata objects that contain all the
@@ -31,8 +38,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     protected $cacheSalt = '$CLASSMETADATA';
 
-    /** @var Cache|null */
-    private $cacheDriver;
+    /** @var CacheInterface|null */
+    private $cache;
 
     /** @var array<string, ClassMetadata> */
     private $loadedMetadata = [];
@@ -45,18 +52,35 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
     /**
      * Sets the cache driver used by the factory to cache ClassMetadata instances.
+     *
+     * @deprecated
      */
     public function setCacheDriver(?Cache $cacheDriver = null) : void
     {
-        $this->cacheDriver = $cacheDriver;
+        @trigger_error(sprintf('%s is deprecated. Use setCache() with a PSR-16 cache instead.', __METHOD__), E_USER_DEPRECATED);
+
+        $this->cache = new SimpleCacheAdapter($cacheDriver);
     }
 
     /**
      * Gets the cache driver used by the factory to cache ClassMetadata instances.
+     *
+     * @deprecated
      */
     public function getCacheDriver() : ?Cache
     {
-        return $this->cacheDriver;
+        @trigger_error(sprintf('%s is deprecated.', __METHOD__), E_USER_DEPRECATED);
+
+        if ($this->cache !== null && ! $this->cache instanceof SimpleCacheAdapter) {
+            throw new BadMethodCallException('Cannot convert a PSR-16 cache back to a Doctrine cache.');
+        }
+
+        return $this->cache === null ? null : $this->cache->unwrap();
+    }
+
+    public function setCache(?CacheInterface $cache) : void
+    {
+        $this->cache = $cache;
     }
 
     /**
@@ -163,8 +187,9 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         $loadingException = null;
 
         try {
-            if ($this->cacheDriver !== null) {
-                $cached = $this->cacheDriver->fetch($realClassName . $this->cacheSalt);
+            if ($this->cache !== null) {
+                $cacheKey = str_replace('\\', '.', $realClassName) . $this->cacheSalt;
+                $cached   = $this->cache->get($cacheKey);
 
                 if ($cached instanceof ClassMetadata) {
                     $this->loadedMetadata[$realClassName] = $cached;
@@ -172,8 +197,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
                     foreach ($this->loadMetadata($realClassName) as $loadedClassName) {
-                        $this->cacheDriver->save(
-                            $loadedClassName . $this->cacheSalt,
+                        $this->cache->set(
+                            $cacheKey,
                             $this->loadedMetadata[$loadedClassName]
                         );
                     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Persistence\Mapping;
 
+use Cache\Adapter\PHPArray\ArrayCachePool;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -12,6 +13,7 @@ use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use stdClass;
+use function str_replace;
 
 /**
  * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
@@ -63,25 +65,46 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertTrue($this->cmf->hasMetadataFor(RootEntity::class));
     }
 
-    public function testGetCachedMetadata() : void
+    public function testGetCachedMetadataLegacy() : void
     {
         $metadata = $this->createMock(ClassMetadata::class);
         $cache    = new ArrayCache();
-        $cache->save(ChildEntity::class . '$CLASSMETADATA', $metadata);
+        $cache->save(str_replace('\\', '.', ChildEntity::class) . '$CLASSMETADATA', $metadata);
 
         $this->cmf->setCacheDriver($cache);
 
-        self::assertSame($metadata, $this->cmf->getMetadataFor(ChildEntity::class));
+        self::assertEquals($metadata, $this->cmf->getMetadataFor(ChildEntity::class));
     }
 
-    public function testCacheGetMetadataFor() : void
+    public function testGetCachedMetadata() : void
+    {
+        $metadata = $this->createMock(ClassMetadata::class);
+        $cache    = new ArrayCachePool();
+        $cache->set(str_replace('\\', '.', ChildEntity::class) . '$CLASSMETADATA', $metadata);
+
+        $this->cmf->setCache($cache);
+
+        self::assertEquals($metadata, $this->cmf->getMetadataFor(ChildEntity::class));
+    }
+
+    public function testCacheGetMetadataForLegacy() : void
     {
         $cache = new ArrayCache();
         $this->cmf->setCacheDriver($cache);
 
         $loadedMetadata = $this->cmf->getMetadataFor(ChildEntity::class);
 
-        self::assertSame($loadedMetadata, $cache->fetch(ChildEntity::class . '$CLASSMETADATA'));
+        self::assertEquals($loadedMetadata, $cache->fetch(str_replace('\\', '.', ChildEntity::class) . '$CLASSMETADATA'));
+    }
+
+    public function testCacheGetMetadataFor() : void
+    {
+        $cache = new ArrayCachePool();
+        $this->cmf->setCache($cache);
+
+        $loadedMetadata = $this->cmf->getMetadataFor(ChildEntity::class);
+
+        self::assertEquals($loadedMetadata, $cache->get(str_replace('\\', '.', ChildEntity::class) . '$CLASSMETADATA'));
     }
 
     public function testGetAliasedMetadata() : void
