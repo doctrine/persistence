@@ -1,4 +1,10 @@
 parameters:
+    level: 3
+
+    paths:
+        - lib
+        - tests
+
     autoload_files:
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/ObjectManagerDecoratorTest.php
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/PersistentObjectTest.php
