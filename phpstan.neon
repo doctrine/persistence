@@ -8,3 +8,4 @@ parameters:
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/Mapping/_files/TestEntity.php
     ignoreErrors:
         - '#Call to an undefined method Doctrine\\Tests\\Common\\Persistence\\TestObject#'
+        - '#Method Doctrine\\Tests\\Common\\Persistence\\Mapping\\TestFileDriver\:\:loadMappingFile\(\) should return array\<Doctrine\\Common\\Persistence\\Mapping\\ClassMetadata\> but returns array\<string, string\>\.#'

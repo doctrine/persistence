@@ -56,7 +56,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      *
      * @param string $name The name of the service.
      *
-     * @return object The instance of the given service.
+     * @return ObjectManager The instance of the given service.
      */
     abstract protected function getService($name);
 
