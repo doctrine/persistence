@@ -2,8 +2,8 @@
 
 namespace Doctrine\Tests\Common\Persistence\Mapping;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\Mapping\Driver\PHPDriver;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\Driver\PHPDriver;
 use Doctrine\Tests\DoctrineTestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 

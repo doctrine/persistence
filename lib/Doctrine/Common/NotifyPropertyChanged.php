@@ -2,19 +2,30 @@
 
 namespace Doctrine\Common;
 
-/**
- * Interface for classes that notify event listeners of changes to their managed properties.
- *
- * This interface is implemented by objects that manually want to notify their object manager or
- * other listeners when properties change, instead of relying on the object manager to compute
- * property changes itself when changes are to be persisted.
- */
-interface NotifyPropertyChanged
-{
+use const E_USER_DEPRECATED;
+use function class_alias;
+use function interface_exists;
+use function sprintf;
+use function trigger_error;
+
+if (! interface_exists(\Doctrine\Persistence\NotifyPropertyChanged::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\NotifyPropertyChanged class is deprecated since doctrine/persistence 1.3 and will be removed in 2.0.'
+        . ' Use \Doctrine\Persistence\NotifyPropertyChanged instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
+
+class_alias(
+    \Doctrine\Persistence\NotifyPropertyChanged::class,
+    __NAMESPACE__ . '\NotifyPropertyChanged'
+);
+
+if (false) {
     /**
-     * Adds a listener that wants to be notified about property changes.
-     *
-     * @return void
+     * @deprecated 1.3 Use Doctrine\Persistence\NotifyPropertyChanged
      */
-    public function addPropertyChangedListener(PropertyChangedListener $listener);
+    interface NotifyPropertyChanged extends \Doctrine\Persistence\NotifyPropertyChanged
+    {
+    }
 }

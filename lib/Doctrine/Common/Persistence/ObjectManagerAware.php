@@ -2,28 +2,30 @@
 
 namespace Doctrine\Common\Persistence;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use const E_USER_DEPRECATED;
+use function class_alias;
+use function interface_exists;
+use function sprintf;
+use function trigger_error;
 
-/**
- * Makes a Persistent Objects aware of its own object-manager.
- *
- * Using this interface the managing object manager and class metadata instances
- * are injected into the persistent object after construction. This allows
- * you to implement ActiveRecord functionality on top of the persistence-ignorance
- * that Doctrine propagates.
- *
- * Word of Warning: This is a very powerful hook to change how you can work with your domain models.
- * Using this hook will break the Single Responsibility Principle inside your Domain Objects
- * and increase the coupling of database and objects.
- *
- * Every ObjectManager has to implement this functionality itself.
- */
-interface ObjectManagerAware
-{
+if (! interface_exists(\Doctrine\Persistence\ObjectManagerAware::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\ObjectManagerAware class is deprecated since doctrine/persistence 1.3 and will be removed in 2.0.'
+        . ' Use \Doctrine\Persistence\ObjectManagerAware instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
+
+class_alias(
+    \Doctrine\Persistence\ObjectManagerAware::class,
+    __NAMESPACE__ . '\ObjectManagerAware'
+);
+
+if (false) {
     /**
-     * Injects responsible ObjectManager and the ClassMetadata into this persistent object.
-     *
-     * @return void
+     * @deprecated 1.3 Use Doctrine\Persistence\ObjectManagerAware
      */
-    public function injectObjectManager(ObjectManager $objectManager, ClassMetadata $classMetadata);
+    interface ObjectManagerAware extends \Doctrine\Persistence\ObjectManagerAware
+    {
+    }
 }

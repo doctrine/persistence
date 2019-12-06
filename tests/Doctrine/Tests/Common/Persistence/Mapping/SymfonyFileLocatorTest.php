@@ -2,8 +2,8 @@
 
 namespace Doctrine\Tests\Common\Persistence\Mapping;
 
-use Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator;
-use Doctrine\Common\Persistence\Mapping\MappingException;
+use Doctrine\Persistence\Mapping\Driver\SymfonyFileLocator;
+use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use const DIRECTORY_SEPARATOR;
 use function realpath;

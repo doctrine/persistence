@@ -2,38 +2,30 @@
 
 namespace Doctrine\Common\Persistence;
 
-/**
- * Contract covering connection for a Doctrine persistence layer ManagerRegistry class to implement.
- */
-interface ConnectionRegistry
-{
-    /**
-     * Gets the default connection name.
-     *
-     * @return string The default connection name.
-     */
-    public function getDefaultConnectionName();
+use const E_USER_DEPRECATED;
+use function class_alias;
+use function interface_exists;
+use function sprintf;
+use function trigger_error;
 
-    /**
-     * Gets the named connection.
-     *
-     * @param string $name The connection name (null for the default one).
-     *
-     * @return object
-     */
-    public function getConnection($name = null);
+if (! interface_exists(\Doctrine\Persistence\ConnectionRegistry::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\ConnectionRegistry class is deprecated since doctrine/persistence 1.3 and will be removed in 2.0.'
+        . ' Use \Doctrine\Persistence\ConnectionRegistry instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
 
-    /**
-     * Gets an array of all registered connections.
-     *
-     * @return object[] An array of Connection instances.
-     */
-    public function getConnections();
+class_alias(
+    \Doctrine\Persistence\ConnectionRegistry::class,
+    __NAMESPACE__ . '\ConnectionRegistry'
+);
 
+if (false) {
     /**
-     * Gets all connection names.
-     *
-     * @return string[] An array of connection names.
+     * @deprecated 1.3 Use Doctrine\Persistence\ConnectionRegistry
      */
-    public function getConnectionNames();
+    interface ConnectionRegistry extends \Doctrine\Persistence\ConnectionRegistry
+    {
+    }
 }

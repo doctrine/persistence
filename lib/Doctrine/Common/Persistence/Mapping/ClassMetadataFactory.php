@@ -2,52 +2,30 @@
 
 namespace Doctrine\Common\Persistence\Mapping;
 
-/**
- * Contract for a Doctrine persistence layer ClassMetadata class to implement.
- */
-interface ClassMetadataFactory
-{
-    /**
-     * Forces the factory to load the metadata of all classes known to the underlying
-     * mapping driver.
-     *
-     * @return ClassMetadata[] The ClassMetadata instances of all mapped classes.
-     */
-    public function getAllMetadata();
+use const E_USER_DEPRECATED;
+use function class_alias;
+use function interface_exists;
+use function sprintf;
+use function trigger_error;
 
-    /**
-     * Gets the class metadata descriptor for a class.
-     *
-     * @param string $className The name of the class.
-     *
-     * @return ClassMetadata
-     */
-    public function getMetadataFor($className);
+if (! interface_exists(\Doctrine\Persistence\Mapping\ClassMetadataFactory::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\ClassMetadataFactory class is deprecated since doctrine/persistence 1.3 and will be removed in 2.0.'
+        . ' Use \Doctrine\Persistence\Mapping\ClassMetadataFactory instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
 
-    /**
-     * Checks whether the factory has the metadata for a class loaded already.
-     *
-     * @param string $className
-     *
-     * @return bool TRUE if the metadata of the class in question is already loaded, FALSE otherwise.
-     */
-    public function hasMetadataFor($className);
+class_alias(
+    \Doctrine\Persistence\Mapping\ClassMetadataFactory::class,
+    __NAMESPACE__ . '\ClassMetadataFactory'
+);
 
+if (false) {
     /**
-     * Sets the metadata descriptor for a specific class.
-     *
-     * @param string        $className
-     * @param ClassMetadata $class
+     * @deprecated 1.3 Use Doctrine\Persistence\Mapping\ClassMetadataFactory
      */
-    public function setMetadataFor($className, $class);
-
-    /**
-     * Returns whether the class with the specified name should have its metadata loaded.
-     * This is only the case if it is either mapped directly or as a MappedSuperclass.
-     *
-     * @param string $className
-     *
-     * @return bool
-     */
-    public function isTransient($className);
+    interface ClassMetadataFactory extends \Doctrine\Persistence\Mapping\ClassMetadataFactory
+    {
+    }
 }

@@ -2,86 +2,30 @@
 
 namespace Doctrine\Common\Persistence\Mapping;
 
-use Doctrine\Common\Reflection\RuntimePublicReflectionProperty;
-use ReflectionClass;
-use ReflectionException;
-use ReflectionMethod;
-use ReflectionProperty;
+use const E_USER_DEPRECATED;
+use function class_alias;
 use function class_exists;
-use function class_parents;
+use function sprintf;
+use function trigger_error;
 
-/**
- * PHP Runtime Reflection Service.
- */
-class RuntimeReflectionService implements ReflectionService
-{
+if (! class_exists(\Doctrine\Persistence\Mapping\RuntimeReflectionService::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\RuntimeReflectionService class is deprecated since doctrine/persistence 1.3 and will be removed in 2.0.'
+        . ' Use \Doctrine\Persistence\Mapping\RuntimeReflectionService instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
+
+class_alias(
+    \Doctrine\Persistence\Mapping\RuntimeReflectionService::class,
+    __NAMESPACE__ . '\RuntimeReflectionService'
+);
+
+if (false) {
     /**
-     * {@inheritDoc}
+     * @deprecated 1.3 Use Doctrine\Persistence\Mapping\RuntimeReflectionService
      */
-    public function getParentClasses($class)
+    class RuntimeReflectionService extends \Doctrine\Persistence\Mapping\RuntimeReflectionService
     {
-        if (! class_exists($class)) {
-            throw MappingException::nonExistingClass($class);
-        }
-
-        return class_parents($class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getClassShortName($class)
-    {
-        $reflectionClass = new ReflectionClass($class);
-
-        return $reflectionClass->getShortName();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getClassNamespace($class)
-    {
-        $reflectionClass = new ReflectionClass($class);
-
-        return $reflectionClass->getNamespaceName();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getClass($class)
-    {
-        return new ReflectionClass($class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAccessibleProperty($class, $property)
-    {
-        $reflectionProperty = new ReflectionProperty($class, $property);
-
-        if ($reflectionProperty->isPublic()) {
-            $reflectionProperty = new RuntimePublicReflectionProperty($class, $property);
-        }
-
-        $reflectionProperty->setAccessible(true);
-
-        return $reflectionProperty;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function hasPublicMethod($class, $method)
-    {
-        try {
-            $reflectionMethod = new ReflectionMethod($class, $method);
-        } catch (ReflectionException $e) {
-            return false;
-        }
-
-        return $reflectionMethod->isPublic();
     }
 }

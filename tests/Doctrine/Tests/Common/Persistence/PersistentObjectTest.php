@@ -3,10 +3,10 @@
 namespace Doctrine\Tests\Common\Persistence;
 
 use BadMethodCallException;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\Mapping\ReflectionService;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\PersistentObject;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ReflectionService;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Tests\DoctrineTestCase;
 use InvalidArgumentException;
 use PHPUnit_Framework_MockObject_MockObject;
