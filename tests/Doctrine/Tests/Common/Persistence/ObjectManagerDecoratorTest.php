@@ -2,8 +2,8 @@
 
 namespace Doctrine\Tests\Common\Persistence;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectManagerDecorator;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManagerDecorator;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionClass;

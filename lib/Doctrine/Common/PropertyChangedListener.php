@@ -2,21 +2,30 @@
 
 namespace Doctrine\Common;
 
-/**
- * Contract for classes that are potential listeners of a {@see NotifyPropertyChanged}
- * implementor.
- */
-interface PropertyChangedListener
-{
+use const E_USER_DEPRECATED;
+use function class_alias;
+use function interface_exists;
+use function sprintf;
+use function trigger_error;
+
+if (! interface_exists(\Doctrine\Persistence\PropertyChangedListener::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\PropertyChangedListener class is deprecated since doctrine/persistence 1.3 and will be removed in 2.0.'
+        . ' Use \Doctrine\Persistence\PropertyChangedListener instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
+
+class_alias(
+    \Doctrine\Persistence\PropertyChangedListener::class,
+    __NAMESPACE__ . '\PropertyChangedListener'
+);
+
+if (false) {
     /**
-     * Collect information about a property change.
-     *
-     * @param object $sender       The object on which the property changed.
-     * @param string $propertyName The name of the property that changed.
-     * @param mixed  $oldValue     The old value of the property that changed.
-     * @param mixed  $newValue     The new value of the property that changed.
-     *
-     * @return void
+     * @deprecated 1.3 Use Doctrine\Persistence\PropertyChangedListener
      */
-    public function propertyChanged($sender, $propertyName, $oldValue, $newValue);
+    interface PropertyChangedListener extends \Doctrine\Persistence\PropertyChangedListener
+    {
+    }
 }

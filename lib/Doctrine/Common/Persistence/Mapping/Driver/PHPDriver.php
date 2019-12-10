@@ -2,43 +2,30 @@
 
 namespace Doctrine\Common\Persistence\Mapping\Driver;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use const E_USER_DEPRECATED;
+use function class_alias;
+use function class_exists;
+use function sprintf;
+use function trigger_error;
 
-/**
- * The PHPDriver includes php files which just populate ClassMetadataInfo
- * instances with plain PHP code.
- */
-class PHPDriver extends FileDriver
-{
-    /** @var ClassMetadata */
-    protected $metadata;
+if (! class_exists(\Doctrine\Persistence\Mapping\Driver\PHPDriver::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\PHPDriver class is deprecated since doctrine/persistence 1.3 and will be removed in 2.0.'
+        . ' Use \Doctrine\Persistence\Mapping\Driver\PHPDriver instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
 
+class_alias(
+    \Doctrine\Persistence\Mapping\Driver\PHPDriver::class,
+    __NAMESPACE__ . '\PHPDriver'
+);
+
+if (false) {
     /**
-     * {@inheritDoc}
+     * @deprecated 1.3 Use Doctrine\Persistence\Mapping\Driver\PHPDriver
      */
-    public function __construct($locator)
+    class PHPDriver extends \Doctrine\Persistence\Mapping\Driver\PHPDriver
     {
-        parent::__construct($locator, '.php');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function loadMetadataForClass($className, ClassMetadata $metadata)
-    {
-        $this->metadata = $metadata;
-
-        $this->loadMappingFile($this->locator->findMappingFile($className));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function loadMappingFile($file)
-    {
-        $metadata = $this->metadata;
-        include $file;
-
-        return [$metadata->getName() => $metadata];
     }
 }

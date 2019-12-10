@@ -3,9 +3,9 @@
 namespace Doctrine\Tests\Common\Persistence\Mapping;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\Mapping\Driver\AnnotationDriver;
 use Doctrine\Entity;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\Driver\AnnotationDriver;
 use Doctrine\TestClass;
 use PHPUnit\Framework\TestCase;
 

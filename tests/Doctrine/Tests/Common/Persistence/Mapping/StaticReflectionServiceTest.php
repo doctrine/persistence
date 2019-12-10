@@ -2,7 +2,7 @@
 
 namespace Doctrine\Tests\Common\Persistence\Mapping;
 
-use Doctrine\Common\Persistence\Mapping\StaticReflectionService;
+use Doctrine\Persistence\Mapping\StaticReflectionService;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use function count;

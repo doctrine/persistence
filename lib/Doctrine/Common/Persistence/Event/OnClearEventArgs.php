@@ -2,57 +2,30 @@
 
 namespace Doctrine\Common\Persistence\Event;
 
-use Doctrine\Common\EventArgs;
-use Doctrine\Common\Persistence\ObjectManager;
+use const E_USER_DEPRECATED;
+use function class_alias;
+use function class_exists;
+use function sprintf;
+use function trigger_error;
 
-/**
- * Provides event arguments for the onClear event.
- */
-class OnClearEventArgs extends EventArgs
-{
-    /** @var ObjectManager */
-    private $objectManager;
+if (! class_exists(\Doctrine\Persistence\Event\OnClearEventArgs::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\OnClearEventArgs class is deprecated since doctrine/persistence 1.3 and will be removed in 2.0.'
+        . ' Use \Doctrine\Persistence\Event\OnClearEventArgs instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
 
-    /** @var string|null */
-    private $entityClass;
+class_alias(
+    \Doctrine\Persistence\Event\OnClearEventArgs::class,
+    __NAMESPACE__ . '\OnClearEventArgs'
+);
 
+if (false) {
     /**
-     * @param ObjectManager $objectManager The object manager.
-     * @param string|null   $entityClass   The optional entity class.
+     * @deprecated 1.3 Use Doctrine\Persistence\Event\OnClearEventArgs
      */
-    public function __construct($objectManager, $entityClass = null)
+    class OnClearEventArgs extends \Doctrine\Persistence\Event\OnClearEventArgs
     {
-        $this->objectManager = $objectManager;
-        $this->entityClass   = $entityClass;
-    }
-
-    /**
-     * Retrieves the associated ObjectManager.
-     *
-     * @return ObjectManager
-     */
-    public function getObjectManager()
-    {
-        return $this->objectManager;
-    }
-
-    /**
-     * Returns the name of the entity class that is cleared, or null if all are cleared.
-     *
-     * @return string|null
-     */
-    public function getEntityClass()
-    {
-        return $this->entityClass;
-    }
-
-    /**
-     * Returns whether this event clears all entities.
-     *
-     * @return bool
-     */
-    public function clearsAllEntities()
-    {
-        return $this->entityClass === null;
     }
 }

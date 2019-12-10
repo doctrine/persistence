@@ -2,34 +2,30 @@
 
 namespace Doctrine\Common\Persistence;
 
-/**
- * Interface for proxy classes.
- */
-interface Proxy
-{
-    /**
-     * Marker for Proxy class names.
-     */
-    public const MARKER = '__CG__';
+use const E_USER_DEPRECATED;
+use function class_alias;
+use function interface_exists;
+use function sprintf;
+use function trigger_error;
 
-    /**
-     * Length of the proxy marker.
-     */
-    public const MARKER_LENGTH = 6;
+if (! interface_exists(\Doctrine\Persistence\Proxy::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\Proxy class is deprecated since doctrine/persistence 1.3 and will be removed in 2.0.'
+        . ' Use \Doctrine\Persistence\Proxy instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
 
-    /**
-     * Initializes this proxy if its not yet initialized.
-     *
-     * Acts as a no-op if already initialized.
-     *
-     * @return void
-     */
-    public function __load();
+class_alias(
+    \Doctrine\Persistence\Proxy::class,
+    __NAMESPACE__ . '\Proxy'
+);
 
+if (false) {
     /**
-     * Returns whether this proxy is initialized or not.
-     *
-     * @return bool
+     * @deprecated 1.3 Use Doctrine\Persistence\Proxy
      */
-    public function __isInitialized();
+    interface Proxy extends \Doctrine\Persistence\Proxy
+    {
+    }
 }
