@@ -51,6 +51,7 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     {
         return $this->driver;
     }
+
     protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService)
     {
     }
@@ -76,6 +77,7 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     public function isTransient($class)
     {
         $name = $this->metadata->getName();
+
         return $class !== $name;
     }
 }

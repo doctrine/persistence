@@ -394,6 +394,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         if ($this->reflectionService === null) {
             $this->reflectionService = new RuntimeReflectionService();
         }
+
         return $this->reflectionService;
     }
 

@@ -169,6 +169,7 @@ class TestObjectMetadata implements ClassMetadata
     public function getAssociationMappedByTargetField($assocName)
     {
         $assoc = ['children' => 'parent'];
+
         return $assoc[$assocName];
     }
 
@@ -205,6 +206,7 @@ class TestObjectMetadata implements ClassMetadata
     public function getTypeOfField($fieldName)
     {
         $types = ['id' => 'integer', 'name' => 'string'];
+
         return $types[$fieldName];
     }
 

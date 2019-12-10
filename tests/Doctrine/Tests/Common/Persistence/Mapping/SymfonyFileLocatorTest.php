@@ -159,7 +159,6 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         }
     }
 
-
     public function testFindMappingFile()
     {
         $path   = __DIR__ . '/_files';
