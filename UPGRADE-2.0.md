@@ -17,4 +17,5 @@ ActiveRecord style functionality.
 
 ## Strict Typing
 
-Proper type hints have been added to all method signatures and strict types have been enabled.
+Type declarations have been enabled for all parameters and strict types have been enabled.
+Return type declarations will be added in the next major release.

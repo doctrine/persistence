@@ -20,7 +20,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getParentClasses(string $class) : array
+    public function getParentClasses(string $class)
     {
         if (! class_exists($class)) {
             throw MappingException::nonExistingClass($class);
@@ -32,7 +32,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClassShortName(string $class) : string
+    public function getClassShortName(string $class)
     {
         $reflectionClass = new ReflectionClass($class);
 
@@ -42,7 +42,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClassNamespace(string $class) : string
+    public function getClassNamespace(string $class)
     {
         $reflectionClass = new ReflectionClass($class);
 
@@ -52,7 +52,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClass(string $class) : ?ReflectionClass
+    public function getClass(string $class)
     {
         return new ReflectionClass($class);
     }
@@ -60,7 +60,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getAccessibleProperty(string $class, string $property) : ?ReflectionProperty
+    public function getAccessibleProperty(string $class, string $property)
     {
         $reflectionProperty = new ReflectionProperty($class, $property);
 
@@ -76,7 +76,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function hasPublicMethod(string $class, string $method) : bool
+    public function hasPublicMethod(string $class, string $method)
     {
         try {
             $reflectionMethod = new ReflectionMethod($class, $method);

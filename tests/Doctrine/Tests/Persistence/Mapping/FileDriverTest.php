@@ -69,7 +69,10 @@ class FileDriverTest extends DoctrineTestCase
 
     public function testGetAllClassNamesGlobalBasename() : void
     {
-        $driver = $this->createTestFileDriver($this->newLocator());
+        $locator = $this->newLocator();
+        $locator->expects(self::any())->method('getAllClassNames')->with('global')->will(self::returnValue(['stdGlobal', 'stdGlobal2']));
+
+        $driver = $this->createTestFileDriver($locator);
         $driver->setGlobalBasename('global');
 
         $classNames = $driver->getAllClassNames();
@@ -118,6 +121,11 @@ class FileDriverTest extends DoctrineTestCase
 
         $driver = $this->createTestFileDriver($locator);
         $driver->setGlobalBasename('global');
+
+        $locator->expects(self::once())
+                ->method('findMappingFile')
+                ->with('stdClass')
+                ->willReturn('');
 
         $driver->getElement('stdClass');
         $classNames = $driver->getAllClassNames();

@@ -14,8 +14,10 @@ interface FileLocator
 {
     /**
      * Locates mapping file for the given class name.
+     *
+     * @return string
      */
-    public function findMappingFile(string $className) : string;
+    public function findMappingFile(string $className);
 
     /**
      * Gets all class names that are found with this file locator.
@@ -24,22 +26,26 @@ interface FileLocator
      *
      * @return array<int, string>
      */
-    public function getAllClassNames(string $globalBasename) : array;
+    public function getAllClassNames(string $globalBasename);
 
     /**
      * Checks if a file can be found for this class name.
+     *
+     * @return bool
      */
-    public function fileExists(string $className) : bool;
+    public function fileExists(string $className);
 
     /**
      * Gets all the paths that this file locator looks for mapping files.
      *
      * @return array<int, string>
      */
-    public function getPaths() : array;
+    public function getPaths();
 
     /**
      * Gets the file extension that mapping files are suffixed with.
+     *
+     * @return string|null
      */
-    public function getFileExtension() : ?string;
+    public function getFileExtension();
 }

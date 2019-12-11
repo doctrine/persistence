@@ -82,8 +82,10 @@ class SymfonyFileLocator implements FileLocator
      * Adds Namespace Prefixes.
      *
      * @param array<string, string> $prefixes
+     *
+     * @return void
      */
-    public function addNamespacePrefixes(array $prefixes) : void
+    public function addNamespacePrefixes(array $prefixes)
     {
         $this->prefixes = array_merge($this->prefixes, $prefixes);
         $this->paths    = array_merge($this->paths, array_keys($prefixes));
@@ -94,7 +96,7 @@ class SymfonyFileLocator implements FileLocator
      *
      * @return string[]
      */
-    public function getNamespacePrefixes() : array
+    public function getNamespacePrefixes()
     {
         return $this->prefixes;
     }
@@ -102,7 +104,7 @@ class SymfonyFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function getPaths() : array
+    public function getPaths()
     {
         return $this->paths;
     }
@@ -110,7 +112,7 @@ class SymfonyFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function getFileExtension() : ?string
+    public function getFileExtension()
     {
         return $this->fileExtension;
     }
@@ -119,8 +121,10 @@ class SymfonyFileLocator implements FileLocator
      * Sets the file extension used to look for mapping files under.
      *
      * @param string $fileExtension The file extension to set.
+     *
+     * @return void
      */
-    public function setFileExtension(string $fileExtension) : void
+    public function setFileExtension(string $fileExtension)
     {
         $this->fileExtension = $fileExtension;
     }
@@ -128,10 +132,9 @@ class SymfonyFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function fileExists(string $className) : bool
+    public function fileExists(string $className)
     {
         $defaultFileName = str_replace('\\', $this->nsSeparator, $className) . $this->fileExtension;
-
         foreach ($this->paths as $path) {
             if (! isset($this->prefixes[$path])) {
                 // global namespace class
@@ -161,7 +164,7 @@ class SymfonyFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function getAllClassNames(string $globalBasename) : array
+    public function getAllClassNames(?string $globalBasename = null)
     {
         if ($this->paths === []) {
             return [];
@@ -211,7 +214,7 @@ class SymfonyFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function findMappingFile(string $className) : string
+    public function findMappingFile(string $className)
     {
         $defaultFileName = str_replace('\\', $this->nsSeparator, $className) . $this->fileExtension;
         foreach ($this->paths as $path) {

@@ -29,24 +29,30 @@ class LifecycleEventArgs extends EventArgs
      * Retrieves the associated entity.
      *
      * @deprecated
+     *
+     * @return object
      */
-    public function getEntity() : object
+    public function getEntity()
     {
         return $this->object;
     }
 
     /**
      * Retrieves the associated object.
+     *
+     * @return object
      */
-    public function getObject() : object
+    public function getObject()
     {
         return $this->object;
     }
 
     /**
      * Retrieves the associated ObjectManager.
+     *
+     * @return ObjectManager
      */
-    public function getObjectManager() : ObjectManager
+    public function getObjectManager()
     {
         return $this->objectManager;
     }

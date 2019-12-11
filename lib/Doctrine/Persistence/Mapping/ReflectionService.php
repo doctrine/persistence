@@ -22,27 +22,38 @@ interface ReflectionService
      *
      * @throws MappingException
      */
-    public function getParentClasses(string $class) : array;
+    public function getParentClasses(string $class);
 
     /**
      * Returns the shortname of a class.
+     *
+     * @return string
      */
-    public function getClassShortName(string $class) : string;
+    public function getClassShortName(string $class);
 
-    public function getClassNamespace(string $class) : string;
+    /**
+     * @return string
+     */
+    public function getClassNamespace(string $class);
 
     /**
      * Returns a reflection class instance or null.
+     *
+     * @return ReflectionClass|null
      */
-    public function getClass(string $class) : ?ReflectionClass;
+    public function getClass(string $class);
 
     /**
      * Returns an accessible property (setAccessible(true)) or null.
+     *
+     * @return ReflectionProperty|null
      */
-    public function getAccessibleProperty(string $class, string $property) : ?ReflectionProperty;
+    public function getAccessibleProperty(string $class, string $property);
 
     /**
      * Checks if the class have a public method with the given name.
+     *
+     * @return bool
      */
-    public function hasPublicMethod(string $class, string $method) : bool;
+    public function hasPublicMethod(string $class, string $method);
 }

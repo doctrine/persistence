@@ -14,21 +14,23 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @return string The default object manager name.
      */
-    public function getDefaultManagerName() : string;
+    public function getDefaultManagerName();
 
     /**
      * Gets a named object manager.
      *
      * @param string $name The object manager name (null for the default one).
+     *
+     * @return ObjectManager
      */
-    public function getManager(?string $name = null) : ObjectManager;
+    public function getManager(?string $name = null);
 
     /**
      * Gets an array of all registered object managers.
      *
      * @return array<string, ObjectManager> An array of ObjectManager instances
      */
-    public function getManagers() : array;
+    public function getManagers();
 
     /**
      * Resets a named object manager.
@@ -44,8 +46,10 @@ interface ManagerRegistry extends ConnectionRegistry
      * to avoid this problem.
      *
      * @param string|null $name The object manager name (null for the default one).
+     *
+     * @return ObjectManager
      */
-    public function resetManager(?string $name = null) : ObjectManager;
+    public function resetManager(?string $name = null);
 
     /**
      * Resolves a registered namespace alias to the full namespace.
@@ -56,30 +60,34 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @return string The full namespace.
      */
-    public function getAliasNamespace(string $alias) : string;
+    public function getAliasNamespace(string $alias);
 
     /**
      * Gets all object manager names.
      *
      * @return array<string, string> An array of object manager names.
      */
-    public function getManagerNames() : array;
+    public function getManagerNames();
 
     /**
      * Gets the ObjectRepository for a persistent object.
      *
      * @param string $persistentObject      The name of the persistent object.
      * @param string $persistentManagerName The object manager name (null for the default one).
+     *
+     * @return ObjectRepository
      */
     public function getRepository(
         string $persistentObject,
         ?string $persistentManagerName = null
-    ) : ObjectRepository;
+    );
 
     /**
      * Gets the object manager associated with a given class.
      *
      * @param string $class A persistent object class name.
+     *
+     * @return ObjectManager|null
      */
-    public function getManagerForClass(string $class) : ?ObjectManager;
+    public function getManagerForClass(string $class);
 }
