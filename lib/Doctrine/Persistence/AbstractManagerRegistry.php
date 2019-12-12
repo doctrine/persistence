@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use ReflectionClass;
 use function class_exists;
 use function explode;
+use function interface_exists;
 use function sprintf;
 use function strpos;
 
@@ -247,3 +248,4 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
 }
 
 class_exists(\Doctrine\Common\Persistence\AbstractManagerRegistry::class);
+interface_exists(\Doctrine\Common\Persistence\ObjectManager::class);

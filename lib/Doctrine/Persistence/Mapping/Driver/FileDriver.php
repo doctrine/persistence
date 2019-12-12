@@ -8,6 +8,7 @@ use function array_keys;
 use function array_merge;
 use function array_unique;
 use function class_exists;
+use function interface_exists;
 use function is_file;
 use function str_replace;
 
@@ -195,3 +196,4 @@ abstract class FileDriver implements MappingDriver
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\Driver\FileDriver::class);
+interface_exists(\Doctrine\Common\Persistence\Mapping\Driver\FileLocator::class);
