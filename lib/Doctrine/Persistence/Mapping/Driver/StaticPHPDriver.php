@@ -131,4 +131,4 @@ class StaticPHPDriver implements MappingDriver
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\Driver\StaticPHPDriver::class);
-interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);
+interface_exists(ClassMetadata::class);

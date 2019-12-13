@@ -416,5 +416,5 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory::class);
-interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);
-interface_exists(\Doctrine\Common\Persistence\Mapping\ReflectionService::class);
+interface_exists(ClassMetadata::class);
+interface_exists(ReflectionService::class);

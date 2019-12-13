@@ -146,4 +146,4 @@ class MappingDriverChain implements MappingDriver
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain::class);
-interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);
+interface_exists(ClassMetadata::class);
