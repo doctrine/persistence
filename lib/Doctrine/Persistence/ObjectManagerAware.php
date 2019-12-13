@@ -30,4 +30,4 @@ interface ObjectManagerAware
 }
 
 interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);
-interface_exists(\Doctrine\Common\Persistence\ObjectManager::class);
+interface_exists(ObjectManager::class);

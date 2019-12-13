@@ -22,4 +22,4 @@ interface NotifyPropertyChanged
 }
 
 interface_exists(\Doctrine\Common\NotifyPropertyChanged::class);
-interface_exists(\Doctrine\Common\PropertyChangedListener::class);
+interface_exists(PropertyChangedListener::class);

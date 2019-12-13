@@ -196,4 +196,4 @@ abstract class FileDriver implements MappingDriver
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\Driver\FileDriver::class);
-interface_exists(\Doctrine\Common\Persistence\Mapping\Driver\FileLocator::class);
+interface_exists(FileLocator::class);

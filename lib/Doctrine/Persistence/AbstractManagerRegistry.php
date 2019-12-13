@@ -248,4 +248,4 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
 }
 
 class_exists(\Doctrine\Common\Persistence\AbstractManagerRegistry::class);
-interface_exists(\Doctrine\Common\Persistence\ObjectManager::class);
+interface_exists(ObjectManager::class);

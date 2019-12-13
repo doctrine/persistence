@@ -46,4 +46,4 @@ class PHPDriver extends FileDriver
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\Driver\PHPDriver::class);
-interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);
+interface_exists(ClassMetadata::class);
