@@ -37,5 +37,5 @@ interface MappingDriver
     public function isTransient($className);
 }
 
-interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);
-interface_exists(\Doctrine\Persistence\Mapping\Driver\MappingDriver::class);
+interface_exists(\Doctrine\Common\Persistence\Mapping\Driver\MappingDriver::class);
+interface_exists(ClassMetadata::class);
