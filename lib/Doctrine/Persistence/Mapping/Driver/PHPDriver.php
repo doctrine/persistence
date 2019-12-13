@@ -4,6 +4,7 @@ namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use function class_exists;
+use function interface_exists;
 
 /**
  * The PHPDriver includes php files which just populate ClassMetadataInfo
@@ -45,3 +46,4 @@ class PHPDriver extends FileDriver
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\Driver\PHPDriver::class);
+interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);

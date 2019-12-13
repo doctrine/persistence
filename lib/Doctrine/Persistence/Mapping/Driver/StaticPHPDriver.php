@@ -12,6 +12,7 @@ use function array_unique;
 use function class_exists;
 use function get_declared_classes;
 use function in_array;
+use function interface_exists;
 use function is_dir;
 use function method_exists;
 use function realpath;
@@ -130,3 +131,4 @@ class StaticPHPDriver implements MappingDriver
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\Driver\StaticPHPDriver::class);
+interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);

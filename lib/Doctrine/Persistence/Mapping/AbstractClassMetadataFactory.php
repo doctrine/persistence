@@ -10,6 +10,7 @@ use function array_reverse;
 use function array_unshift;
 use function class_exists;
 use function explode;
+use function interface_exists;
 use function strpos;
 use function strrpos;
 use function substr;
@@ -415,3 +416,5 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory::class);
+interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);
+interface_exists(\Doctrine\Common\Persistence\Mapping\ReflectionService::class);
