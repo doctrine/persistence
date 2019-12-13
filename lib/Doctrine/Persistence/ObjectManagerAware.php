@@ -29,5 +29,6 @@ interface ObjectManagerAware
     public function injectObjectManager(ObjectManager $objectManager, ClassMetadata $classMetadata);
 }
 
-interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);
+interface_exists(\Doctrine\Common\Persistence\ObjectManagerAware::class);
+interface_exists(ClassMetadata::class);
 interface_exists(ObjectManager::class);
