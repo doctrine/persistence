@@ -27,16 +27,20 @@ class LoadClassMetadataEventArgs extends EventArgs
 
     /**
      * Retrieves the associated ClassMetadata.
+     *
+     * @return ClassMetadata
      */
-    public function getClassMetadata() : ClassMetadata
+    public function getClassMetadata()
     {
         return $this->classMetadata;
     }
 
     /**
      * Retrieves the associated ObjectManager.
+     *
+     * @return ObjectManager
      */
-    public function getObjectManager() : ObjectManager
+    public function getObjectManager()
     {
         return $this->objectManager;
     }

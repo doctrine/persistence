@@ -47,8 +47,10 @@ class StaticPHPDriver implements MappingDriver
 
     /**
      * @param array<int, string> $paths
+     *
+     * @return void
      */
-    public function addPaths(array $paths) : void
+    public function addPaths(array $paths)
     {
         $this->paths = array_unique(array_merge($this->paths, $paths));
     }
@@ -56,7 +58,7 @@ class StaticPHPDriver implements MappingDriver
     /**
      * {@inheritdoc}
      */
-    public function loadMetadataForClass(string $className, ClassMetadata $metadata) : void
+    public function loadMetadataForClass(string $className, ClassMetadata $metadata)
     {
         $className::loadMetadata($metadata);
     }
@@ -66,7 +68,7 @@ class StaticPHPDriver implements MappingDriver
      *
      * @todo Same code exists in AnnotationDriver, should we re-use it somehow or not worry about it?
      */
-    public function getAllClassNames() : array
+    public function getAllClassNames()
     {
         if ($this->classNames !== null) {
             return $this->classNames;
@@ -122,7 +124,7 @@ class StaticPHPDriver implements MappingDriver
     /**
      * {@inheritdoc}
      */
-    public function isTransient(string $className) : bool
+    public function isTransient(string $className)
     {
         return ! method_exists($className, 'loadMetadata');
     }

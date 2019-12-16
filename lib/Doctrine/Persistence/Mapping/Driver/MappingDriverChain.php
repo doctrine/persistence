@@ -28,24 +28,30 @@ class MappingDriverChain implements MappingDriver
 
     /**
      * Gets the default driver.
+     *
+     * @return MappingDriver|null
      */
-    public function getDefaultDriver() : ?MappingDriver
+    public function getDefaultDriver()
     {
         return $this->defaultDriver;
     }
 
     /**
      * Set the default driver.
+     *
+     * @return void
      */
-    public function setDefaultDriver(MappingDriver $driver) : void
+    public function setDefaultDriver(MappingDriver $driver)
     {
         $this->defaultDriver = $driver;
     }
 
     /**
      * Adds a nested driver.
+     *
+     * @return void
      */
-    public function addDriver(MappingDriver $nestedDriver, string $namespace) : void
+    public function addDriver(MappingDriver $nestedDriver, string $namespace)
     {
         $this->drivers[$namespace] = $nestedDriver;
     }
@@ -55,7 +61,7 @@ class MappingDriverChain implements MappingDriver
      *
      * @return array<string, MappingDriver> $drivers
      */
-    public function getDrivers() : array
+    public function getDrivers()
     {
         return $this->drivers;
     }
@@ -63,7 +69,7 @@ class MappingDriverChain implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function loadMetadataForClass(string $className, ClassMetadata $metadata) : void
+    public function loadMetadataForClass(string $className, ClassMetadata $metadata)
     {
         /** @var MappingDriver $driver */
         foreach ($this->drivers as $namespace => $driver) {
@@ -86,7 +92,7 @@ class MappingDriverChain implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function getAllClassNames() : array
+    public function getAllClassNames()
     {
         $classNames    = [];
         $driverClasses = [];
@@ -120,7 +126,7 @@ class MappingDriverChain implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function isTransient(string $className) : bool
+    public function isTransient(string $className)
     {
         /** @var MappingDriver $driver */
         foreach ($this->drivers as $namespace => $driver) {

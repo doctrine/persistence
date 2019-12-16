@@ -30,24 +30,30 @@ class OnClearEventArgs extends EventArgs
 
     /**
      * Retrieves the associated ObjectManager.
+     *
+     * @return ObjectManager
      */
-    public function getObjectManager() : ObjectManager
+    public function getObjectManager()
     {
         return $this->objectManager;
     }
 
     /**
      * Returns the name of the entity class that is cleared, or null if all are cleared.
+     *
+     * @return string|null
      */
-    public function getEntityClass() : ?string
+    public function getEntityClass()
     {
         return $this->entityClass;
     }
 
     /**
      * Returns whether this event clears all entities.
+     *
+     * @return bool
      */
-    public function clearsAllEntities() : bool
+    public function clearsAllEntities()
     {
         return $this->entityClass === null;
     }

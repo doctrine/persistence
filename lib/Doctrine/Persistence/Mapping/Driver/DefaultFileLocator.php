@@ -57,8 +57,10 @@ class DefaultFileLocator implements FileLocator
      * Appends lookup paths to metadata driver.
      *
      * @param array<int, string> $paths
+     *
+     * @return void
      */
-    public function addPaths(array $paths) : void
+    public function addPaths(array $paths)
     {
         $this->paths = array_unique(array_merge($this->paths, $paths));
     }
@@ -68,15 +70,17 @@ class DefaultFileLocator implements FileLocator
      *
      * @return array<int, string>
      */
-    public function getPaths() : array
+    public function getPaths()
     {
         return $this->paths;
     }
 
     /**
      * Gets the file extension used to look for mapping files under.
+     *
+     * @return string|null
      */
-    public function getFileExtension() : ?string
+    public function getFileExtension()
     {
         return $this->fileExtension;
     }
@@ -85,8 +89,10 @@ class DefaultFileLocator implements FileLocator
      * Sets the file extension used to look for mapping files under.
      *
      * @param string|null $fileExtension The file extension to set.
+     *
+     * @return void
      */
-    public function setFileExtension(?string $fileExtension) : void
+    public function setFileExtension(?string $fileExtension)
     {
         $this->fileExtension = $fileExtension;
     }
@@ -94,7 +100,7 @@ class DefaultFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function findMappingFile(string $className) : string
+    public function findMappingFile(string $className)
     {
         $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
 
@@ -111,7 +117,7 @@ class DefaultFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function getAllClassNames(string $globalBasename) : array
+    public function getAllClassNames(string $globalBasename)
     {
         if ($this->paths === []) {
             return [];
@@ -151,7 +157,7 @@ class DefaultFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function fileExists(string $className) : bool
+    public function fileExists(string $className)
     {
         $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
 

@@ -49,16 +49,20 @@ abstract class FileDriver implements MappingDriver
 
     /**
      * Sets the global basename.
+     *
+     * @return void
      */
-    public function setGlobalBasename(string $file) : void
+    public function setGlobalBasename(string $file)
     {
         $this->globalBasename = $file;
     }
 
     /**
      * Retrieves the global basename.
+     *
+     * @return string|null
      */
-    public function getGlobalBasename() : string
+    public function getGlobalBasename()
     {
         return $this->globalBasename;
     }
@@ -71,7 +75,7 @@ abstract class FileDriver implements MappingDriver
      *
      * @throws MappingException
      */
-    public function getElement(string $className) : ClassMetadata
+    public function getElement(string $className)
     {
         if ($this->classCache === null) {
             $this->initialize();
@@ -98,7 +102,7 @@ abstract class FileDriver implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function isTransient(string $className) : bool
+    public function isTransient(string $className)
     {
         if ($this->classCache === null) {
             $this->initialize();
@@ -114,7 +118,7 @@ abstract class FileDriver implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function getAllClassNames() : array
+    public function getAllClassNames()
     {
         if ($this->classCache === null) {
             $this->initialize();
@@ -144,7 +148,7 @@ abstract class FileDriver implements MappingDriver
      *
      * @return ClassMetadata[]
      */
-    abstract protected function loadMappingFile(string $file) : array;
+    abstract protected function loadMappingFile(string $file);
 
     /**
      * Initializes the class cache from all the global files.
@@ -154,8 +158,10 @@ abstract class FileDriver implements MappingDriver
      * necessary. This may not be relevant to scenarios where caching of
      * metadata is in place, however hits very hard in scenarios where no
      * caching is used.
+     *
+     * @return void
      */
-    protected function initialize() : void
+    protected function initialize()
     {
         $this->classCache = [];
         if ($this->globalBasename === null) {
@@ -177,16 +183,20 @@ abstract class FileDriver implements MappingDriver
 
     /**
      * Retrieves the locator used to discover mapping files by className.
+     *
+     * @return FileLocator
      */
-    public function getLocator() : FileLocator
+    public function getLocator()
     {
         return $this->locator;
     }
 
     /**
      * Sets the locator used to discover mapping files by className.
+     *
+     * @return void
      */
-    public function setLocator(FileLocator $locator) : void
+    public function setLocator(FileLocator $locator)
     {
         $this->locator = $locator;
     }

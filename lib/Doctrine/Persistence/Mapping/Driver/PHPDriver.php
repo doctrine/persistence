@@ -26,7 +26,7 @@ class PHPDriver extends FileDriver
     /**
      * {@inheritDoc}
      */
-    public function loadMetadataForClass(string $className, ClassMetadata $metadata) : void
+    public function loadMetadataForClass(string $className, ClassMetadata $metadata)
     {
         $this->metadata = $metadata;
 
@@ -36,7 +36,7 @@ class PHPDriver extends FileDriver
     /**
      * {@inheritDoc}
      */
-    protected function loadMappingFile(string $file) : array
+    protected function loadMappingFile(string $file)
     {
         $metadata = $this->metadata;
         include $file;

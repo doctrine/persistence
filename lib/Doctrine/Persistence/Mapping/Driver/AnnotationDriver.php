@@ -100,8 +100,10 @@ abstract class AnnotationDriver implements MappingDriver
      * Appends lookup paths to metadata driver.
      *
      * @param array<int, string> $paths
+     *
+     * @return void
      */
-    public function addPaths(array $paths) : void
+    public function addPaths(array $paths)
     {
         $this->paths = array_unique(array_merge($this->paths, $paths));
     }
@@ -111,7 +113,7 @@ abstract class AnnotationDriver implements MappingDriver
      *
      * @return array<int, string>
      */
-    public function getPaths() : array
+    public function getPaths()
     {
         return $this->paths;
     }
@@ -120,8 +122,10 @@ abstract class AnnotationDriver implements MappingDriver
      * Append exclude lookup paths to metadata driver.
      *
      * @param array<int, string> $paths
+     *
+     * @return void
      */
-    public function addExcludePaths(array $paths) : void
+    public function addExcludePaths(array $paths)
     {
         $this->excludePaths = array_unique(array_merge($this->excludePaths, $paths));
     }
@@ -131,23 +135,27 @@ abstract class AnnotationDriver implements MappingDriver
      *
      * @return array<int, string>
      */
-    public function getExcludePaths() : array
+    public function getExcludePaths()
     {
         return $this->excludePaths;
     }
 
     /**
      * Retrieve the current annotation reader
+     *
+     * @return Reader
      */
-    public function getReader() : Reader
+    public function getReader()
     {
         return $this->reader;
     }
 
     /**
      * Gets the file extension used to look for mapping files under.
+     *
+     * @return string
      */
-    public function getFileExtension() : string
+    public function getFileExtension()
     {
         return $this->fileExtension;
     }
@@ -156,8 +164,10 @@ abstract class AnnotationDriver implements MappingDriver
      * Sets the file extension used to look for mapping files under.
      *
      * @param string $fileExtension The file extension to set.
+     *
+     * @return void
      */
-    public function setFileExtension(string $fileExtension) : void
+    public function setFileExtension(string $fileExtension)
     {
         $this->fileExtension = $fileExtension;
     }
@@ -168,8 +178,10 @@ abstract class AnnotationDriver implements MappingDriver
      *
      * A class is non-transient if it is annotated with an annotation
      * from the {@see AnnotationDriver::entityAnnotationClasses}.
+     *
+     * @return bool
      */
-    public function isTransient(string $className) : bool
+    public function isTransient(string $className)
     {
         $classAnnotations = $this->reader->getClassAnnotations(new ReflectionClass($className));
 
@@ -185,7 +197,7 @@ abstract class AnnotationDriver implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function getAllClassNames() : array
+    public function getAllClassNames()
     {
         if ($this->classNames !== null) {
             return $this->classNames;
