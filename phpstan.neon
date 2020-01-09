@@ -9,6 +9,7 @@ parameters:
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/ObjectManagerDecoratorTest.php
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/ClassMetadataFactoryTest.php
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/annotation/TestClass.php
+        - %currentWorkingDirectory%/tests/Doctrine/Tests_PHP74/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
     excludes_analyse:
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
@@ -16,6 +17,8 @@ parameters:
     ignoreErrors:
         # looks like a bug in phpstan since method_exists first argument accepts a string
         - '#Call to function method_exists\(\) with string and (.*) will always evaluate to false#'
+        # Should be fixed by adding return typehints
+        - '#Cannot call method getDefaultProperties\(\) on ReflectionClass|null.#'
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
