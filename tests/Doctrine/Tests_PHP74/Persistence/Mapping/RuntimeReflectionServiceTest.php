@@ -17,10 +17,7 @@ class RuntimeReflectionServiceTest extends TestCase
     /** @var RuntimeReflectionService */
     private $reflectionService;
 
-    /** @var mixed */
     private string $typedNoDefaultProperty;
-
-    /** @var mixed */
     private string $typedDefaultProperty = '';
 
     protected function setUp() : void
