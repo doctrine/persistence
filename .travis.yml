@@ -49,6 +49,7 @@ jobs:
       script: ./vendor/bin/phpcs
 
     - stage: Code Quality
+      php: 7.4snapshot
       env: STATIC_ANALYSIS
       install: travis_retry composer install --prefer-dist
       script: vendor/bin/phpstan analyze
