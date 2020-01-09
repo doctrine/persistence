@@ -44,7 +44,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests/Doctrine/Tests"
+            "Doctrine\\Tests\\": "tests/Doctrine/Tests",
+            "Doctrine\\Tests_PHP74\\": "tests/Doctrine/Tests_PHP74"
         }
     },
     "extra": {
