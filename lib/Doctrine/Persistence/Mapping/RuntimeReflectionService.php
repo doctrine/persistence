@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Mapping;
 
 use Doctrine\Common\Reflection\RuntimePublicReflectionProperty;
+use Doctrine\Common\Reflection\TypedNoDefaultReflectionProperty;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 use ReflectionProperty;
+use function array_key_exists;
 use function class_exists;
 use function class_parents;
 
@@ -64,7 +66,9 @@ class RuntimeReflectionService implements ReflectionService
     {
         $reflectionProperty = new ReflectionProperty($class, $property);
 
-        if ($reflectionProperty->isPublic()) {
+        if (! array_key_exists($property, $this->getClass($class)->getDefaultProperties())) {
+            $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
+        } elseif ($reflectionProperty->isPublic()) {
             $reflectionProperty = new RuntimePublicReflectionProperty($class, $property);
         }
 
