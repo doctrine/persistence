@@ -255,4 +255,4 @@ abstract class AnnotationDriver implements MappingDriver
     }
 }
 
-class_exists(\Doctrine\Persistence\Mapping\Driver\AnnotationDriver::class);
+class_exists(\Doctrine\Common\Persistence\Mapping\Driver\AnnotationDriver::class);
