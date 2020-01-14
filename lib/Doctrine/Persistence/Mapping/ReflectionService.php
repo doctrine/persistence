@@ -71,4 +71,4 @@ interface ReflectionService
     public function hasPublicMethod($class, $method);
 }
 
-interface_exists(\Doctrine\Persistence\Mapping\ReflectionService::class);
+interface_exists(\Doctrine\Common\Persistence\Mapping\ReflectionService::class);
