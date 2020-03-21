@@ -25,7 +25,7 @@
         "doctrine/cache": "^1.0",
         "doctrine/collections": "^1.0",
         "doctrine/event-manager": "^1.0",
-        "doctrine/reflection": "^1.1"
+        "doctrine/reflection": "^1.2"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.11",
