@@ -30,7 +30,8 @@
     "require-dev": {
         "phpstan/phpstan": "^0.11",
         "doctrine/coding-standard": "^6.0",
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^7.0",
+        "vimeo/psalm": "^3.11"
     },
     "conflict": {
         "doctrine/common": "<2.10@dev"
