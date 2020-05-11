@@ -2,8 +2,6 @@
 
 namespace Doctrine\Persistence;
 
-use function interface_exists;
-
 /**
  * Contract covering object managers for a Doctrine persistence layer ManagerRegistry class to implement.
  */
@@ -88,5 +86,3 @@ interface ManagerRegistry extends ConnectionRegistry
      */
     public function getManagerForClass($class);
 }
-
-interface_exists(\Doctrine\Common\Persistence\ManagerRegistry::class);

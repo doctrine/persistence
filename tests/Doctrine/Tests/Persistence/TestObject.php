@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Doctrine\Tests\Common\Persistence;
+namespace Doctrine\Tests\Persistence;
 
 use Doctrine\Common\Persistence\PersistentObject;
 

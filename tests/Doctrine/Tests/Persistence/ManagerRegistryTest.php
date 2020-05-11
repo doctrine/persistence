@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Tests\Common\Persistence;
+namespace Doctrine\Tests\Persistence;
 
 use Doctrine\Persistence\AbstractManagerRegistry;
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -9,8 +9,8 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManagerAware;
 use Doctrine\Persistence\ObjectRepository;
 use Doctrine\Persistence\Proxy;
-use Doctrine\Tests\Common\Persistence\Mapping\TestClassMetadataFactory;
 use Doctrine\Tests\DoctrineTestCase;
+use Doctrine\Tests\Persistence\Mapping\TestClassMetadataFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionException;
 use function call_user_func;
@@ -54,7 +54,7 @@ class ManagerRegistryTest extends DoctrineTestCase
     public function testGetManagerForInvalidClass()
     {
         $this->expectException(ReflectionException::class);
-        $this->expectExceptionMessage('Class Doctrine\Tests\Common\Persistence\TestObjectInexistent does not exist');
+        $this->expectExceptionMessage('Class Doctrine\Tests\Persistence\TestObjectInexistent does not exist');
 
         $this->mr->getManagerForClass('prefix:TestObjectInexistent');
     }
@@ -67,7 +67,7 @@ class ManagerRegistryTest extends DoctrineTestCase
     public function testGetManagerForInvalidAliasedClass()
     {
         $this->expectException(ReflectionException::class);
-        $this->expectExceptionMessage('Class Doctrine\Tests\Common\Persistence\TestObject:Foo does not exist');
+        $this->expectExceptionMessage('Class Doctrine\Tests\Persistence\TestObject:Foo does not exist');
 
         $this->mr->getManagerForClass('prefix:TestObject:Foo');
     }

@@ -23,10 +23,6 @@
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
 
-    <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
-        <exclude-pattern>tests/Doctrine/Tests/Common/Util/ClassUtilsTest.php</exclude-pattern>
-    </rule>
-
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
@@ -36,14 +32,11 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming">
-        <exclude-pattern>lib/Doctrine/Common/Persistence/AbstractManagerRegistry.php</exclude-pattern>
-        <exclude-pattern>lib/Doctrine/Common/Persistence/Mapping/AbstractClassMetadataFactory.php</exclude-pattern>
         <exclude-pattern>lib/Doctrine/Persistence/AbstractManagerRegistry.php</exclude-pattern>
         <exclude-pattern>lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix">
-        <exclude-pattern>lib/Doctrine/Common/Persistence/Mapping/MappingException.php</exclude-pattern>
         <exclude-pattern>lib/Doctrine/Persistence/Mapping/MappingException.php</exclude-pattern>
     </rule>
 </ruleset>

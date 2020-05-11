@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Tests\Common\Persistence;
+namespace Doctrine\Tests\Persistence;
 
 use BadMethodCallException;
 use Doctrine\Common\Persistence\PersistentObject;

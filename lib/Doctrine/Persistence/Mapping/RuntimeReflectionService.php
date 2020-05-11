@@ -99,5 +99,3 @@ class RuntimeReflectionService implements ReflectionService
         return $reflectionMethod->isPublic();
     }
 }
-
-class_exists(\Doctrine\Common\Persistence\Mapping\RuntimeReflectionService::class);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Tests\Common\Persistence\Mapping;
+namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Entity;

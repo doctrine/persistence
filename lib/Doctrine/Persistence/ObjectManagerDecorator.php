@@ -2,8 +2,6 @@
 
 namespace Doctrine\Persistence;
 
-use function class_exists;
-
 /**
  * Base class to simplify ObjectManager decorators
  */
@@ -116,5 +114,3 @@ abstract class ObjectManagerDecorator implements ObjectManager
         return $this->wrapped->contains($object);
     }
 }
-
-class_exists(\Doctrine\Common\Persistence\ObjectManagerDecorator::class);

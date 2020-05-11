@@ -6,9 +6,10 @@ use BadMethodCallException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManagerAware;
 use InvalidArgumentException;
 use RuntimeException;
-use function class_exists;
 use function lcfirst;
 use function substr;
 
@@ -231,5 +232,3 @@ abstract class PersistentObject implements ObjectManagerAware
         }
     }
 }
-
-class_exists(\Doctrine\Common\Persistence\PersistentObject::class);

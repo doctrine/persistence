@@ -4,7 +4,6 @@ namespace Doctrine\Persistence;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadataFactory;
-use function interface_exists;
 
 /**
  * Contract for a Doctrine persistence layer ObjectManager class to implement.
@@ -156,5 +155,3 @@ interface ObjectManager
      */
     public function contains($object);
 }
-
-interface_exists(\Doctrine\Common\Persistence\ObjectManager::class);

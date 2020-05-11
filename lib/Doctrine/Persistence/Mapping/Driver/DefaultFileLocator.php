@@ -8,7 +8,6 @@ use RecursiveIteratorIterator;
 use const DIRECTORY_SEPARATOR;
 use function array_merge;
 use function array_unique;
-use function class_exists;
 use function is_dir;
 use function is_file;
 use function str_replace;
@@ -160,5 +159,3 @@ class DefaultFileLocator implements FileLocator
         return false;
     }
 }
-
-class_exists(\Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator::class);

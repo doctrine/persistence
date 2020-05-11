@@ -3,7 +3,6 @@
 namespace Doctrine\Persistence\Mapping;
 
 use ReflectionClass;
-use function interface_exists;
 
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
@@ -153,5 +152,3 @@ interface ClassMetadata
      */
     public function getIdentifierValues($object);
 }
-
-interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadata::class);

@@ -2,8 +2,6 @@
 
 namespace Doctrine\Persistence;
 
-use function interface_exists;
-
 /**
  * Contract for classes that are potential listeners of a {@see NotifyPropertyChanged}
  * implementor.
@@ -22,5 +20,3 @@ interface PropertyChangedListener
      */
     public function propertyChanged($sender, $propertyName, $oldValue, $newValue);
 }
-
-interface_exists(\Doctrine\Common\PropertyChangedListener::class);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Tests\Common\Persistence\Mapping;
+namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache;
@@ -12,7 +12,7 @@ use PHPUnit_Framework_MockObject_MockObject;
 use stdClass;
 
 /**
- * @covers \Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory
+ * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
  */
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
@@ -93,7 +93,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     {
         $this->expectException(MappingException::class);
         $this->expectExceptionMessage(
-            'Class \'Doctrine\Tests\Common\Persistence\Mapping\ChildEntity:Foo\' does not exist'
+            'Class \'Doctrine\Tests\Persistence\Mapping\ChildEntity:Foo\' does not exist'
         );
 
         $this->cmf->getMetadataFor('prefix:ChildEntity:Foo');

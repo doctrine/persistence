@@ -3,7 +3,6 @@
 namespace Doctrine\Persistence;
 
 use UnexpectedValueException;
-use function interface_exists;
 
 /**
  * Contract for a Doctrine persistence layer ObjectRepository class to implement.
@@ -60,5 +59,3 @@ interface ObjectRepository
      */
     public function getClassName();
 }
-
-interface_exists(\Doctrine\Common\Persistence\ObjectRepository::class);

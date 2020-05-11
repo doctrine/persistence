@@ -4,7 +4,6 @@ namespace Doctrine\Persistence\Mapping;
 
 use ReflectionClass;
 use ReflectionProperty;
-use function interface_exists;
 
 /**
  * Very simple reflection service abstraction.
@@ -70,5 +69,3 @@ interface ReflectionService
      */
     public function hasPublicMethod($class, $method);
 }
-
-interface_exists(\Doctrine\Common\Persistence\Mapping\ReflectionService::class);

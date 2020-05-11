@@ -5,8 +5,6 @@ namespace Doctrine\Persistence\Mapping\Driver;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\MappingException;
 use function array_keys;
-use function class_exists;
-use function interface_exists;
 use function spl_object_hash;
 use function strpos;
 
@@ -144,6 +142,3 @@ class MappingDriverChain implements MappingDriver
         return true;
     }
 }
-
-class_exists(\Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain::class);
-interface_exists(ClassMetadata::class);

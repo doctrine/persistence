@@ -9,10 +9,8 @@ use RecursiveIteratorIterator;
 use ReflectionClass;
 use function array_merge;
 use function array_unique;
-use function class_exists;
 use function get_declared_classes;
 use function in_array;
-use function interface_exists;
 use function is_dir;
 use function method_exists;
 use function realpath;
@@ -129,6 +127,3 @@ class StaticPHPDriver implements MappingDriver
         return ! method_exists($className, 'loadMetadata');
     }
 }
-
-class_exists(\Doctrine\Common\Persistence\Mapping\Driver\StaticPHPDriver::class);
-interface_exists(ClassMetadata::class);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Tests\Common\Persistence\Mapping;
+namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Common\Reflection\RuntimePublicReflectionProperty;
 use Doctrine\Persistence\Mapping\MappingException;
@@ -32,7 +32,7 @@ class RuntimeReflectionServiceTest extends TestCase
 
     public function testClassNamespaceName()
     {
-        self::assertSame('Doctrine\Tests\Common\Persistence\Mapping', $this->reflectionService->getClassNamespace(self::class));
+        self::assertSame('Doctrine\Tests\Persistence\Mapping', $this->reflectionService->getClassNamespace(self::class));
     }
 
     public function testGetParentClasses()

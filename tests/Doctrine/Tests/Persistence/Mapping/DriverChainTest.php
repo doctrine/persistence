@@ -1,6 +1,6 @@
 <?php
 
-namespace Doctrine\Tests\Common\Persistence\Mapping;
+namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
@@ -37,7 +37,7 @@ class DriverChainTest extends DoctrineTestCase
                 ->will($this->returnValue(true));
 
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\Company');
-        $chain->addDriver($driver2, 'Doctrine\Tests\Common\Persistence\Mapping');
+        $chain->addDriver($driver2, 'Doctrine\Tests\Persistence\Mapping');
 
         $chain->loadMetadataForClass($className, $classMetadata);
 

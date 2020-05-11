@@ -6,12 +6,12 @@ parameters:
         - tests
 
     autoload_files:
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/ObjectManagerDecoratorTest.php
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/PersistentObjectTest.php
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/Mapping/ClassMetadataFactoryTest.php
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/Mapping/_files/annotation/TestClass.php
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/ObjectManagerDecoratorTest.php
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/ClassMetadataFactoryTest.php
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/annotation/TestClass.php
     excludes_analyse:
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Common/Persistence/Mapping/_files/TestEntity.php
+        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
     ignoreErrors:
-        - '#Call to an undefined method Doctrine\\Tests\\Common\\Persistence\\TestObject#'
-        - '#Method Doctrine\\Tests\\Common\\Persistence\\Mapping\\TestFileDriver\:\:loadMappingFile\(\) should return array\<Doctrine\\Persistence\\Mapping\\ClassMetadata\> but returns array\<string, string\>\.#'
+        - '#Call to an undefined method Doctrine\\Tests\\Persistence\\TestObject#'
+        - '#Method Doctrine\\Tests\\Persistence\\Mapping\\TestFileDriver\:\:loadMappingFile\(\) should return array\<Doctrine\\Persistence\\Mapping\\ClassMetadata\> but returns array\<string, string\>\.#'

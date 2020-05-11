@@ -2,8 +2,6 @@
 
 namespace Doctrine\Persistence\Mapping;
 
-use function interface_exists;
-
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
  */
@@ -53,5 +51,3 @@ interface ClassMetadataFactory
      */
     public function isTransient($className);
 }
-
-interface_exists(\Doctrine\Common\Persistence\Mapping\ClassMetadataFactory::class);

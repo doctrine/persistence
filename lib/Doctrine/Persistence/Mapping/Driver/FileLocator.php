@@ -2,8 +2,6 @@
 
 namespace Doctrine\Persistence\Mapping\Driver;
 
-use function interface_exists;
-
 /**
  * Locates the file that contains the metadata information for a given class name.
  *
@@ -53,5 +51,3 @@ interface FileLocator
      */
     public function getFileExtension();
 }
-
-interface_exists(\Doctrine\Common\Persistence\Mapping\Driver\FileLocator::class);
