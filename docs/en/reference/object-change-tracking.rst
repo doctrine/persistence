@@ -9,9 +9,9 @@ the persistence backend.
 
 This approach is based on `the observer pattern <https://en.wikipedia.org/wiki/Observer_pattern>`_
 and consists of the following two interfaces:
- * ``Doctrine\Common\NotifyPropertyChanged`` that is implemented by the object
+ * ``Doctrine\Persistence\NotifyPropertyChanged`` that is implemented by the object
    whose changes can be tracked,
- * ``Doctrine\Common\PropertyChangedListener`` that is implemented by subscribers
+ * ``Doctrine\Persistence\PropertyChangedListener`` that is implemented by subscribers
    which are interested in tracking the changes.
 
 Notifying subscribers
@@ -25,8 +25,8 @@ such an implementation can look as follows:
 
     <?php
 
-    use Doctrine\Common\NotifyPropertyChanged;
-    use Doctrine\Common\PropertyChangedListener;
+    use Doctrine\Persistence\NotifyPropertyChanged;
+    use Doctrine\Persistence\PropertyChangedListener;
 
     class MyTrackedObject implements NotifyPropertyChanged
     {
