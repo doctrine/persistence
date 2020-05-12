@@ -21,6 +21,8 @@ The interfaces and functionality in this project evolved from building several d
 object mappers. The first implementation was the ORM_ then came the `MongoDB ODM`_. A set of common interfaces were
 extracted from both projects and released in the `Doctrine Common`_ project. Over the years, more common functionality
 was extracted and eventually moved to this standalone project.
+After that, that project was itself split into several projects
+including this one.
 
 A Doctrine object mapper looks like this when implemented.
 
@@ -59,11 +61,11 @@ To learn more about the full interfaces and functionality continue reading!
 Object Manager
 ==============
 
-The main public interface that an end user will use is the ``Doctrine\Common\Persistence\ObjectManager`` interface.
+The main public interface that an end user will use is the ``Doctrine\Persistence\ObjectManager`` interface.
 
 .. code-block:: php
 
-    namespace Doctrine\Common\Persistence;
+    namespace Doctrine\Persistence;
 
     interface ObjectManager
     {
@@ -89,7 +91,7 @@ The object repository is used to retrieve instances of your mapped objects from 
 
 .. code-block:: php
 
-    namespace Doctrine\Common\Persistence;
+    namespace Doctrine\Persistence;
 
     interface ObjectRepository
     {
@@ -111,7 +113,7 @@ ClassMetadata
 
 .. code-block:: php
 
-    namespace Doctrine\Common\Persistence\Mapping;
+    namespace Doctrine\Persistence\Mapping;
 
     interface ClassMetadata
     {
@@ -136,12 +138,12 @@ ClassMetadata
 ClassMetadataFactory
 --------------------
 
-The ``Doctrine\Common\Persistence\Mapping\ClassMetadataFactory`` class can be used to manage the instances for each of
+The ``Doctrine\Persistence\Mapping\ClassMetadataFactory`` class can be used to manage the instances for each of
 your mapped PHP classes.
 
 .. code-block:: php
 
-    namespace Doctrine\Common\Persistence\Mapping;
+    namespace Doctrine\Persistence\Mapping;
 
     interface ClassMetadataFactory
     {
@@ -155,15 +157,15 @@ your mapped PHP classes.
 Mapping Driver
 ==============
 
-In order to load ``ClassMetadata`` instances you can use the ``Doctrine\Common\Persistence\Mapping\Driver\MappingDriver``
+In order to load ``ClassMetadata`` instances you can use the ``Doctrine\Persistence\Mapping\Driver\MappingDriver``
 interface. This is the interface that does the core loading of mapping information from wherever they are stored.
 That may be in files, annotations, yaml, xml, etc.
 
 .. code-block:: php
 
-    namespace Doctrine\Common\Persistence\Mapping\Driver;
+    namespace Doctrine\Persistence\Mapping\Driver;
 
-    use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+    use Doctrine\Persistence\Mapping\ClassMetadata;
 
     interface MappingDriver
     {
@@ -182,12 +184,12 @@ The file driver operates in a mode where it loads the mapping files of individua
 the user to adhere to the convention of 1 mapping file per class and the file names of the mapping files must
 correspond to the full class name, including namespace, with the namespace delimiters '\', replaced by dots '.'.
 
-Extend the ``Doctrine\Common\Persistence\Mapping\Driver\FileDriver`` class to implement your own file driver.
+Extend the ``Doctrine\Persistence\Mapping\Driver\FileDriver`` class to implement your own file driver.
 Here is an example JSON file driver implementation.
 
 .. code-block:: php
 
-    use Doctrine\Common\Persistence\Mapping\Driver\FileDriver;
+    use Doctrine\Persistence\Mapping\Driver\FileDriver;
 
     final class JSONFileDriver extends FileDriver
     {
@@ -208,7 +210,7 @@ Now you can use it like the following.
 
 .. code-block:: php
 
-    use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
+    use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 
     $fileLocator = new DefaultFileLocator('/path/to/mapping/files', 'json');
 
@@ -219,7 +221,7 @@ Now if you have a class named ``App\Model\User`` and you can load the mapping in
 .. code-block:: php
 
     use App\Model\User;
-    use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+    use Doctrine\Persistence\Mapping\ClassMetadata;
 
     $classMetadata = new ClassMetadata();
 
@@ -259,8 +261,8 @@ Now you can use it like the following:
 .. code-block:: php
 
     use App\Model\User;
-    use Doctrine\Common\Annotations\AnnotationReader;
-    use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+    use Doctrine\Annotations\AnnotationReader;
+    use Doctrine\Persistence\Mapping\ClassMetadata;
 
     $annotationReader = new AnnotationReader();
 
@@ -278,7 +280,7 @@ The PHPDriver includes PHP files which just populate ``ClassMetadata`` instances
 
 .. code-block:: php
 
-    use Doctrine\Common\Persistence\Mapping\Driver\PHPDriver;
+    use Doctrine\Persistence\Mapping\Driver\PHPDriver;
 
     $phpDriver = new PHPDriver('/path/to/mapping/files');
 
@@ -287,7 +289,7 @@ Now you can use it like the following:
 .. code-block:: php
 
     use App\Model\User;
-    use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+    use Doctrine\Persistence\Mapping\ClassMetadata;
 
     $classMetadata = new ClassMetadata();
 
@@ -341,11 +343,11 @@ Reflection
 ==========
 
 Doctrine uses reflection to set and get the data inside your objects. The
-``Doctrine\Common\Persistence\Mapping\ReflectionService`` is the primary interface needed for a Doctrine mapper.
+``Doctrine\Persistence\Mapping\ReflectionService`` is the primary interface needed for a Doctrine mapper.
 
 .. code-block:: php
 
-    namespace Doctrine\Common\Persistence\Mapping;
+    namespace Doctrine\Persistence\Mapping;
 
     interface ReflectionService
     {
@@ -358,7 +360,7 @@ Doctrine uses reflection to set and get the data inside your objects. The
     }
 
 Doctrine provides an implementation of this interface in the class named
-``Doctrine\Common\Persistence\Mapping\RuntimeReflectionService``.
+``Doctrine\Persistence\Mapping\RuntimeReflectionService``.
 
 Implementations
 ===============
