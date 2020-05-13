@@ -117,6 +117,8 @@ interface ObjectManager
      *
      * @param string $className
      *
+     * @return ObjectRepository
+     *
      * @template T
      * @psalm-param class-string<T> $className
      * @psalm-return ObjectRepository<T>
