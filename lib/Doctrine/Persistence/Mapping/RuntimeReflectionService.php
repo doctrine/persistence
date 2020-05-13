@@ -5,18 +5,30 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Mapping;
 
 use Doctrine\Common\Reflection\RuntimePublicReflectionProperty;
+use Doctrine\Common\Reflection\TypedNoDefaultReflectionProperty;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 use ReflectionProperty;
+use function array_key_exists;
 use function class_exists;
 use function class_parents;
+use function phpversion;
+use function version_compare;
 
 /**
  * PHP Runtime Reflection Service.
  */
 class RuntimeReflectionService implements ReflectionService
 {
+    /** @var bool */
+    private $supportsTypedPropertiesWorkaround;
+
+    public function __construct()
+    {
+        $this->supportsTypedPropertiesWorkaround = version_compare((string) phpversion(), '7.4.0') >= 0;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -50,7 +62,7 @@ class RuntimeReflectionService implements ReflectionService
     }
 
     /**
-     * {@inheritDoc}
+     * @return ReflectionClass
      */
     public function getClass(string $class)
     {
@@ -66,6 +78,8 @@ class RuntimeReflectionService implements ReflectionService
 
         if ($reflectionProperty->isPublic()) {
             $reflectionProperty = new RuntimePublicReflectionProperty($class, $property);
+        } elseif ($this->supportsTypedPropertiesWorkaround && ! array_key_exists($property, $this->getClass($class)->getDefaultProperties())) {
+            $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
         }
 
         $reflectionProperty->setAccessible(true);

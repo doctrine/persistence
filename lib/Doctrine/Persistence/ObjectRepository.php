@@ -8,6 +8,8 @@ use UnexpectedValueException;
 
 /**
  * Contract for a Doctrine persistence layer ObjectRepository class to implement.
+ *
+ * @template T of object
  */
 interface ObjectRepository
 {
@@ -17,6 +19,8 @@ interface ObjectRepository
      * @param mixed $id The identifier.
      *
      * @return object|null The object.
+     *
+     * @psalm-return T|null
      */
     public function find($id) : ?object;
 
@@ -24,6 +28,8 @@ interface ObjectRepository
      * Finds all objects in the repository.
      *
      * @return array<int, object> The objects.
+     *
+     * @psalm-return T[]
      */
     public function findAll() : array;
 
@@ -40,6 +46,8 @@ interface ObjectRepository
      * @return array<int, object> The objects.
      *
      * @throws UnexpectedValueException
+     *
+     * @psalm-return T[]
      */
     public function findBy(
         array $criteria,
@@ -54,6 +62,8 @@ interface ObjectRepository
      * @param array<string, mixed> $criteria The criteria.
      *
      * @return object|null The object.
+     *
+     * @psalm-return T|null
      */
     public function findOneBy(array $criteria) : ?object;
 

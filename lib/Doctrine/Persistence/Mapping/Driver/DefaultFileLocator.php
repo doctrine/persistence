@@ -144,10 +144,8 @@ class DefaultFileLocator implements FileLocator
 
                 // NOTE: All files found here means classes are not transient!
 
-                $class = str_replace('.', '\\', $fileName);
-                assert(is_string($class));
-
-                $classes[] = $class;
+                assert(is_string($fileName));
+                $classes[] = str_replace('.', '\\', $fileName);
             }
         }
 

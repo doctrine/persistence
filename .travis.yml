@@ -5,7 +5,7 @@ language: php
 php:
   - 7.2
   - 7.3
-  - 7.4snapshot
+  - 7.4
 
 cache:
   directories:
@@ -22,9 +22,6 @@ script:
   - ./vendor/bin/phpunit
 
 jobs:
-  allow_failures:
-    - php: 7.4snapshot
-
   include:
     - stage: Test
       env: DEPENDENCIES=low
@@ -49,6 +46,7 @@ jobs:
       script: ./vendor/bin/phpcs
 
     - stage: Code Quality
+      php: 7.4
       env: STATIC_ANALYSIS
       install: travis_retry composer install --prefer-dist
       script: vendor/bin/phpstan analyze

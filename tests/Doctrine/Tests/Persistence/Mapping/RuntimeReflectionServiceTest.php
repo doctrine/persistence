@@ -49,12 +49,6 @@ class RuntimeReflectionServiceTest extends TestCase
         $this->reflectionService->getParentClasses(__NAMESPACE__ . '\AbsentClass');
     }
 
-    public function testGetReflectionClass() : void
-    {
-        $class = $this->reflectionService->getClass(self::class);
-        self::assertInstanceOf('ReflectionClass', $class);
-    }
-
     public function testGetMethods() : void
     {
         self::assertTrue($this->reflectionService->hasPublicMethod(self::class, 'testGetMethods'));
