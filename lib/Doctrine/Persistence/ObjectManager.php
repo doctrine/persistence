@@ -115,6 +115,8 @@ interface ObjectManager
     /**
      * Gets the repository for a class.
      *
+     * @param string $className
+     *
      * @template T
      * @psalm-param class-string<T> $className
      * @psalm-return ObjectRepository<T>
