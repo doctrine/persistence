@@ -15,7 +15,7 @@ class StaticReflectionServiceTest extends TestCase
     /** @var StaticReflectionService */
     private $reflectionService;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->reflectionService = new StaticReflectionService();
     }
