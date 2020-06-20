@@ -28,7 +28,7 @@ class ManagerRegistryTest extends DoctrineTestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->mr = new TestManagerRegistry(
             'ORM',

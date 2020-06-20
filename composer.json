@@ -20,7 +20,7 @@
         {"name": "Marco Pivetta", "email": "ocramius@gmail.com"}
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.1 || ^8.0",
         "doctrine/annotations": "^1.0",
         "doctrine/cache": "^1.0",
         "doctrine/collections": "^1.0",
@@ -30,7 +30,7 @@
     "require-dev": {
         "phpstan/phpstan": "^0.11",
         "doctrine/coding-standard": "^6.0",
-        "phpunit/phpunit": "^7.0",
+        "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
         "vimeo/psalm": "^3.11"
     },
     "conflict": {

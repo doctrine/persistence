@@ -27,7 +27,7 @@ class ObjectManagerDecoratorTest extends TestCase
     /** @var NullObjectManagerDecorator */
     private $decorated;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->wrapped   = $this->createMock(ObjectManager::class);
         $this->decorated = new NullObjectManagerDecorator($this->wrapped);

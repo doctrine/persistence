@@ -20,7 +20,7 @@ class RuntimeReflectionServiceTest extends TestCase
     /** @var mixed */
     public $unusedPublicProperty;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->reflectionService = new RuntimeReflectionService();
     }

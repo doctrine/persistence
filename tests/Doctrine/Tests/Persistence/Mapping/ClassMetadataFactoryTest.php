@@ -19,7 +19,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     /** @var TestClassMetadataFactory */
     private $cmf;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $driver    = $this->createMock(MappingDriver::class);
         $metadata  = $this->createMock(ClassMetadata::class);
