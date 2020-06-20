@@ -30,7 +30,7 @@ class PersistentObjectTest extends DoctrineTestCase
     /** @var TestObject */
     private $object;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->cm = new TestObjectMetadata();
         $this->om = $this->createMock(ObjectManager::class);

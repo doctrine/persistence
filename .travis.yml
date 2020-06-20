@@ -23,7 +23,15 @@ script:
   - ./vendor/bin/phpunit
 
 jobs:
+  allow_failures:
+    - php: nightly
+
   include:
+    - stage: Test
+      php: nightly
+      before_install:
+        - composer config platform.php 7.4.99
+
     - stage: Test
       env: DEPENDENCIES=low
       install:
@@ -37,9 +45,8 @@ jobs:
         - if [[ ! $(php -m | grep -si xdebug) ]]; then echo "xdebug required for coverage"; exit 1; fi
       script:
         - ./vendor/bin/phpunit --coverage-clover clover.xml
-      after_script:
-        - wget https://scrutinizer-ci.com/ocular.phar
-        - php ocular.phar code-coverage:upload --format=php-clover clover.xml
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
 
     - stage: Code Quality
       env: CODING_STANDARDS

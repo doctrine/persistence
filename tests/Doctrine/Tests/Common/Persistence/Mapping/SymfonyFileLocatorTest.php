@@ -5,6 +5,7 @@ namespace Doctrine\Tests\Common\Persistence\Mapping;
 use Doctrine\Persistence\Mapping\Driver\SymfonyFileLocator;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
+use InvalidArgumentException;
 use const DIRECTORY_SEPARATOR;
 use function realpath;
 use function sort;
@@ -74,12 +75,10 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         self::assertSame($expectedGlobalClasses, $globalClasses);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Namespace separator should not be empty
-     */
     public function testInvalidCustomNamespaceSeparator()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Namespace separator should not be empty');
         $path   = __DIR__ . '/_files';
         $prefix = 'Foo';
 
