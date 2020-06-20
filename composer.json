@@ -20,8 +20,8 @@
         {"name": "Marco Pivetta", "email": "ocramius@gmail.com"}
     ],
     "require": {
-        "php": "^7.2",
-        "doctrine/annotations": "^1.0",
+        "php": "^7.2 || ^8.0",
+        "doctrine/annotations": "^1.7.0",
         "doctrine/cache": "^1.0",
         "doctrine/collections": "^1.0",
         "doctrine/event-manager": "^1.0",
@@ -32,7 +32,7 @@
         "phpstan/phpstan-phpunit": "^0.11",
         "phpstan/phpstan-strict-rules": "^0.11",
         "doctrine/coding-standard": "^6.0",
-        "phpunit/phpunit": "^8.0",
+        "phpunit/phpunit": "^8.0 || ^9.0",
         "vimeo/psalm": "^3.11"
     },
     "conflict": {

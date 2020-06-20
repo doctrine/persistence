@@ -79,6 +79,8 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
 
     public function testInvalidCustomNamespaceSeparator() : void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Namespace separator should not be empty');
         $path   = __DIR__ . '/_files';
         $prefix = 'Foo';
 
