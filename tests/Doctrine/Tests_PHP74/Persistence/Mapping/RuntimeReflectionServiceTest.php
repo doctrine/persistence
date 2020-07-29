@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests_PHP74\Persistence\Mapping;
 
-use Doctrine\Common\Reflection\RuntimePublicReflectionProperty;
-use Doctrine\Common\Reflection\TypedNoDefaultReflectionProperty;
 use Doctrine\Persistence\Mapping\RuntimeReflectionService;
+use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
+use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
