@@ -152,6 +152,10 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function getMetadataFor($className)
     {
+        if (strpos($className, '@anonymous') !== false) {
+            throw MappingException::anonymousClass($className);
+        }
+
         if (isset($this->loadedMetadata[$className])) {
             return $this->loadedMetadata[$className];
         }
