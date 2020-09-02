@@ -10,6 +10,7 @@ use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use stdClass;
+use function get_class;
 
 /**
  * @covers \Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory
@@ -32,6 +33,17 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $cache = new ArrayCache();
         $this->cmf->setCacheDriver($cache);
         self::assertSame($cache, $this->cmf->getCacheDriver());
+    }
+
+    public function testGetMetadataForAnonymousClass() : void
+    {
+        $object = new class () extends stdClass {
+        };
+
+        $this->expectException(MappingException::class);
+        $this->expectExceptionMessage('anonymous');
+
+        $this->cmf->getMetadataFor(get_class($object));
     }
 
     public function testGetMetadataFor()

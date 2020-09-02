@@ -93,6 +93,11 @@ class MappingException extends Exception
     {
         return new self(sprintf("Class '%s' does not exist", $className));
     }
+
+    public static function anonymousClass(string $className) : self
+    {
+        return new self(sprintf("The class '%s' is anonymous.", $className));
+    }
 }
 
 class_exists(\Doctrine\Common\Persistence\Mapping\MappingException::class);
