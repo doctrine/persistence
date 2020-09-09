@@ -121,6 +121,7 @@ interface ObjectManager
      * @template T
      * @psalm-param class-string<T> $className
      * @psalm-return ObjectRepository<T>
+     * @return ObjectRepository
      */
     public function getRepository($className);
 
