@@ -2,9 +2,9 @@
 
 namespace Doctrine\Tests\Persistence\Mapping;
 
-use Doctrine\Common\Reflection\RuntimePublicReflectionProperty;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Persistence\Mapping\RuntimeReflectionService;
+use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use function count;
