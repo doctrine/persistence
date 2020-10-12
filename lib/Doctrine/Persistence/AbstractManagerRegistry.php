@@ -182,6 +182,8 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
                 return $manager;
             }
         }
+
+        return null;
     }
 
     /**
