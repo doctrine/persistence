@@ -9,6 +9,7 @@ use Doctrine\Persistence\Mapping\ReflectionService;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Tests\DoctrineTestCase;
 use InvalidArgumentException;
+use LogicException;
 use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionClass;
 use RuntimeException;
@@ -242,10 +243,12 @@ class TestObjectMetadata implements ClassMetadata
 
     public function getIdentifierValues($entity)
     {
+        throw new LogicException('Not implemented');
     }
 
     public function getIdentifierFieldNames()
     {
+        throw new LogicException('Not implemented');
     }
 
     public function initializeReflection(ReflectionService $reflService)
