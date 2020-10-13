@@ -5,11 +5,6 @@ parameters:
         - lib
         - tests
 
-    autoload_files:
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/ObjectManagerDecoratorTest.php
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/ClassMetadataFactoryTest.php
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/annotation/TestClass.php
     excludes_analyse:
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
     ignoreErrors:
