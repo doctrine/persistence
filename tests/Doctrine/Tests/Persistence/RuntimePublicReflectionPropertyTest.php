@@ -5,6 +5,7 @@ namespace Doctrine\Tests\Persistence;
 use Closure;
 use Doctrine\Common\Proxy\Proxy;
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use function call_user_func;
 
@@ -130,6 +131,7 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
      */
     public function __getLazyProperties()
     {
+        throw new LogicException('Not implemented');
     }
 
     /**
@@ -210,6 +212,7 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
      */
     public function __getCloner()
     {
+        throw new LogicException('Not implemented');
     }
 }
 
