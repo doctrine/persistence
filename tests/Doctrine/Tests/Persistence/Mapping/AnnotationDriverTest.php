@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class AnnotationDriverTest extends TestCase
 {
-    public function testGetAllClassNames()
+    public function testGetAllClassNames(): void
     {
         $reader = new AnnotationReader();
         $driver = new SimpleAnnotationDriver($reader, [__DIR__ . '/_files/annotation']);
@@ -27,7 +27,10 @@ class SimpleAnnotationDriver extends AnnotationDriver
     /** @var bool[] */
     protected $entityAnnotationClasses = [Entity::class => true];
 
-    public function loadMetadataForClass($className, ClassMetadata $metadata)
+    /**
+     * {@inheritDoc}
+     */
+    public function loadMetadataForClass($className, ClassMetadata $metadata): void
     {
     }
 }

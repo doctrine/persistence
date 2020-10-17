@@ -49,6 +49,7 @@ jobs:
         - bash <(curl -s https://codecov.io/bash)
 
     - stage: Code Quality
+      php: 7.4
       env: CODING_STANDARDS
       install: travis_retry composer install --prefer-dist
       script: ./vendor/bin/phpcs

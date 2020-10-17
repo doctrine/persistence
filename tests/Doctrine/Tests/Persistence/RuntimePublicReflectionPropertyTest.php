@@ -7,11 +7,12 @@ use Doctrine\Common\Proxy\Proxy;
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
 use LogicException;
 use PHPUnit\Framework\TestCase;
+
 use function call_user_func;
 
 class RuntimePublicReflectionPropertyTest extends TestCase
 {
-    public function testGetValue() : void
+    public function testGetValue(): void
     {
         $object = new RuntimePublicReflectionPropertyTestClass();
 
@@ -24,7 +25,7 @@ class RuntimePublicReflectionPropertyTest extends TestCase
         self::assertNull($reflProperty->getValue($object));
     }
 
-    public function testSetValue() : void
+    public function testSetValue(): void
     {
         $object = new RuntimePublicReflectionPropertyTestClass();
 
@@ -37,11 +38,11 @@ class RuntimePublicReflectionPropertyTest extends TestCase
         self::assertSame('changedValue', $reflProperty->getValue($object));
     }
 
-    public function testGetValueOnProxyPublicProperty() : void
+    public function testGetValueOnProxyPublicProperty(): void
     {
         $getCheckMock = $this->getMockBuilder('stdClass')->setMethods(['callGet'])->getMock();
         $getCheckMock->expects($this->never())->method('callGet');
-        $initializer = static function () use ($getCheckMock) {
+        $initializer = static function () use ($getCheckMock): void {
             call_user_func($getCheckMock);
         };
 
@@ -58,11 +59,11 @@ class RuntimePublicReflectionPropertyTest extends TestCase
         self::assertNull($reflProperty->getValue($mockProxy));
     }
 
-    public function testSetValueOnProxyPublicProperty() : void
+    public function testSetValueOnProxyPublicProperty(): void
     {
         $setCheckMock = $this->getMockBuilder('stdClass')->setMethods(['neverCallSet'])->getMock();
         $setCheckMock->expects($this->never())->method('neverCallSet');
-        $initializer = static function () use ($setCheckMock) {
+        $initializer = static function () use ($setCheckMock): void {
             call_user_func([$setCheckMock, 'neverCallSet']);
         };
 
@@ -83,7 +84,7 @@ class RuntimePublicReflectionPropertyTest extends TestCase
 
         $setCheckMock = $this->getMockBuilder('stdClass')->setMethods(['callSet'])->getMock();
         $setCheckMock->expects($this->once())->method('callSet');
-        $initializer = static function () use ($setCheckMock) {
+        $initializer = static function () use ($setCheckMock): void {
             call_user_func([$setCheckMock, 'callSet']);
         };
 
@@ -158,9 +159,9 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
     }
 
     /**
-     * @param string $name
+     * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if ($this->initializer) {
             $cb = $this->initializer;
@@ -171,10 +172,9 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
     }
 
     /**
-     * @param string $name
-     * @param mixed  $value
+     * @param mixed $value
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value): void
     {
         if ($this->initializer) {
             $cb = $this->initializer;
@@ -185,12 +185,7 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
         $this->checkedProperty = $value;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function __isset($name)
+    public function __isset(string $name): bool
     {
         if ($this->initializer) {
             $cb = $this->initializer;
