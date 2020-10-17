@@ -4,6 +4,7 @@ namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\MappingException;
+
 use function array_keys;
 use function array_merge;
 use function array_unique;

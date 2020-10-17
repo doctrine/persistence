@@ -18,33 +18,30 @@ class RuntimeReflectionServiceTest extends TestCase
     /** @var RuntimeReflectionService */
     private $reflectionService;
 
-    /** @var string */
     private string $typedNoDefaultProperty;
-    /** @var string */
     private string $typedDefaultProperty = '';
 
-    /** @var string */
     public string $typedNoDefaultPublicProperty;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->reflectionService = new RuntimeReflectionService();
     }
 
-    public function testGetTypedNoDefaultReflectionProperty() : void
+    public function testGetTypedNoDefaultReflectionProperty(): void
     {
         $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'typedNoDefaultProperty');
         self::assertInstanceOf(TypedNoDefaultReflectionProperty::class, $reflProp);
     }
 
-    public function testGetTypedDefaultReflectionProperty() : void
+    public function testGetTypedDefaultReflectionProperty(): void
     {
         $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'typedDefaultProperty');
         self::assertInstanceOf(ReflectionProperty::class, $reflProp);
         self::assertNotInstanceOf(TypedNoDefaultReflectionProperty::class, $reflProp);
     }
 
-    public function testGetTypedPublicNoDefaultPropertyWorksWithGetValue() : void
+    public function testGetTypedPublicNoDefaultPropertyWorksWithGetValue(): void
     {
         $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'typedNoDefaultPublicProperty');
         self::assertInstanceOf(RuntimePublicReflectionProperty::class, $reflProp);
