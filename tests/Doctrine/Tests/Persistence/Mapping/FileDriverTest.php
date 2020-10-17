@@ -6,6 +6,7 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\FileDriver;
 use Doctrine\Persistence\Mapping\Driver\FileLocator;
 use Doctrine\Tests\DoctrineTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 use function strpos;
 
@@ -154,7 +155,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertFalse($driver->isTransient('stdClass'));
     }
 
-    private function newLocator()
+    private function newLocator(): MockObject
     {
         $locator = $this->createMock(FileLocator::class);
         $locator->expects($this->any())->method('getFileExtension')->will($this->returnValue('.yml'));
@@ -166,6 +167,9 @@ class FileDriverTest extends DoctrineTestCase
 
 class TestFileDriver extends FileDriver
 {
+    /**
+     * {@inheritDoc}
+     */
     protected function loadMappingFile($file)
     {
         if (strpos($file, 'global.yml') !== false) {
@@ -175,6 +179,9 @@ class TestFileDriver extends FileDriver
         return ['stdClass' => 'stdClass'];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function loadMetadataForClass($className, ClassMetadata $metadata): void
     {
     }

@@ -87,7 +87,10 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         new SymfonyFileLocator([$path => $prefix], '.yml', null);
     }
 
-    public function customNamespaceSeparatorProvider()
+    /**
+     * @return array<string, array{string, string}>
+     */
+    public function customNamespaceSeparatorProvider(): array
     {
         return [
             'directory separator' => [DIRECTORY_SEPARATOR, '/_custom_ns/dir'],
@@ -115,7 +118,10 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         self::assertSame(['Foo\\stdClass', 'Foo\\sub\\subClass', 'Foo\\sub\\subsub\\subSubClass'], $classes);
     }
 
-    public function customNamespaceLookupQueryProvider()
+    /**
+     * @return array<array{string, string, array<string, string>}>
+     */
+    public function customNamespaceLookupQueryProvider(): array
     {
         return [
             'directory separator'  => [

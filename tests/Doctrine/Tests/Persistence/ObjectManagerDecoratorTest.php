@@ -34,6 +34,9 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated = new NullObjectManagerDecorator($this->wrapped);
     }
 
+    /**
+     * @return list<array{string, list<mixed>, bool}>
+     */
     public function getMethodParameters()
     {
         $class       = new ReflectionClass(ObjectManager::class);

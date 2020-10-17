@@ -168,86 +168,128 @@ class PersistentObjectTest extends DoctrineTestCase
 
 class TestObjectMetadata implements ClassMetadata
 {
-    public function getAssociationMappedByTargetField($assocName)
+    /**
+     * {@inheritDoc}
+     */
+    public function getAssociationMappedByTargetField($assocName): string
     {
         $assoc = ['children' => 'parent'];
 
         return $assoc[$assocName];
     }
 
-    public function getAssociationNames()
+    /**
+     * {@inheritDoc}
+     */
+    public function getAssociationNames(): array
     {
         return ['parent', 'children'];
     }
 
-    public function getAssociationTargetClass($assocName)
+    /**
+     * {@inheritDoc}
+     */
+    public function getAssociationTargetClass($assocName): string
     {
         return __NAMESPACE__ . '\TestObject';
     }
 
-    public function getFieldNames()
+    /**
+     * {@inheritDoc}
+     */
+    public function getFieldNames(): array
     {
         return ['id', 'name'];
     }
 
-    public function getIdentifier()
+    /**
+     * {@inheritDoc}
+     */
+    public function getIdentifier(): array
     {
         return ['id'];
     }
 
-    public function getName()
+    public function getName(): string
     {
         return __NAMESPACE__ . '\TestObject';
     }
 
-    public function getReflectionClass()
+    public function getReflectionClass(): ReflectionClass
     {
         return new ReflectionClass($this->getName());
     }
 
-    public function getTypeOfField($fieldName)
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeOfField($fieldName): string
     {
         $types = ['id' => 'integer', 'name' => 'string'];
 
         return $types[$fieldName];
     }
 
-    public function hasAssociation($fieldName)
+    /**
+     * {@inheritDoc}
+     */
+    public function hasAssociation($fieldName): bool
     {
         return in_array($fieldName, ['parent', 'children']);
     }
 
-    public function hasField($fieldName)
+    /**
+     * {@inheritDoc}
+     */
+    public function hasField($fieldName): bool
     {
         return in_array($fieldName, ['id', 'name']);
     }
 
-    public function isAssociationInverseSide($assocName)
+    /**
+     * {@inheritDoc}
+     */
+    public function isAssociationInverseSide($assocName): bool
     {
         return $assocName === 'children';
     }
 
-    public function isCollectionValuedAssociation($fieldName)
+    /**
+     * {@inheritDoc}
+     */
+    public function isCollectionValuedAssociation($fieldName): bool
     {
         return $fieldName === 'children';
     }
 
-    public function isIdentifier($fieldName)
+    /**
+     * {@inheritDoc}
+     */
+    public function isIdentifier($fieldName): bool
     {
         return $fieldName === 'id';
     }
 
-    public function isSingleValuedAssociation($fieldName)
+    /**
+     * {@inheritDoc}
+     */
+    public function isSingleValuedAssociation($fieldName): bool
     {
         return $fieldName === 'parent';
     }
 
-    public function getIdentifierValues($entity): void
+    /**
+     * {@inheritDoc}
+     */
+    public function getIdentifierValues($entity): array
     {
         throw new LogicException('Not implemented');
     }
 
-    public function getIdentifierFieldNames(): void
+    /**
+     * {@inheritDoc}
+     */
+    public function getIdentifierFieldNames(): array
     {
         throw new LogicException('Not implemented');
     }

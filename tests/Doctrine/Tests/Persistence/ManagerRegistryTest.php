@@ -2,6 +2,7 @@
 
 namespace Doctrine\Tests\Persistence;
 
+use Closure;
 use Doctrine\Persistence\AbstractManagerRegistry;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
@@ -167,7 +168,7 @@ class ManagerRegistryTest extends DoctrineTestCase
         self::assertSame($repository, $this->mr->getRepository(OtherTestObject::class));
     }
 
-    private function getManagerFactory()
+    private function getManagerFactory(): Closure
     {
         return function (string $name) {
             $mock     = $this->createMock(ObjectManager::class);
@@ -195,8 +196,7 @@ class TestManagerRegistry extends AbstractManagerRegistry
     private $managerFactory;
 
     /**
-     * @param string[] $connections
-     * @param string[] $managers
+     * {@inheritDoc}
      */
     public function __construct(
         $name,
@@ -212,6 +212,9 @@ class TestManagerRegistry extends AbstractManagerRegistry
         parent::__construct($name, $connections, $managers, $defaultConnection, $defaultManager, $proxyInterfaceName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getService($name)
     {
         if (! isset($this->services[$name])) {
@@ -221,11 +224,17 @@ class TestManagerRegistry extends AbstractManagerRegistry
         return $this->services[$name];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function resetService($name): void
     {
         unset($this->services[$name]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getAliasNamespace($alias)
     {
         return __NAMESPACE__;

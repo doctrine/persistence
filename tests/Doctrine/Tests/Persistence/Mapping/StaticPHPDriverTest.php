@@ -32,7 +32,7 @@ class StaticPHPDriverTest extends DoctrineTestCase
 
 class TestEntity
 {
-    public static function loadMetadata($metadata): void
+    public static function loadMetadata(ClassMetadata $metadata): void
     {
         $metadata->getFieldNames();
     }

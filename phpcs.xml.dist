@@ -52,4 +52,8 @@
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix">
         <exclude-pattern>lib/Doctrine/Persistence/Mapping/MappingException.php</exclude-pattern>
     </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
+        <exclude-pattern>RuntimeReflectionServiceTest</exclude-pattern>
+    </rule>
 </ruleset>
