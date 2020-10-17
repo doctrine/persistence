@@ -4,8 +4,8 @@ namespace Doctrine\Tests\Persistence;
 
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManagerDecorator;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionClass;
 
 use function array_fill;
@@ -22,7 +22,7 @@ class NullObjectManagerDecorator extends ObjectManagerDecorator
 
 class ObjectManagerDecoratorTest extends TestCase
 {
-    /** @var PHPUnit_Framework_MockObject_MockObject|ObjectManager */
+    /** @var MockObject|ObjectManager */
     private $wrapped;
 
     /** @var NullObjectManagerDecorator */
