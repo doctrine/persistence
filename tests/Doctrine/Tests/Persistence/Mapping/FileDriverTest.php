@@ -6,11 +6,12 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\FileDriver;
 use Doctrine\Persistence\Mapping\Driver\FileLocator;
 use Doctrine\Tests\DoctrineTestCase;
+
 use function strpos;
 
 class FileDriverTest extends DoctrineTestCase
 {
-    public function testGlobalBasename()
+    public function testGlobalBasename(): void
     {
         $driver = new TestFileDriver([]);
 
@@ -20,7 +21,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame('global', $driver->getGlobalBasename());
     }
 
-    public function testGetElementFromGlobalFile()
+    public function testGetElementFromGlobalFile(): void
     {
         $driver = new TestFileDriver($this->newLocator());
         $driver->setGlobalBasename('global');
@@ -30,7 +31,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame('stdGlobal', $element);
     }
 
-    public function testGetElementFromFile()
+    public function testGetElementFromFile(): void
     {
         $locator = $this->newLocator();
         $locator->expects($this->once())
@@ -43,7 +44,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame('stdClass', $driver->getElement('stdClass'));
     }
 
-    public function testGetElementUpdatesClassCache()
+    public function testGetElementUpdatesClassCache(): void
     {
         $locator = $this->newLocator();
 
@@ -62,7 +63,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame('stdClass', $driver->getElement('stdClass'));
     }
 
-    public function testGetAllClassNamesGlobalBasename()
+    public function testGetAllClassNamesGlobalBasename(): void
     {
         $driver = new TestFileDriver($this->newLocator());
         $driver->setGlobalBasename('global');
@@ -72,7 +73,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame(['stdGlobal', 'stdGlobal2'], $classNames);
     }
 
-    public function testGetAllClassNamesFromMappingFile()
+    public function testGetAllClassNamesFromMappingFile(): void
     {
         $locator = $this->newLocator();
         $locator->expects($this->any())
@@ -86,7 +87,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame(['stdClass'], $classNames);
     }
 
-    public function testGetAllClassNamesBothSources()
+    public function testGetAllClassNamesBothSources(): void
     {
         $locator = $this->newLocator();
         $locator->expects($this->any())
@@ -101,7 +102,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
     }
 
-    public function testGetAllClassNamesBothSourcesNoDupes() : void
+    public function testGetAllClassNamesBothSourcesNoDupes(): void
     {
         $locator = $this->newLocator();
         $locator->expects($this->once())
@@ -117,7 +118,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
     }
 
-    public function testIsNotTransient()
+    public function testIsNotTransient(): void
     {
         $locator = $this->newLocator();
         $locator->expects($this->once())
@@ -133,7 +134,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertFalse($driver->isTransient('stdGlobal2'));
     }
 
-    public function testIsTransient()
+    public function testIsTransient(): void
     {
         $locator = $this->newLocator();
         $locator->expects($this->once())
@@ -146,7 +147,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertTrue($driver->isTransient('stdClass2'));
     }
 
-    public function testNonLocatorFallback()
+    public function testNonLocatorFallback(): void
     {
         $driver = new TestFileDriver(__DIR__ . '/_files', '.yml');
         self::assertTrue($driver->isTransient('stdClass2'));
@@ -174,7 +175,7 @@ class TestFileDriver extends FileDriver
         return ['stdClass' => 'stdClass'];
     }
 
-    public function loadMetadataForClass($className, ClassMetadata $metadata)
+    public function loadMetadataForClass($className, ClassMetadata $metadata): void
     {
     }
 }

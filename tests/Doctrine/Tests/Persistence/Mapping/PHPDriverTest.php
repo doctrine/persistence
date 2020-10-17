@@ -7,12 +7,14 @@ use Doctrine\Persistence\Mapping\Driver\PHPDriver;
 use Doctrine\Tests\DoctrineTestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 
+use function assert;
+
 class PHPDriverTest extends DoctrineTestCase
 {
-    public function testLoadMetadata()
+    public function testLoadMetadata(): void
     {
-        /** @var ClassMetadata|PHPUnit_Framework_MockObject_MockObject $metadata */
         $metadata = $this->createMock(ClassMetadata::class);
+        assert($metadata instanceof ClassMetadata || $metadata instanceof PHPUnit_Framework_MockObject_MockObject);
         $metadata->expects($this->once())->method('getFieldNames');
 
         $driver = new PHPDriver([__DIR__ . '/_files']);

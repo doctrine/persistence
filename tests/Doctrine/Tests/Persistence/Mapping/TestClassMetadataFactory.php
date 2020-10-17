@@ -29,7 +29,7 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     /**
      * @param string[] $nonSuperclassParents
      */
-    protected function doLoadMetadata($class, $parent, $rootEntityFound, array $nonSuperclassParents)
+    protected function doLoadMetadata($class, $parent, $rootEntityFound, array $nonSuperclassParents): void
     {
     }
 
@@ -38,7 +38,7 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
         return __NAMESPACE__ . '\\' . $simpleClassName;
     }
 
-    protected function initialize()
+    protected function initialize(): void
     {
     }
 
@@ -52,11 +52,11 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
         return $this->driver;
     }
 
-    protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService)
+    protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService): void
     {
     }
 
-    protected function initializeReflection(ClassMetadata $class, ReflectionService $reflService)
+    protected function initializeReflection(ClassMetadata $class, ReflectionService $reflService): void
     {
     }
 

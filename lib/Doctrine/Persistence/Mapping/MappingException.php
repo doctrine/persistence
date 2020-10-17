@@ -3,6 +3,7 @@
 namespace Doctrine\Persistence\Mapping;
 
 use Exception;
+
 use function implode;
 use function sprintf;
 

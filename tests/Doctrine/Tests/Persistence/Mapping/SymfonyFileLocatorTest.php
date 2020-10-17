@@ -6,13 +6,15 @@ use Doctrine\Persistence\Mapping\Driver\SymfonyFileLocator;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use InvalidArgumentException;
-use const DIRECTORY_SEPARATOR;
+
 use function realpath;
 use function sort;
 
+use const DIRECTORY_SEPARATOR;
+
 class SymfonyFileLocatorTest extends DoctrineTestCase
 {
-    public function testGetPaths()
+    public function testGetPaths(): void
     {
         $path   = __DIR__ . '/_files';
         $prefix = 'Foo';
@@ -24,7 +26,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         self::assertSame([$path], $locator->getPaths());
     }
 
-    public function testGetPrefixes()
+    public function testGetPrefixes(): void
     {
         $path   = __DIR__ . '/_files';
         $prefix = 'Foo';
@@ -33,7 +35,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         self::assertSame([$path => $prefix], $locator->getNamespacePrefixes());
     }
 
-    public function testGetFileExtension()
+    public function testGetFileExtension(): void
     {
         $locator = new SymfonyFileLocator([], '.yml');
         self::assertSame('.yml', $locator->getFileExtension());
@@ -41,7 +43,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         self::assertSame('.xml', $locator->getFileExtension());
     }
 
-    public function testFileExists()
+    public function testFileExists(): void
     {
         $path   = __DIR__ . '/_files';
         $prefix = 'Foo';
@@ -54,7 +56,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         self::assertFalse($locator->fileExists('Foo\global2'));
     }
 
-    public function testGetAllClassNames()
+    public function testGetAllClassNames(): void
     {
         $path   = __DIR__ . '/_files';
         $prefix = 'Foo';
@@ -75,7 +77,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         self::assertSame($expectedGlobalClasses, $globalClasses);
     }
 
-    public function testInvalidCustomNamespaceSeparator()
+    public function testInvalidCustomNamespaceSeparator(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Namespace separator should not be empty');
@@ -101,7 +103,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
      *
      * @dataProvider customNamespaceSeparatorProvider
      */
-    public function testGetClassNamesWithCustomNsSeparator($separator, $dir)
+    public function testGetClassNamesWithCustomNsSeparator(string $separator, string $dir): void
     {
         $path   = __DIR__ . $dir;
         $prefix = 'Foo';
@@ -146,7 +148,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
      *
      * @dataProvider customNamespaceLookupQueryProvider
      */
-    public function testFindMappingFileWithCustomNsSeparator($separator, $dir, $files)
+    public function testFindMappingFileWithCustomNsSeparator(string $separator, string $dir, array $files): void
     {
         $path   = __DIR__ . $dir;
         $prefix = 'Foo';
@@ -158,7 +160,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         }
     }
 
-    public function testFindMappingFile()
+    public function testFindMappingFile(): void
     {
         $path   = __DIR__ . '/_files';
         $prefix = 'Foo';
@@ -168,7 +170,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         self::assertSame(__DIR__ . '/_files/stdClass.yml', $locator->findMappingFile('Foo\\stdClass'));
     }
 
-    public function testFindMappingFileNotFound()
+    public function testFindMappingFileNotFound(): void
     {
         $path   = __DIR__ . '/_files';
         $prefix = 'Foo';
@@ -180,7 +182,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         $locator->findMappingFile('Foo\\stdClass2');
     }
 
-    public function testFindMappingFileLeastSpecificNamespaceFirst()
+    public function testFindMappingFileLeastSpecificNamespaceFirst(): void
     {
         // Low -> High
         $prefixes                             = [];
@@ -195,7 +197,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         );
     }
 
-    public function testFindMappingFileMostSpecificNamespaceFirst()
+    public function testFindMappingFileMostSpecificNamespaceFirst(): void
     {
         $prefixes                             = [];
         $prefixes[__DIR__ . '/_match_ns/Bar'] = 'Foo\\Bar';
