@@ -211,11 +211,11 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritdoc}
      */
-    public function getRepository($persistentObjectName, $persistentManagerName = null)
+    public function getRepository($persistentObject, $persistentManagerName = null)
     {
         return $this
-            ->selectManager($persistentObjectName, $persistentManagerName)
-            ->getRepository($persistentObjectName);
+            ->selectManager($persistentObject, $persistentManagerName)
+            ->getRepository($persistentObject);
     }
 
     /**
