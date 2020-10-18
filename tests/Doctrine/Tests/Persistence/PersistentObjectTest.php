@@ -10,7 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Tests\DoctrineTestCase;
 use InvalidArgumentException;
 use LogicException;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionClass;
 use RuntimeException;
 use stdClass;
@@ -26,7 +26,7 @@ class PersistentObjectTest extends DoctrineTestCase
     /** @var TestObjectMetadata */
     private $cm;
 
-    /** @var ObjectManager|PHPUnit_Framework_MockObject_MockObject */
+    /** @var ObjectManager|MockObject */
     private $om;
 
     /** @var TestObject */

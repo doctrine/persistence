@@ -8,7 +8,7 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 use stdClass;
 
 use function assert;
@@ -142,7 +142,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances(): void
     {
         $cacheDriver = $this->createMock(Cache::class);
-        assert($cacheDriver instanceof Cache || $cacheDriver instanceof PHPUnit_Framework_MockObject_MockObject);
+        assert($cacheDriver instanceof Cache || $cacheDriver instanceof MockObject);
 
         $this->cmf->setCacheDriver($cacheDriver);
 
@@ -152,7 +152,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         assert($metadata instanceof ClassMetadata);
 
         $fallbackCallback = $this->getMockBuilder(stdClass::class)->setMethods(['__invoke'])->getMock();
-        assert($fallbackCallback instanceof PHPUnit_Framework_MockObject_MockObject || $fallbackCallback instanceof stdClass || is_callable($fallbackCallback));
+        assert($fallbackCallback instanceof MockObject || $fallbackCallback instanceof stdClass || is_callable($fallbackCallback));
 
         $fallbackCallback->expects(self::any())->method('__invoke')->willReturn($metadata);
 

@@ -4,35 +4,72 @@ name: "Continuous Integration"
 on:
   pull_request: null
 
+env:
+  COMPOSER_ROOT_VERSION: "2.1"
+
 jobs:
-  static-analysis-psalm:
-    name: "Static Analysis with Psalm"
-    runs-on: ubuntu-latest
+  phpunit:
+    name: "PHPUnit"
+    runs-on: "ubuntu-20.04"
 
     strategy:
       matrix:
         php-version:
+          - "7.1"
+          - "7.2"
+          - "7.3"
           - "7.4"
+          - "8.0"
+        deps:
+          - "normal"
+        include:
+          - deps: "low"
+            php-version: "7.1"
 
     steps:
-      - name: "Checkout code"
+      - name: "Checkout"
         uses: "actions/checkout@v2"
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
         with:
-          coverage: "none"
+          fetch-depth: 2
+
+      - name: "Install PHP with pcov"
+        uses: "shivammathur/setup-php@v2"
+        if: "${{ matrix.php-version != '7.1' }}"
+        with:
           php-version: "${{ matrix.php-version }}"
+          coverage: "pcov"
+
+      - name: "Install PHP with xdebug"
+        uses: "shivammathur/setup-php@v2"
+        if: "${{ matrix.php-version == '7.1' }}"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          coverage: "xdebug"
 
       - name: "Cache dependencies installed with composer"
-        uses: "actions/cache@v1"
+        uses: "actions/cache@v2"
         with:
           path: "~/.composer/cache"
           key: "php-${{ matrix.php-version }}-composer-locked-${{ hashFiles('composer.lock') }}"
           restore-keys: "php-${{ matrix.php-version }}-composer-locked-"
 
-      - name: "Install dependencies with composer"
-        run: " COMPOSER_ROOT_VERSION=2.0 composer install --no-interaction --no-progress"
+      # Remove this block when
+      # https://github.com/felixfbecker/php-language-server-protocol/pull/15 is
+      # merged and released
+      - name: "Remove dependency on vimeo/psalm for PHP8"
+        run: "composer remove --dev --no-update vimeo/psalm"
+        if: "${{ matrix.php-version == '8.0' }}"
 
-      - name: "Run a static analysis with vimeo/psalm"
-        run: "vendor/bin/psalm --show-info=false --stats --output-format=github --threads=$(nproc)"
+      - name: "Update dependencies with composer"
+        run: "composer update --no-interaction --no-progress --no-suggest"
+        if: "${{ matrix.deps == 'normal' }}"
+
+      - name: "Install lowest possible dependencies with composer"
+        run: "composer update --no-interaction --no-progress --no-suggest --prefer-dist --prefer-lowest"
+        if: "${{ matrix.deps == 'low' }}"
+
+      - name: "Run PHPUnit"
+        run: "vendor/bin/phpunit --coverage-clover=coverage.xml"
+
+      - name: "Upload to Codecov"
+        uses: "codecov/codecov-action@v1"

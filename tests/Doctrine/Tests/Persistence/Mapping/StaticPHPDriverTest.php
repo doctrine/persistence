@@ -5,7 +5,7 @@ namespace Doctrine\Tests\Persistence\Mapping;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
 use Doctrine\Tests\DoctrineTestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 use function assert;
 
@@ -14,7 +14,7 @@ class StaticPHPDriverTest extends DoctrineTestCase
     public function testLoadMetadata(): void
     {
         $metadata = $this->createMock(ClassMetadata::class);
-        assert($metadata instanceof ClassMetadata || $metadata instanceof PHPUnit_Framework_MockObject_MockObject);
+        assert($metadata instanceof ClassMetadata || $metadata instanceof MockObject);
         $metadata->expects($this->once())->method('getFieldNames');
 
         $driver = new StaticPHPDriver([__DIR__]);
