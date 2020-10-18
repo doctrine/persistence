@@ -28,5 +28,5 @@ interface ObjectManagerAware
     public function injectObjectManager(
         ObjectManager $objectManager,
         ClassMetadata $classMetadata
-    ) : void;
+    ): void;
 }

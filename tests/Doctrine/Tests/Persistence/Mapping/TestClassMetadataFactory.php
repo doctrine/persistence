@@ -37,9 +37,6 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     ): void {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFqcnFromAlias(string $namespaceAlias, string $simpleClassName): string
     {
         return __NAMESPACE__ . '\\' . $simpleClassName;
@@ -49,17 +46,11 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function newClassMetadataInstance(string $className): ClassMetadata
     {
         return $this->metadata;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getDriver(): MappingDriver
     {
         return $this->driver;
@@ -73,17 +64,11 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function isEntity(ClassMetadata $class): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function onNotFoundMetadata(string $className): ?ClassMetadata
     {
         if ($this->fallbackCallback === null) {
@@ -93,9 +78,6 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
         return ($this->fallbackCallback)();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isTransient(string $class): bool
     {
         $name = $this->metadata->getName();

@@ -107,6 +107,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * Gets the fully qualified class-name from the namespace alias.
      *
      * @return string
+     *
+     * @psalm-return class-string
      */
     abstract protected function getFqcnFromAlias(
         string $namespaceAlias,
@@ -244,6 +246,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * Gets an array of parent classes for the given entity class.
      *
      * @return array<int, string>
+     *
+     * @psalm-param class-string $name
      */
     protected function getParentClasses(string $name)
     {
@@ -277,6 +281,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @param string $name The name of the class for which the metadata should get loaded.
      *
      * @return array<int, string>
+     *
+     * @psalm-param class-string $name
      */
     protected function loadMetadata(string $name)
     {
@@ -409,6 +415,9 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
     /**
      * Gets the real class name of a class name that could be a proxy.
+     *
+     * @psalm-param class-string $class
+     * @psalm-return class-string
      */
     private function getRealClass(string $class): string
     {

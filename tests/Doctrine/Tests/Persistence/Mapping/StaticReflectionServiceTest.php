@@ -40,12 +40,6 @@ class StaticReflectionServiceTest extends TestCase
         self::assertTrue(count($classes) === 0, 'The test class ' . self::class . ' should have no parents according to static reflection.');
     }
 
-    public function testGetReflectionClass(): void
-    {
-        $class = $this->reflectionService->getClass(self::class);
-        self::assertNull($class);
-    }
-
     public function testGetMethods(): void
     {
         self::assertTrue($this->reflectionService->hasPublicMethod(self::class, 'testGetMethods'));

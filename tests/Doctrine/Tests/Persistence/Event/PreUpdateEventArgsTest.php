@@ -12,7 +12,7 @@ use InvalidArgumentException;
 
 class PreUpdateEventArgsTest extends DoctrineTestCase
 {
-    public function testPreUpdateEventArgs() : void
+    public function testPreUpdateEventArgs(): void
     {
         $expectedEntityChangeset = [
             'name' => ['old', 'new'],
@@ -35,7 +35,7 @@ class PreUpdateEventArgsTest extends DoctrineTestCase
         self::assertSame('changed new', $event->getNewValue('name'));
     }
 
-    public function testGetOldValueThrowsInvalidArgumentExceptionOnInvalidField() : void
+    public function testGetOldValueThrowsInvalidArgumentExceptionOnInvalidField(): void
     {
         $event = $this->createTestPreUpdateEventArgs();
 
@@ -45,7 +45,7 @@ class PreUpdateEventArgsTest extends DoctrineTestCase
         $event->getOldValue('does_not_exist');
     }
 
-    public function testGetNewValueThrowsInvalidArgumentExceptionOnInvalidField() : void
+    public function testGetNewValueThrowsInvalidArgumentExceptionOnInvalidField(): void
     {
         $event = $this->createTestPreUpdateEventArgs();
 
@@ -55,7 +55,7 @@ class PreUpdateEventArgsTest extends DoctrineTestCase
         $event->getNewValue('does_not_exist');
     }
 
-    public function testSetNewValueThrowsInvalidArgumentExceptionOnInvalidField() : void
+    public function testSetNewValueThrowsInvalidArgumentExceptionOnInvalidField(): void
     {
         $event = $this->createTestPreUpdateEventArgs();
 
@@ -65,7 +65,7 @@ class PreUpdateEventArgsTest extends DoctrineTestCase
         $event->setNewValue('does_not_exist', 'new value');
     }
 
-    private function createTestPreUpdateEventArgs() : PreUpdateEventArgs
+    private function createTestPreUpdateEventArgs(): PreUpdateEventArgs
     {
         $entity = new TestObject();
 

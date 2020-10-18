@@ -30,7 +30,7 @@ interface ClassMetadata
     /**
      * Gets the ReflectionClass instance for this mapped class.
      *
-     * @return ReflectionClass
+     * @return ReflectionClass<object>
      */
     public function getReflectionClass();
 

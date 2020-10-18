@@ -24,10 +24,10 @@ interface Proxy
      *
      * Acts as a no-op if already initialized.
      */
-    public function __load() : void;
+    public function __load(): void;
 
     /**
      * Returns whether this proxy is initialized or not.
      */
-    public function __isInitialized() : bool;
+    public function __isInitialized(): bool;
 }

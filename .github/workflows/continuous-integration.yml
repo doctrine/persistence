@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - "7.1"
           - "7.2"
           - "7.3"
           - "7.4"
@@ -24,7 +23,7 @@ jobs:
           - "normal"
         include:
           - deps: "low"
-            php-version: "7.1"
+            php-version: "7.2"
 
     steps:
       - name: "Checkout"
@@ -32,19 +31,11 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: "Install PHP with pcov"
+      - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
-        if: "${{ matrix.php-version != '7.1' }}"
         with:
           php-version: "${{ matrix.php-version }}"
           coverage: "pcov"
-
-      - name: "Install PHP with xdebug"
-        uses: "shivammathur/setup-php@v2"
-        if: "${{ matrix.php-version == '7.1' }}"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          coverage: "xdebug"
 
       - name: "Cache dependencies installed with composer"
         uses: "actions/cache@v2"

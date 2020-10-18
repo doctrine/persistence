@@ -22,7 +22,7 @@ interface ObjectRepository
      *
      * @psalm-return T|null
      */
-    public function find($id) : ?object;
+    public function find($id): ?object;
 
     /**
      * Finds all objects in the repository.
@@ -31,7 +31,7 @@ interface ObjectRepository
      *
      * @psalm-return T[]
      */
-    public function findAll() : array;
+    public function findAll(): array;
 
     /**
      * Finds objects by a set of criteria.
@@ -54,7 +54,7 @@ interface ObjectRepository
         ?array $orderBy = null,
         ?int $limit = null,
         ?int $offset = null
-    ) : array;
+    ): array;
 
     /**
      * Finds a single object by a set of criteria.
@@ -65,10 +65,10 @@ interface ObjectRepository
      *
      * @psalm-return T|null
      */
-    public function findOneBy(array $criteria) : ?object;
+    public function findOneBy(array $criteria): ?object;
 
     /**
      * Returns the class name of the object managed by the repository.
      */
-    public function getClassName() : string;
+    public function getClassName(): string;
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
+use function assert;
+use function is_int;
 use function strpos;
 use function strrev;
 use function strrpos;
@@ -28,8 +30,8 @@ class StaticReflectionService implements ReflectionService
     public function getClassShortName(string $className)
     {
         if (strpos($className, '\\') !== false) {
-            /** @var int $pos */
             $pos = strrpos($className, '\\');
+            assert(is_int($pos));
 
             $className = substr($className, $pos + 1);
         }
@@ -45,8 +47,8 @@ class StaticReflectionService implements ReflectionService
         $namespace = '';
 
         if (strpos($className, '\\') !== false) {
-            /** @var int $pos */
             $pos = strpos(strrev($className), '\\');
+            assert(is_int($pos));
 
             $namespace = strrev(substr(strrev($className), $pos + 1));
         }
@@ -56,6 +58,8 @@ class StaticReflectionService implements ReflectionService
 
     /**
      * {@inheritDoc}
+     *
+     * @return null
      */
     public function getClass(string $class)
     {

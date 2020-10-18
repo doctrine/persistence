@@ -227,9 +227,6 @@ class TestManagerRegistry extends AbstractManagerRegistry
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getService(string $name): object
     {
         if (! isset($this->services[$name])) {
@@ -239,17 +236,11 @@ class TestManagerRegistry extends AbstractManagerRegistry
         return $this->services[$name];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function resetService(string $name): void
     {
         unset($this->services[$name]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getAliasNamespace(string $alias): string
     {
         return __NAMESPACE__;

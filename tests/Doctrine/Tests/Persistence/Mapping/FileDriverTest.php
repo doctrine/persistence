@@ -170,6 +170,9 @@ class FileDriverTest extends DoctrineTestCase
         self::assertFalse($driver->isTransient('stdClass'));
     }
 
+    /**
+     * @return FileLocator&MockObject
+     */
     private function newLocator(): MockObject
     {
         $locator = $this->createMock(FileLocator::class);
@@ -182,7 +185,7 @@ class FileDriverTest extends DoctrineTestCase
     /**
      * @param string|array<int, string>|FileLocator $locator
      */
-    private function createTestFileDriver($locator, ?string $fileExtension = null) : TestFileDriver
+    private function createTestFileDriver($locator, ?string $fileExtension = null): TestFileDriver
     {
         $driver = new TestFileDriver($locator, $fileExtension);
 
@@ -208,7 +211,7 @@ class TestFileDriver extends FileDriver
     /**
      * {@inheritDoc}
      */
-    protected function loadMappingFile(string $file) : array
+    protected function loadMappingFile(string $file): array
     {
         if (strpos($file, 'global.yml') !== false) {
             return [
@@ -220,10 +223,7 @@ class TestFileDriver extends FileDriver
         return ['stdClass' => $this->stdClass];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function loadMetadataForClass(string $className, ClassMetadata $metadata) : void
+    public function loadMetadataForClass(string $className, ClassMetadata $metadata): void
     {
     }
 }

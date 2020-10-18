@@ -30,6 +30,8 @@ interface MappingDriver
      * This is only the case if it is either mapped as an Entity or a MappedSuperclass.
      *
      * @return bool
+     *
+     * @psalm-param class-string $className
      */
     public function isTransient(string $className);
 }

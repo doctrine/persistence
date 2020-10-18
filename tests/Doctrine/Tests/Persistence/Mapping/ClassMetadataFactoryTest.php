@@ -10,11 +10,9 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use stdClass;
 
 use function assert;
-use function is_callable;
 
 /**
  * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
@@ -39,8 +37,8 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
         $this->cmf->setCacheDriver($cache);
 
-        /** @var ArrayCache $cacheDriver */
         $cacheDriver = $this->cmf->getCacheDriver();
+        assert($cacheDriver instanceof ArrayCache);
 
         self::assertSame($cache, $cacheDriver);
     }
@@ -124,7 +122,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
             return $classMetadata;
         };
 
-        /** @var ClassMetadata $fooClassMetadata */
         $fooClassMetadata = $this->cmf->getMetadataFor('Foo');
 
         self::assertSame($classMetadata, $fooClassMetadata);
@@ -148,19 +145,27 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances(): void
     {
         $cacheDriver = $this->createMock(Cache::class);
-        assert($cacheDriver instanceof Cache || $cacheDriver instanceof MockObject);
 
         $this->cmf->setCacheDriver($cacheDriver);
 
         $cacheDriver->expects(self::once())->method('fetch')->with('Foo$CLASSMETADATA')->willReturn(new stdClass());
 
         $metadata = $this->createMock(ClassMetadata::class);
-        assert($metadata instanceof ClassMetadata);
 
-        $fallbackCallback = $this->getMockBuilder(stdClass::class)->setMethods(['__invoke'])->getMock();
-        assert($fallbackCallback instanceof MockObject || $fallbackCallback instanceof stdClass || is_callable($fallbackCallback));
+        $fallbackCallback = new class ($metadata) {
+            /** @var ClassMetadata */
+            private $metadata;
 
-        $fallbackCallback->expects(self::any())->method('__invoke')->willReturn($metadata);
+            public function __construct(ClassMetadata $metadata)
+            {
+                $this->metadata = $metadata;
+            }
+
+            public function __invoke(): ClassMetadata
+            {
+                return $this->metadata;
+            }
+        };
 
         $this->cmf->fallbackCallback = $fallbackCallback;
 

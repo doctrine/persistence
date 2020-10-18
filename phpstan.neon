@@ -9,8 +9,37 @@ parameters:
         - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
 
     ignoreErrors:
-        # looks like a bug in phpstan since method_exists first argument accepts a string
-        - '#Call to function method_exists\(\) with string and (.*) will always evaluate to false#'
+        - '#Variable property access on \$this\(Doctrine\\Persistence\\Reflection\\TypedNoDefaultReflectionProperty\)\.#'
+        - '#Variable property access on Doctrine\\Common\\Proxy\\Proxy\.#'
+        - '#Variable property access on object.#'
+        -
+            message: '#Parameter \#1 \$class of method Doctrine\\Persistence\\Mapping\\RuntimeReflectionService\:\:getParentClasses\(\) expects class\-string, string given\.#'
+            path: 'tests/Doctrine/Tests/Persistence/Mapping/RuntimeReflectionServiceTest.php'
+        -
+            message: '#Parameter \#1 \$className of method Doctrine\\Persistence\\Mapping\\Driver\\MappingDriverChain\:\:isTransient\(\) expects class\-string, string given\.#'
+            path: 'tests/Doctrine/Tests/Persistence/Mapping/DriverChainTest.php'
+        -
+            message: '#Parameter \#1 \$className of method Doctrine\\Persistence\\Mapping\\Driver\\FileDriver\:\:isTransient\(\) expects class\-string, string given\.#'
+            path: 'tests/Doctrine/Tests/Persistence/Mapping/FileDriverTest.php'
+        -
+            message: '#Method Doctrine\\Tests\\Persistence\\Mapping\\TestClassMetadataFactory\:\:getFqcnFromAlias\(\) should return class\-string but returns string\.#'
+            path: 'tests/Doctrine/Tests/Persistence/Mapping/TestClassMetadataFactory.php'
+        -
+            message: '#Method Doctrine\\Tests\\Persistence\\TestManagerRegistry\:\:getAliasNamespace\(\) should return class\-string but returns string\.#'
+            path: 'tests/Doctrine/Tests/Persistence/ManagerRegistryTest.php'
+        -
+            message: '#Method Doctrine\\Persistence\\Mapping\\AbstractClassMetadataFactory\:\:getRealClass\(\) should return class\-string but returns string\.#'
+            path: 'lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php'
+        -
+            message: '#Parameter \#1 \$class of method Doctrine\\Persistence\\Mapping\\AbstractClassMetadataFactory\:\:getRealClass\(\) expects class\-string, string given\.#'
+            path: 'lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php'
+        -
+            message: '#Parameter \#1 \$className of method Doctrine\\Persistence\\Mapping\\Driver\\MappingDriver\:\:isTransient\(\) expects class\-string, string given\.#'
+            path: 'lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php'
+        -
+            message: '#Parameter \#1 \$argument of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, string given\.#'
+            path: 'lib/Doctrine/Persistence/AbstractManagerRegistry.php'
+
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon

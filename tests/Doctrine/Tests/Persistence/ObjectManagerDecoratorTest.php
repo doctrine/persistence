@@ -20,13 +20,13 @@ class ObjectManagerDecoratorTest extends TestCase
     /** @var NullObjectManagerDecorator */
     private $decorated;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->wrapped   = $this->createMock(ObjectManager::class);
         $this->decorated = new NullObjectManagerDecorator($this->wrapped);
     }
 
-    public function testFind() : void
+    public function testFind(): void
     {
         $object = new TestObject();
 
@@ -38,7 +38,7 @@ class ObjectManagerDecoratorTest extends TestCase
         self::assertSame($object, $this->decorated->find(TestObject::class, 1));
     }
 
-    public function testPersist() : void
+    public function testPersist(): void
     {
         $object = new TestObject();
 
@@ -49,7 +49,7 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated->persist($object);
     }
 
-    public function testRemove() : void
+    public function testRemove(): void
     {
         $object = new TestObject();
 
@@ -60,7 +60,7 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated->remove($object);
     }
 
-    public function testMerge() : void
+    public function testMerge(): void
     {
         $object1 = new TestObject();
         $object2 = new TestObject();
@@ -73,7 +73,7 @@ class ObjectManagerDecoratorTest extends TestCase
         self::assertSame($object2, $this->decorated->merge($object1));
     }
 
-    public function testClearWithNoArgument() : void
+    public function testClearWithNoArgument(): void
     {
         $this->wrapped->expects(self::once())
             ->method('clear');
@@ -81,7 +81,7 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated->clear();
     }
 
-    public function testClearWithArgument() : void
+    public function testClearWithArgument(): void
     {
         $this->wrapped->expects(self::once())
             ->method('clear')
@@ -90,7 +90,7 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated->clear(TestObject::class);
     }
 
-    public function testDetach() : void
+    public function testDetach(): void
     {
         $object = new TestObject();
 
@@ -101,7 +101,7 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated->detach($object);
     }
 
-    public function testRefresh() : void
+    public function testRefresh(): void
     {
         $object = new TestObject();
 
@@ -112,7 +112,7 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated->refresh($object);
     }
 
-    public function testFlush() : void
+    public function testFlush(): void
     {
         $this->wrapped->expects(self::once())
             ->method('flush');
@@ -120,7 +120,7 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated->flush();
     }
 
-    public function testGetRepository() : void
+    public function testGetRepository(): void
     {
         $repository = $this->createMock(ObjectRepository::class);
 
@@ -132,7 +132,7 @@ class ObjectManagerDecoratorTest extends TestCase
         self::assertSame($repository, $this->decorated->getRepository(TestObject::class));
     }
 
-    public function testGetClassMetadata() : void
+    public function testGetClassMetadata(): void
     {
         $classMetadata = $this->createMock(ClassMetadata::class);
 
@@ -144,7 +144,7 @@ class ObjectManagerDecoratorTest extends TestCase
         self::assertSame($classMetadata, $this->decorated->getClassMetadata(TestObject::class));
     }
 
-    public function testGetClassMetadataFactory() : void
+    public function testGetClassMetadataFactory(): void
     {
         $classMetadataFactory = $this->createMock(ClassMetadataFactory::class);
 
@@ -155,7 +155,7 @@ class ObjectManagerDecoratorTest extends TestCase
         self::assertSame($classMetadataFactory, $this->decorated->getMetadataFactory());
     }
 
-    public function testInitializeObject() : void
+    public function testInitializeObject(): void
     {
         $object = new TestObject();
 
@@ -166,7 +166,7 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated->initializeObject($object);
     }
 
-    public function testContains() : void
+    public function testContains(): void
     {
         $object = new TestObject();
 

@@ -22,11 +22,11 @@ interface ObjectManager
      *
      * @return object|null The found object.
      *
-     * @template T
+     * @template T of object
      * @psalm-param class-string<T> $className
      * @psalm-return T|null
      */
-    public function find(string $className, $id) : ?object;
+    public function find(string $className, $id): ?object;
 
     /**
      * Tells the ObjectManager to make an instance managed and persistent.
@@ -38,7 +38,7 @@ interface ObjectManager
      *
      * @param object $object The instance to make managed and persistent.
      */
-    public function persist(object $object) : void;
+    public function persist(object $object): void;
 
     /**
      * Removes an object instance.
@@ -47,7 +47,7 @@ interface ObjectManager
      *
      * @param object $object The object instance to remove.
      */
-    public function remove(object $object) : void;
+    public function remove(object $object): void;
 
     /**
      * Merges the state of a detached object into the persistence context
@@ -58,7 +58,7 @@ interface ObjectManager
      *             Merging should be part of the business domain of an application rather than
      *             a generic operation of ObjectManager.
      */
-    public function merge(object $object) : object;
+    public function merge(object $object): object;
 
     /**
      * Clears the ObjectManager. All objects that are currently managed
@@ -66,7 +66,7 @@ interface ObjectManager
      *
      * @param string|null $objectName if given, only objects of this type will get detached.
      */
-    public function clear(?string $objectName = null) : void;
+    public function clear(?string $objectName = null): void;
 
     /**
      * Detaches an object from the ObjectManager, causing a managed object to
@@ -80,7 +80,7 @@ interface ObjectManager
      *
      * @param object $object The object to detach.
      */
-    public function detach(object $object) : void;
+    public function detach(object $object): void;
 
     /**
      * Refreshes the persistent state of an object from the database,
@@ -88,23 +88,23 @@ interface ObjectManager
      *
      * @param object $object The object to refresh.
      */
-    public function refresh(object $object) : void;
+    public function refresh(object $object): void;
 
     /**
      * Flushes all changes to objects that have been queued up to now to the database.
      * This effectively synchronizes the in-memory state of managed objects with the
      * database.
      */
-    public function flush() : void;
+    public function flush(): void;
 
     /**
      * Gets the repository for a class.
      *
-     * @template T
+     * @template T of object
      * @psalm-param class-string<T> $className
      * @psalm-return ObjectRepository<T>
      */
-    public function getRepository(string $className) : ObjectRepository;
+    public function getRepository(string $className): ObjectRepository;
 
     /**
      * Returns the ClassMetadata descriptor for a class.
@@ -112,22 +112,22 @@ interface ObjectManager
      * The class name must be the fully-qualified class name without a leading backslash
      * (as it is returned by get_class($obj)).
      */
-    public function getClassMetadata(string $className) : ClassMetadata;
+    public function getClassMetadata(string $className): ClassMetadata;
 
     /**
      * Gets the metadata factory used to gather the metadata of classes.
      */
-    public function getMetadataFactory() : ClassMetadataFactory;
+    public function getMetadataFactory(): ClassMetadataFactory;
 
     /**
      * Helper method to initialize a lazy loading proxy or persistent collection.
      *
      * This method is a no-op for other objects.
      */
-    public function initializeObject(object $obj) : void;
+    public function initializeObject(object $obj): void;
 
     /**
      * Checks if the object is part of the current UnitOfWork and therefore managed.
      */
-    public function contains(object $object) : bool;
+    public function contains(object $object): bool;
 }

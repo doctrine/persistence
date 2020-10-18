@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests_PHP74\Persistence\Reflection;
 
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;

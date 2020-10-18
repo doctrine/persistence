@@ -162,7 +162,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getManagerForClass(string $class)
     {
@@ -212,9 +212,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         $managers = [];
 
         foreach ($this->managers as $name => $id) {
-            /** @var ObjectManager $manager */
-            $manager = $this->getService($id);
-
+            $manager         = $this->getService($id);
             $managers[$name] = $manager;
         }
 
@@ -253,14 +251,17 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $this->getManager($name);
     }
 
+    /**
+     * @psalm-param class-string $persistentObject
+     */
     private function selectManager(
         string $persistentObject,
         ?string $persistentManagerName = null
-    ) : ObjectManager {
+    ): ObjectManager {
         if ($persistentManagerName !== null) {
             return $this->getManager($persistentManagerName);
         }
 
-        return $this->getManagerForClass($persistentObjectName) ?? $this->getManager();
+        return $this->getManagerForClass($persistentObject) ?? $this->getManager();
     }
 }

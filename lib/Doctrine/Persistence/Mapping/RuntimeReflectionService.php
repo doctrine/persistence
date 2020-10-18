@@ -63,7 +63,7 @@ class RuntimeReflectionService implements ReflectionService
     }
 
     /**
-     * @return ReflectionClass
+     * {@inheritDoc}
      */
     public function getClass(string $class)
     {

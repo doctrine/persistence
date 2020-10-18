@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Reflection;
 
 use Doctrine\Common\Proxy\Proxy;
@@ -40,6 +42,8 @@ class RuntimePublicReflectionProperty extends ReflectionProperty
      * is a {@see \Doctrine\Common\Proxy\Proxy}.
      *
      * @link https://bugs.php.net/bug.php?id=63463
+     *
+     * @param object|null $object
      */
     public function setValue($object, $value = null)
     {

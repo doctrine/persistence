@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Persistence\Reflection;
 
 use ReflectionProperty;
@@ -28,13 +30,15 @@ class TypedNoDefaultReflectionProperty extends ReflectionProperty
      * NULL which is not supported, instead unset() to uninitialize.
      *
      * @link https://github.com/doctrine/orm/issues/7999
+     *
+     * @param object|null $object
      */
     public function setValue($object, $value = null)
     {
         if ($value === null && $this->hasType() && ! $this->getType()->allowsNull()) {
             $propertyName = $this->getName();
 
-            $unsetter = function () use ($propertyName) {
+            $unsetter = function () use ($propertyName): void {
                 unset($this->$propertyName);
             };
             $unsetter = $unsetter->bindTo($object, $this->getDeclaringClass()->getName());

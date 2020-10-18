@@ -58,7 +58,7 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @param string $alias The alias.
      *
-     * @return string The full namespace.
+     * @phpstan-return class-string The full namespace.
      */
     public function getAliasNamespace(string $alias);
 
@@ -77,7 +77,7 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @return ObjectRepository
      *
-     * @template T
+     * @template T of object
      * @psalm-param class-string<T> $persistentObject
      * @psalm-return ObjectRepository<T>
      */

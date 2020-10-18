@@ -9,12 +9,13 @@ use InvalidArgumentException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
-use const DIRECTORY_SEPARATOR;
 
 use function array_keys;
 use function array_merge;
+use function assert;
 use function is_dir;
 use function is_file;
+use function is_int;
 use function realpath;
 use function sprintf;
 use function str_replace;
@@ -203,9 +204,7 @@ class SymfonyFileLocator implements FileLocator
 
                     $classes[] = $this->prefixes[$path] . str_replace(DIRECTORY_SEPARATOR, '\\', $nsSuffix) . '\\' . str_replace($this->nsSeparator, '\\', $fileName);
                 } else {
-                    /** @var string $className */
                     $className = str_replace($this->nsSeparator, '\\', $fileName);
-
                     $classes[] = $className;
                 }
             }
@@ -241,8 +240,8 @@ class SymfonyFileLocator implements FileLocator
             }
         }
 
-        /** @var int $pos */
         $pos = strrpos($className, '\\');
+        assert(is_int($pos));
 
         throw MappingException::mappingFileNotFound(
             $className,
@@ -250,7 +249,7 @@ class SymfonyFileLocator implements FileLocator
         );
     }
 
-    private function realpath(string $path) : string
+    private function realpath(string $path): string
     {
         $realpath = realpath($path);
 

@@ -8,7 +8,6 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\MappingException;
 
 use function array_keys;
-use function assert;
 use function spl_object_hash;
 use function strpos;
 
@@ -74,7 +73,6 @@ class MappingDriverChain implements MappingDriver
     public function loadMetadataForClass(string $className, ClassMetadata $metadata)
     {
         foreach ($this->drivers as $namespace => $driver) {
-            assert($driver instanceof MappingDriver);
             if (strpos($className, $namespace) === 0) {
                 $driver->loadMetadataForClass($className, $metadata);
 
@@ -100,7 +98,6 @@ class MappingDriverChain implements MappingDriver
         $driverClasses = [];
 
         foreach ($this->drivers as $namespace => $driver) {
-            assert($driver instanceof MappingDriver);
             $oid = spl_object_hash($driver);
 
             if (! isset($driverClasses[$oid])) {
@@ -131,7 +128,6 @@ class MappingDriverChain implements MappingDriver
     public function isTransient(string $className)
     {
         foreach ($this->drivers as $namespace => $driver) {
-            assert($driver instanceof MappingDriver);
             if (strpos($className, $namespace) === 0) {
                 return $driver->isTransient($className);
             }
