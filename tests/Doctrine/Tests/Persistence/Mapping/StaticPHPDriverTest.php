@@ -9,19 +9,21 @@ use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
 use Doctrine\Tests\DoctrineTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
+use function assert;
+
 class StaticPHPDriverTest extends DoctrineTestCase
 {
     public function testLoadMetadata() : void
     {
-        /** @var ClassMetadata|MockObject $metadata */
         $metadata = $this->createMock(ClassMetadata::class);
+        assert($metadata instanceof ClassMetadata || $metadata instanceof MockObject);
         $metadata->expects(self::once())->method('getFieldNames');
 
         $driver = new StaticPHPDriver([__DIR__]);
         $driver->loadMetadataForClass(TestEntity::class, $metadata);
     }
 
-    public function testGetAllClassNames() : void
+    public function testGetAllClassNames(): void
     {
         $driver     = new StaticPHPDriver([__DIR__]);
         $classNames = $driver->getAllClassNames();
@@ -32,7 +34,7 @@ class StaticPHPDriverTest extends DoctrineTestCase
 
 class TestEntity
 {
-    public static function loadMetadata(ClassMetadata $metadata) : void
+    public static function loadMetadata(ClassMetadata $metadata): void
     {
         $metadata->getFieldNames();
     }

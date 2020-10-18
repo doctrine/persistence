@@ -91,6 +91,9 @@ class SimpleAnnotationDriver extends AnnotationDriver
     /** @var array<string, int> */
     protected $entityAnnotationClasses = [Entity::class => 1];
 
+    /**
+     * {@inheritDoc}
+     */
     public function loadMetadataForClass(string $className, ClassMetadata $metadata) : void
     {
     }

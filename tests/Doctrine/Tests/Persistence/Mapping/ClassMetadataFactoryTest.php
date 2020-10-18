@@ -13,6 +13,9 @@ use Doctrine\Tests\DoctrineTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use stdClass;
 
+use function assert;
+use function is_callable;
+
 /**
  * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
  */
@@ -21,14 +24,14 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     /** @var TestClassMetadataFactory */
     private $cmf;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $driver    = $this->createMock(MappingDriver::class);
         $metadata  = $this->createMock(ClassMetadata::class);
         $this->cmf = new TestClassMetadataFactory($driver, $metadata);
     }
 
-    public function testGetCacheDriver() : void
+    public function testGetCacheDriver(): void
     {
         self::assertNull($this->cmf->getCacheDriver());
 
@@ -42,20 +45,20 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertSame($cache, $cacheDriver);
     }
 
-    public function testGetMetadataFor() : void
+    public function testGetMetadataFor(): void
     {
         $metadata = $this->cmf->getMetadataFor('stdClass');
 
         self::assertTrue($this->cmf->hasMetadataFor('stdClass'));
     }
 
-    public function testGetMetadataForAbsentClass() : void
+    public function testGetMetadataForAbsentClass(): void
     {
         $this->expectException(MappingException::class);
         $this->cmf->getMetadataFor(__NAMESPACE__ . '\AbsentClass');
     }
 
-    public function testGetParentMetadata() : void
+    public function testGetParentMetadata(): void
     {
         $metadata = $this->cmf->getMetadataFor(ChildEntity::class);
 
@@ -63,7 +66,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertTrue($this->cmf->hasMetadataFor(RootEntity::class));
     }
 
-    public function testGetCachedMetadata() : void
+    public function testGetCachedMetadata(): void
     {
         $metadata = $this->createMock(ClassMetadata::class);
         $cache    = new ArrayCache();
@@ -74,7 +77,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertSame($metadata, $this->cmf->getMetadataFor(ChildEntity::class));
     }
 
-    public function testCacheGetMetadataFor() : void
+    public function testCacheGetMetadataFor(): void
     {
         $cache = new ArrayCache();
         $this->cmf->setCacheDriver($cache);
@@ -84,7 +87,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertSame($loadedMetadata, $cache->fetch(ChildEntity::class . '$CLASSMETADATA'));
     }
 
-    public function testGetAliasedMetadata() : void
+    public function testGetAliasedMetadata(): void
     {
         $this->cmf->getMetadataFor('prefix:ChildEntity');
 
@@ -95,7 +98,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     /**
      * @group DCOM-270
      */
-    public function testGetInvalidAliasedMetadata() : void
+    public function testGetInvalidAliasedMetadata(): void
     {
         $this->expectException(MappingException::class);
         $this->expectExceptionMessage(
@@ -108,12 +111,12 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     /**
      * @group DCOM-270
      */
-    public function testClassIsTransient() : void
+    public function testClassIsTransient(): void
     {
         self::assertTrue($this->cmf->isTransient('prefix:ChildEntity:Foo'));
     }
 
-    public function testWillFallbackOnNotLoadedMetadata() : void
+    public function testWillFallbackOnNotLoadedMetadata(): void
     {
         $classMetadata = $this->createMock(ClassMetadata::class);
 
@@ -127,7 +130,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertSame($classMetadata, $fooClassMetadata);
     }
 
-    public function testWillFailOnFallbackFailureWithNotLoadedMetadata() : void
+    public function testWillFailOnFallbackFailureWithNotLoadedMetadata(): void
     {
         $this->cmf->fallbackCallback = static function () {
             return null;
@@ -142,20 +145,20 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     /**
      * @group 717
      */
-    public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances() : void
+    public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances(): void
     {
-        /** @var Cache|MockObject $cacheDriver */
         $cacheDriver = $this->createMock(Cache::class);
+        assert($cacheDriver instanceof Cache || $cacheDriver instanceof MockObject);
 
         $this->cmf->setCacheDriver($cacheDriver);
 
         $cacheDriver->expects(self::once())->method('fetch')->with('Foo$CLASSMETADATA')->willReturn(new stdClass());
 
-        /** @var ClassMetadata $metadata */
         $metadata = $this->createMock(ClassMetadata::class);
+        assert($metadata instanceof ClassMetadata);
 
-        /** @var MockObject|stdClass|callable $fallbackCallback */
         $fallbackCallback = $this->getMockBuilder(stdClass::class)->setMethods(['__invoke'])->getMock();
+        assert($fallbackCallback instanceof MockObject || $fallbackCallback instanceof stdClass || is_callable($fallbackCallback));
 
         $fallbackCallback->expects(self::any())->method('__invoke')->willReturn($metadata);
 

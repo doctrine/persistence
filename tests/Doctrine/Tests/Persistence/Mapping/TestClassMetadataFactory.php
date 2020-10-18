@@ -27,49 +27,64 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     }
 
     /**
-     * @param string[] $nonSuperclassParents
+     * {@inheritDoc}
      */
     protected function doLoadMetadata(
         ClassMetadata $class,
         ?ClassMetadata $parent,
         bool $rootEntityFound,
         array $nonSuperclassParents
-    ) : void {
+    ): void {
     }
 
-    protected function getFqcnFromAlias(string $namespaceAlias, string $simpleClassName) : string
+    /**
+     * {@inheritDoc}
+     */
+    protected function getFqcnFromAlias(string $namespaceAlias, string $simpleClassName): string
     {
         return __NAMESPACE__ . '\\' . $simpleClassName;
     }
 
-    protected function initialize() : void
+    protected function initialize(): void
     {
     }
 
-    protected function newClassMetadataInstance(string $className) : ClassMetadata
+    /**
+     * {@inheritDoc}
+     */
+    protected function newClassMetadataInstance(string $className): ClassMetadata
     {
         return $this->metadata;
     }
 
-    protected function getDriver() : MappingDriver
+    /**
+     * {@inheritDoc}
+     */
+    protected function getDriver(): MappingDriver
     {
         return $this->driver;
     }
 
-    protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService) : void
+    protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService): void
     {
     }
 
-    protected function initializeReflection(ClassMetadata $class, ReflectionService $reflService) : void
+    protected function initializeReflection(ClassMetadata $class, ReflectionService $reflService): void
     {
     }
 
-    protected function isEntity(ClassMetadata $class) : bool
+    /**
+     * {@inheritDoc}
+     */
+    protected function isEntity(ClassMetadata $class): bool
     {
         return true;
     }
 
-    protected function onNotFoundMetadata(string $className) : ?ClassMetadata
+    /**
+     * {@inheritDoc}
+     */
+    protected function onNotFoundMetadata(string $className): ?ClassMetadata
     {
         if ($this->fallbackCallback === null) {
             return null;
@@ -78,7 +93,10 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
         return ($this->fallbackCallback)();
     }
 
-    public function isTransient(string $class) : bool
+    /**
+     * {@inheritDoc}
+     */
+    public function isTransient(string $class): bool
     {
         $name = $this->metadata->getName();
 

@@ -6,6 +6,7 @@ namespace Doctrine\Persistence;
 
 use InvalidArgumentException;
 use ReflectionClass;
+
 use function explode;
 use function sprintf;
 use function strpos;
@@ -224,12 +225,12 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      * {@inheritdoc}
      */
     public function getRepository(
-        string $persistentObjectName,
+        string $persistentObject,
         ?string $persistentManagerName = null
     ) {
         return $this
-            ->selectManager($persistentObjectName, $persistentManagerName)
-            ->getRepository($persistentObjectName);
+            ->selectManager($persistentObject, $persistentManagerName)
+            ->getRepository($persistentObject);
     }
 
     /**
@@ -253,7 +254,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     private function selectManager(
-        string $persistentObjectName,
+        string $persistentObject,
         ?string $persistentManagerName = null
     ) : ObjectManager {
         if ($persistentManagerName !== null) {

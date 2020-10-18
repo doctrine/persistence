@@ -9,11 +9,12 @@ use Doctrine\Persistence\Mapping\Driver\FileDriver;
 use Doctrine\Persistence\Mapping\Driver\FileLocator;
 use Doctrine\Tests\DoctrineTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+
 use function strpos;
 
 class FileDriverTest extends DoctrineTestCase
 {
-    public function testGlobalBasename() : void
+    public function testGlobalBasename(): void
     {
         $driver = $this->createTestFileDriver([]);
 
@@ -24,7 +25,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame('global', $driver->getGlobalBasename());
     }
 
-    public function testGetElementFromGlobalFile() : void
+    public function testGetElementFromGlobalFile(): void
     {
         $driver = $this->createTestFileDriver($this->newLocator());
 
@@ -35,7 +36,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame($driver->stdGlobal, $element);
     }
 
-    public function testGetElementFromFile() : void
+    public function testGetElementFromFile(): void
     {
         $locator = $this->newLocator();
         $locator->expects(self::once())
@@ -48,7 +49,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame($driver->stdClass, $driver->getElement('stdClass'));
     }
 
-    public function testGetElementUpdatesClassCache() : void
+    public function testGetElementUpdatesClassCache(): void
     {
         $locator = $this->newLocator();
 
@@ -67,7 +68,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame($driver->stdClass, $driver->getElement('stdClass'));
     }
 
-    public function testGetAllClassNamesGlobalBasename() : void
+    public function testGetAllClassNamesGlobalBasename(): void
     {
         $locator = $this->newLocator();
         $locator->expects(self::any())->method('getAllClassNames')->with('global')->will(self::returnValue(['stdGlobal', 'stdGlobal2']));
@@ -80,7 +81,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame(['stdGlobal', 'stdGlobal2'], $classNames);
     }
 
-    public function testGetAllClassNamesFromMappingFile() : void
+    public function testGetAllClassNamesFromMappingFile(): void
     {
         $locator = $this->newLocator();
         $locator->expects(self::any())
@@ -95,7 +96,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame(['stdClass'], $classNames);
     }
 
-    public function testGetAllClassNamesBothSources() : void
+    public function testGetAllClassNamesBothSources(): void
     {
         $locator = $this->newLocator();
         $locator->expects(self::any())
@@ -111,7 +112,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
     }
 
-    public function testGetAllClassNamesBothSourcesNoDupes() : void
+    public function testGetAllClassNamesBothSourcesNoDupes(): void
     {
         $locator = $this->newLocator();
         $locator->expects(self::once())
@@ -133,7 +134,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertSame(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
     }
 
-    public function testIsNotTransient() : void
+    public function testIsNotTransient(): void
     {
         $locator = $this->newLocator();
         $locator->expects(self::once())
@@ -149,7 +150,7 @@ class FileDriverTest extends DoctrineTestCase
         self::assertFalse($driver->isTransient('stdGlobal2'));
     }
 
-    public function testIsTransient() : void
+    public function testIsTransient(): void
     {
         $locator = $this->newLocator();
         $locator->expects(self::once())
@@ -162,17 +163,14 @@ class FileDriverTest extends DoctrineTestCase
         self::assertTrue($driver->isTransient('stdClass2'));
     }
 
-    public function testNonLocatorFallback() : void
+    public function testNonLocatorFallback(): void
     {
         $driver = $this->createTestFileDriver(__DIR__ . '/_files', '.yml');
         self::assertTrue($driver->isTransient('stdClass2'));
         self::assertFalse($driver->isTransient('stdClass'));
     }
 
-    /**
-     * @return FileLocator|MockObject
-     */
-    private function newLocator() : FileLocator
+    private function newLocator(): MockObject
     {
         $locator = $this->createMock(FileLocator::class);
         $locator->expects(self::any())->method('getFileExtension')->will(self::returnValue('.yml'));
@@ -222,6 +220,9 @@ class TestFileDriver extends FileDriver
         return ['stdClass' => $this->stdClass];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function loadMetadataForClass(string $className, ClassMetadata $metadata) : void
     {
     }

@@ -13,4 +13,12 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <RedundantCondition>
+            <errorLevel type="suppress">
+                <!-- see https://github.com/JetBrains/phpstorm-stubs/pull/877 -->
+                <file name="lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php"/>
+            </errorLevel>
+        </RedundantCondition>
+    </issueHandlers>
 </psalm>
