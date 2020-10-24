@@ -17,6 +17,7 @@ before_install:
 
 install:
   - rm composer.lock
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer self-update --1; fi
   - travis_retry composer update --prefer-dist
 
 script:
@@ -36,6 +37,7 @@ jobs:
       env: DEPENDENCIES=low
       install:
         - rm composer.lock
+        - composer self-update --1
         - travis_retry composer update --prefer-dist --prefer-lowest
 
     - stage: Test
