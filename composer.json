@@ -47,10 +47,5 @@
             "Doctrine\\Tests\\": "tests/Doctrine/Tests",
             "Doctrine\\Tests_PHP74\\": "tests/Doctrine/Tests_PHP74"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.x-dev"
-        }
     }
 }
