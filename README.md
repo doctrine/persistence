@@ -1,7 +1,7 @@
 # Doctrine Persistence
 
 [![Build Status](https://travis-ci.org/doctrine/persistence.svg)](https://travis-ci.org/doctrine/persistence)
-[![Code Coverage](https://codecov.io/gh/doctrine/persistence/branch/master/graph/badge.svg)](https://codecov.io/gh/doctrine/persistence/branch/master)
+[![Code Coverage](https://codecov.io/gh/doctrine/persistence/branch/2.1.x/graph/badge.svg)](https://codecov.io/gh/doctrine/persistence/branch/2.1.x)
 
 The Doctrine Persistence project is a library that provides common abstractions for object mapper persistence.
 

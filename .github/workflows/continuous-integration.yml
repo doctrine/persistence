@@ -60,6 +60,10 @@ jobs:
         run: "composer remove --dev --no-update vimeo/psalm"
         if: "${{ matrix.php-version == '8.0' }}"
 
+      - name: "Downgrade Composer"
+        run: "composer self-update --1"
+        if: "${{ matrix.php-version == '7.1' }}"
+
       - name: "Update dependencies with composer"
         run: "composer update --no-interaction --no-progress --no-suggest"
         if: "${{ matrix.deps == 'normal' }}"
