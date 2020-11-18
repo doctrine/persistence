@@ -138,9 +138,9 @@ abstract class PersistentObject implements ObjectManagerAware
     /**
      * If this is an inverse side association, completes the owning side.
      *
-     * @param string        $field
-     * @param ClassMetadata $targetClass
-     * @param object        $targetObject
+     * @param string $field
+     * @param string $targetClass
+     * @param object $targetObject
      *
      * @return void
      */
