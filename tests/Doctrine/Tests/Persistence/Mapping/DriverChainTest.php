@@ -7,9 +7,6 @@ use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
-use PHPUnit\Framework\MockObject\MockObject;
-
-use function assert;
 
 class DriverChainTest extends DoctrineTestCase
 {
@@ -17,19 +14,16 @@ class DriverChainTest extends DoctrineTestCase
     {
         $className     = DriverChainEntity::class;
         $classMetadata = $this->createMock(ClassMetadata::class);
-        assert($classMetadata instanceof ClassMetadata || $classMetadata instanceof MockObject);
 
         $chain = new MappingDriverChain();
 
         $driver1 = $this->createMock(MappingDriver::class);
-        assert($driver1 instanceof MappingDriver || $driver1 instanceof MockObject);
         $driver1->expects($this->never())
                 ->method('loadMetadataForClass');
         $driver1->expectS($this->never())
                 ->method('isTransient');
 
         $driver2 = $this->createMock(MappingDriver::class);
-        assert($driver2 instanceof MappingDriver || $driver2 instanceof MockObject);
         $driver2->expects($this->at(0))
                 ->method('loadMetadataForClass')
                 ->with($this->equalTo($className), $this->equalTo($classMetadata));
@@ -50,7 +44,6 @@ class DriverChainTest extends DoctrineTestCase
     {
         $className     = DriverChainEntity::class;
         $classMetadata = $this->createMock(ClassMetadata::class);
-        assert($classMetadata instanceof ClassMetadata || $classMetadata instanceof MockObject);
 
         $chain = new MappingDriverChain();
 
@@ -63,13 +56,11 @@ class DriverChainTest extends DoctrineTestCase
         $chain = new MappingDriverChain();
 
         $driver1 = $this->createMock(MappingDriver::class);
-        assert($driver1 instanceof MappingDriver || $driver1 instanceof MockObject);
         $driver1->expects($this->once())
                 ->method('getAllClassNames')
                 ->will($this->returnValue(['Doctrine\Tests\Models\Company\Foo']));
 
         $driver2 = $this->createMock(MappingDriver::class);
-        assert($driver2 instanceof MappingDriver || $driver2 instanceof MockObject);
         $driver2->expects($this->once())
                 ->method('getAllClassNames')
                 ->will($this->returnValue(['Doctrine\Tests\ORM\Mapping\Bar', 'Doctrine\Tests\ORM\Mapping\Baz', 'FooBarBaz']));
@@ -90,8 +81,7 @@ class DriverChainTest extends DoctrineTestCase
     public function testIsTransient(): void
     {
         $driver1 = $this->createMock(MappingDriver::class);
-        assert($driver1 instanceof MappingDriver || $driver1 instanceof MockObject);
-        $chain = new MappingDriverChain();
+        $chain   = new MappingDriverChain();
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\CMS');
 
         self::assertTrue($chain->isTransient('stdClass'), 'stdClass isTransient');
@@ -136,10 +126,8 @@ class DriverChainTest extends DoctrineTestCase
     public function testDefaultDriverGetAllClassNames(): void
     {
         $companyDriver = $this->createMock(MappingDriver::class);
-        assert($companyDriver instanceof MappingDriver || $companyDriver instanceof MockObject);
         $defaultDriver = $this->createMock(MappingDriver::class);
-        assert($defaultDriver instanceof MappingDriver || $defaultDriver instanceof MockObject);
-        $chain = new MappingDriverChain();
+        $chain         = new MappingDriverChain();
 
         $companyDriver->expects($this->once())
             ->method('getAllClassNames')
