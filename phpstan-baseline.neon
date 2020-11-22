@@ -1,0 +1,13 @@
+parameters:
+    ignoreErrors:
+        -   "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:.+\\(\\)\\.$#"
+
+        -
+            message: "#^Method Doctrine\\\\Tests\\\\Persistence\\\\Mapping\\\\TestFileDriver\\:\\:loadMappingFile\\(\\) should return array\\<Doctrine\\\\Persistence\\\\Mapping\\\\ClassMetadata\\> but returns array\\<string, string\\>\\.$#"
+            count: 2
+            path: tests/Doctrine/Tests/Persistence/Mapping/FileDriverTest.php
+
+        -
+            message: "#^Parameter \\#3 \\$nsSeparator of class Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\SymfonyFileLocator constructor expects string, null given\\.$#"
+            count: 1
+            path: tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php
