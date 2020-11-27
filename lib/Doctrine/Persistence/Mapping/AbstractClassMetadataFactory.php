@@ -58,6 +58,9 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /** @var ReflectionService|null */
     private $reflectionService = null;
 
+    /** @var ProxyClassNameResolver|null */
+    private $proxyClassNameResolver = null;
+
     /**
      * Sets the cache driver used by the factory to cache ClassMetadata instances.
      *
@@ -138,6 +141,11 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         }
 
         return $metadata;
+    }
+
+    public function setProxyClassNameResolver(ProxyClassNameResolver $resolver): void
+    {
+        $this->proxyClassNameResolver = $resolver;
     }
 
     /**
@@ -467,12 +475,26 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     private function getRealClass(string $class): string
     {
-        $pos = strrpos($class, '\\' . Proxy::MARKER . '\\');
-
-        if ($pos === false) {
-            return $class;
+        if ($this->proxyClassNameResolver === null) {
+            $this->createDefaultProxyClassNameResolver();
         }
 
-        return substr($class, $pos + Proxy::MARKER_LENGTH + 2);
+        return $this->proxyClassNameResolver->resolveClassName($class);
+    }
+
+    private function createDefaultProxyClassNameResolver(): void
+    {
+        $this->proxyClassNameResolver = new class implements ProxyClassNameResolver {
+            public function resolveClassName(string $className): string
+            {
+                $pos = strrpos($className, '\\' . Proxy::MARKER . '\\');
+
+                if ($pos === false) {
+                    return $className;
+                }
+
+                return substr($className, $pos + Proxy::MARKER_LENGTH + 2);
+            }
+        };
     }
 }
