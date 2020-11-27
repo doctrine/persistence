@@ -12,6 +12,9 @@ use ReflectionException;
 use Symfony\Component\Cache\Adapter\DoctrineAdapter;
 use Symfony\Component\Cache\DoctrineProvider;
 
+use function array_combine;
+use function array_keys;
+use function array_map;
 use function array_reverse;
 use function array_unshift;
 use function explode;
@@ -225,9 +228,18 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
-                    foreach ($this->loadMetadata($realClassName) as $loadedClassName) {
-                        $item = $this->cache->getItem($this->getCacheKey($loadedClassName));
-                        $item->set($this->loadedMetadata[$loadedClassName]);
+                    $loadedMetadata = $this->loadMetadata($realClassName);
+                    $classNames     = array_combine(
+                        array_map([$this, 'getCacheKey'], $loadedMetadata),
+                        $loadedMetadata
+                    );
+
+                    foreach ($this->cache->getItems(array_keys($classNames)) as $item) {
+                        if (! isset($classNames[$item->getKey()])) {
+                            continue;
+                        }
+
+                        $item->set($this->loadedMetadata[$classNames[$item->getKey()]]);
                         $this->cache->saveDeferred($item);
                     }
 

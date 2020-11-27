@@ -172,6 +172,10 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
         $item
             ->expects(self::any())
+            ->method('getKey')
+            ->willReturn($key);
+        $item
+            ->expects(self::any())
             ->method('get')
             ->willReturn(new stdClass());
         $item
@@ -185,6 +189,11 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
             ->method('getItem')
             ->with($key)
             ->willReturn($item);
+        $cacheDriver
+            ->expects(self::once())
+            ->method('getItems')
+            ->with([$key])
+            ->willReturn([$item]);
         $cacheDriver
             ->expects(self::once())
             ->method('saveDeferred')
