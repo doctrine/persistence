@@ -98,4 +98,9 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
 
         return $class !== $name;
     }
+
+    public function getCacheKey(string $realClassName): string
+    {
+        return parent::getCacheKey($realClassName);
+    }
 }

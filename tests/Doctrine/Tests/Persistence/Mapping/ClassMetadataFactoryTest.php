@@ -3,14 +3,16 @@
 namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Cache\Cache;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use stdClass;
-
-use function assert;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Adapter\DoctrineAdapter;
+use Symfony\Component\Cache\DoctrineProvider;
 
 /**
  * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
@@ -27,12 +29,31 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf = new TestClassMetadataFactory($driver, $metadata);
     }
 
-    public function testGetCacheDriver(): void
+    public function testSetGetCacheDriver(): void
     {
         self::assertNull($this->cmf->getCacheDriver());
+        self::assertNull($this->cmf->getCache());
+
         $cache = new ArrayCache();
         $this->cmf->setCacheDriver($cache);
+
         self::assertSame($cache, $this->cmf->getCacheDriver());
+        self::assertInstanceOf(DoctrineAdapter::class, $this->cmf->getCache());
+
+        $this->cmf->setCacheDriver(null);
+        self::assertNull($this->cmf->getCacheDriver());
+        self::assertNull($this->cmf->getCache());
+    }
+
+    public function testSetGetCache(): void
+    {
+        self::assertNull($this->cmf->getCache());
+        self::assertNull($this->cmf->getCacheDriver());
+
+        $cache = new ArrayAdapter();
+        $this->cmf->setCache($cache);
+        self::assertSame($cache, $this->cmf->getCache());
+        self::assertInstanceOf(DoctrineProvider::class, $this->cmf->getCacheDriver());
     }
 
     public function testGetMetadataFor(): void
@@ -61,22 +82,26 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     public function testGetCachedMetadata(): void
     {
         $metadata = $this->createMock(ClassMetadata::class);
-        $cache    = new ArrayCache();
-        $cache->save(ChildEntity::class . '$CLASSMETADATA', $metadata);
+        $cache    = new ArrayAdapter();
+        $item     = $cache->getItem($this->cmf->getCacheKey(ChildEntity::class));
+        $item->set($metadata);
+        $cache->save($item);
 
-        $this->cmf->setCacheDriver($cache);
+        $this->cmf->setCache($cache);
 
-        self::assertSame($metadata, $this->cmf->getMetadataFor(ChildEntity::class));
+        self::assertEquals($metadata, $this->cmf->getMetadataFor(ChildEntity::class));
     }
 
     public function testCacheGetMetadataFor(): void
     {
-        $cache = new ArrayCache();
-        $this->cmf->setCacheDriver($cache);
+        $cache = new ArrayAdapter();
+        $this->cmf->setCache($cache);
 
         $loadedMetadata = $this->cmf->getMetadataFor(ChildEntity::class);
 
-        self::assertSame($loadedMetadata, $cache->fetch(ChildEntity::class . '$CLASSMETADATA'));
+        $item = $cache->getItem($this->cmf->getCacheKey(ChildEntity::class));
+        self::assertTrue($item->isHit());
+        self::assertEquals($loadedMetadata, $item->get());
     }
 
     public function testGetAliasedMetadata(): void
@@ -139,18 +164,77 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
      */
     public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances(): void
     {
-        $cacheDriver = $this->createMock(Cache::class);
+        $key = $this->cmf->getCacheKey(RootEntity::class);
 
-        $this->cmf->setCacheDriver($cacheDriver);
+        $metadata = $this->cmf->metadata;
 
-        $cacheDriver->expects(self::once())->method('fetch')->with('Foo$CLASSMETADATA')->willReturn(new stdClass());
+        $item = $this->createMock(CacheItemInterface::class);
 
-        $metadata = $this->createMock(ClassMetadata::class);
-        assert($metadata instanceof ClassMetadata);
+        $item
+            ->expects(self::any())
+            ->method('get')
+            ->willReturn(new stdClass());
+        $item
+            ->expects(self::once())
+            ->method('set')
+            ->with($metadata);
+
+        $cacheDriver = $this->createMock(CacheItemPoolInterface::class);
+        $cacheDriver
+            ->expects(self::any())
+            ->method('getItem')
+            ->with($key)
+            ->willReturn($item);
+        $cacheDriver
+            ->expects(self::once())
+            ->method('saveDeferred')
+            ->with($item);
+        $cacheDriver
+            ->expects(self::once())
+            ->method('commit');
+
+        $this->cmf->setCache($cacheDriver);
+
+        self::assertSame($metadata, $this->cmf->getMetadataFor(RootEntity::class));
+    }
+
+    public function testWillNotCacheFallbackMetadata(): void
+    {
+        $key = $this->cmf->getCacheKey('Foo');
+
+        $metadata = $this->cmf->metadata;
+
+        $item = $this->createMock(CacheItemInterface::class);
+
+        $item
+            ->expects(self::any())
+            ->method('get')
+            ->willReturn(null);
+        $item
+            ->expects(self::never())
+            ->method('set');
+
+        $cacheDriver = $this->createMock(CacheItemPoolInterface::class);
+        $cacheDriver
+            ->expects(self::once())
+            ->method('getItem')
+            ->with($key)
+            ->willReturn($item);
+        $cacheDriver
+            ->expects(self::never())
+            ->method('saveDeferred');
+        $cacheDriver
+            ->expects(self::never())
+            ->method('commit');
+
+        $this->cmf->setCache($cacheDriver);
 
         $fallbackCallback = $this->getMockBuilder(stdClass::class)->setMethods(['__invoke'])->getMock();
 
-        $fallbackCallback->expects(self::any())->method('__invoke')->willReturn($metadata);
+        $fallbackCallback
+            ->expects(self::any())
+            ->method('__invoke')
+            ->willReturn($metadata);
 
         $this->cmf->fallbackCallback = $fallbackCallback;
 
