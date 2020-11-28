@@ -27,6 +27,7 @@
         "doctrine/event-manager": "^1.0"
     },
     "require-dev": {
+        "composer/package-versions-deprecated": "^1.11",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-strict-rules": "^0.12",
@@ -47,11 +48,6 @@
         "psr-4": {
             "Doctrine\\Tests\\": "tests/Doctrine/Tests",
             "Doctrine\\Tests_PHP74\\": "tests/Doctrine/Tests_PHP74"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.0.x-dev"
         }
     }
 }

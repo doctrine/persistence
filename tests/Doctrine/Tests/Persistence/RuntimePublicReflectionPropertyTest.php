@@ -141,7 +141,10 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
     /**
      * {@inheritDoc}
      *
-     * @return mixed[]
+     * @return mixed[] Keys are the property names, and values are the default
+     *                 values for those properties.
+     *
+     * @phpstan-return array<string, mixed>
      */
     public function __getLazyProperties()
     {
