@@ -2,6 +2,7 @@
 
 namespace Doctrine\Persistence;
 
+use Doctrine\Persistence\Mapping\MappingException;
 use InvalidArgumentException;
 use ReflectionClass;
 
@@ -185,8 +186,13 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
                 return $manager;
             }
 
-            if ($isInterface && $manager->getClassMetadata($class)) {
-                return $manager;
+            if ($isInterface) {
+                try {
+                    $manager->getClassMetadata($class);
+
+                    return $manager;
+                } catch (MappingException $expected) {
+                }
             }
         }
 
