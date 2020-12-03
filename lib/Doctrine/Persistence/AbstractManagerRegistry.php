@@ -176,10 +176,16 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
             $class = $parentClass->getName();
         }
 
+        $isInterface = $proxyClass->isInterface();
+
         foreach ($this->managers as $id) {
             $manager = $this->getService($id);
 
-            if (! $manager->getMetadataFactory()->isTransient($class)) {
+            if (! $isInterface && ! $manager->getMetadataFactory()->isTransient($class)) {
+                return $manager;
+            }
+
+            if ($isInterface && $manager->getClassMetadata($class)) {
                 return $manager;
             }
         }
