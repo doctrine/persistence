@@ -171,11 +171,9 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $item = $this->createMock(CacheItemInterface::class);
 
         $item
-            ->expects(self::any())
             ->method('getKey')
             ->willReturn($key);
         $item
-            ->expects(self::any())
             ->method('get')
             ->willReturn(new stdClass());
         $item
@@ -185,7 +183,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
         $cacheDriver = $this->createMock(CacheItemPoolInterface::class);
         $cacheDriver
-            ->expects(self::any())
             ->method('getItem')
             ->with($key)
             ->willReturn($item);
@@ -216,7 +213,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $item = $this->createMock(CacheItemInterface::class);
 
         $item
-            ->expects(self::any())
             ->method('get')
             ->willReturn(null);
         $item
@@ -241,7 +237,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $fallbackCallback = $this->getMockBuilder(stdClass::class)->setMethods(['__invoke'])->getMock();
 
         $fallbackCallback
-            ->expects(self::any())
             ->method('__invoke')
             ->willReturn($metadata);
 
