@@ -113,6 +113,8 @@ abstract class AnnotationDriver implements MappingDriver
      * Append exclude lookup paths to metadata driver.
      *
      * @param string[] $paths
+     *
+     * @return void
      */
     public function addExcludePaths(array $paths)
     {
