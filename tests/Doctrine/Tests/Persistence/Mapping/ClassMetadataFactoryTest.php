@@ -116,8 +116,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
             return $classMetadata;
         };
 
-        $this->cmf->metadata = null;
-
         self::assertSame($classMetadata, $this->cmf->getMetadataFor('Foo'));
     }
 
@@ -126,8 +124,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf->fallbackCallback = static function () {
             return null;
         };
-
-        $this->cmf->metadata = null;
 
         $this->expectException(MappingException::class);
 
