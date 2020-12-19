@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - "7.1"
           - "7.2"
           - "7.3"
           - "7.4"
@@ -24,7 +23,7 @@ jobs:
           - "normal"
         include:
           - deps: "low"
-            php-version: "7.1"
+            php-version: "7.2"
 
     steps:
       - name: "Checkout"
@@ -34,17 +33,9 @@ jobs:
 
       - name: "Install PHP with pcov"
         uses: "shivammathur/setup-php@v2"
-        if: "${{ matrix.php-version != '7.1' }}"
         with:
           php-version: "${{ matrix.php-version }}"
           coverage: "pcov"
-
-      - name: "Install PHP with xdebug"
-        uses: "shivammathur/setup-php@v2"
-        if: "${{ matrix.php-version == '7.1' }}"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          coverage: "xdebug"
 
       - name: "Cache dependencies installed with composer"
         uses: "actions/cache@v2"
@@ -59,10 +50,6 @@ jobs:
       - name: "Remove dependency on vimeo/psalm for PHP8"
         run: "composer remove --dev --no-update vimeo/psalm"
         if: "${{ matrix.php-version == '8.0' }}"
-
-      - name: "Downgrade Composer"
-        run: "composer self-update --1"
-        if: "${{ matrix.php-version == '7.1' }}"
 
       - name: "Update dependencies with composer"
         run: "composer update --no-interaction --no-progress --no-suggest"
