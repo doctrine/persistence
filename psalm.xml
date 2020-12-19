@@ -9,8 +9,10 @@
 >
     <projectFiles>
         <directory name="lib/Doctrine/Persistence" />
+        <directory name="tests/Doctrine" />
         <ignoreFiles>
             <directory name="vendor" />
+            <file name="tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php" />
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>

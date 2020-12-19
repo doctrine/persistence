@@ -84,6 +84,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
         $path   = __DIR__ . '/_files';
         $prefix = 'Foo';
 
+        /** @psalm-suppress NullArgument */
         new SymfonyFileLocator([$path => $prefix], '.yml', null);
     }
 
