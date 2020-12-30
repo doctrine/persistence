@@ -7,4 +7,5 @@
 /phpunit.xml.dist export-ignore
 /phpcs.xml.dist export-ignore
 /phpstan.neon export-ignore
+/psalm.xml export-ignore
 /composer.lock export-ignore
