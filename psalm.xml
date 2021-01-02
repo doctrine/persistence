@@ -34,5 +34,10 @@
                 <file name="lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php"/>
             </errorLevel>
         </NullableReturnStatement>
+        <NullArgument>
+            <errorLevel type="suppress">
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php"/>
+            </errorLevel>
+        </NullArgument>
     </issueHandlers>
 </psalm>
