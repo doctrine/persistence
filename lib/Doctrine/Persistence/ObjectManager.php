@@ -107,6 +107,7 @@ interface ObjectManager
      * This effectively synchronizes the in-memory state of managed objects with the
      * database.
      *
+     * @throws UniqueConstraintViolationException
      * @return void
      */
     public function flush();
