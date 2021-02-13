@@ -20,5 +20,17 @@
                 <file name="lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php"/>
             </errorLevel>
         </RedundantCondition>
+        <InvalidNullableReturnType>
+            <errorLevel type="suppress">
+                <!-- see https://github.com/vimeo/psalm/issues/5193 -->
+                <file name="lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php"/>
+            </errorLevel>
+        </InvalidNullableReturnType>
+        <NullableReturnStatement>
+            <errorLevel type="suppress">
+                <!-- see https://github.com/vimeo/psalm/issues/5193 -->
+                <file name="lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php"/>
+            </errorLevel>
+        </NullableReturnStatement>
     </issueHandlers>
 </psalm>
