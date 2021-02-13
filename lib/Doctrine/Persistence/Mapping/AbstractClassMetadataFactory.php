@@ -2,17 +2,30 @@
 
 namespace Doctrine\Persistence\Mapping;
 
+use BadMethodCallException;
 use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Proxy;
+use Psr\Cache\CacheItemPoolInterface;
 use ReflectionException;
+use Symfony\Component\Cache\Adapter\DoctrineAdapter;
+use Symfony\Component\Cache\DoctrineProvider;
 
+use function array_combine;
+use function array_keys;
+use function array_map;
 use function array_reverse;
 use function array_unshift;
 use function explode;
+use function sprintf;
+use function str_replace;
 use function strpos;
 use function strrpos;
 use function substr;
+use function trigger_error;
+
+use const E_USER_DEPRECATED;
 
 /**
  * The ClassMetadataFactory is used to create ClassMetadata objects that contain all the
@@ -28,10 +41,13 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      *
      * @var string
      */
-    protected $cacheSalt = '$CLASSMETADATA';
+    protected $cacheSalt = '__CLASSMETADATA__';
 
     /** @var Cache|null */
     private $cacheDriver;
+
+    /** @var CacheItemPoolInterface|null */
+    private $cache;
 
     /** @var ClassMetadata[] */
     private $loadedMetadata = [];
@@ -45,21 +61,52 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * Sets the cache driver used by the factory to cache ClassMetadata instances.
      *
+     * @deprecated setCacheDriver was deprecated in doctrine/persistence 2.2 and will be removed in 3.0. Use setCache instead
+     *
      * @return void
      */
     public function setCacheDriver(?Cache $cacheDriver = null)
     {
+        @trigger_error(sprintf('%s is deprecated. Use setCache() with a PSR-6 cache instead.', __METHOD__), E_USER_DEPRECATED);
+
         $this->cacheDriver = $cacheDriver;
+
+        if ($cacheDriver === null) {
+            $this->cache = null;
+
+            return;
+        }
+
+        if (! $cacheDriver instanceof CacheProvider) {
+            throw new BadMethodCallException('Cannot convert cache to PSR-6 cache');
+        }
+
+        $this->cache = new DoctrineAdapter($cacheDriver);
     }
 
     /**
      * Gets the cache driver used by the factory to cache ClassMetadata instances.
      *
+     * @deprecated getCacheDriver was deprecated in doctrine/persistence 2.2 and will be removed in 3.0. Use getCache instead
+     *
      * @return Cache|null
      */
     public function getCacheDriver()
     {
+        @trigger_error(sprintf('%s is deprecated. Use getCache() instead.', __METHOD__), E_USER_DEPRECATED);
+
         return $this->cacheDriver;
+    }
+
+    public function setCache(CacheItemPoolInterface $cache): void
+    {
+        $this->cache       = $cache;
+        $this->cacheDriver = new DoctrineProvider($cache);
+    }
+
+    public function getCache(): ?CacheItemPoolInterface
+    {
+        return $this->cache;
     }
 
     /**
@@ -174,19 +221,29 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         $loadingException = null;
 
         try {
-            if ($this->cacheDriver) {
-                $cached = $this->cacheDriver->fetch($realClassName . $this->cacheSalt);
+            if ($this->cache) {
+                $cached = $this->cache->getItem($this->getCacheKey($realClassName))->get();
                 if ($cached instanceof ClassMetadata) {
                     $this->loadedMetadata[$realClassName] = $cached;
 
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
-                    foreach ($this->loadMetadata($realClassName) as $loadedClassName) {
-                        $this->cacheDriver->save(
-                            $loadedClassName . $this->cacheSalt,
-                            $this->loadedMetadata[$loadedClassName]
-                        );
+                    $loadedMetadata = $this->loadMetadata($realClassName);
+                    $classNames     = array_combine(
+                        array_map([$this, 'getCacheKey'], $loadedMetadata),
+                        $loadedMetadata
+                    );
+
+                    foreach ($this->cache->getItems(array_keys($classNames)) as $item) {
+                        if (! isset($classNames[$item->getKey()])) {
+                            continue;
+                        }
+
+                        $item->set($this->loadedMetadata[$classNames[$item->getKey()]]);
+                        $this->cache->saveDeferred($item);
                     }
+
+                    $this->cache->commit();
                 }
             } else {
                 $this->loadMetadata($realClassName);
@@ -398,6 +455,11 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         }
 
         return $this->reflectionService;
+    }
+
+    protected function getCacheKey(string $realClassName): string
+    {
+        return str_replace('\\', '__', $realClassName) . $this->cacheSalt;
     }
 
     /**
