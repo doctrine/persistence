@@ -49,8 +49,8 @@ class MappingException extends Exception
 
         return new self(sprintf(
             'File mapping drivers must have a valid directory path, ' .
-            'however the given path %s seems to be incorrect!',
-            $path
+            'however the given path "%s" seems to be incorrect!',
+            (string) $path
         ));
     }
 
