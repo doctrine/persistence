@@ -141,6 +141,8 @@ abstract class FileDriver implements MappingDriver
      * @param string $file The mapping file to load.
      *
      * @return ClassMetadata[]
+     *
+     * @psalm-return array<class-string, ClassMetadata>
      */
     abstract protected function loadMappingFile($file);
 
@@ -187,6 +189,8 @@ abstract class FileDriver implements MappingDriver
 
     /**
      * Sets the locator used to discover mapping files by className.
+     *
+     * @return void
      */
     public function setLocator(FileLocator $locator)
     {
