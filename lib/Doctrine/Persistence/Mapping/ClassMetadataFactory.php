@@ -48,6 +48,8 @@ interface ClassMetadataFactory
      * @param string $className
      *
      * @return bool
+     *
+     * @psalm-param class-string $className
      */
     public function isTransient($className);
 }

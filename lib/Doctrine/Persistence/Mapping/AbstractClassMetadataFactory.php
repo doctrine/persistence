@@ -163,6 +163,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @param string $simpleClassName
      *
      * @return string
+     *
+     * @psalm-return class-string
      */
     abstract protected function getFqcnFromAlias($namespaceAlias, $simpleClassName);
 
@@ -307,6 +309,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @param string $name
      *
      * @return string[]
+     *
+     * @psalm-param class-string $name
      */
     protected function getParentClasses($name)
     {
@@ -337,6 +341,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @param string $name The name of the class for which the metadata should get loaded.
      *
      * @return string[]
+     *
+     * @psalm-param class-string $name
      */
     protected function loadMetadata($name)
     {

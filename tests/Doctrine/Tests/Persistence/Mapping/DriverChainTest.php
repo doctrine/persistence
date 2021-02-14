@@ -93,9 +93,11 @@ class DriverChainTest extends DoctrineTestCase
      */
     public function testDefaultDriver(): void
     {
-        $companyDriver    = $this->createMock(MappingDriver::class);
-        $defaultDriver    = $this->createMock(MappingDriver::class);
-        $entityClassName  = 'Doctrine\Tests\ORM\Mapping\DriverChainEntity';
+        $companyDriver = $this->createMock(MappingDriver::class);
+        $defaultDriver = $this->createMock(MappingDriver::class);
+        /** @psalm-var class-string */
+        $entityClassName = 'Doctrine\Tests\ORM\Mapping\DriverChainEntity';
+        /** @psalm-var class-string */
         $managerClassName = 'Doctrine\Tests\Models\Company\CompanyManager';
         $chain            = new MappingDriverChain();
 

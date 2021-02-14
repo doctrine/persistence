@@ -21,6 +21,9 @@ interface ReflectionService
      * @return string[]
      *
      * @throws MappingException
+     *
+     * @psalm-param class-string $class
+     * @psalm-return class-string[]
      */
     public function getParentClasses($class);
 
@@ -30,6 +33,8 @@ interface ReflectionService
      * @param string $class
      *
      * @return string
+     *
+     * @psalm-param class-string $class
      */
     public function getClassShortName($class);
 
@@ -37,6 +42,8 @@ interface ReflectionService
      * @param string $class
      *
      * @return string
+     *
+     * @psalm-param class-string $class
      */
     public function getClassNamespace($class);
 
@@ -46,6 +53,8 @@ interface ReflectionService
      * @param string $class
      *
      * @return ReflectionClass|null
+     *
+     * @psalm-param class-string $class
      */
     public function getClass($class);
 
@@ -56,6 +65,8 @@ interface ReflectionService
      * @param string $property
      *
      * @return ReflectionProperty|null
+     *
+     * @psalm-param class-string $class
      */
     public function getAccessibleProperty($class, $property);
 
@@ -66,6 +77,8 @@ interface ReflectionService
      * @param mixed $method
      *
      * @return bool
+     *
+     * @psalm-param class-string $class
      */
     public function hasPublicMethod($class, $method);
 }
