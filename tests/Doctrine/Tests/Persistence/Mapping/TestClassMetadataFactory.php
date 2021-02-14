@@ -14,13 +14,13 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     /** @var MappingDriver */
     public $driver;
 
-    /** @var ClassMetadata|null */
+    /** @var ClassMetadata */
     public $metadata;
 
     /** @var callable|null */
     public $fallbackCallback;
 
-    public function __construct(MappingDriver $driver, ?ClassMetadata $metadata)
+    public function __construct(MappingDriver $driver, ClassMetadata $metadata)
     {
         $this->driver   = $driver;
         $this->metadata = $metadata;

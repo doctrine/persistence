@@ -141,8 +141,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
             return $classMetadata;
         };
 
-        $this->cmf->metadata = null;
-
         self::assertSame($classMetadata, $this->cmf->getMetadataFor('Foo'));
     }
 
@@ -151,8 +149,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf->fallbackCallback = static function () {
             return null;
         };
-
-        $this->cmf->metadata = null;
 
         $this->expectException(MappingException::class);
 
@@ -234,13 +230,9 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
         $this->cmf->setCache($cacheDriver);
 
-        $fallbackCallback = $this->getMockBuilder(stdClass::class)->setMethods(['__invoke'])->getMock();
-
-        $fallbackCallback
-            ->method('__invoke')
-            ->willReturn($metadata);
-
-        $this->cmf->fallbackCallback = $fallbackCallback;
+        $this->cmf->fallbackCallback = static function () use ($metadata): ClassMetadata {
+            return $metadata;
+        };
 
         self::assertSame($metadata, $this->cmf->getMetadataFor('Foo'));
     }

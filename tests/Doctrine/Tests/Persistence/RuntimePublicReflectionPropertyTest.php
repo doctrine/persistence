@@ -40,10 +40,8 @@ class RuntimePublicReflectionPropertyTest extends TestCase
 
     public function testGetValueOnProxyPublicProperty(): void
     {
-        $getCheckMock = $this->getMockBuilder('stdClass')->setMethods(['callGet'])->getMock();
-        $getCheckMock->expects($this->never())->method('callGet');
-        $initializer = static function () use ($getCheckMock): void {
-            call_user_func($getCheckMock);
+        $initializer = static function (): void {
+            self::fail('The initializer should not be called.');
         };
 
         $mockProxy = new RuntimePublicReflectionPropertyTestProxyMock();

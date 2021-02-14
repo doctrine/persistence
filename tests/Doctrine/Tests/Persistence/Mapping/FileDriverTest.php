@@ -6,7 +6,11 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\FileDriver;
 use Doctrine\Persistence\Mapping\Driver\FileLocator;
 use Doctrine\Tests\DoctrineTestCase;
+use Doctrine\Tests\Persistence\Mapping\Fixtures\AnotherGlobalClass;
+use Doctrine\Tests\Persistence\Mapping\Fixtures\GlobalClass;
+use Doctrine\Tests\Persistence\Mapping\Fixtures\TestClassMetadata;
 use PHPUnit\Framework\MockObject\MockObject;
+use stdClass;
 
 use function strpos;
 
@@ -27,9 +31,9 @@ class FileDriverTest extends DoctrineTestCase
         $driver = new TestFileDriver($this->newLocator());
         $driver->setGlobalBasename('global');
 
-        $element = $driver->getElement('stdGlobal');
+        $element = $driver->getElement(GlobalClass::class);
 
-        self::assertSame('stdGlobal', $element);
+        self::assertSame(GlobalClass::class, $element->getName());
     }
 
     public function testGetElementFromFile(): void
@@ -37,12 +41,12 @@ class FileDriverTest extends DoctrineTestCase
         $locator = $this->newLocator();
         $locator->expects($this->once())
                 ->method('findMappingFile')
-                ->with($this->equalTo('stdClass'))
+                ->with($this->equalTo(stdClass::class))
                 ->will($this->returnValue(__DIR__ . '/_files/stdClass.yml'));
 
         $driver = new TestFileDriver($locator);
 
-        self::assertSame('stdClass', $driver->getElement('stdClass'));
+        self::assertSame(stdClass::class, $driver->getElement(stdClass::class)->getName());
     }
 
     public function testGetElementUpdatesClassCache(): void
@@ -52,16 +56,16 @@ class FileDriverTest extends DoctrineTestCase
         // findMappingFile should only be called once
         $locator->expects($this->once())
             ->method('findMappingFile')
-            ->with($this->equalTo('stdClass'))
+            ->with($this->equalTo(stdClass::class))
             ->will($this->returnValue(__DIR__ . '/_files/stdClass.yml'));
 
         $driver = new TestFileDriver($locator);
 
         // not cached
-        self::assertSame('stdClass', $driver->getElement('stdClass'));
+        self::assertSame(stdClass::class, $driver->getElement(stdClass::class)->getName());
 
         // cached call
-        self::assertSame('stdClass', $driver->getElement('stdClass'));
+        self::assertSame(stdClass::class, $driver->getElement(stdClass::class)->getName());
     }
 
     public function testGetAllClassNamesGlobalBasename(): void
@@ -71,7 +75,7 @@ class FileDriverTest extends DoctrineTestCase
 
         $classNames = $driver->getAllClassNames();
 
-        self::assertSame(['stdGlobal', 'stdGlobal2'], $classNames);
+        self::assertSame([GlobalClass::class, AnotherGlobalClass::class], $classNames);
     }
 
     public function testGetAllClassNamesFromMappingFile(): void
@@ -94,13 +98,13 @@ class FileDriverTest extends DoctrineTestCase
         $locator->expects($this->any())
                 ->method('getAllClassNames')
                 ->with($this->equalTo('global'))
-                ->will($this->returnValue(['stdClass']));
+                ->will($this->returnValue([stdClass::class]));
         $driver = new TestFileDriver($locator);
         $driver->setGlobalBasename('global');
 
         $classNames = $driver->getAllClassNames();
 
-        self::assertSame(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
+        self::assertSame([GlobalClass::class, AnotherGlobalClass::class, stdClass::class], $classNames);
     }
 
     public function testGetAllClassNamesBothSourcesNoDupes(): void
@@ -109,14 +113,14 @@ class FileDriverTest extends DoctrineTestCase
         $locator->expects($this->once())
                 ->method('getAllClassNames')
                 ->with($this->equalTo('global'))
-                ->willReturn(['stdClass']);
+                ->willReturn([stdClass::class]);
         $driver = new TestFileDriver($locator);
         $driver->setGlobalBasename('global');
 
-        $driver->getElement('stdClass');
+        $driver->getElement(stdClass::class);
         $classNames = $driver->getAllClassNames();
 
-        self::assertSame(['stdGlobal', 'stdGlobal2', 'stdClass'], $classNames);
+        self::assertSame([GlobalClass::class, AnotherGlobalClass::class, stdClass::class], $classNames);
     }
 
     public function testIsNotTransient(): void
@@ -124,15 +128,15 @@ class FileDriverTest extends DoctrineTestCase
         $locator = $this->newLocator();
         $locator->expects($this->once())
                 ->method('fileExists')
-                ->with($this->equalTo('stdClass'))
+                ->with($this->equalTo(stdClass::class))
                 ->will($this->returnValue(true));
 
         $driver = new TestFileDriver($locator);
         $driver->setGlobalBasename('global');
 
-        self::assertFalse($driver->isTransient('stdClass'));
-        self::assertFalse($driver->isTransient('stdGlobal'));
-        self::assertFalse($driver->isTransient('stdGlobal2'));
+        self::assertFalse($driver->isTransient(stdClass::class));
+        self::assertFalse($driver->isTransient(GlobalClass::class));
+        self::assertFalse($driver->isTransient(AnotherGlobalClass::class));
     }
 
     public function testIsTransient(): void
@@ -176,10 +180,13 @@ class TestFileDriver extends FileDriver
     protected function loadMappingFile($file)
     {
         if (strpos($file, 'global.yml') !== false) {
-            return ['stdGlobal' => 'stdGlobal', 'stdGlobal2' => 'stdGlobal2'];
+            return [
+                GlobalClass::class => new TestClassMetadata(GlobalClass::class),
+                AnotherGlobalClass::class => new TestClassMetadata(AnotherGlobalClass::class),
+            ];
         }
 
-        return ['stdClass' => 'stdClass'];
+        return [stdClass::class => new TestClassMetadata(stdClass::class)];
     }
 
     /**
