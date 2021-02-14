@@ -62,6 +62,8 @@ class RuntimeReflectionService implements ReflectionService
 
     /**
      * {@inheritDoc}
+     *
+     * @return ReflectionClass
      */
     public function getClass($class)
     {

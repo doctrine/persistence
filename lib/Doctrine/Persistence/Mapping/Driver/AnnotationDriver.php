@@ -170,9 +170,7 @@ abstract class AnnotationDriver implements MappingDriver
      * A class is non-transient if it is annotated with an annotation
      * from the {@see AnnotationDriver::entityAnnotationClasses}.
      *
-     * @param string $className
-     *
-     * @return bool
+     * {@inheritDoc}
      */
     public function isTransient($className)
     {

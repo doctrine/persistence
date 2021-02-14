@@ -92,6 +92,8 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
 
     /**
      * {@inheritDoc}
+     *
+     * @param string $class
      */
     public function isTransient($class): bool
     {
