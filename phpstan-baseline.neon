@@ -12,3 +12,8 @@ parameters:
             message: "#^Method Doctrine\\\\Persistence\\\\Mapping\\\\AbstractClassMetadataFactory\\:\\:getRealClass\\(\\) should return class\\-string\\<T of object\\> but returns class\\-string\\<Doctrine\\\\Persistence\\\\Proxy\\<T of object\\>\\|T of object\\>\\.$#"
             count: 1
             path: lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php
+
+        -
+            message: "#^Parameter \\#1 \\$class of method Doctrine\\\\Persistence\\\\Mapping\\\\RuntimeReflectionService\\:\\:getParentClasses\\(\\) expects class-string, string given.$#"
+            count: 1
+            path: tests/Doctrine/Tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
