@@ -212,7 +212,7 @@ class TestObjectMetadata implements ClassMetadata
 
     public function getName(): string
     {
-        return __NAMESPACE__ . '\TestObject';
+        return TestObject::class;
     }
 
     public function getReflectionClass(): ReflectionClass

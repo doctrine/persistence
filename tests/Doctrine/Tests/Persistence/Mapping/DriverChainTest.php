@@ -7,6 +7,7 @@ use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
+use stdClass;
 
 class DriverChainTest extends DoctrineTestCase
 {
@@ -84,7 +85,7 @@ class DriverChainTest extends DoctrineTestCase
         $chain   = new MappingDriverChain();
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\CMS');
 
-        self::assertTrue($chain->isTransient('stdClass'), 'stdClass isTransient');
+        self::assertTrue($chain->isTransient(stdClass::class), 'stdClass isTransient');
     }
 
     /**
