@@ -4,6 +4,7 @@ namespace Doctrine\Persistence\Mapping;
 
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
+use Doctrine\Persistence\Reflection\TypedWithDefaultReflectionProperty;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -77,8 +78,12 @@ class RuntimeReflectionService implements ReflectionService
 
         if ($reflectionProperty->isPublic()) {
             $reflectionProperty = new RuntimePublicReflectionProperty($class, $property);
-        } elseif ($this->supportsTypedPropertiesWorkaround && ! array_key_exists($property, $this->getClass($class)->getDefaultProperties())) {
-            $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
+        } elseif ($this->supportsTypedPropertiesWorkaround) {
+            if (array_key_exists($property, $this->getClass($class)->getDefaultProperties())) {
+                $reflectionProperty = new TypedWithDefaultReflectionProperty($class, $property);
+            } else {
+                $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
+            }
         }
 
         $reflectionProperty->setAccessible(true);

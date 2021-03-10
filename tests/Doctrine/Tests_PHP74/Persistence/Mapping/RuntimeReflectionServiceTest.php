@@ -7,8 +7,8 @@ namespace Doctrine\Tests_PHP74\Persistence\Mapping;
 use Doctrine\Persistence\Mapping\RuntimeReflectionService;
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
+use Doctrine\Persistence\Reflection\TypedWithDefaultReflectionProperty;
 use PHPUnit\Framework\TestCase;
-use ReflectionProperty;
 
 /**
  * @group DCOM-93
@@ -37,7 +37,7 @@ class RuntimeReflectionServiceTest extends TestCase
     public function testGetTypedDefaultReflectionProperty(): void
     {
         $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'typedDefaultProperty');
-        self::assertInstanceOf(ReflectionProperty::class, $reflProp);
+        self::assertInstanceOf(TypedWithDefaultReflectionProperty::class, $reflProp);
         self::assertNotInstanceOf(TypedNoDefaultReflectionProperty::class, $reflProp);
     }
 
