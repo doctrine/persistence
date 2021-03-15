@@ -55,12 +55,13 @@ interface ObjectRepository
      * Finds a single object by a set of criteria.
      *
      * @param mixed[] $criteria The criteria.
+     * @param mixed[]|null $orderBy The order by.
      *
      * @return object|null The object.
      *
      * @psalm-return T|null
      */
-    public function findOneBy(array $criteria);
+    public function findOneBy(array $criteria, array $orderBy = null);
 
     /**
      * Returns the class name of the object managed by the repository.
