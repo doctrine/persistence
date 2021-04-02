@@ -6,3 +6,9 @@ parameters:
             message: "#^Parameter \\#3 \\$nsSeparator of class Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\SymfonyFileLocator constructor expects string, null given\\.$#"
             count: 1
             path: tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+
+        -
+            # Remove it when https://github.com/phpstan/phpstan/issues/4803 is solved
+            message: "#^Method Doctrine\\\\Persistence\\\\Mapping\\\\AbstractClassMetadataFactory\\:\\:getRealClass\\(\\) should return class\\-string\\<T of object\\> but returns class\\-string\\<Doctrine\\\\Persistence\\\\Proxy\\<T of object\\>\\|T of object\\>\\.$#"
+            count: 1
+            path: lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php
