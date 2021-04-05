@@ -472,6 +472,10 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
     /**
      * Gets the real class name of a class name that could be a proxy.
+     *
+     * @template T of object
+     * @psalm-param class-string<Proxy<T>>|class-string<T> $class
+     * @psalm-return class-string<T>
      */
     private function getRealClass(string $class): string
     {
@@ -485,14 +489,21 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     private function createDefaultProxyClassNameResolver(): void
     {
         $this->proxyClassNameResolver = new class implements ProxyClassNameResolver {
+            /**
+             * @template T of object
+             * @psalm-param class-string<Proxy<T>>|class-string<T> $className
+             * @psalm-return class-string<T>
+             */
             public function resolveClassName(string $className): string
             {
                 $pos = strrpos($className, '\\' . Proxy::MARKER . '\\');
 
                 if ($pos === false) {
+                    /** @psalm-var class-string<T> */
                     return $className;
                 }
 
+                /** @psalm-var class-string<T> */
                 return substr($className, $pos + Proxy::MARKER_LENGTH + 2);
             }
         };
