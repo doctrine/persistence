@@ -47,6 +47,7 @@ interface ObjectRepository
      *
      * @throws UnexpectedValueException
      *
+     * @psalm-param array<string, 'asc'|'desc'|'ASC'|'DESC'> $orderBy
      * @psalm-return T[]
      */
     public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null);
