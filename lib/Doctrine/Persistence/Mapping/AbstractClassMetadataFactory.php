@@ -208,6 +208,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      *
      * @throws ReflectionException
      * @throws MappingException
+     *
+     * @psalm-param class-string|string $className
      */
     public function getMetadataFor($className)
     {
@@ -433,6 +435,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-param class-string|string $class
      */
     public function isTransient($class)
     {
@@ -446,6 +450,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             $class                              = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         }
 
+        /** @psalm-var class-string $class */
         return $this->getDriver()->isTransient($class);
     }
 
