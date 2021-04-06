@@ -7,6 +7,8 @@ use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
+use Doctrine\Tests\Persistence\Mapping\Fixtures\Manager\Manager;
+use Doctrine\Tests\Persistence\Mapping\Fixtures\Model;
 use stdClass;
 
 class DriverChainTest extends DoctrineTestCase
@@ -93,12 +95,10 @@ class DriverChainTest extends DoctrineTestCase
      */
     public function testDefaultDriver(): void
     {
-        $companyDriver = $this->createMock(MappingDriver::class);
-        $defaultDriver = $this->createMock(MappingDriver::class);
-        /** @psalm-var class-string */
-        $entityClassName = 'Doctrine\Tests\ORM\Mapping\DriverChainEntity';
-        /** @psalm-var class-string */
-        $managerClassName = 'Doctrine\Tests\Models\Company\CompanyManager';
+        $companyDriver    = $this->createMock(MappingDriver::class);
+        $defaultDriver    = $this->createMock(MappingDriver::class);
+        $entityClassName  = Model::class;
+        $managerClassName = Manager::class;
         $chain            = new MappingDriverChain();
 
         $companyDriver->expects($this->never())
@@ -118,7 +118,7 @@ class DriverChainTest extends DoctrineTestCase
         self::assertNull($chain->getDefaultDriver());
 
         $chain->setDefaultDriver($defaultDriver);
-        $chain->addDriver($companyDriver, 'Doctrine\Tests\Models\Company');
+        $chain->addDriver($companyDriver, 'Doctrine\Tests\Persistence\Mapping\Fixtures\Manager');
 
         self::assertSame($defaultDriver, $chain->getDefaultDriver());
 
