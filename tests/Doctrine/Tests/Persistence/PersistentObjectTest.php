@@ -191,7 +191,7 @@ class TestObjectMetadata implements ClassMetadata
      */
     public function getAssociationTargetClass($assocName): string
     {
-        return __NAMESPACE__ . '\TestObject';
+        return TestObject::class;
     }
 
     /**
