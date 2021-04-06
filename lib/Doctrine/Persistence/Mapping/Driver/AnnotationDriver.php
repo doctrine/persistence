@@ -66,7 +66,7 @@ abstract class AnnotationDriver implements MappingDriver
     /**
      * Name of the entity annotations as keys.
      *
-     * @var array<class-string, mixed>
+     * @var array<class-string, bool|int>
      */
     protected $entityAnnotationClasses = [];
 
