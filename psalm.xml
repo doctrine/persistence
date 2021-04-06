@@ -41,17 +41,21 @@
         </NullArgument>
         <PossiblyNullReference>
             <errorLevel type="suppress">
+                <!-- ReflectionProperty::getType() can return null, but there is ReflectionProperty::hasType()
+                check before -->
                 <file name="lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php"/>
             </errorLevel>
         </PossiblyNullReference>
         <ArgumentTypeCoercion>
             <errorLevel type="suppress">
+                <!-- On purpose to use a non existing class for tests -->
                 <referencedFunction name="RuntimeReflectionServiceTest::testGetParentClassesForAbsentClass"/>
                 <file name="tests/Doctrine/Tests/Persistence/Mapping/RuntimeReflectionServiceTest.php"/>
             </errorLevel>
         </ArgumentTypeCoercion>
         <MoreSpecificReturnType>
             <errorLevel type="suppress">
+                <!-- FileDriver::loadMappingFile() in tests could have a more specific return, but is not needed -->
                 <file name="tests/Doctrine/Tests/Persistence/Mapping/FileDriverTest.php"/>
             </errorLevel>
         </MoreSpecificReturnType>
