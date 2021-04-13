@@ -3,12 +3,14 @@
 namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use ReflectionMethod;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\DoctrineAdapter;
@@ -32,27 +34,27 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     public function testSetGetCacheDriver(): void
     {
         self::assertNull($this->cmf->getCacheDriver());
-        self::assertNull($this->cmf->getCache());
+        self::assertNull(self::getCache($this->cmf));
 
         $cache = new ArrayCache();
         $this->cmf->setCacheDriver($cache);
 
         self::assertSame($cache, $this->cmf->getCacheDriver());
-        self::assertInstanceOf(DoctrineAdapter::class, $this->cmf->getCache());
+        self::assertInstanceOf(DoctrineAdapter::class, self::getCache($this->cmf));
 
         $this->cmf->setCacheDriver(null);
         self::assertNull($this->cmf->getCacheDriver());
-        self::assertNull($this->cmf->getCache());
+        self::assertNull(self::getCache($this->cmf));
     }
 
     public function testSetGetCache(): void
     {
-        self::assertNull($this->cmf->getCache());
+        self::assertNull(self::getCache($this->cmf));
         self::assertNull($this->cmf->getCacheDriver());
 
         $cache = new ArrayAdapter();
         $this->cmf->setCache($cache);
-        self::assertSame($cache, $this->cmf->getCache());
+        self::assertSame($cache, self::getCache($this->cmf));
         self::assertInstanceOf(DoctrineProvider::class, $this->cmf->getCacheDriver());
     }
 
@@ -235,6 +237,14 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         };
 
         self::assertSame($metadata, $this->cmf->getMetadataFor('Foo'));
+    }
+
+    private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): ?CacheItemPoolInterface
+    {
+        $method = new ReflectionMethod($classMetadataFactory, 'getCache');
+        $method->setAccessible(true);
+
+        return $method->invoke($classMetadataFactory);
     }
 }
 

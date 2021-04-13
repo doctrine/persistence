@@ -90,7 +90,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * Gets the cache driver used by the factory to cache ClassMetadata instances.
      *
-     * @deprecated getCacheDriver was deprecated in doctrine/persistence 2.2 and will be removed in 3.0. Use getCache instead
+     * @deprecated getCacheDriver was deprecated in doctrine/persistence 2.2 and will be removed in 3.0.
      *
      * @return Cache|null
      */
@@ -107,7 +107,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         $this->cacheDriver = new DoctrineProvider($cache);
     }
 
-    public function getCache(): ?CacheItemPoolInterface
+    final protected function getCache(): ?CacheItemPoolInterface
     {
         return $this->cache;
     }
