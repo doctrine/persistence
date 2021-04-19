@@ -33,6 +33,9 @@ use const E_USER_DEPRECATED;
  * to a relational database.
  *
  * This class was abstracted from the ORM ClassMetadataFactory.
+ *
+ * @template CMTemplate of ClassMetadata
+ * @template-implements ClassMetadataFactory<CMTemplate>
  */
 abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 {
@@ -49,7 +52,10 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /** @var CacheItemPoolInterface|null */
     private $cache;
 
-    /** @var ClassMetadata[] */
+    /**
+     * @var ClassMetadata[]
+     * @psalm-var CMTemplate[]
+     */
     private $loadedMetadata = [];
 
     /** @var bool */
@@ -116,6 +122,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * Returns an array of all the loaded metadata currently in memory.
      *
      * @return ClassMetadata[]
+     * @psalm-return CMTemplate[]
      */
     public function getLoadedMetadata()
     {
@@ -123,10 +130,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     }
 
     /**
-     * Forces the factory to load the metadata of all classes known to the underlying
-     * mapping driver.
-     *
-     * @return ClassMetadata[] The ClassMetadata instances of all mapped classes.
+     * {@inheritDoc}
      */
     public function getAllMetadata()
     {
@@ -176,12 +180,16 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * Wakes up reflection after ClassMetadata gets unserialized from cache.
      *
+     * @psalm-param CMTemplate $class
+     *
      * @return void
      */
     abstract protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService);
 
     /**
      * Initializes Reflection after ClassMetadata was constructed.
+     *
+     * @psalm-param CMTemplate $class
      *
      * @return void
      */
@@ -192,16 +200,14 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      *
      * This method should return false for mapped superclasses or embedded classes.
      *
+     * @psalm-param CMTemplate $class
+     *
      * @return bool
      */
     abstract protected function isEntity(ClassMetadata $class);
 
     /**
-     * Gets the class metadata descriptor for a class.
-     *
-     * @param string $className The name of the class.
-     *
-     * @return ClassMetadata
+     * {@inheritDoc}
      *
      * @throws ReflectionException
      * @throws MappingException
@@ -232,6 +238,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             if ($this->cache) {
                 $cached = $this->cache->getItem($this->getCacheKey($realClassName))->get();
                 if ($cached instanceof ClassMetadata) {
+                    /** @psalm-var CMTemplate $cached */
                     $this->loadedMetadata[$realClassName] = $cached;
 
                     $this->wakeupReflection($cached, $this->getReflectionService());
@@ -275,11 +282,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     }
 
     /**
-     * Checks whether the factory has the metadata for a class loaded already.
-     *
-     * @param string $className
-     *
-     * @return bool TRUE if the metadata of the class in question is already loaded, FALSE otherwise.
+     * {@inheritDoc}
      */
     public function hasMetadataFor($className)
     {
@@ -291,8 +294,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      *
      * NOTE: This is only useful in very special cases, like when generating proxy classes.
      *
-     * @param string        $className
-     * @param ClassMetadata $class
+     * {@inheritDoc}
      *
      * @return void
      */
@@ -395,6 +397,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @param string $className
      *
      * @return ClassMetadata|null
+     * @psalm-return CMTemplate|null
      */
     protected function onNotFoundMetadata($className)
     {
@@ -409,6 +412,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @param bool               $rootEntityFound
      * @param string[]           $nonSuperclassParents All parent class names
      *                                                 that are not marked as mapped superclasses.
+     * @psalm-param CMTemplate $class
+     * @psalm-param CMTemplate|null $parent
      *
      * @return void
      */
@@ -420,6 +425,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @param string $className
      *
      * @return ClassMetadata
+     * @psalm-return CMTemplate
      */
     abstract protected function newClassMetadataInstance($className);
 
