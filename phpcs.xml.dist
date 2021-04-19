@@ -52,12 +52,4 @@
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix">
         <exclude-pattern>lib/Doctrine/Persistence/Mapping/MappingException.php</exclude-pattern>
     </rule>
-
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
-        <exclude-pattern>RuntimeReflectionServiceTest</exclude-pattern>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.WriteOnlyProperty">
-        <exclude-pattern>tests/Doctrine/Tests_PHP74/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php</exclude-pattern>
-    </rule>
 </ruleset>

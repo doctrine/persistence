@@ -72,12 +72,12 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @param string $persistentObject      The name of the persistent object.
      * @param string $persistentManagerName The object manager name (null for the default one).
+     * @psalm-param class-string<T> $persistentObject
      *
      * @return ObjectRepository
+     * @psalm-return ObjectRepository<T>
      *
      * @template T
-     * @psalm-param class-string<T> $persistentObject
-     * @psalm-return ObjectRepository<T>
      */
     public function getRepository($persistentObject, $persistentManagerName = null);
 
