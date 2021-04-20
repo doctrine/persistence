@@ -17,12 +17,12 @@ interface ObjectManager
      *
      * @param string $className The class name of the object to find.
      * @param mixed  $id        The identity of the object to find.
+     * @psalm-param class-string<T> $className
      *
      * @return object|null The found object.
+     * @psalm-return T|null
      *
      * @template T
-     * @psalm-param class-string<T> $className
-     * @psalm-return T|null
      */
     public function find($className, $id);
 
@@ -115,12 +115,12 @@ interface ObjectManager
      * Gets the repository for a class.
      *
      * @param string $className
+     * @psalm-param class-string<T> $className
      *
      * @return ObjectRepository
+     * @psalm-return ObjectRepository<T>
      *
      * @template T
-     * @psalm-param class-string<T> $className
-     * @psalm-return ObjectRepository<T>
      */
     public function getRepository($className);
 
