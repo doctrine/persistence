@@ -29,7 +29,10 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /** @var string */
     private $defaultManager;
 
-    /** @var string */
+    /**
+     * @var string
+     * @psalm-var class-string
+     */
     private $proxyInterfaceName;
 
     /**
@@ -39,6 +42,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      * @param string   $defaultConnection
      * @param string   $defaultManager
      * @param string   $proxyInterfaceName
+     * @psalm-param class-string $proxyInterfaceName
      */
     public function __construct($name, array $connections, array $managers, $defaultConnection, $defaultManager, $proxyInterfaceName)
     {

@@ -167,6 +167,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @param string $simpleClassName
      *
      * @return string
+     * @psalm-return class-string
      */
     abstract protected function getFqcnFromAlias($namespaceAlias, $simpleClassName);
 
@@ -307,6 +308,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * Gets an array of parent classes for the given entity class.
      *
      * @param string $name
+     * @psalm-param class-string $name
      *
      * @return string[]
      */
@@ -337,6 +339,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * should be used for reflection.
      *
      * @param string $name The name of the class for which the metadata should get loaded.
+     * @psalm-param class-string $name
      *
      * @return string[]
      */
@@ -431,6 +434,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-param class-string|string $class
      */
     public function isTransient($class)
     {

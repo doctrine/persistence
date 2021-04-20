@@ -8,6 +8,7 @@ use Doctrine\Persistence\Mapping\Driver\FileLocator;
 use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\AnotherGlobalClass;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\GlobalClass;
+use Doctrine\Tests\Persistence\Mapping\Fixtures\NotLoadedClass;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\TestClassMetadata;
 use PHPUnit\Framework\MockObject\MockObject;
 use stdClass;
@@ -84,12 +85,12 @@ class FileDriverTest extends DoctrineTestCase
         $locator->expects($this->any())
                 ->method('getAllClassNames')
                 ->with($this->equalTo(null))
-                ->will($this->returnValue(['stdClass']));
+                ->will($this->returnValue([stdClass::class]));
         $driver = new TestFileDriver($locator);
 
         $classNames = $driver->getAllClassNames();
 
-        self::assertSame(['stdClass'], $classNames);
+        self::assertSame([stdClass::class], $classNames);
     }
 
     public function testGetAllClassNamesBothSources(): void
@@ -144,19 +145,19 @@ class FileDriverTest extends DoctrineTestCase
         $locator = $this->newLocator();
         $locator->expects($this->once())
                 ->method('fileExists')
-                ->with($this->equalTo('stdClass2'))
+                ->with($this->equalTo(NotLoadedClass::class))
                 ->will($this->returnValue(false));
 
         $driver = new TestFileDriver($locator);
 
-        self::assertTrue($driver->isTransient('stdClass2'));
+        self::assertTrue($driver->isTransient(NotLoadedClass::class));
     }
 
     public function testNonLocatorFallback(): void
     {
         $driver = new TestFileDriver(__DIR__ . '/_files', '.yml');
-        self::assertTrue($driver->isTransient('stdClass2'));
-        self::assertFalse($driver->isTransient('stdClass'));
+        self::assertTrue($driver->isTransient(NotLoadedClass::class));
+        self::assertFalse($driver->isTransient(stdClass::class));
     }
 
     /**
