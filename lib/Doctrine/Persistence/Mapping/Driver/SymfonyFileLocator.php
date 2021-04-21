@@ -227,6 +227,6 @@ class SymfonyFileLocator implements FileLocator
             }
         }
 
-        throw MappingException::mappingFileNotFound($className, substr($className, strrpos($className, '\\') + 1) . $this->fileExtension);
+        throw MappingException::mappingFileNotFound($className, substr($className, (int) strrpos($className, '\\') + 1) . $this->fileExtension);
     }
 }
