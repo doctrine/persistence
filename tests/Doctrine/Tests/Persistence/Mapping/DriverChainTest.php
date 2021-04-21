@@ -24,13 +24,13 @@ class DriverChainTest extends DoctrineTestCase
                 ->method('isTransient');
 
         $driver2 = $this->createMock(MappingDriver::class);
-        $driver2->expects($this->at(0))
+        $driver2->expects($this->once())
                 ->method('loadMetadataForClass')
                 ->with($this->equalTo($className), $this->equalTo($classMetadata));
-        $driver2->expects($this->at(1))
+        $driver2->expects($this->once())
                 ->method('isTransient')
                 ->with($this->equalTo($className))
-                ->will($this->returnValue(true));
+                ->willReturn(true);
 
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\Company');
         $chain->addDriver($driver2, 'Doctrine\Tests\Persistence\Mapping');
