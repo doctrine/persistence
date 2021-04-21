@@ -225,6 +225,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
             $realClassName = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         } else {
+            /** @psalm-var class-string $className */
             $realClassName = $this->getRealClass($className);
         }
 
@@ -449,6 +450,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             $class                              = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         }
 
+        /** @psalm-var class-string $class */
         return $this->getDriver()->isTransient($class);
     }
 
