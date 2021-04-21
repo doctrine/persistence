@@ -7,6 +7,7 @@ use Doctrine\Common\Proxy\Proxy;
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
 use LogicException;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function call_user_func;
 
@@ -59,7 +60,7 @@ class RuntimePublicReflectionPropertyTest extends TestCase
 
     public function testSetValueOnProxyPublicProperty(): void
     {
-        $setCheckMock = $this->getMockBuilder('stdClass')->setMethods(['neverCallSet'])->getMock();
+        $setCheckMock = $this->getMockBuilder(stdClass::class)->setMethods(['neverCallSet'])->getMock();
         $setCheckMock->expects($this->never())->method('neverCallSet');
         $initializer = static function () use ($setCheckMock): void {
             call_user_func([$setCheckMock, 'neverCallSet']);
@@ -80,7 +81,7 @@ class RuntimePublicReflectionPropertyTest extends TestCase
         $reflProperty->setValue($mockProxy, 'otherNewValue');
         self::assertSame('otherNewValue', $mockProxy->checkedProperty);
 
-        $setCheckMock = $this->getMockBuilder('stdClass')->setMethods(['callSet'])->getMock();
+        $setCheckMock = $this->getMockBuilder(stdClass::class)->setMethods(['callSet'])->getMock();
         $setCheckMock->expects($this->once())->method('callSet');
         $initializer = static function () use ($setCheckMock): void {
             call_user_func([$setCheckMock, 'callSet']);

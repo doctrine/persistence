@@ -6,3 +6,8 @@ parameters:
             message: "#^Parameter \\#3 \\$nsSeparator of class Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\SymfonyFileLocator constructor expects string, null given\\.$#"
             count: 1
             path: tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+
+        - # On purpose to make a test fail.
+            message: "#^Parameter \\#1 \\$class of method Doctrine\\\\Persistence\\\\Mapping\\\\RuntimeReflectionService\\:\\:getParentClasses\\(\\) expects class-string, string given.$#"
+            count: 1
+            path: tests/Doctrine/Tests/Persistence/Mapping/RuntimeReflectionServiceTest.php

@@ -6,6 +6,7 @@ use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Persistence\Mapping\RuntimeReflectionService;
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use ReflectionProperty;
 
 use function count;
@@ -51,7 +52,7 @@ class RuntimeReflectionServiceTest extends TestCase
     public function testGetReflectionClass(): void
     {
         $class = $this->reflectionService->getClass(self::class);
-        self::assertInstanceOf('ReflectionClass', $class);
+        self::assertInstanceOf(ReflectionClass::class, $class);
     }
 
     public function testGetMethods(): void

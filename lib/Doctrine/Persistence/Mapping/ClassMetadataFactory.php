@@ -51,6 +51,7 @@ interface ClassMetadataFactory
      * This is only the case if it is either mapped directly or as a MappedSuperclass.
      *
      * @param string $className
+     * @psalm-param class-string $className
      *
      * @return bool
      */

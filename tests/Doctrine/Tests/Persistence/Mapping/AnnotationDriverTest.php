@@ -24,7 +24,7 @@ class AnnotationDriverTest extends TestCase
 
 class SimpleAnnotationDriver extends AnnotationDriver
 {
-    /** @var bool[] */
+    /** @var array<class-string, bool|int> */
     protected $entityAnnotationClasses = [Entity::class => true];
 
     /**
