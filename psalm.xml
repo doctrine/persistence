@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <psalm
-    totallyTyped="false"
-    errorLevel="4"
-    resolveFromConfigFile="true"
+    errorLevel="3"
+    findUnusedPsalmSuppress="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
@@ -39,5 +38,17 @@
                 <file name="tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php"/>
             </errorLevel>
         </NullArgument>
+        <ArgumentTypeCoercion>
+            <errorLevel type="suppress">
+                <!-- On purpose to use a non existing class for tests -->
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/RuntimeReflectionServiceTest.php"/>
+            </errorLevel>
+        </ArgumentTypeCoercion>
+        <MoreSpecificReturnType>
+            <errorLevel type="suppress">
+                <!-- FileDriver::loadMappingFile() in tests could have a more specific return, but is not needed -->
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/FileDriverTest.php"/>
+            </errorLevel>
+        </MoreSpecificReturnType>
     </issueHandlers>
 </psalm>

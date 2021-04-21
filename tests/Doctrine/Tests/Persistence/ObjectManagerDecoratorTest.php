@@ -22,7 +22,7 @@ class NullObjectManagerDecorator extends ObjectManagerDecorator
 
 class ObjectManagerDecoratorTest extends TestCase
 {
-    /** @var MockObject|ObjectManager */
+    /** @var MockObject&ObjectManager */
     private $wrapped;
 
     /** @var NullObjectManagerDecorator */
