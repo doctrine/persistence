@@ -5,12 +5,12 @@ namespace Doctrine\Persistence\Mapping;
 use BadMethodCallException;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\CacheProvider;
+use Doctrine\Common\Cache\Psr6\CacheAdapter;
+use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Proxy;
 use Psr\Cache\CacheItemPoolInterface;
 use ReflectionException;
-use Symfony\Component\Cache\Adapter\DoctrineAdapter;
-use Symfony\Component\Cache\DoctrineProvider;
 
 use function array_combine;
 use function array_keys;
@@ -91,7 +91,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             throw new BadMethodCallException('Cannot convert cache to PSR-6 cache');
         }
 
-        $this->cache = new DoctrineAdapter($cacheDriver);
+        $this->cache = CacheAdapter::wrap($cacheDriver);
     }
 
     /**
@@ -111,7 +111,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     public function setCache(CacheItemPoolInterface $cache): void
     {
         $this->cache       = $cache;
-        $this->cacheDriver = new DoctrineProvider($cache);
+        $this->cacheDriver = DoctrineProvider::wrap($cache);
     }
 
     final protected function getCache(): ?CacheItemPoolInterface

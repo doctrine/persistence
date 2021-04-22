@@ -3,6 +3,8 @@
 namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\Cache\Psr6\CacheAdapter;
+use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
@@ -13,8 +15,6 @@ use Psr\Cache\CacheItemPoolInterface;
 use ReflectionMethod;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Symfony\Component\Cache\Adapter\DoctrineAdapter;
-use Symfony\Component\Cache\DoctrineProvider;
 
 /**
  * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
@@ -40,7 +40,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf->setCacheDriver($cache);
 
         self::assertSame($cache, $this->cmf->getCacheDriver());
-        self::assertInstanceOf(DoctrineAdapter::class, self::getCache($this->cmf));
+        self::assertInstanceOf(CacheAdapter::class, self::getCache($this->cmf));
 
         $this->cmf->setCacheDriver(null);
         self::assertNull($this->cmf->getCacheDriver());
