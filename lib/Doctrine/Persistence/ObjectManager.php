@@ -131,8 +131,12 @@ interface ObjectManager
      * (as it is returned by get_class($obj)).
      *
      * @param string $className
+     * @psalm-param class-string<T> $className
      *
      * @return ClassMetadata
+     * @psalm-return ClassMetadata<T>
+     *
+     * @template T of object
      */
     public function getClassMetadata($className);
 
