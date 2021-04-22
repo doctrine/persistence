@@ -61,7 +61,10 @@ class RuntimeReflectionService implements ReflectionService
     }
 
     /**
-     * {@inheritDoc}
+     * @param string $class
+     * @psalm-param class-string $class
+     *
+     * @return ReflectionClass
      */
     public function getClass($class)
     {

@@ -17,6 +17,7 @@ use function array_keys;
 use function array_map;
 use function array_reverse;
 use function array_unshift;
+use function assert;
 use function explode;
 use function sprintf;
 use function str_replace;
@@ -225,6 +226,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
             $realClassName = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         } else {
+            /** @psalm-var class-string $className */
             $realClassName = $this->getRealClass($className);
         }
 
@@ -449,6 +451,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             $class                              = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         }
 
+        /** @psalm-var class-string $class */
         return $this->getDriver()->isTransient($class);
     }
 
@@ -495,6 +498,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         if ($this->proxyClassNameResolver === null) {
             $this->createDefaultProxyClassNameResolver();
         }
+
+        assert($this->proxyClassNameResolver !== null);
 
         return $this->proxyClassNameResolver->resolveClassName($class);
     }
