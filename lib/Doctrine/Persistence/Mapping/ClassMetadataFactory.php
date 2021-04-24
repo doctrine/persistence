@@ -43,6 +43,8 @@ interface ClassMetadataFactory
      * @param string        $className
      * @param ClassMetadata $class
      * @psalm-param T $class
+     *
+     * @return void
      */
     public function setMetadataFor($className, $class);
 

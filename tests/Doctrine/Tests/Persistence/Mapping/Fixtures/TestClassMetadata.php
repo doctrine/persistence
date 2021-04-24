@@ -8,25 +8,26 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use LogicException;
 use ReflectionClass;
 
+/**
+ * @template T of object
+ * @implements ClassMetadata<T>
+ */
 final class TestClassMetadata implements ClassMetadata
 {
     /**
      * @var string
-     * @psalm-var class-string
+     * @psalm-var class-string<T>
      */
     private $className;
 
     /**
-     * @psalm-param class-string $className
+     * @psalm-param class-string<T> $className
      */
     public function __construct(string $className)
     {
         $this->className = $className;
     }
 
-    /**
-     * @psalm-return class-string
-     */
     public function getName(): string
     {
         return $this->className;
