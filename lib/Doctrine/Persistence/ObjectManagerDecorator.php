@@ -38,9 +38,9 @@ abstract class ObjectManagerDecorator implements ObjectManager
         return $this->wrapped->merge($object);
     }
 
-    public function clear(?string $objectName = null): void
+    public function clear(): void
     {
-        $this->wrapped->clear($objectName);
+        $this->wrapped->clear();
     }
 
     public function detach(object $object): void

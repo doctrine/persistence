@@ -73,21 +73,12 @@ class ObjectManagerDecoratorTest extends TestCase
         self::assertSame($object2, $this->decorated->merge($object1));
     }
 
-    public function testClearWithNoArgument(): void
+    public function testClear(): void
     {
         $this->wrapped->expects(self::once())
             ->method('clear');
 
         $this->decorated->clear();
-    }
-
-    public function testClearWithArgument(): void
-    {
-        $this->wrapped->expects(self::once())
-            ->method('clear')
-            ->with(TestObject::class);
-
-        $this->decorated->clear(TestObject::class);
     }
 
     public function testDetach(): void
