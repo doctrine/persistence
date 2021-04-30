@@ -4,13 +4,16 @@ namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use stdClass;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 use function assert;
+use function class_exists;
 
 /**
  * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
@@ -30,7 +33,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     public function testGetCacheDriver(): void
     {
         self::assertNull($this->cmf->getCacheDriver());
-        $cache = new ArrayCache();
+        $cache = $this->getArrayCache();
         $this->cmf->setCacheDriver($cache);
         self::assertSame($cache, $this->cmf->getCacheDriver());
     }
@@ -61,22 +64,22 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     public function testGetCachedMetadata(): void
     {
         $metadata = $this->createMock(ClassMetadata::class);
-        $cache    = new ArrayCache();
+        $cache    = $this->getArrayCache();
         $cache->save(ChildEntity::class . '$CLASSMETADATA', $metadata);
 
         $this->cmf->setCacheDriver($cache);
 
-        self::assertSame($metadata, $this->cmf->getMetadataFor(ChildEntity::class));
+        self::assertEquals($metadata, $this->cmf->getMetadataFor(ChildEntity::class));
     }
 
     public function testCacheGetMetadataFor(): void
     {
-        $cache = new ArrayCache();
+        $cache = $this->getArrayCache();
         $this->cmf->setCacheDriver($cache);
 
         $loadedMetadata = $this->cmf->getMetadataFor(ChildEntity::class);
 
-        self::assertSame($loadedMetadata, $cache->fetch(ChildEntity::class . '$CLASSMETADATA'));
+        self::assertEquals($loadedMetadata, $cache->fetch(ChildEntity::class . '$CLASSMETADATA'));
     }
 
     public function testGetAliasedMetadata(): void
@@ -149,6 +152,13 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         };
 
         self::assertSame($metadata, $this->cmf->getMetadataFor('Foo'));
+    }
+
+    private function getArrayCache(): Cache
+    {
+        return class_exists(DoctrineProvider::class)
+            ? DoctrineProvider::wrap(new ArrayAdapter())
+            : new ArrayCache();
     }
 }
 
