@@ -7,7 +7,7 @@ use ReflectionClass;
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
  *
- * @template T of object
+ * @template-covariant T of object
  */
 interface ClassMetadata
 {
