@@ -39,5 +39,11 @@
                 <file name="tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php"/>
             </errorLevel>
         </NullArgument>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <!-- This test references ArrayCache which has been removed from Doctrine Cache -->
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/ClassMetadataFactoryTest.php"/>
+            </errorLevel>
+        </UndefinedClass>
     </issueHandlers>
 </psalm>
