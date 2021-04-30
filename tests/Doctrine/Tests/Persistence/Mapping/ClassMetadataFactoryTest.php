@@ -16,6 +16,9 @@ use ReflectionMethod;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
+use function assert;
+use function class_exists;
+
 /**
  * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
  */
@@ -36,7 +39,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertNull($this->cmf->getCacheDriver());
         self::assertNull(self::getCache($this->cmf));
 
-        $cache = new ArrayCache();
+        $cache = $this->getArrayCache();
         $this->cmf->setCacheDriver($cache);
 
         self::assertSame($cache, $this->cmf->getCacheDriver());
@@ -245,6 +248,13 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $method->setAccessible(true);
 
         return $method->invoke($classMetadataFactory);
+    }
+
+    private function getArrayCache(): Cache
+    {
+        return class_exists(DoctrineProvider::class)
+            ? DoctrineProvider::wrap(new ArrayAdapter())
+            : new ArrayCache();
     }
 }
 
