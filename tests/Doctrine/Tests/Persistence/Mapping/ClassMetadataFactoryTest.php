@@ -252,9 +252,12 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
     private function getArrayCache(): Cache
     {
-        return class_exists(DoctrineProvider::class)
+        $cache = class_exists(DoctrineProvider::class)
             ? DoctrineProvider::wrap(new ArrayAdapter())
             : new ArrayCache();
+        assert($cache instanceof Cache);
+
+        return $cache;
     }
 }
 
