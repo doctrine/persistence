@@ -313,6 +313,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @psalm-param class-string $name
      *
      * @return string[]
+     * @psalm-return class-string[]
      */
     protected function getParentClasses($name)
     {
@@ -428,9 +429,12 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * Creates a new ClassMetadata instance for the given class name.
      *
      * @param string $className
+     * @psalm-param class-string<T> $className
      *
-     * @return ClassMetadata
+     * @return ClassMetadata<T>
      * @psalm-return CMTemplate
+     *
+     * @template T of object
      */
     abstract protected function newClassMetadataInstance($className);
 

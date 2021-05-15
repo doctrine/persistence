@@ -9,17 +9,27 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\ReflectionService;
 
+/**
+ * @template CMTemplate of ClassMetadata
+ * @template-extends AbstractClassMetadataFactory<CMTemplate>
+ */
 class TestClassMetadataFactory extends AbstractClassMetadataFactory
 {
     /** @var MappingDriver */
     public $driver;
 
-    /** @var ClassMetadata */
+    /**
+     * @var ClassMetadata
+     * @psalm-var CMTemplate
+     */
     public $metadata;
 
     /** @var callable|null */
     public $fallbackCallback;
 
+    /**
+     * @psalm-param CMTemplate $metadata
+     */
     public function __construct(MappingDriver $driver, ClassMetadata $metadata)
     {
         $this->driver   = $driver;

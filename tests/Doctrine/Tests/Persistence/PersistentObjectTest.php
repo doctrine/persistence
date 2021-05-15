@@ -166,6 +166,9 @@ class PersistentObjectTest extends DoctrineTestCase
     }
 }
 
+/**
+ * @template-implements ClassMetadata<TestObject>
+ */
 class TestObjectMetadata implements ClassMetadata
 {
     /**

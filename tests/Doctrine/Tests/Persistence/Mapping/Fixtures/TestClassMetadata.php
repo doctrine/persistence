@@ -10,7 +10,7 @@ use ReflectionClass;
 
 /**
  * @template T of object
- * @implements ClassMetadata<T>
+ * @template-implements ClassMetadata<T>
  */
 final class TestClassMetadata implements ClassMetadata
 {
