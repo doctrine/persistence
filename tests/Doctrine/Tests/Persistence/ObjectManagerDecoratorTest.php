@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class ObjectManagerDecoratorTest extends TestCase
 {
-    /** @var ObjectManager|MockObject */
+    /** @var MockObject&ObjectManager */
     private $wrapped;
 
     /** @var NullObjectManagerDecorator */
@@ -182,7 +182,7 @@ class ObjectManagerDecoratorTest extends TestCase
 class NullObjectManagerDecorator extends ObjectManagerDecorator
 {
     /**
-     * @param ObjectManager|MockObject $wrapped
+     * @psalm-param ObjectManager&MockObject $wrapped
      */
     public function __construct(ObjectManager $wrapped)
     {

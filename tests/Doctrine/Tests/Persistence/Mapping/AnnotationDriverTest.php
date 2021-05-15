@@ -88,8 +88,8 @@ class AnnotationDriverTest extends TestCase
 
 class SimpleAnnotationDriver extends AnnotationDriver
 {
-    /** @var array<string, int> */
-    protected $entityAnnotationClasses = [Entity::class => 1];
+    /** @var array<class-string, bool|int> */
+    protected $entityAnnotationClasses = [Entity::class => true];
 
     public function loadMetadataForClass(string $className, ClassMetadata $metadata): void
     {

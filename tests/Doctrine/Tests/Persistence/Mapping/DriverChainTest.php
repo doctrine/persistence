@@ -9,6 +9,9 @@ use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
+use Doctrine\Tests\Persistence\Mapping\Fixtures\Manager\Manager;
+use Doctrine\Tests\Persistence\Mapping\Fixtures\Model;
+use stdClass;
 
 class DriverChainTest extends DoctrineTestCase
 {
@@ -26,13 +29,13 @@ class DriverChainTest extends DoctrineTestCase
                 ->method('isTransient');
 
         $driver2 = $this->createMock(MappingDriver::class);
-        $driver2->expects(self::at(0))
+        $driver2->expects(self::once())
                 ->method('loadMetadataForClass')
                 ->with(self::equalTo($className), self::equalTo($classMetadata));
-        $driver2->expects(self::at(1))
+        $driver2->expects(self::once())
                 ->method('isTransient')
                 ->with(self::equalTo($className))
-                ->will(self::returnValue(true));
+                ->willReturn(true);
 
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\Company');
         $chain->addDriver($driver2, 'Doctrine\Tests\Persistence\Mapping');
@@ -86,7 +89,7 @@ class DriverChainTest extends DoctrineTestCase
         $chain   = new MappingDriverChain();
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\CMS');
 
-        self::assertTrue($chain->isTransient('stdClass'), 'stdClass isTransient');
+        self::assertTrue($chain->isTransient(stdClass::class), 'stdClass isTransient');
     }
 
     /**
@@ -96,8 +99,8 @@ class DriverChainTest extends DoctrineTestCase
     {
         $companyDriver    = $this->createMock(MappingDriver::class);
         $defaultDriver    = $this->createMock(MappingDriver::class);
-        $entityClassName  = DriverChainEntity::class;
-        $managerClassName = 'Doctrine\Tests\Models\Company\CompanyManager';
+        $entityClassName  = Model::class;
+        $managerClassName = Manager::class;
         $chain            = new MappingDriverChain();
 
         $companyDriver->expects(self::never())
@@ -117,7 +120,7 @@ class DriverChainTest extends DoctrineTestCase
         self::assertNull($chain->getDefaultDriver());
 
         $chain->setDefaultDriver($defaultDriver);
-        $chain->addDriver($companyDriver, 'Doctrine\Tests\Models\Company');
+        $chain->addDriver($companyDriver, 'Doctrine\Tests\Persistence\Mapping\Fixtures\Manager');
 
         $driver = $chain->getDefaultDriver();
 

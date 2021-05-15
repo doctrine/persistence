@@ -18,56 +18,57 @@ interface ReflectionService
     /**
      * Returns an array of the parent classes (not interfaces) for the given class.
      *
+     * @psalm-param class-string $class
+     *
      * @return string[]
+     * @psalm-return class-string[]
      *
      * @throws MappingException
-     *
-     * @psalm-param class-string $class
-     * @psalm-return class-string[]
      */
     public function getParentClasses(string $class);
 
     /**
      * Returns the shortname of a class.
      *
-     * @return string
-     *
      * @psalm-param class-string $class
+     *
+     * @return string
      */
     public function getClassShortName(string $class);
 
     /**
-     * @return string
-     *
      * @psalm-param class-string $class
+     *
+     * @return string
      */
     public function getClassNamespace(string $class);
 
     /**
      * Returns a reflection class instance or null.
      *
+     * @psalm-param class-string<T> $class
+     *
      * @return ReflectionClass<T>|null
      *
      * @template T of object
-     * @psalm-param class-string<T> $class
      */
     public function getClass(string $class);
 
     /**
      * Returns an accessible property (setAccessible(true)) or null.
      *
-     * @return ReflectionProperty|null
-     *
      * @psalm-param class-string $class
+     *
+     * @return ReflectionProperty|null
      */
     public function getAccessibleProperty(string $class, string $property);
 
     /**
      * Checks if the class have a public method with the given name.
      *
-     * @return bool
-     *
      * @psalm-param class-string $class
+     *
+     * @return bool
      */
     public function hasPublicMethod(string $class, string $method);
 }

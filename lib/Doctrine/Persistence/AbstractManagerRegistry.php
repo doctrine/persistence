@@ -31,12 +31,16 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /** @var string */
     private $defaultManager;
 
-    /** @var string */
+    /**
+     * @var string
+     * @psalm-var class-string
+     */
     private $proxyInterfaceName;
 
     /**
      * @param array<string, string> $connections
      * @param array<string, string> $managers
+     * @psalm-param class-string $proxyInterfaceName
      */
     public function __construct(
         string $name,
@@ -166,14 +170,9 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      */
     public function getManagerForClass(string $class)
     {
-        // Check for namespace alias
-        if (strpos($class, ':') !== false) {
-            [$namespaceAlias, $simpleClassName] = explode(':', $class, 2);
+        $className = $this->getRealClassName($class);
 
-            $class = $this->getAliasNamespace($namespaceAlias) . '\\' . $simpleClassName;
-        }
-
-        $proxyClass = new ReflectionClass($class);
+        $proxyClass = new ReflectionClass($className);
 
         if ($proxyClass->implementsInterface($this->proxyInterfaceName)) {
             $parentClass = $proxyClass->getParentClass();
@@ -182,13 +181,13 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
                 return null;
             }
 
-            $class = $parentClass->getName();
+            $className = $parentClass->getName();
         }
 
         foreach ($this->managers as $id) {
             $manager = $this->getService($id);
 
-            if (! $manager->getMetadataFactory()->isTransient($class)) {
+            if (! $manager->getMetadataFactory()->isTransient($className)) {
                 return $manager;
             }
         }
@@ -263,5 +262,22 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         }
 
         return $this->getManagerForClass($persistentObject) ?? $this->getManager();
+    }
+
+    /**
+     * @psalm-return class-string
+     */
+    private function getRealClassName(string $classNameOrAlias): string
+    {
+        // Check for namespace alias
+        if (strpos($classNameOrAlias, ':') !== false) {
+            [$namespaceAlias, $simpleClassName] = explode(':', $classNameOrAlias, 2);
+
+            /** @psalm-var class-string */
+            return $this->getAliasNamespace($namespaceAlias) . '\\' . $simpleClassName;
+        }
+
+        /** @psalm-var class-string */
+        return $classNameOrAlias;
     }
 }

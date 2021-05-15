@@ -6,6 +6,8 @@ namespace Doctrine\Persistence\Mapping;
 
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
+ *
+ * @template T of ClassMetadata
  */
 interface ClassMetadataFactory
 {
@@ -13,7 +15,8 @@ interface ClassMetadataFactory
      * Forces the factory to load the metadata of all classes known to the underlying
      * mapping driver.
      *
-     * @return array<int, ClassMetadata> The ClassMetadata instances of all mapped classes.
+     * @return ClassMetadata[] The ClassMetadata instances of all mapped classes.
+     * @psalm-return T[]
      */
     public function getAllMetadata();
 
@@ -23,6 +26,7 @@ interface ClassMetadataFactory
      * @param string $className The name of the class.
      *
      * @return ClassMetadata
+     * @psalm-return T
      */
     public function getMetadataFor(string $className);
 
@@ -36,6 +40,8 @@ interface ClassMetadataFactory
     /**
      * Sets the metadata descriptor for a specific class.
      *
+     * @psalm-param T $class
+     *
      * @return void
      */
     public function setMetadataFor(string $className, ClassMetadata $class);
@@ -43,6 +49,8 @@ interface ClassMetadataFactory
     /**
      * Returns whether the class with the specified name should have its metadata loaded.
      * This is only the case if it is either mapped directly or as a MappedSuperclass.
+     *
+     * @psalm-param class-string $className
      *
      * @return bool
      */

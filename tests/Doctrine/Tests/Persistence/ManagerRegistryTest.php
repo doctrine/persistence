@@ -205,6 +205,8 @@ class TestManagerRegistry extends AbstractManagerRegistry
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-param class-string $proxyInterfaceName
      */
     public function __construct(
         string $name,

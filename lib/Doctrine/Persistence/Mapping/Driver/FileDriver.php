@@ -26,7 +26,7 @@ abstract class FileDriver implements MappingDriver
     /** @var FileLocator */
     protected $locator;
 
-    /** @var ClassMetadata[]|null */
+    /** @psalm-var ClassMetadata<object>[]|null */
     protected $classCache;
 
     /** @var string */
@@ -72,7 +72,7 @@ abstract class FileDriver implements MappingDriver
      * Gets the element of schema meta data for the class from the mapping file.
      * This will lazily load the mapping file if it is not loaded yet.
      *
-     * @return ClassMetadata The element of schema meta data.
+     * @psalm-return ClassMetadata<object> The element of schema meta data.
      *
      * @throws MappingException
      */
@@ -129,7 +129,7 @@ abstract class FileDriver implements MappingDriver
             return $this->locator->getAllClassNames($this->globalBasename);
         }
 
-        /** @var array<string, ClassMetadata> $classCache */
+        /** @var array<string, ClassMetadata<object>> $classCache */
         $classCache = $this->classCache;
 
         /** @var array<int, string> $keys */
@@ -148,6 +148,7 @@ abstract class FileDriver implements MappingDriver
      * @param string $file The mapping file to load.
      *
      * @return ClassMetadata[]
+     * @psalm-return array<class-string, ClassMetadata<object>>
      */
     abstract protected function loadMappingFile(string $file);
 
