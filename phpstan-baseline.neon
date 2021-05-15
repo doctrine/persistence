@@ -2,6 +2,8 @@ parameters:
     ignoreErrors:
         -   "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:.+\\(\\)\\.$#"
 
+        -   "#^Instantiated class Doctrine\\\\Common\\\\Cache\\\\ArrayCache not found\\.$#"
+
         -
             message: "#^Parameter \\#3 \\$nsSeparator of class Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\SymfonyFileLocator constructor expects string, null given\\.$#"
             count: 1

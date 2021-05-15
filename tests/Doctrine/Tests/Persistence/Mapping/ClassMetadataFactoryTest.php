@@ -3,7 +3,7 @@
 namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Cache\Psr6\CacheAdapter;
+use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -15,6 +15,9 @@ use Psr\Cache\CacheItemPoolInterface;
 use ReflectionMethod;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
+
+use function assert;
+use function class_exists;
 
 /**
  * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
@@ -36,11 +39,11 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertNull($this->cmf->getCacheDriver());
         self::assertNull(self::getCache($this->cmf));
 
-        $cache = new ArrayCache();
+        $cache = $this->getArrayCache();
         $this->cmf->setCacheDriver($cache);
 
         self::assertSame($cache, $this->cmf->getCacheDriver());
-        self::assertInstanceOf(CacheAdapter::class, self::getCache($this->cmf));
+        self::assertInstanceOf(CacheItemPoolInterface::class, self::getCache($this->cmf));
 
         $this->cmf->setCacheDriver(null);
         self::assertNull($this->cmf->getCacheDriver());
@@ -245,6 +248,16 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $method->setAccessible(true);
 
         return $method->invoke($classMetadataFactory);
+    }
+
+    private function getArrayCache(): Cache
+    {
+        $cache = class_exists(DoctrineProvider::class)
+            ? DoctrineProvider::wrap(new ArrayAdapter())
+            : new ArrayCache();
+        assert($cache instanceof Cache);
+
+        return $cache;
     }
 }
 
