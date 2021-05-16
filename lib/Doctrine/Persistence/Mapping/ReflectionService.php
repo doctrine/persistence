@@ -48,9 +48,12 @@ interface ReflectionService
      * Returns a reflection class instance or null.
      *
      * @param string $class
-     * @psalm-param class-string $class
+     * @psalm-param class-string<T> $class
      *
      * @return ReflectionClass|null
+     * @psalm-return ReflectionClass<T>|null
+     *
+     * @template T of object
      */
     public function getClass($class);
 

@@ -13,6 +13,7 @@ interface MappingDriver
      * Loads the metadata for the specified class into the provided container.
      *
      * @param string $className
+     * @psalm-param ClassMetadata<object> $metadata
      *
      * @return void
      */

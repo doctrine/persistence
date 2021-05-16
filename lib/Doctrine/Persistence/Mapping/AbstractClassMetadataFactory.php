@@ -19,6 +19,7 @@ use function array_reverse;
 use function array_unshift;
 use function assert;
 use function explode;
+use function is_array;
 use function sprintf;
 use function str_replace;
 use function strpos;
@@ -251,6 +252,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
                         array_map([$this, 'getCacheKey'], $loadedMetadata),
                         $loadedMetadata
                     );
+                    assert(is_array($classNames));
 
                     foreach ($this->cache->getItems(array_keys($classNames)) as $item) {
                         if (! isset($classNames[$item->getKey()])) {

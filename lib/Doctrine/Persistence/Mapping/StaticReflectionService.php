@@ -49,6 +49,8 @@ class StaticReflectionService implements ReflectionService
 
     /**
      * {@inheritDoc}
+     *
+     * @return null
      */
     public function getClass($class)
     {

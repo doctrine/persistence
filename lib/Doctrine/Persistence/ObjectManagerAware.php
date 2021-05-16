@@ -23,6 +23,8 @@ interface ObjectManagerAware
     /**
      * Injects responsible ObjectManager and the ClassMetadata into this persistent object.
      *
+     * @psalm-param ClassMetadata<object> $classMetadata
+     *
      * @return void
      */
     public function injectObjectManager(ObjectManager $objectManager, ClassMetadata $classMetadata);
