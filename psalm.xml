@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
 <psalm
-    totallyTyped="false"
-    errorLevel="4"
-    resolveFromConfigFile="true"
+    errorLevel="3"
+    findUnusedPsalmSuppress="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
         <directory name="lib/Doctrine/Persistence" />
+        <directory name="tests/Doctrine" />
         <ignoreFiles>
             <directory name="vendor" />
+            <file name="tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php" />
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
@@ -20,5 +21,40 @@
                 <file name="lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php"/>
             </errorLevel>
         </RedundantCondition>
+        <InvalidNullableReturnType>
+            <errorLevel type="suppress">
+                <!-- see https://github.com/vimeo/psalm/issues/5193 -->
+                <file name="lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php"/>
+            </errorLevel>
+        </InvalidNullableReturnType>
+        <NullableReturnStatement>
+            <errorLevel type="suppress">
+                <!-- see https://github.com/vimeo/psalm/issues/5193 -->
+                <file name="lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php"/>
+            </errorLevel>
+        </NullableReturnStatement>
+        <NullArgument>
+            <errorLevel type="suppress">
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php"/>
+            </errorLevel>
+        </NullArgument>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <!-- This test references ArrayCache which has been removed from Doctrine Cache -->
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/ClassMetadataFactoryTest.php"/>
+            </errorLevel>
+        </UndefinedClass>
+        <ArgumentTypeCoercion>
+            <errorLevel type="suppress">
+                <!-- On purpose to use a non existing class for tests -->
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/RuntimeReflectionServiceTest.php"/>
+            </errorLevel>
+        </ArgumentTypeCoercion>
+        <MoreSpecificReturnType>
+            <errorLevel type="suppress">
+                <!-- FileDriver::loadMappingFile() in tests could have a more specific return, but is not needed -->
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/FileDriverTest.php"/>
+            </errorLevel>
+        </MoreSpecificReturnType>
     </issueHandlers>
 </psalm>

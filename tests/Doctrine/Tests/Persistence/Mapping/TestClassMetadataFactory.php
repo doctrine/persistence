@@ -9,17 +9,27 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\ReflectionService;
 
+/**
+ * @template CMTemplate of ClassMetadata
+ * @template-extends AbstractClassMetadataFactory<CMTemplate>
+ */
 class TestClassMetadataFactory extends AbstractClassMetadataFactory
 {
     /** @var MappingDriver */
     public $driver;
 
-    /** @var ClassMetadata */
+    /**
+     * @var ClassMetadata
+     * @psalm-var CMTemplate
+     */
     public $metadata;
 
     /** @var callable|null */
     public $fallbackCallback;
 
+    /**
+     * @psalm-param CMTemplate $metadata
+     */
     public function __construct(MappingDriver $driver, ClassMetadata $metadata)
     {
         $this->driver   = $driver;
@@ -39,6 +49,7 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
 
     protected function getFqcnFromAlias(string $namespaceAlias, string $simpleClassName): string
     {
+        /** @psalm-var class-string */
         return __NAMESPACE__ . '\\' . $simpleClassName;
     }
 
@@ -83,5 +94,10 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
         $name = $this->metadata->getName();
 
         return $class !== $name;
+    }
+
+    public function getCacheKey(string $realClassName): string
+    {
+        return parent::getCacheKey($realClassName);
     }
 }

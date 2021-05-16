@@ -21,7 +21,6 @@ use function get_declared_classes;
 use function in_array;
 use function is_array;
 use function is_dir;
-use function is_string;
 use function preg_match;
 use function preg_quote;
 use function realpath;
@@ -71,7 +70,7 @@ abstract class AnnotationDriver implements MappingDriver
     /**
      * Name of the entity annotations as keys.
      *
-     * @var array<string, int>
+     * @var array<class-string, bool|int>
      */
     protected $entityAnnotationClasses = [];
 
@@ -122,7 +121,7 @@ abstract class AnnotationDriver implements MappingDriver
     /**
      * Append exclude lookup paths to metadata driver.
      *
-     * @param array<int, string> $paths
+     * @param string[] $paths
      *
      * @return void
      */
@@ -181,6 +180,8 @@ abstract class AnnotationDriver implements MappingDriver
      *
      * A class is non-transient if it is annotated with an annotation
      * from the {@see AnnotationDriver::entityAnnotationClasses}.
+     *
+     * {@inheritDoc}
      */
     public function isTransient(string $className)
     {
@@ -233,10 +234,9 @@ abstract class AnnotationDriver implements MappingDriver
                 }
 
                 foreach ($this->excludePaths as $excludePath) {
-                    $realpath = realpath($excludePath);
-                    assert(is_string($realpath));
-
-                    $exclude = str_replace('\\', '/', $realpath);
+                    $realExcludePath = realpath($excludePath);
+                    assert($realExcludePath !== false);
+                    $exclude = str_replace('\\', '/', $realExcludePath);
                     $current = str_replace('\\', '/', $sourceFile);
 
                     if (strpos($current, $exclude) !== false) {

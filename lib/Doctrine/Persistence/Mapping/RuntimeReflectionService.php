@@ -12,6 +12,7 @@ use ReflectionMethod;
 use ReflectionProperty;
 
 use function array_key_exists;
+use function assert;
 use function class_exists;
 use function class_parents;
 use function phpversion;
@@ -39,7 +40,11 @@ class RuntimeReflectionService implements ReflectionService
             throw MappingException::nonExistingClass($class);
         }
 
-        return class_parents($class);
+        $parents = class_parents($class);
+
+        assert($parents !== false);
+
+        return $parents;
     }
 
     /**
@@ -63,7 +68,12 @@ class RuntimeReflectionService implements ReflectionService
     }
 
     /**
-     * {@inheritDoc}
+     * @psalm-param class-string<T> $class
+     *
+     * @return ReflectionClass
+     * @psalm-return ReflectionClass<T>
+     *
+     * @template T of object
      */
     public function getClass(string $class)
     {
