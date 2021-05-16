@@ -7,9 +7,17 @@ use Doctrine\Common\Proxy\Proxy;
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
-use function call_user_func;
+class DummyObject
+{
+    public function callGet(): void
+    {
+    }
+
+    public function callSet(): void
+    {
+    }
+}
 
 class RuntimePublicReflectionPropertyTest extends TestCase
 {
@@ -41,8 +49,10 @@ class RuntimePublicReflectionPropertyTest extends TestCase
 
     public function testGetValueOnProxyPublicProperty(): void
     {
-        $initializer = static function (): void {
-            self::fail('The initializer should not be called.');
+        $getCheckMock = $this->createMock(DummyObject::class);
+        $getCheckMock->expects(self::never())->method('callGet');
+        $initializer = static function () use ($getCheckMock): void {
+            $getCheckMock->callGet();
         };
 
         $mockProxy = new RuntimePublicReflectionPropertyTestProxyMock();
@@ -60,10 +70,10 @@ class RuntimePublicReflectionPropertyTest extends TestCase
 
     public function testSetValueOnProxyPublicProperty(): void
     {
-        $setCheckMock = $this->getMockBuilder(stdClass::class)->setMethods(['neverCallSet'])->getMock();
-        $setCheckMock->expects($this->never())->method('neverCallSet');
+        $setCheckMock = $this->createMock(DummyObject::class);
+        $setCheckMock->expects(self::never())->method('callSet');
         $initializer = static function () use ($setCheckMock): void {
-            call_user_func([$setCheckMock, 'neverCallSet']);
+            $setCheckMock->callSet();
         };
 
         $mockProxy = new RuntimePublicReflectionPropertyTestProxyMock();
@@ -81,10 +91,10 @@ class RuntimePublicReflectionPropertyTest extends TestCase
         $reflProperty->setValue($mockProxy, 'otherNewValue');
         self::assertSame('otherNewValue', $mockProxy->checkedProperty);
 
-        $setCheckMock = $this->getMockBuilder(stdClass::class)->setMethods(['callSet'])->getMock();
-        $setCheckMock->expects($this->once())->method('callSet');
+        $setCheckMock = $this->createMock(DummyObject::class);
+        $setCheckMock->expects(self::once())->method('callSet');
         $initializer = static function () use ($setCheckMock): void {
-            call_user_func([$setCheckMock, 'callSet']);
+            $setCheckMock->callSet();
         };
 
         $mockProxy->__setInitializer($initializer);

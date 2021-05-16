@@ -144,6 +144,7 @@ interface ObjectManager
      * Gets the metadata factory used to gather the metadata of classes.
      *
      * @return ClassMetadataFactory
+     * @psalm-return ClassMetadataFactory<ClassMetadata<object>>
      */
     public function getMetadataFactory();
 

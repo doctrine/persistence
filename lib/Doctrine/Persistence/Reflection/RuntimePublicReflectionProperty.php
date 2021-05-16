@@ -40,6 +40,9 @@ class RuntimePublicReflectionProperty extends ReflectionProperty
      * is a {@see \Doctrine\Common\Proxy\Proxy}.
      *
      * @link https://bugs.php.net/bug.php?id=63463
+     *
+     * @param object $object
+     * @param mixed  $value
      */
     public function setValue($object, $value = null)
     {

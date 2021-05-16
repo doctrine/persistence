@@ -13,3 +13,10 @@ parameters:
             message: "#^Parameter \\#1 \\$class of method Doctrine\\\\Persistence\\\\Mapping\\\\RuntimeReflectionService\\:\\:getParentClasses\\(\\) expects class-string, string given.$#"
             count: 1
             path: tests/Doctrine/Tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
+
+        -
+            message: '#Method Doctrine\\Persistence\\AbstractManagerRegistry\:\:getRealClassName\(\) should return class\-string but returns string\.#'
+            path: 'lib/Doctrine/Persistence/AbstractManagerRegistry.php'
+        -
+            message: '#Method Doctrine\\Tests\\Persistence\\Mapping\\TestClassMetadataFactory\:\:getFqcnFromAlias\(\) should return class\-string but returns string\.#'
+            path: 'tests/Doctrine/Tests/Persistence/Mapping/TestClassMetadataFactory.php'

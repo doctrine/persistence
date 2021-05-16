@@ -51,7 +51,10 @@ abstract class PersistentObject implements ObjectManagerAware
     /** @var ObjectManager|null */
     private static $objectManager = null;
 
-    /** @var ClassMetadata|null */
+    /**
+     * @var ClassMetadata<object>|null
+     * @psalm-var ClassMetadata<object>|null
+     */
     private $cm = null;
 
     /**
@@ -141,6 +144,7 @@ abstract class PersistentObject implements ObjectManagerAware
      * @param string $field
      * @param string $targetClass
      * @param object $targetObject
+     * @psalm-param class-string $targetClass
      *
      * @return void
      */

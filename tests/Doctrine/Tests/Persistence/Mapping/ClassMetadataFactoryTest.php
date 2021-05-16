@@ -24,12 +24,17 @@ use function class_exists;
  */
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
-    /** @var TestClassMetadataFactory */
+    /**
+     * @var TestClassMetadataFactory
+     * @psalm-var TestClassMetadataFactory<ClassMetadata<object>>
+     */
     private $cmf;
 
     protected function setUp(): void
     {
-        $driver    = $this->createMock(MappingDriver::class);
+        $driver = $this->createMock(MappingDriver::class);
+
+        /** @psalm-var ClassMetadata<object> */
         $metadata  = $this->createMock(ClassMetadata::class);
         $this->cmf = new TestClassMetadataFactory($driver, $metadata);
     }
@@ -242,6 +247,9 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertSame($metadata, $this->cmf->getMetadataFor('Foo'));
     }
 
+    /**
+     * @psalm-param AbstractClassMetadataFactory<ClassMetadata<object>> $classMetadataFactory
+     */
     private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): ?CacheItemPoolInterface
     {
         $method = new ReflectionMethod($classMetadataFactory, 'getCache');

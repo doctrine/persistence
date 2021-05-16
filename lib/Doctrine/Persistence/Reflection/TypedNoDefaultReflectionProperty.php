@@ -18,6 +18,8 @@ class TypedNoDefaultReflectionProperty extends ReflectionProperty
      * Checks that a typed property is initialized before accessing its value.
      * This is necessary to avoid PHP error "Error: Typed property must not be accessed before initialization".
      * Should be used only for reflecting typed properties without a default value.
+     *
+     * @param object $object
      */
     public function getValue($object = null)
     {
@@ -31,6 +33,8 @@ class TypedNoDefaultReflectionProperty extends ReflectionProperty
      * NULL which is not supported, instead unset() to uninitialize.
      *
      * @link https://github.com/doctrine/orm/issues/7999
+     *
+     * @param object $object
      */
     public function setValue($object, $value = null)
     {

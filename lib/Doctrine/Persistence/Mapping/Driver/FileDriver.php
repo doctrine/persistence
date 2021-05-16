@@ -24,7 +24,10 @@ abstract class FileDriver implements MappingDriver
     /** @var FileLocator */
     protected $locator;
 
-    /** @var ClassMetadata[]|null */
+    /**
+     * @var ClassMetadata[]|null
+     * @psalm-var ClassMetadata<object>[]|null
+     */
     protected $classCache;
 
     /** @var string|null */
@@ -76,6 +79,7 @@ abstract class FileDriver implements MappingDriver
      * @param string $className
      *
      * @return ClassMetadata The element of schema meta data.
+     * @psalm-return ClassMetadata<object>
      *
      * @throws MappingException
      */
@@ -141,7 +145,7 @@ abstract class FileDriver implements MappingDriver
      * @param string $file The mapping file to load.
      *
      * @return ClassMetadata[]
-     * @psalm-return array<class-string, ClassMetadata>
+     * @psalm-return array<class-string, ClassMetadata<object>>
      */
     abstract protected function loadMappingFile($file);
 

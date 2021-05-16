@@ -28,6 +28,9 @@ class StaticPHPDriverTest extends DoctrineTestCase
 
 class TestEntity
 {
+    /**
+     * @psalm-param ClassMetadata<object> $metadata
+     */
     public static function loadMetadata(ClassMetadata $metadata): void
     {
         $metadata->getFieldNames();

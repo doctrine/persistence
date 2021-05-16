@@ -11,12 +11,18 @@ use Doctrine\Persistence\ObjectManager;
  */
 class LoadClassMetadataEventArgs extends EventArgs
 {
-    /** @var ClassMetadata */
+    /**
+     * @var ClassMetadata
+     * @psalm-var ClassMetadata<object>
+     */
     private $classMetadata;
 
     /** @var ObjectManager */
     private $objectManager;
 
+    /**
+     * @psalm-param ClassMetadata<object> $classMetadata
+     */
     public function __construct(ClassMetadata $classMetadata, ObjectManager $objectManager)
     {
         $this->classMetadata = $classMetadata;
@@ -27,6 +33,7 @@ class LoadClassMetadataEventArgs extends EventArgs
      * Retrieves the associated ClassMetadata.
      *
      * @return ClassMetadata
+     * @psalm-return ClassMetadata<object>
      */
     public function getClassMetadata()
     {
