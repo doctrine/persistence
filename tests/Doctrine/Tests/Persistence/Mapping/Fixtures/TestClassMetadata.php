@@ -46,17 +46,11 @@ final class TestClassMetadata implements ClassMetadata
         return new ReflectionClass($this->getName());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isIdentifier(string $fieldName): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function hasField(string $fieldName): bool
     {
         return false;

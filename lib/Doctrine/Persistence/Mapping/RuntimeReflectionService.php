@@ -70,7 +70,8 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * @psalm-param class-string<T> $class
      *
-     * @return ReflectionClass<T>
+     * @return ReflectionClass
+     * @psalm-return ReflectionClass<T>
      *
      * @template T of object
      */

@@ -22,7 +22,7 @@ jobs:
         deps:
           - "highest"
         include:
-          - deps: "low"
+          - deps: "lowest"
             php-version: "7.2"
 
     steps:

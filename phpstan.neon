@@ -11,7 +11,7 @@ parameters:
         - tests
 
     excludes_analyse:
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
+        - tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
 
     ignoreErrors:
         - '#Variable property access on \$this\(Doctrine\\Persistence\\Reflection\\TypedNoDefaultReflectionProperty\)\.#'
@@ -33,3 +33,12 @@ parameters:
         -
             message: '#Call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with Symfony\\Component\\Cache\\Adapter\\ArrayAdapter and null will always evaluate to false\.#'
             path: 'tests/Doctrine/Tests/Persistence/Mapping/ClassMetadataFactoryTest.php'
+
+        # https://github.com/phpstan/phpstan/issues/5009
+        -
+            message: '#Call to function assert\(\) with true will always evaluate to true\.#'
+            path: 'lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'
+
+        -
+            message: '#Instanceof between Closure\(\)\: void and Closure will always evaluate to true\.#'
+            path: 'lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'

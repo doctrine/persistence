@@ -21,7 +21,6 @@ use function get_declared_classes;
 use function in_array;
 use function is_array;
 use function is_dir;
-use function is_string;
 use function preg_match;
 use function preg_quote;
 use function realpath;
@@ -235,10 +234,9 @@ abstract class AnnotationDriver implements MappingDriver
                 }
 
                 foreach ($this->excludePaths as $excludePath) {
-                    $realpath = realpath($excludePath);
-                    assert(is_string($realpath));
-
-                    $exclude = str_replace('\\', '/', $realpath);
+                    $realExcludePath = realpath($excludePath);
+                    assert($realExcludePath !== false);
+                    $exclude = str_replace('\\', '/', $realExcludePath);
                     $current = str_replace('\\', '/', $sourceFile);
 
                     if (strpos($current, $exclude) !== false) {

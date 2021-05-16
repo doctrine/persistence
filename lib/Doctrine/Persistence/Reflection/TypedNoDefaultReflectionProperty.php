@@ -20,6 +20,8 @@ class TypedNoDefaultReflectionProperty extends ReflectionProperty
      * Checks that a typed property is initialized before accessing its value.
      * This is necessary to avoid PHP error "Error: Typed property must not be accessed before initialization".
      * Should be used only for reflecting typed properties without a default value.
+     *
+     * @param object|null $object
      */
     public function getValue($object = null)
     {
@@ -45,6 +47,7 @@ class TypedNoDefaultReflectionProperty extends ReflectionProperty
                 unset($this->$propertyName);
             };
             $unsetter = $unsetter->bindTo($object, $this->getDeclaringClass()->getName());
+            assert($unsetter instanceof Closure);
 
             $unsetter();
 

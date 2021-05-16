@@ -44,6 +44,7 @@ class RuntimePublicReflectionProperty extends ReflectionProperty
      * @link https://bugs.php.net/bug.php?id=63463
      *
      * @param object|null $object
+     * @param mixed       $value
      */
     public function setValue($object, $value = null)
     {

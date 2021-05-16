@@ -48,7 +48,8 @@ interface ReflectionService
      *
      * @psalm-param class-string<T> $class
      *
-     * @return ReflectionClass<T>|null
+     * @return ReflectionClass|null
+     * @psalm-return ReflectionClass<T>|null
      *
      * @template T of object
      */

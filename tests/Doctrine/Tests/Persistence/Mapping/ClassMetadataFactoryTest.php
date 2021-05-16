@@ -26,12 +26,15 @@ use function class_exists;
  */
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
-    /** @var TestClassMetadataFactory<ClassMetadata<object>> */
+    /**
+     * @var TestClassMetadataFactory
+     * @psalm-var TestClassMetadataFactory<ClassMetadata<object>>
+     */
     private $cmf;
 
     protected function setUp(): void
     {
-        $driver    = $this->createMock(MappingDriver::class);
+        $driver = $this->createMock(MappingDriver::class);
 
         /** @psalm-var ClassMetadata<object> */
         $metadata  = $this->createMock(ClassMetadata::class);
