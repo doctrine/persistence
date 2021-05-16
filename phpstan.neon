@@ -9,4 +9,4 @@ parameters:
         - tests
 
     excludes_analyse:
-        - %currentWorkingDirectory%/tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
+        - tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
