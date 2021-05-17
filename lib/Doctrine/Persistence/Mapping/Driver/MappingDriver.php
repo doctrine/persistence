@@ -13,9 +13,12 @@ interface MappingDriver
      * Loads the metadata for the specified class into the provided container.
      *
      * @param string $className
-     * @psalm-param ClassMetadata<object> $metadata
+     * @psalm-param class-string<T> $className
+     * @psalm-param ClassMetadata<T> $metadata
      *
      * @return void
+     *
+     * @template T of object
      */
     public function loadMetadataForClass($className, ClassMetadata $metadata);
 
@@ -23,6 +26,7 @@ interface MappingDriver
      * Gets the names of all mapped classes known to this driver.
      *
      * @return string[] The names of all mapped classes known to this driver.
+     * @psalm-return list<class-string>
      */
     public function getAllClassNames();
 

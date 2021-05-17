@@ -14,6 +14,10 @@ class PHPDriverTest extends DoctrineTestCase
         $metadata->expects($this->once())->method('getFieldNames');
 
         $driver = new PHPDriver([__DIR__ . '/_files']);
-        $driver->loadMetadataForClass('TestEntity', $metadata);
+        $driver->loadMetadataForClass(PHPTestEntity::class, $metadata);
     }
+}
+
+class PHPTestEntity
+{
 }

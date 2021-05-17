@@ -20,3 +20,7 @@ parameters:
         -
             message: '#Method Doctrine\\Tests\\Persistence\\Mapping\\TestClassMetadataFactory\:\:getFqcnFromAlias\(\) should return class\-string but returns string\.#'
             path: 'tests/Doctrine/Tests/Persistence/Mapping/TestClassMetadataFactory.php'
+	# https://github.com/phpstan/phpstan/issues/1267
+        -
+            message: "#^Call to an undefined static method T of object\\:\\:loadMetadata\\(\\)\\.$#"
+            path: lib/Doctrine/Persistence/Mapping/Driver/StaticPHPDriver.php
