@@ -22,7 +22,7 @@ interface ObjectManager
      * @return object|null The found object.
      * @psalm-return T|null
      *
-     * @template T
+     * @template T of object
      */
     public function find($className, $id);
 
