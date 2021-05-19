@@ -2,9 +2,7 @@
 
 namespace Doctrine\Persistence\Mapping;
 
-use BadMethodCallException;
 use Doctrine\Common\Cache\Cache;
-use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\Common\Cache\Psr6\CacheAdapter;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\Deprecations\Deprecation;
@@ -88,10 +86,6 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             $this->cache = null;
 
             return;
-        }
-
-        if (! $cacheDriver instanceof CacheProvider) {
-            throw new BadMethodCallException('Cannot convert cache to PSR-6 cache');
         }
 
         $this->cache = CacheAdapter::wrap($cacheDriver);
