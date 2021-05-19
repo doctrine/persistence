@@ -9,4 +9,4 @@ parameters:
         - tests
 
     excludes_analyse:
-        - tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
+        - tests/Doctrine/Tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php
