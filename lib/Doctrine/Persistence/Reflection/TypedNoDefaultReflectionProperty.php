@@ -4,6 +4,7 @@ namespace Doctrine\Persistence\Reflection;
 
 use Closure;
 use ReflectionProperty;
+use ReturnTypeWillChange;
 
 use function assert;
 
@@ -21,6 +22,7 @@ class TypedNoDefaultReflectionProperty extends ReflectionProperty
      *
      * @param object $object
      */
+    #[ReturnTypeWillChange]
     public function getValue($object = null)
     {
         return $object !== null && $this->isInitialized($object) ? parent::getValue($object) : null;
@@ -36,6 +38,7 @@ class TypedNoDefaultReflectionProperty extends ReflectionProperty
      *
      * @param object $object
      */
+    #[ReturnTypeWillChange]
     public function setValue($object, $value = null)
     {
         if ($value === null && $this->hasType() && ! $this->getType()->allowsNull()) {
