@@ -180,7 +180,7 @@ class TestFileDriver extends FileDriver
      */
     protected function loadMappingFile($file)
     {
-        if (strpos($file, 'global.yml') !== false) {
+        if ($file && strpos($file, 'global.yml') !== false) {
             return [
                 GlobalClass::class => new TestClassMetadata(GlobalClass::class),
                 AnotherGlobalClass::class => new TestClassMetadata(AnotherGlobalClass::class),
