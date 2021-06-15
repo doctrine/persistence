@@ -122,8 +122,8 @@ interface ClassMetadata
      *
      * @param string $assocName
      *
-     * @return string
-     * @psalm-return class-string
+     * @return string|null
+     * @psalm-return class-string|null
      */
     public function getAssociationTargetClass($assocName);
 
