@@ -63,10 +63,8 @@ interface ObjectManager
     /**
      * Clears the ObjectManager. All objects that are currently managed
      * by this ObjectManager become detached.
-     *
-     * @param string|null $objectName if given, only objects of this type will get detached.
      */
-    public function clear(?string $objectName = null): void;
+    public function clear(): void;
 
     /**
      * Detaches an object from the ObjectManager, causing a managed object to

@@ -73,7 +73,7 @@ The main public interface that an end user will use is the ``Doctrine\Persistenc
         public function persist($object);
         public function remove($object);
         public function merge($object);
-        public function clear($objectName = null);
+        public function clear();
         public function detach($object);
         public function refresh($object);
         public function flush();
