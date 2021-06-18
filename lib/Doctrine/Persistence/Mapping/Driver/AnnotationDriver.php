@@ -179,6 +179,10 @@ abstract class AnnotationDriver implements MappingDriver
         $classAnnotations = $this->reader->getClassAnnotations(new ReflectionClass($className));
 
         foreach ($classAnnotations as $annot) {
+            if (is_array($annot)) {
+                $annot = array_pop($annot);
+            }
+
             if (isset($this->entityAnnotationClasses[get_class($annot)])) {
                 return false;
             }
