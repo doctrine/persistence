@@ -109,7 +109,7 @@ abstract class PersistentObject implements ObjectManagerAware
             $this->$field = $args[0];
         } elseif ($this->cm->hasAssociation($field) && $this->cm->isSingleValuedAssociation($field)) {
             $targetClass = $this->cm->getAssociationTargetClass($field);
-            if (! ($args[0] instanceof $targetClass) && $args[0] !== null) {
+            if ($targetClass !== null && ! ($args[0] instanceof $targetClass) && $args[0] !== null) {
                 throw new InvalidArgumentException("Expected persistent object of type '" . $targetClass . "'");
             }
 
@@ -181,7 +181,7 @@ abstract class PersistentObject implements ObjectManagerAware
         }
 
         $targetClass = $this->cm->getAssociationTargetClass($field);
-        if (! ($args[0] instanceof $targetClass)) {
+        if ($targetClass !== null && ! ($args[0] instanceof $targetClass)) {
             throw new InvalidArgumentException("Expected persistent object of type '" . $targetClass . "'");
         }
 
