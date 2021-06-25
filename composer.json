@@ -21,7 +21,6 @@
     ],
     "require": {
         "php": "^7.1 || ^8.0",
-        "doctrine/annotations": "^1.0",
         "doctrine/cache": "^1.11 || ^2.0",
         "doctrine/collections": "^1.0",
         "doctrine/event-manager": "^1.0",
@@ -31,6 +30,7 @@
     "require-dev": {
         "composer/package-versions-deprecated": "^1.11",
         "phpstan/phpstan": "0.12.84",
+        "doctrine/annotations": "^1.0",
         "doctrine/coding-standard": "^6.0 || ^9.0",
         "doctrine/common": "^3.0",
         "phpunit/phpunit": "^7.5.20 || ^8.0 || ^9.0",
@@ -38,6 +38,7 @@
         "vimeo/psalm": "4.7.0"
     },
     "conflict": {
+        "doctrine/annotations": "<1.0 || >=2.0",
         "doctrine/common": "<2.10@dev"
     },
     "autoload": {
