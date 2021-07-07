@@ -36,10 +36,10 @@ interface ObjectRepository
      * an UnexpectedValueException if certain values of the sorting or limiting details are
      * not supported.
      *
-     * @param mixed[]       $criteria
-     * @param string[]|null $orderBy
-     * @param int|null      $limit
-     * @param int|null      $offset
+     * @param array<string, mixed> $criteria
+     * @param string[]|null        $orderBy
+     * @param int|null             $limit
+     * @param int|null             $offset
      * @psalm-param array<string, 'asc'|'desc'|'ASC'|'DESC'> $orderBy
      *
      * @return object[] The objects.
@@ -52,7 +52,7 @@ interface ObjectRepository
     /**
      * Finds a single object by a set of criteria.
      *
-     * @param mixed[] $criteria The criteria.
+     * @param array<string, mixed> $criteria The criteria.
      *
      * @return object|null The object.
      * @psalm-return T|null
