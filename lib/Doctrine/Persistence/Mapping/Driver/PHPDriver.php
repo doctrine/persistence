@@ -40,7 +40,12 @@ class PHPDriver extends FileDriver
     protected function loadMappingFile($file)
     {
         $metadata = $this->metadata;
-        include $file;
+        
+        $mapping = include $file;
+        
+        if (is_callable($mapping)) {
+            $mapping($metadata);
+        }
 
         return [$metadata->getName() => $metadata];
     }
