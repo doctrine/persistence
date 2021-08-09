@@ -64,10 +64,7 @@ class TypedFoo
 {
     private int $id;
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
+    public function setId(mixed $id): void
     {
         $this->id = $id;
     }
@@ -77,18 +74,12 @@ class TypedNullableFoo
 {
     private ?string $value;
 
-    /**
-     * @param mixed $value
-     */
-    public function setValue($value): void
+    public function setValue(mixed $value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }
