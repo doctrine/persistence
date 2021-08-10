@@ -20,6 +20,8 @@ trait TypedNoDefaultReflectionPropertyBase
      * Should be used only for reflecting typed properties without a default value.
      *
      * @param object $object
+     *
+     * @return mixed
      */
     #[ReturnTypeWillChange]
     public function getValue($object = null)
@@ -36,6 +38,8 @@ trait TypedNoDefaultReflectionPropertyBase
      * @link https://github.com/doctrine/orm/issues/7999
      *
      * @param object $object
+     *
+     * @return void
      */
     #[ReturnTypeWillChange]
     public function setValue($object, $value = null)
