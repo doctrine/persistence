@@ -113,7 +113,7 @@ interface ClassMetadata
      *
      * @param string $fieldName
      *
-     * @return string
+     * @return string|null
      */
     public function getTypeOfField($fieldName);
 

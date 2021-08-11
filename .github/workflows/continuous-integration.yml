@@ -2,7 +2,12 @@
 name: "Continuous Integration"
 
 on:
-  pull_request: null
+  pull_request:
+    branches:
+      - "*.x"
+  push:
+    branches:
+      - "*.x"
 
 env:
   COMPOSER_ROOT_VERSION: "2.1"
