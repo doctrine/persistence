@@ -166,6 +166,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * Gets the fully qualified class-name from the namespace alias.
      *
+     * @deprecated This method is deprecated along with short namespace aliases.
+     *
      * @param string $namespaceAlias
      * @param string $simpleClassName
      *
@@ -224,6 +226,13 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
         // Check for namespace alias
         if (strpos($className, ':') !== false) {
+            Deprecation::trigger(
+                'doctrine/persistence',
+                'https://github.com/doctrine/persistence/issues/204',
+                'Short namespace aliases such as "%s" are deprecated, use ::class constant instead.',
+                $className
+            );
+
             [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
 
             $realClassName = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
@@ -454,6 +463,13 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
         // Check for namespace alias
         if (strpos($class, ':') !== false) {
+            Deprecation::trigger(
+                'doctrine/persistence',
+                'https://github.com/doctrine/persistence/issues/204',
+                'Short namespace aliases such as "%s" are deprecated, use ::class constant instead.',
+                $class
+            );
+
             [$namespaceAlias, $simpleClassName] = explode(':', $class, 2);
             $class                              = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         }
