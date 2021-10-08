@@ -22,7 +22,7 @@ use function call_user_func;
 use const PHP_VERSION_ID;
 
 /**
- * @uses Doctrine\Tests\Common\Persistence\TestObject
+ * @uses Doctrine\Tests\Persistence\TestObject
  *
  * @groups DCOM-270
  */
