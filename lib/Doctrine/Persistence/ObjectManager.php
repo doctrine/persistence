@@ -83,9 +83,6 @@ interface ObjectManager
      * Objects which previously referenced the detached object will continue to
      * reference it.
      *
-     * @deprecated Detach operation is deprecated and will be removed in Persistence 2.0. Please use
-     *             {@see ObjectManager::clear()} instead.
-     *
      * @param object $object The object to detach.
      *
      * @return void
