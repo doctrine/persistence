@@ -30,7 +30,7 @@
     },
     "require-dev": {
         "composer/package-versions-deprecated": "^1.11",
-        "phpstan/phpstan": "0.12.84",
+        "phpstan/phpstan": "1.0.1",
         "doctrine/coding-standard": "^6.0 || ^9.0",
         "doctrine/common": "^3.0",
         "phpunit/phpunit": "^7.5.20 || ^8.0 || ^9.0",
