@@ -3,11 +3,14 @@
 namespace Doctrine\Persistence\Mapping;
 
 use ReflectionClass;
+use ReflectionProperty;
 
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
  *
  * @template-covariant T of object
+ * @method array getFieldMapping(string $fieldName)
+ * @method ReflectionProperty getReflectionProperty(string $fieldName)
  */
 interface ClassMetadata
 {
