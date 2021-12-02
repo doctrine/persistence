@@ -284,7 +284,7 @@ class TestObjectMetadata implements ClassMetadata
     /**
      * {@inheritDoc}
      */
-    public function getIdentifierValues($entity): array
+    public function getIdentifierValues($object): array
     {
         throw new LogicException('Not implemented');
     }
