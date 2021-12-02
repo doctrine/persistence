@@ -444,22 +444,22 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * {@inheritDoc}
      *
-     * @psalm-param class-string|string $class
+     * @psalm-param class-string|string $className
      */
-    public function isTransient($class)
+    public function isTransient($className)
     {
         if (! $this->initialized) {
             $this->initialize();
         }
 
         // Check for namespace alias
-        if (strpos($class, ':') !== false) {
-            [$namespaceAlias, $simpleClassName] = explode(':', $class, 2);
-            $class                              = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
+        if (strpos($className, ':') !== false) {
+            [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
+            $className                          = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         }
 
-        /** @psalm-var class-string $class */
-        return $this->getDriver()->isTransient($class);
+        /** @psalm-var class-string $className */
+        return $this->getDriver()->isTransient($className);
     }
 
     /**
