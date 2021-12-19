@@ -10,3 +10,12 @@ parameters:
 
     excludePaths:
         - tests/Doctrine/Tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php
+
+    ignoreErrors:
+        # TODO: Remove in 3.0
+        -
+            message: "#^Call to function is_object\\(\\) with array\\<string\\>\\|string\\|null will always evaluate to false\\.$#"
+            path: lib/Doctrine/Persistence/Mapping/Driver/AnnotationDriver.php
+        -
+            message: "#^Parameter \\#1 \\$paths of class Doctrine\\\\Tests\\\\Persistence\\\\Mapping\\\\SimpleAnnotationDriver constructor expects array\\<string\\>\\|string\\|null, Doctrine\\\\Common\\\\Annotations\\\\AnnotationReader given\\.$#"
+            path: tests/Doctrine/Tests/Persistence/Mapping/AnnotationDriverTest.php

@@ -3,6 +3,7 @@
 namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use Doctrine\Entity;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\AnnotationDriver;
@@ -11,18 +12,44 @@ use PHPUnit\Framework\TestCase;
 
 class AnnotationDriverTest extends TestCase
 {
+    use VerifyDeprecations;
+
     public function testGetAllClassNames(): void
     {
-        $reader = new AnnotationReader();
-        $driver = new SimpleAnnotationDriver($reader, [__DIR__ . '/_files/annotation']);
+        $driver = new SimpleAnnotationDriver([__DIR__ . '/_files/annotation']);
 
-        $classes = $driver->getAllClassNames();
+        self::assertSame([TestClass::class], $driver->getAllClassNames());
+    }
 
-        self::assertSame([TestClass::class], $classes);
+    public function testGetAllClassNamesLegacy(): void
+    {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/pull/217');
+
+        $driver = new SimpleAnnotationDriver(new AnnotationReader(), [__DIR__ . '/_files/annotation']);
+
+        self::assertSame([TestClass::class], $driver->getAllClassNames());
     }
 }
 
 class SimpleAnnotationDriver extends AnnotationDriver
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function loadMetadataForClass($className, ClassMetadata $metadata): void
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isTransient($className): bool
+    {
+        return $className === Entity::class;
+    }
+}
+
+class LegacyAnnotationDriver extends AnnotationDriver
 {
     /** @var array<class-string, bool|int> */
     protected $entityAnnotationClasses = [Entity::class => true];

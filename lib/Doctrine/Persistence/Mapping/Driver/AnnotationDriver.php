@@ -3,8 +3,10 @@
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Common\Annotations\Reader;
+use Doctrine\Deprecations\Deprecation;
 use Doctrine\Persistence\Mapping\MappingException;
 use FilesystemIterator;
+use LogicException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
@@ -14,13 +16,17 @@ use RegexIterator;
 use function array_merge;
 use function array_unique;
 use function assert;
+use function func_get_arg;
+use function func_num_args;
 use function get_class;
 use function get_declared_classes;
 use function in_array;
 use function is_dir;
+use function is_object;
 use function preg_match;
 use function preg_quote;
 use function realpath;
+use function sprintf;
 use function str_replace;
 use function strpos;
 
@@ -32,7 +38,9 @@ abstract class AnnotationDriver implements MappingDriver
     /**
      * The annotation reader.
      *
-     * @var Reader
+     * @deprecated Store the reader inside the child class instead.
+     *
+     * @var Reader|null
      */
     protected $reader;
 
@@ -68,6 +76,8 @@ abstract class AnnotationDriver implements MappingDriver
     /**
      * Name of the entity annotations as keys.
      *
+     * @deprecated
+     *
      * @var array<class-string, bool|int>
      */
     protected $entityAnnotationClasses = [];
@@ -76,12 +86,21 @@ abstract class AnnotationDriver implements MappingDriver
      * Initializes a new AnnotationDriver that uses the given AnnotationReader for reading
      * docblock annotations.
      *
-     * @param Reader               $reader The AnnotationReader to use, duck-typed.
-     * @param string|string[]|null $paths  One or multiple paths where mapping classes can be found.
+     * @param string|string[]|null $paths One or multiple paths where mapping classes can be found.
      */
-    public function __construct($reader, $paths = null)
+    public function __construct($paths = null)
     {
-        $this->reader = $reader;
+        if (is_object($paths)) {
+            Deprecation::trigger(
+                'doctrine/persistence',
+                'https://github.com/doctrine/persistence/pull/217',
+                'Passing an annotation reader to %s is deprecated. Store the reader in the child class instead and override isTransient().',
+                __METHOD__
+            );
+            $this->reader = $paths;
+            $paths        = func_num_args() > 1 ? func_get_arg(1) : null;
+        }
+
         if (! $paths) {
             return;
         }
@@ -136,10 +155,23 @@ abstract class AnnotationDriver implements MappingDriver
     /**
      * Retrieve the current annotation reader
      *
+     * @deprecated
+     *
      * @return Reader
      */
     public function getReader()
     {
+        Deprecation::trigger(
+            'doctrine/persistence',
+            'https://github.com/doctrine/persistence/pull/217',
+            '%s is deprecated without replacement.',
+            __METHOD__
+        );
+
+        if ($this->reader === null) {
+            throw new LogicException('The reader has not been initialized.');
+        }
+
         return $this->reader;
     }
 
@@ -176,6 +208,21 @@ abstract class AnnotationDriver implements MappingDriver
      */
     public function isTransient($className)
     {
+        Deprecation::trigger(
+            'doctrine/persistence',
+            'https://github.com/doctrine/persistence/pull/217',
+            'Not overriding %s in %s is deprecated.',
+            __METHOD__,
+            static::class
+        );
+
+        if (! $this->reader) {
+            throw new LogicException(sprintf(
+                'The annotation reader has not been set. Override isTransient() in %s instead.',
+                static::class
+            ));
+        }
+
         $classAnnotations = $this->reader->getClassAnnotations(new ReflectionClass($className));
 
         foreach ($classAnnotations as $annot) {

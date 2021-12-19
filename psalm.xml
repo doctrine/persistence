@@ -22,6 +22,12 @@
                 <file name="lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php"/>
             </errorLevel>
         </RedundantCondition>
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <!-- TODO: Remove in 3.0 -->
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/AnnotationDriverTest.php" />
+            </errorLevel>
+        </InvalidArgument>
         <InvalidNullableReturnType>
             <errorLevel type="suppress">
                 <!-- see https://github.com/vimeo/psalm/issues/5193 -->
