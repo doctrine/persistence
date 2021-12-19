@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
-use BadMethodCallException;
 use Doctrine\Common\Cache\Cache;
-use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\Common\Cache\Psr6\CacheAdapter;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
+use Doctrine\Deprecations\Deprecation;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Proxy;
 use Psr\Cache\CacheItemPoolInterface;
@@ -22,14 +21,10 @@ use function array_unshift;
 use function assert;
 use function explode;
 use function is_array;
-use function sprintf;
 use function str_replace;
 use function strpos;
 use function strrpos;
 use function substr;
-use function trigger_error;
-
-use const E_USER_DEPRECATED;
 
 /**
  * The ClassMetadataFactory is used to create ClassMetadata objects that contain all the
@@ -80,7 +75,12 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function setCacheDriver(?Cache $cacheDriver = null)
     {
-        @trigger_error(sprintf('%s is deprecated. Use setCache() with a PSR-6 cache instead.', __METHOD__), E_USER_DEPRECATED);
+        Deprecation::trigger(
+            'doctrine/persistence',
+            'https://github.com/doctrine/persistence/issues/184',
+            '%s is deprecated. Use setCache() with a PSR-6 cache instead.',
+            __METHOD__
+        );
 
         $this->cacheDriver = $cacheDriver;
 
@@ -88,10 +88,6 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             $this->cache = null;
 
             return;
-        }
-
-        if (! $cacheDriver instanceof CacheProvider) {
-            throw new BadMethodCallException('Cannot convert cache to PSR-6 cache');
         }
 
         $this->cache = CacheAdapter::wrap($cacheDriver);
@@ -106,7 +102,12 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function getCacheDriver()
     {
-        @trigger_error(sprintf('%s is deprecated. Use getCache() instead.', __METHOD__), E_USER_DEPRECATED);
+        Deprecation::trigger(
+            'doctrine/persistence',
+            'https://github.com/doctrine/persistence/issues/184',
+            '%s is deprecated. Use getCache() instead.',
+            __METHOD__
+        );
 
         return $this->cacheDriver;
     }
@@ -166,6 +167,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
     /**
      * Gets the fully qualified class-name from the namespace alias.
+     *
+     * @deprecated This method is deprecated along with short namespace aliases.
      *
      * @return string
      * @psalm-return class-string
@@ -231,6 +234,13 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
         // Check for namespace alias
         if (strpos($className, ':') !== false) {
+            Deprecation::trigger(
+                'doctrine/persistence',
+                'https://github.com/doctrine/persistence/issues/204',
+                'Short namespace aliases such as "%s" are deprecated, use ::class constant instead.',
+                $className
+            );
+
             [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
 
             $realClassName = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
@@ -456,23 +466,30 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * {@inheritDoc}
      *
-     * @psalm-param class-string|string $class
+     * @psalm-param class-string|string $className
      */
-    public function isTransient(string $class)
+    public function isTransient(string $className)
     {
         if (! $this->initialized) {
             $this->initialize();
         }
 
         // Check for namespace alias
-        if (strpos($class, ':') !== false) {
-            [$namespaceAlias, $simpleClassName] = explode(':', $class, 2);
+        if (strpos($className, ':') !== false) {
+            Deprecation::trigger(
+                'doctrine/persistence',
+                'https://github.com/doctrine/persistence/issues/204',
+                'Short namespace aliases such as "%s" are deprecated, use ::class constant instead.',
+                $className
+            );
 
-            $class = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
+            [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
+
+            $className = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         }
 
-        /** @psalm-var class-string $class */
-        return $this->getDriver()->isTransient($class);
+        /** @psalm-var class-string $className */
+        return $this->getDriver()->isTransient($className);
     }
 
     /**

@@ -202,11 +202,14 @@ class SymfonyFileLocator implements FileLocator
                         '\\'
                     );
 
-                    $classes[] = $this->prefixes[$path] . str_replace(DIRECTORY_SEPARATOR, '\\', $nsSuffix) . '\\' . str_replace($this->nsSeparator, '\\', $fileName);
+                    /** @psalm-var class-string */
+                    $class = $this->prefixes[$path] . str_replace(DIRECTORY_SEPARATOR, '\\', $nsSuffix) . '\\' . str_replace($this->nsSeparator, '\\', $fileName);
                 } else {
-                    $className = str_replace($this->nsSeparator, '\\', $fileName);
-                    $classes[] = $className;
+                    /** @psalm-var class-string */
+                    $class = str_replace($this->nsSeparator, '\\', $fileName);
                 }
+
+                $classes[] = $class;
             }
         }
 

@@ -64,6 +64,7 @@ abstract class AnnotationDriver implements MappingDriver
      * Cache for AnnotationDriver#getAllClassNames().
      *
      * @var array<int, string>|null
+     * @psalm-var list<class-string>|null
      */
     protected $classNames;
 

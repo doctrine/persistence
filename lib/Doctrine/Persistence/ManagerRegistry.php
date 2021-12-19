@@ -56,6 +56,8 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * This method looks for the alias in all registered object managers.
      *
+     * @deprecated This method is deprecated along with short namespace aliases.
+     *
      * @param string $alias The alias.
      *
      * @phpstan-return string The full namespace.

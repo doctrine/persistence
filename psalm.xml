@@ -5,13 +5,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
         <directory name="lib/Doctrine/Persistence" />
         <directory name="tests/Doctrine" />
         <ignoreFiles>
             <directory name="vendor" />
-            <file name="tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php" />
+            <!-- this one is a mapping file in written in PHP -->
+            <file name="tests/Doctrine/Tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php" />
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>

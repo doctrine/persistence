@@ -10,6 +10,7 @@ use Doctrine\Persistence\Mapping\MappingException;
 use function array_keys;
 use function array_merge;
 use function array_unique;
+use function array_values;
 use function is_file;
 use function str_replace;
 
@@ -28,7 +29,7 @@ abstract class FileDriver implements MappingDriver
 
     /**
      * @var ClassMetadata[]|null
-     * @psalm-var ClassMetadata<object>[]|null
+     * @psalm-var array<class-string, ClassMetadata<object>>|null
      */
     protected $classCache;
 
@@ -74,6 +75,8 @@ abstract class FileDriver implements MappingDriver
     /**
      * Gets the element of schema meta data for the class from the mapping file.
      * This will lazily load the mapping file if it is not loaded yet.
+     *
+     * @psalm-param class-string $className
      *
      * @return ClassMetadata The element of schema meta data.
      * @psalm-return ClassMetadata<object>
@@ -139,10 +142,10 @@ abstract class FileDriver implements MappingDriver
         /** @var array<int, string> $keys */
         $keys = array_keys($classCache);
 
-        return array_unique(array_merge(
+        return array_values(array_unique(array_merge(
             $keys,
             $this->locator->getAllClassNames($this->globalBasename)
-        ));
+        )));
     }
 
     /**

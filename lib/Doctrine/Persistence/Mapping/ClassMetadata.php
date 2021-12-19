@@ -103,15 +103,15 @@ interface ClassMetadata
      * This type names can be implementation specific but should at least include the php types:
      * integer, string, boolean, float/double, datetime.
      *
-     * @return string
+     * @return string|null
      */
     public function getTypeOfField(string $fieldName);
 
     /**
      * Returns the target class name of the given association.
      *
-     * @return string
-     * @psalm-return class-string
+     * @return string|null
+     * @psalm-return class-string|null
      */
     public function getAssociationTargetClass(string $assocName);
 

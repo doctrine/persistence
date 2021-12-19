@@ -6,6 +6,7 @@ namespace Doctrine\Persistence\Mapping;
 
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
+use Doctrine\Persistence\Reflection\TypedNoDefaultRuntimePublicReflectionProperty;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -28,7 +29,7 @@ class RuntimeReflectionService implements ReflectionService
 
     public function __construct()
     {
-        $this->supportsTypedPropertiesWorkaround = version_compare((string) phpversion(), '7.4.0') >= 0;
+        $this->supportsTypedPropertiesWorkaround = version_compare(phpversion(), '7.4.0') >= 0;
     }
 
     /**
@@ -87,10 +88,14 @@ class RuntimeReflectionService implements ReflectionService
     {
         $reflectionProperty = new ReflectionProperty($class, $property);
 
-        if ($reflectionProperty->isPublic()) {
+        if ($this->supportsTypedPropertiesWorkaround && ! array_key_exists($property, $this->getClass($class)->getDefaultProperties())) {
+            if ($reflectionProperty->isPublic()) {
+                $reflectionProperty = new TypedNoDefaultRuntimePublicReflectionProperty($class, $property);
+            } else {
+                $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
+            }
+        } elseif ($reflectionProperty->isPublic()) {
             $reflectionProperty = new RuntimePublicReflectionProperty($class, $property);
-        } elseif ($this->supportsTypedPropertiesWorkaround && ! array_key_exists($property, $this->getClass($class)->getDefaultProperties())) {
-            $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
         }
 
         $reflectionProperty->setAccessible(true);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Persistence;
 
 use Closure;
+use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use Doctrine\Persistence\AbstractManagerRegistry;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
@@ -29,6 +30,8 @@ use const PHP_VERSION_ID;
  */
 class ManagerRegistryTest extends DoctrineTestCase
 {
+    use VerifyDeprecations;
+
     /** @var TestManagerRegistry */
     private $mr;
 
@@ -60,6 +63,8 @@ class ManagerRegistryTest extends DoctrineTestCase
 
     public function testGetManagerForInvalidClass(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
+
         $this->expectException(ReflectionException::class);
         $this->expectExceptionMessage(
             PHP_VERSION_ID < 80000 ?
@@ -72,6 +77,8 @@ class ManagerRegistryTest extends DoctrineTestCase
 
     public function testGetManagerForAliasedClass(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
+
         self::assertInstanceOf(
             ObjectManager::class,
             $this->mr->getManagerForClass('prefix:TestObject')
@@ -80,6 +87,8 @@ class ManagerRegistryTest extends DoctrineTestCase
 
     public function testGetManagerForInvalidAliasedClass(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
+
         $this->expectException(ReflectionException::class);
         $this->expectExceptionMessage(
             PHP_VERSION_ID < 80000 ?

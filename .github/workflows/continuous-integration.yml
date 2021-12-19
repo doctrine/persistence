@@ -2,49 +2,17 @@
 name: "Continuous Integration"
 
 on:
-  pull_request: null
-
-env:
-  COMPOSER_ROOT_VERSION: "2.1"
+  pull_request:
+    branches:
+      - "*.x"
+  push:
+    branches:
+      - "*.x"
 
 jobs:
   phpunit:
     name: "PHPUnit"
-    runs-on: "ubuntu-20.04"
-
-    strategy:
-      matrix:
-        php-version:
-          - "7.2"
-          - "7.3"
-          - "7.4"
-          - "8.0"
-        deps:
-          - "highest"
-        include:
-          - deps: "lowest"
-            php-version: "7.2"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v2"
-        with:
-          fetch-depth: 2
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          coverage: "pcov"
-
-
-      - name: "Update dependencies with Composer"
-        uses: "ramsey/composer-install@v1"
-        with:
-          dependency-versions: "${{ matrix.deps }}"
-
-      - name: "Run PHPUnit"
-        run: "vendor/bin/phpunit --coverage-clover=coverage.xml"
-
-      - name: "Upload to Codecov"
-        uses: "codecov/codecov-action@v1"
+    uses: "doctrine/.github/.github/workflows/continuous-integration.yml@1.2.0"
+    with:
+      composer-root-version: "2.3"
+      php-versions: '["7.2", "7.3", "7.4", "8.0", "8.1"]'

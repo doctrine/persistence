@@ -110,6 +110,8 @@ class RuntimePublicReflectionPropertyTest extends TestCase
 
 /**
  * Mock that simulates proxy public property lazy loading
+ *
+ * @implements Proxy<object>
  */
 class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
 {
