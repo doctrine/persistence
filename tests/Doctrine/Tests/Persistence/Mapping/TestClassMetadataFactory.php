@@ -89,11 +89,9 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
         return ($this->fallbackCallback)();
     }
 
-    public function isTransient(string $class): bool
+    public function isTransient(string $className): bool
     {
-        $name = $this->metadata->getName();
-
-        return $class !== $name;
+        return $className !== $this->metadata->getName();
     }
 
     public function getCacheKey(string $realClassName): string

@@ -2,6 +2,7 @@ includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - phpstan-baseline.neon
 
 parameters:
     level: 7
@@ -10,8 +11,8 @@ parameters:
         - lib
         - tests
 
-    excludes_analyse:
-        - tests/Doctrine/Tests/Persistence/Mapping/_files/TestEntity.php
+    excludePaths:
+        - tests/Doctrine/Tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php
 
     ignoreErrors:
         - '#Variable property access on \$this\(Doctrine\\Persistence\\Reflection\\TypedNoDefaultReflectionProperty\)\.#'
@@ -30,15 +31,11 @@ parameters:
             message: '#Method Doctrine\\Persistence\\AbstractManagerRegistry\:\:getRealClassName\(\) should return class\-string but returns string\.#'
             path: 'lib/Doctrine/Persistence/AbstractManagerRegistry.php'
 
-        -
-            message: '#Call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with Symfony\\Component\\Cache\\Adapter\\ArrayAdapter and null will always evaluate to false\.#'
-            path: 'tests/Doctrine/Tests/Persistence/Mapping/ClassMetadataFactoryTest.php'
-
         # https://github.com/phpstan/phpstan/issues/5009
         -
             message: '#Call to function assert\(\) with true will always evaluate to true\.#'
-            path: 'lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'
+            path: 'lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionPropertyBase.php'
 
         -
-            message: '#Instanceof between Closure\(\)\: void and Closure will always evaluate to true\.#'
-            path: 'lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'
+            message: '#Instanceof between Closure and Closure will always evaluate to true\.#'
+            path: 'lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionPropertyBase.php'

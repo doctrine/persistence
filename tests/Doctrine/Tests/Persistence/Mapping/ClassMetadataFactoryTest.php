@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Persistence\Mapping;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
+use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
@@ -26,6 +27,8 @@ use function class_exists;
  */
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
+    use VerifyDeprecations;
+
     /**
      * @var TestClassMetadataFactory
      * @psalm-var TestClassMetadataFactory<ClassMetadata<object>>
@@ -116,6 +119,8 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
     public function testGetAliasedMetadata(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
+
         $this->cmf->getMetadataFor('prefix:ChildEntity');
 
         self::assertTrue($this->cmf->hasMetadataFor(__NAMESPACE__ . '\ChildEntity'));
@@ -127,6 +132,8 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
      */
     public function testGetInvalidAliasedMetadata(): void
     {
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
+
         $this->expectException(MappingException::class);
         $this->expectExceptionMessage(
             'Class \'Doctrine\Tests\Persistence\Mapping\ChildEntity:Foo\' does not exist'

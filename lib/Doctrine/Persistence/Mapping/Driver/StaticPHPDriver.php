@@ -35,6 +35,7 @@ class StaticPHPDriver implements MappingDriver
      * Map of all class names.
      *
      * @var array<int, string>
+     * @psalm-var list<class-string>
      */
     private $classNames;
 
