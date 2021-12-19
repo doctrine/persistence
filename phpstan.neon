@@ -8,5 +8,5 @@ parameters:
         - lib
         - tests
 
-    excludes_analyse:
+    excludePaths:
         - tests/Doctrine/Tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php

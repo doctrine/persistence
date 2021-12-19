@@ -103,11 +103,9 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     /**
      * {@inheritDoc}
      */
-    public function isTransient($class): bool
+    public function isTransient($className): bool
     {
-        $name = $this->metadata->getName();
-
-        return $class !== $name;
+        return $className !== $this->metadata->getName();
     }
 
     public function getCacheKey(string $realClassName): string

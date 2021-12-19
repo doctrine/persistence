@@ -453,29 +453,29 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * {@inheritDoc}
      *
-     * @psalm-param class-string|string $class
+     * @psalm-param class-string|string $className
      */
-    public function isTransient($class)
+    public function isTransient($className)
     {
         if (! $this->initialized) {
             $this->initialize();
         }
 
         // Check for namespace alias
-        if (strpos($class, ':') !== false) {
+        if (strpos($className, ':') !== false) {
             Deprecation::trigger(
                 'doctrine/persistence',
                 'https://github.com/doctrine/persistence/issues/204',
                 'Short namespace aliases such as "%s" are deprecated, use ::class constant instead.',
-                $class
+                $className
             );
 
-            [$namespaceAlias, $simpleClassName] = explode(':', $class, 2);
-            $class                              = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
+            [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
+            $className                          = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         }
 
-        /** @psalm-var class-string $class */
-        return $this->getDriver()->isTransient($class);
+        /** @psalm-var class-string $className */
+        return $this->getDriver()->isTransient($className);
     }
 
     /**
