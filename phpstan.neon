@@ -25,8 +25,6 @@ parameters:
             message: '#Method Doctrine\\Tests\\Persistence\\Mapping\\TestClassMetadataFactory\:\:getFqcnFromAlias\(\) should return class\-string but returns string\.#'
             path: 'tests/Doctrine/Tests/Persistence/Mapping/TestClassMetadataFactory.php'
 
-        -   "#^Instantiated class Doctrine\\\\Common\\\\Cache\\\\ArrayCache not found\\.$#"
-
         -
             message: '#Method Doctrine\\Persistence\\AbstractManagerRegistry\:\:getRealClassName\(\) should return class\-string but returns string\.#'
             path: 'lib/Doctrine/Persistence/AbstractManagerRegistry.php'

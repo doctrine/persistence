@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Persistence\Mapping;
 
-use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Cache\Cache;
-use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -18,9 +15,6 @@ use Psr\Cache\CacheItemPoolInterface;
 use ReflectionMethod;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
-
-use function assert;
-use function class_exists;
 
 /**
  * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
@@ -44,31 +38,13 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf = new TestClassMetadataFactory($driver, $metadata);
     }
 
-    public function testSetGetCacheDriver(): void
-    {
-        self::assertNull($this->cmf->getCacheDriver());
-        self::assertNull(self::getCache($this->cmf));
-
-        $cache = $this->getArrayCache();
-        $this->cmf->setCacheDriver($cache);
-
-        self::assertSame($cache, $this->cmf->getCacheDriver());
-        self::assertInstanceOf(CacheItemPoolInterface::class, self::getCache($this->cmf));
-
-        $this->cmf->setCacheDriver(null);
-        self::assertNull($this->cmf->getCacheDriver());
-        self::assertNull(self::getCache($this->cmf));
-    }
-
     public function testSetGetCache(): void
     {
         self::assertNull(self::getCache($this->cmf));
-        self::assertNull($this->cmf->getCacheDriver());
 
         $cache = new ArrayAdapter();
         $this->cmf->setCache($cache);
         self::assertSame($cache, self::getCache($this->cmf));
-        self::assertInstanceOf(DoctrineProvider::class, $this->cmf->getCacheDriver());
     }
 
     public function testGetMetadataFor(): void
@@ -264,16 +240,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $method->setAccessible(true);
 
         return $method->invoke($classMetadataFactory);
-    }
-
-    private function getArrayCache(): Cache
-    {
-        $cache = class_exists(DoctrineProvider::class)
-            ? DoctrineProvider::wrap(new ArrayAdapter())
-            : new ArrayCache();
-        assert($cache instanceof Cache);
-
-        return $cache;
     }
 }
 
