@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
-use Doctrine\Common\Cache\Cache;
-use Doctrine\Common\Cache\Psr6\CacheAdapter;
-use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\Deprecations\Deprecation;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Proxy;
@@ -45,9 +42,6 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     protected $cacheSalt = '__CLASSMETADATA__';
 
-    /** @var Cache|null */
-    private $cacheDriver;
-
     /** @var CacheItemPoolInterface|null */
     private $cache;
 
@@ -66,56 +60,9 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /** @var ProxyClassNameResolver|null */
     private $proxyClassNameResolver = null;
 
-    /**
-     * Sets the cache driver used by the factory to cache ClassMetadata instances.
-     *
-     * @deprecated setCacheDriver was deprecated in doctrine/persistence 2.2 and will be removed in 3.0. Use setCache instead
-     *
-     * @return void
-     */
-    public function setCacheDriver(?Cache $cacheDriver = null)
-    {
-        Deprecation::trigger(
-            'doctrine/persistence',
-            'https://github.com/doctrine/persistence/issues/184',
-            '%s is deprecated. Use setCache() with a PSR-6 cache instead.',
-            __METHOD__
-        );
-
-        $this->cacheDriver = $cacheDriver;
-
-        if ($cacheDriver === null) {
-            $this->cache = null;
-
-            return;
-        }
-
-        $this->cache = CacheAdapter::wrap($cacheDriver);
-    }
-
-    /**
-     * Gets the cache driver used by the factory to cache ClassMetadata instances.
-     *
-     * @deprecated getCacheDriver was deprecated in doctrine/persistence 2.2 and will be removed in 3.0.
-     *
-     * @return Cache|null
-     */
-    public function getCacheDriver()
-    {
-        Deprecation::trigger(
-            'doctrine/persistence',
-            'https://github.com/doctrine/persistence/issues/184',
-            '%s is deprecated. Use getCache() instead.',
-            __METHOD__
-        );
-
-        return $this->cacheDriver;
-    }
-
     public function setCache(CacheItemPoolInterface $cache): void
     {
-        $this->cache       = $cache;
-        $this->cacheDriver = DoctrineProvider::wrap($cache);
+        $this->cache = $cache;
     }
 
     final protected function getCache(): ?CacheItemPoolInterface
