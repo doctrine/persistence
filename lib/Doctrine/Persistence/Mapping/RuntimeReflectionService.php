@@ -35,13 +35,18 @@ class RuntimeReflectionService implements ReflectionService
      */
     public function getParentClasses($class)
     {
-        if (! class_exists($class)) {
+        if (! (class_exists($class) || trait_exists($class)) ) {
             throw MappingException::nonExistingClass($class);
         }
 
-        $parents = class_parents($class);
+        $parents = class_parents($class) + class_uses($class);
 
         assert($parents !== false);
+
+        // Support traits from parent classes
+        foreach ($parents as $parentClass) {
+            $parents = array_merge($parents, $this->getParentClasses($parentClass));
+        }
 
         return $parents;
     }
