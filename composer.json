@@ -35,7 +35,7 @@
         "doctrine/coding-standard": "^6.0 || ^9.0",
         "doctrine/common": "^3.0",
         "phpunit/phpunit": "^8.0 || ^9.0",
-        "symfony/cache": "^4.4 || ^5.0",
+        "symfony/cache": "^4.4 || ^5.0 || ^6.0",
         "vimeo/psalm": "4.13.1"
     },
     "conflict": {

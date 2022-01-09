@@ -9,10 +9,12 @@ use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 
 /**
  * Base class to simplify ObjectManager decorators
+ *
+ * @template-covariant TObjectManager of ObjectManager
  */
 abstract class ObjectManagerDecorator implements ObjectManager
 {
-    /** @var ObjectManager */
+    /** @var TObjectManager */
     protected $wrapped;
 
     /**

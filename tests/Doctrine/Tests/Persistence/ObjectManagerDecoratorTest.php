@@ -170,6 +170,9 @@ class ObjectManagerDecoratorTest extends TestCase
     }
 }
 
+/**
+ * @extends ObjectManagerDecorator<ObjectManager&MockObject>
+ */
 class NullObjectManagerDecorator extends ObjectManagerDecorator
 {
     /**
