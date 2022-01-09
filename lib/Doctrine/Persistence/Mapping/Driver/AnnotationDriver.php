@@ -14,7 +14,6 @@ use RegexIterator;
 use function array_merge;
 use function array_unique;
 use function assert;
-use function get_class;
 use function get_declared_classes;
 use function in_array;
 use function is_dir;
@@ -179,7 +178,7 @@ abstract class AnnotationDriver implements MappingDriver
         $classAnnotations = $this->reader->getClassAnnotations(new ReflectionClass($className));
 
         foreach ($classAnnotations as $annot) {
-            if (isset($this->entityAnnotationClasses[get_class($annot)])) {
+            if (isset($this->entityAnnotationClasses[$annot::class])) {
                 return false;
             }
         }

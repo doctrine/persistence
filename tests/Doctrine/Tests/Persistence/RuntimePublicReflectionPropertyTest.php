@@ -169,10 +169,7 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
         $this->initialized = (bool) $initialized;
     }
 
-    /**
-     * @return mixed
-     */
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         if ($this->initializer) {
             $cb = $this->initializer;
@@ -182,10 +179,7 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
         return $this->checkedProperty;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function __set(string $name, $value): void
+    public function __set(string $name, mixed $value): void
     {
         if ($this->initializer) {
             $cb = $this->initializer;
