@@ -9,13 +9,3 @@ The following classes were moved into different namespace:
 ## Namespace renamed to `Doctrine\Persistence`
 
 The namespace has been renamed from `Doctrine\Common\Persistence` to `Doctrine\Persistence`.
-
-## Removed `PersistentObject`
-
-Please implement this functionality directly in your application if you want
-ActiveRecord style functionality.
-
-## Strict Typing
-
-Type declarations have been enabled for all parameters and strict types have been enabled.
-Return type declarations will be added in the next major release.
