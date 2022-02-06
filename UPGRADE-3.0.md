@@ -1,5 +1,9 @@
 # UPGRADE FROM 2.x to 3.0
 
+# BC Break: remove `ObjectManager::merge()`
+
+`ObjectManagerDecorator::merge()` is removed as well.
+
 ## BC Break: removed support for `doctrine/cache`
 
 Removed support for using doctrine/cache for metadata caching. The

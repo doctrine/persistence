@@ -50,17 +50,6 @@ interface ObjectManager
     public function remove(object $object): void;
 
     /**
-     * Merges the state of a detached object into the persistence context
-     * of this ObjectManager and returns the managed copy of the object.
-     * The object passed to merge will not become associated/managed with this ObjectManager.
-     *
-     * @deprecated Merge operation is deprecated and will be removed in Persistence 2.0.
-     *             Merging should be part of the business domain of an application rather than
-     *             a generic operation of ObjectManager.
-     */
-    public function merge(object $object): object;
-
-    /**
      * Clears the ObjectManager. All objects that are currently managed
      * by this ObjectManager become detached.
      */
