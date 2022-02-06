@@ -15,6 +15,8 @@ interface NotifyPropertyChanged
 {
     /**
      * Adds a listener that wants to be notified about property changes.
+     *
+     * @return void
      */
-    public function addPropertyChangedListener(PropertyChangedListener $listener): void;
+    public function addPropertyChangedListener(PropertyChangedListener $listener);
 }

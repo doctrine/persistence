@@ -25,11 +25,15 @@ interface Proxy
      * Initializes this proxy if its not yet initialized.
      *
      * Acts as a no-op if already initialized.
+     *
+     * @return void
      */
-    public function __load(): void;
+    public function __load();
 
     /**
      * Returns whether this proxy is initialized or not.
+     *
+     * @return bool
      */
-    public function __isInitialized(): bool;
+    public function __isInitialized();
 }
