@@ -20,17 +20,17 @@ abstract class ObjectManagerDecorator implements ObjectManager
     /**
      * {@inheritdoc}
      */
-    public function find(string $className, $id): ?object
+    public function find(string $className, $id)
     {
         return $this->wrapped->find($className, $id);
     }
 
-    public function persist(object $object): void
+    public function persist(object $object)
     {
         $this->wrapped->persist($object);
     }
 
-    public function remove(object $object): void
+    public function remove(object $object)
     {
         $this->wrapped->remove($object);
     }
@@ -40,27 +40,33 @@ abstract class ObjectManagerDecorator implements ObjectManager
         $this->wrapped->clear();
     }
 
-    public function detach(object $object): void
+    public function detach(object $object)
     {
         $this->wrapped->detach($object);
     }
 
-    public function refresh(object $object): void
+    public function refresh(object $object)
     {
         $this->wrapped->refresh($object);
     }
 
-    public function flush(): void
+    public function flush()
     {
         $this->wrapped->flush();
     }
 
-    public function getRepository(string $className): ObjectRepository
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepository(string $className)
     {
         return $this->wrapped->getRepository($className);
     }
 
-    public function getClassMetadata(string $className): ClassMetadata
+    /**
+     * {@inheritdoc}
+     */
+    public function getClassMetadata(string $className)
     {
         return $this->wrapped->getClassMetadata($className);
     }
@@ -68,17 +74,20 @@ abstract class ObjectManagerDecorator implements ObjectManager
     /**
      * @psalm-return ClassMetadataFactory<ClassMetadata<object>>
      */
-    public function getMetadataFactory(): ClassMetadataFactory
+    public function getMetadataFactory()
     {
         return $this->wrapped->getMetadataFactory();
     }
 
-    public function initializeObject(object $obj): void
+    public function initializeObject(object $obj)
     {
         $this->wrapped->initializeObject($obj);
     }
 
-    public function contains(object $object): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function contains(object $object)
     {
         return $this->wrapped->contains($object);
     }

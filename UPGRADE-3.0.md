@@ -20,7 +20,9 @@ Removed support for using doctrine/cache for metadata caching. The
 + public function clear(): void
 ```
 
-Also, native return type declarations have been added on all public APIs.
+Also, native parameter type declarations have been added on all public APIs.
+Native return type declarations have not been added so that it is possible to
+implement types compatible with both 2.x and 3.x.
 
 ## BC Break: Removed `PersistentObject`
 
