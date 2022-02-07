@@ -35,11 +35,6 @@ abstract class ObjectManagerDecorator implements ObjectManager
         $this->wrapped->remove($object);
     }
 
-    public function merge(object $object): object
-    {
-        return $this->wrapped->merge($object);
-    }
-
     public function clear(): void
     {
         $this->wrapped->clear();

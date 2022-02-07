@@ -60,19 +60,6 @@ class ObjectManagerDecoratorTest extends TestCase
         $this->decorated->remove($object);
     }
 
-    public function testMerge(): void
-    {
-        $object1 = new TestObject();
-        $object2 = new TestObject();
-
-        $this->wrapped->expects(self::once())
-            ->method('merge')
-            ->with($object1)
-            ->willReturn($object2);
-
-        self::assertSame($object2, $this->decorated->merge($object1));
-    }
-
     public function testClear(): void
     {
         $this->wrapped->expects(self::once())
