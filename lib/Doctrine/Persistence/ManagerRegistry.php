@@ -63,9 +63,12 @@ interface ManagerRegistry extends ConnectionRegistry
     public function getAliasNamespace($alias);
 
     /**
-     * Gets all object manager names.
+     * Gets all object manager names and associated service IDs. A service ID
+     * is a string that allows to obtain an object manager, typically from a
+     * PSR-11 container.
      *
-     * @return string[] An array of object manager names.
+     * @return array<string,string> An array with object manager names as keys,
+     *                              and service IDs as values.
      */
     public function getManagerNames();
 
