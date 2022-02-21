@@ -17,24 +17,13 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <RedundantCondition>
+        <TypeDoesNotContainType>
             <errorLevel type="suppress">
-                <!-- see https://github.com/JetBrains/phpstorm-stubs/pull/877 -->
-                <file name="lib/Doctrine/Persistence/Reflection/TypedNoDefaultReflectionProperty.php"/>
+                <!-- Expected class list that is not a list<class-string> -->
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/DefaultFileLocatorTest.php"/>
+                <file name="tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php"/>
             </errorLevel>
-        </RedundantCondition>
-        <InvalidNullableReturnType>
-            <errorLevel type="suppress">
-                <!-- see https://github.com/vimeo/psalm/issues/5193 -->
-                <file name="lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php"/>
-            </errorLevel>
-        </InvalidNullableReturnType>
-        <NullableReturnStatement>
-            <errorLevel type="suppress">
-                <!-- see https://github.com/vimeo/psalm/issues/5193 -->
-                <file name="lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php"/>
-            </errorLevel>
-        </NullableReturnStatement>
+        </TypeDoesNotContainType>
         <NullArgument>
             <errorLevel type="suppress">
                 <file name="tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php"/>
