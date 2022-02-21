@@ -9,6 +9,8 @@
     <!-- Ignore warnings and show progress of the run -->
     <arg value="nps"/>
 
+    <config name="php_version" value="70100"/>
+
     <file>lib</file>
     <file>tests</file>
 
