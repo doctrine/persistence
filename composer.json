@@ -29,17 +29,17 @@
     },
     "require-dev": {
         "composer/package-versions-deprecated": "^1.11",
-        "phpstan/phpstan": "1.2.0",
+        "phpstan/phpstan": "1.4.6",
         "doctrine/annotations": "^1.0",
-        "doctrine/coding-standard": "^6.0 || ^9.0",
+        "doctrine/coding-standard": "^9.0",
         "doctrine/common": "^3.0",
-        "phpunit/phpunit": "^7.5.20 || ^8.0 || ^9.0",
-        "symfony/cache": "^4.4 || ^5.0 || ^6.0",
-        "vimeo/psalm": "4.20.0"
+        "phpunit/phpunit": "^7.5.20 || ^8.5 || ^9.5",
+        "symfony/cache": "^4.4 || ^5.4 || ^6.0",
+        "vimeo/psalm": "4.21.0"
     },
     "conflict": {
         "doctrine/annotations": "<1.0 || >=2.0",
-        "doctrine/common": "<2.10@dev"
+        "doctrine/common": "<2.10"
     },
     "autoload": {
         "psr-4": {
@@ -51,6 +51,11 @@
         "psr-4": {
             "Doctrine\\Tests\\": "tests/Doctrine/Tests",
             "Doctrine\\Tests_PHP74\\": "tests/Doctrine/Tests_PHP74"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }
