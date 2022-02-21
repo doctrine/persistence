@@ -286,10 +286,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         // Collect parent classes, ignoring transient (not-mapped) classes.
         $parentClasses = [];
 
-        $parentClasses = $this->getReflectionService()
-            ->getParentClasses($name);
-
-        foreach (array_reverse($parentClasses) as $parentClass) {
+        foreach (array_reverse($this->getReflectionService()->getParentClasses($name)) as $parentClass) {
             if ($this->getDriver()->isTransient($parentClass)) {
                 continue;
             }
