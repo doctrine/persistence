@@ -7,11 +7,15 @@ use Doctrine\Entity;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\AnnotationDriver;
 use Doctrine\TestClass;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 class AnnotationDriverTest extends TestCase
 {
-    public function testGetAllClassNames(): void
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testGetAllClassNames(string $path): void
     {
         $reader = new AnnotationReader();
         $driver = new SimpleAnnotationDriver($reader, [__DIR__ . '/_files/annotation']);
@@ -19,6 +23,15 @@ class AnnotationDriverTest extends TestCase
         $classes = $driver->getAllClassNames();
 
         self::assertSame([TestClass::class], $classes);
+    }
+
+    /**
+     * @return Generator<string, array{string}>
+     */
+    public function pathProvider(): Generator
+    {
+        yield 'straigthforward path' => [__DIR__ . '/_files/annotation'];
+        yield 'winding path' => [__DIR__ . '/../Mapping/_files/annotation'];
     }
 }
 
