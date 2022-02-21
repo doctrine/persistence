@@ -52,5 +52,10 @@
             "Doctrine\\Tests\\": "tests/Doctrine/Tests",
             "Doctrine\\Tests_PHP74\\": "tests/Doctrine/Tests_PHP74"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
