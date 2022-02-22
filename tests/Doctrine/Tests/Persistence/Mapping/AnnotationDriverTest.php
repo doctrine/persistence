@@ -10,6 +10,7 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\AnnotationDriver;
 use Doctrine\TestClass;
 use Doctrine\Tests\Persistence\TestObject;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 class AnnotationDriverTest extends TestCase
@@ -61,11 +62,26 @@ class AnnotationDriverTest extends TestCase
         self::assertSame('.php1', $this->driver->getFileExtension());
     }
 
-    public function testGetAllClassNames(): void
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testGetAllClassNames(string $path): void
     {
-        $classes = $this->driver->getAllClassNames();
+        $reader = new AnnotationReader();
+        $driver = new SimpleAnnotationDriver($reader, $path);
+
+        $classes = $driver->getAllClassNames();
 
         self::assertSame([TestClass::class], $classes);
+    }
+
+    /**
+     * @return Generator<string, array{string}>
+     */
+    public function pathProvider(): Generator
+    {
+        yield 'straigthforward path' => [__DIR__ . '/_files/annotation'];
+        yield 'winding path' => [__DIR__ . '/../Mapping/_files/annotation'];
     }
 
     public function testIsTransient(): void

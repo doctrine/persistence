@@ -230,7 +230,7 @@ abstract class AnnotationDriver implements MappingDriver
             foreach ($iterator as $file) {
                 $sourceFile = $file[0];
 
-                if (preg_match('(^phar:)i', $sourceFile) === false) {
+                if (preg_match('(^phar:)i', $sourceFile) === 0) {
                     $sourceFile = realpath($sourceFile);
                 }
 
