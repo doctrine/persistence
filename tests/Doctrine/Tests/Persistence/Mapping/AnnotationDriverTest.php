@@ -18,7 +18,7 @@ class AnnotationDriverTest extends TestCase
     public function testGetAllClassNames(string $path): void
     {
         $reader = new AnnotationReader();
-        $driver = new SimpleAnnotationDriver($reader, [__DIR__ . '/_files/annotation']);
+        $driver = new SimpleAnnotationDriver($reader, $path);
 
         $classes = $driver->getAllClassNames();
 
