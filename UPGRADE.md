@@ -6,6 +6,15 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 2.4
+
+## Deprecated `AnnotationDriver`
+
+Since attributes were introduced in PHP 8.0, annotations are deprecated. Use
+`ColocatedMappingDriver` instead. This will involve implementing
+`isTransient()` as well as `__construct()` and `getReader()` to
+retain backward compatibility.
+
 # Upgrade to 2.3
 
 ## Deprecated using short namespace alias syntax in favor of `::class` syntax.
