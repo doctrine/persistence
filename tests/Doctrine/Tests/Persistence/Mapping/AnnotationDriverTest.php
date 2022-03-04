@@ -6,32 +6,13 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Entity;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\AnnotationDriver;
-use Doctrine\TestClass;
-use Generator;
-use PHPUnit\Framework\TestCase;
+use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 
-class AnnotationDriverTest extends TestCase
+class AnnotationDriverTest extends ColocatedMappingDriverTest
 {
-    /**
-     * @dataProvider pathProvider
-     */
-    public function testGetAllClassNames(string $path): void
+    protected function createDriver(string $path): MappingDriver
     {
-        $reader = new AnnotationReader();
-        $driver = new SimpleAnnotationDriver($reader, $path);
-
-        $classes = $driver->getAllClassNames();
-
-        self::assertSame([TestClass::class], $classes);
-    }
-
-    /**
-     * @return Generator<string, array{string}>
-     */
-    public function pathProvider(): Generator
-    {
-        yield 'straigthforward path' => [__DIR__ . '/_files/annotation'];
-        yield 'winding path' => [__DIR__ . '/../Mapping/_files/annotation'];
+        return new SimpleAnnotationDriver(new AnnotationReader(), $path);
     }
 }
 

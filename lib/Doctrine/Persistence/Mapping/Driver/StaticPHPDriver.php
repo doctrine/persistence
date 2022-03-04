@@ -68,7 +68,8 @@ class StaticPHPDriver implements MappingDriver
     /**
      * {@inheritDoc}
      *
-     * @todo Same code exists in AnnotationDriver, should we re-use it somehow or not worry about it?
+     * @todo Same code exists in ColocatedMappingDriver, should we re-use it
+     * somehow or not worry about it?
      */
     public function getAllClassNames()
     {
@@ -77,7 +78,7 @@ class StaticPHPDriver implements MappingDriver
         }
 
         if (! $this->paths) {
-            throw MappingException::pathRequired();
+            throw MappingException::pathRequiredForDriver(static::class);
         }
 
         $classes       = [];
