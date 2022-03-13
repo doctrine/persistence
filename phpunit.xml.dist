@@ -7,15 +7,15 @@
 >
     <testsuites>
         <testsuite name="Doctrine Persistence Test Suite">
-            <directory>./tests/Doctrine/Tests</directory>
-            <directory phpVersion="7.4" phpVersionOperator=">=">./tests/Doctrine/Tests_PHP74</directory>
-            <directory phpVersion="8.1" phpVersionOperator=">=">./tests/Doctrine/Tests_PHP81</directory>
+            <directory>tests</directory>
+            <directory phpVersion="7.4" phpVersionOperator=">=">tests_php74</directory>
+            <directory phpVersion="8.1" phpVersionOperator=">=">tests_php81</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./lib/Doctrine/</directory>
+            <directory>src</directory>
         </whitelist>
     </filter>
 </phpunit>

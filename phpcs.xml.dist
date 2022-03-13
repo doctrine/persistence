@@ -11,7 +11,7 @@
 
     <config name="php_version" value="70100"/>
 
-    <file>lib</file>
+    <file>src</file>
     <file>tests</file>
 
     <rule ref="Doctrine">
@@ -27,11 +27,11 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
-        <exclude-pattern>*/lib/*</exclude-pattern>
+        <exclude-pattern>*/src/*</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
-        <exclude-pattern>*/lib/*</exclude-pattern>
+        <exclude-pattern>*/src/*</exclude-pattern>
     </rule>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
@@ -47,12 +47,12 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming">
-        <exclude-pattern>lib/Doctrine/Persistence/AbstractManagerRegistry.php</exclude-pattern>
-        <exclude-pattern>lib/Doctrine/Persistence/Mapping/AbstractClassMetadataFactory.php</exclude-pattern>
+        <exclude-pattern>src/Persistence/AbstractManagerRegistry.php</exclude-pattern>
+        <exclude-pattern>src/Persistence/Mapping/AbstractClassMetadataFactory.php</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix">
-        <exclude-pattern>lib/Doctrine/Persistence/Mapping/MappingException.php</exclude-pattern>
+        <exclude-pattern>src/Persistence/Mapping/MappingException.php</exclude-pattern>
     </rule>
 
     <rule ref="Generic.WhiteSpace.ScopeIndent.Incorrect">

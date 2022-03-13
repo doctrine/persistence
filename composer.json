@@ -43,15 +43,15 @@
     },
     "autoload": {
         "psr-4": {
-            "Doctrine\\Common\\": "lib/Doctrine/Common",
-            "Doctrine\\Persistence\\": "lib/Doctrine/Persistence"
+            "Doctrine\\Common\\": "src/Common",
+            "Doctrine\\Persistence\\": "src/Persistence"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests/Doctrine/Tests",
-            "Doctrine\\Tests_PHP74\\": "tests/Doctrine/Tests_PHP74",
-            "Doctrine\\Tests_PHP81\\": "tests/Doctrine/Tests_PHP81"
+            "Doctrine\\Tests\\": "tests",
+            "Doctrine\\Tests_PHP74\\": "tests_php74",
+            "Doctrine\\Tests_PHP81\\": "tests_php81"
         }
     },
     "config": {
