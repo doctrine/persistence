@@ -44,18 +44,20 @@
     },
     "autoload": {
         "psr-4": {
-            "Doctrine\\Persistence\\": "lib/Doctrine/Persistence"
+            "Doctrine\\Persistence\\": "src/Persistence"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests/Doctrine/Tests",
-            "Doctrine\\Tests_PHP74\\": "tests/Doctrine/Tests_PHP74"
+            "Doctrine\\Tests\\": "tests",
+            "Doctrine\\Tests_PHP74\\": "tests_php74",
+            "Doctrine\\Tests_PHP81\\": "tests_php81"
         }
     },
     "config": {
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/package-versions-deprecated": true
         }
     }
 }

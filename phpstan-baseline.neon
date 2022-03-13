@@ -1,72 +1,121 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\FileDriver\\:\\:getAllClassNames\\(\\) should return array\\<int, class\\-string\\> but returns array\\<int, string\\>\\.$#"
-			count: 1
-			path: lib/Doctrine/Persistence/Mapping/Driver/FileDriver.php
-
-		-
 			message: "#^Call to an undefined static method T of object\\:\\:loadMetadata\\(\\)\\.$#"
 			count: 1
-			path: lib/Doctrine/Persistence/Mapping/Driver/StaticPHPDriver.php
+			path: src/Persistence/Mapping/Driver/StaticPHPDriver.php
+
+		-
+			message: "#^Doctrine\\\\Persistence\\\\Reflection\\\\EnumReflectionProperty\\:\\:__construct\\(\\) does not call parent constructor from ReflectionProperty\\.$#"
+			count: 1
+			path: src/Persistence/Reflection/EnumReflectionProperty.php
 
 		-
 			message: "#^Variable property access on \\$this\\(Doctrine\\\\Persistence\\\\Reflection\\\\TypedNoDefaultRuntimePublicReflectionProperty\\)\\.$#"
 			count: 1
-			path: lib/Doctrine/Persistence/Reflection/TypedNoDefaultRuntimePublicReflectionProperty.php
+			path: src/Persistence/Reflection/TypedNoDefaultRuntimePublicReflectionProperty.php
+
+		-
+			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:addExcludePaths\\(\\)\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
+
+		-
+			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:addPaths\\(\\)\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
+
+		-
+			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:getExcludePaths\\(\\)\\.$#"
+			count: 2
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
+
+		-
+			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:getFileExtension\\(\\)\\.$#"
+			count: 2
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
+
+		-
+			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:getPaths\\(\\)\\.$#"
+			count: 2
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
+
+		-
+			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:setFileExtension\\(\\)\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with '\\.php' and mixed will always evaluate to true\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with '\\.php1' and mixed will always evaluate to true\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'.*'\\} and mixed will always evaluate to true\\.$#"
+			count: 3
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{\\} and mixed will always evaluate to true\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
 
 		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Doctrine\\\\\\\\Tests…', 'Doctrine\\\\\\\\Tests\\\\\\\\ORM…', 'Doctrine\\\\\\\\Tests\\\\\\\\ORM…'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/Mapping/DriverChainTest.php
+			path: tests/Persistence/Mapping/DriverChainTest.php
 
 		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Doctrine\\\\\\\\Tests…', 'Other\\\\\\\\Class'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/Mapping/DriverChainTest.php
+			path: tests/Persistence/Mapping/DriverChainTest.php
 
 		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Foo\\\\\\\\Bar\\\\\\\\subDirClass', 'Foo\\\\\\\\global', 'Foo\\\\\\\\stdClass'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
 
 		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Foo\\\\\\\\Bar\\\\\\\\subDirClass', 'Foo\\\\\\\\stdClass'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
 
 		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Foo\\\\\\\\stdClass', 'Foo\\\\\\\\sub\\\\\\\\subClass', 'Foo\\\\\\\\sub\\\\\\\\subsub…'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\RuntimePublicReflectionPropertyTestProxyMock\\:\\:\\$checkedProperty \\(string\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/RuntimePublicReflectionPropertyTest.php
+			path: tests/Persistence/RuntimePublicReflectionPropertyTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$nonTypedDefaultProperty is never read, only written\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$nonTypedNoDefaultProperty is unused\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$typedDefaultProperty is never read, only written\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$typedNoDefaultProperty is unused\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Reflection\\\\TypedFoo\\:\\:\\$id is never read, only written\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php
-
+			path: tests_php74/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php

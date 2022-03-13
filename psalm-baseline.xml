@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.13.1@5cf660f63b548ccd4a56f62d916ee4d6028e01a3">
-  <file src="lib/Doctrine/Persistence/Mapping/Driver/FileDriver.php">
-    <LessSpecificReturnStatement occurrences="1"/>
-    <MoreSpecificReturnType occurrences="1">
-      <code>getAllClassNames</code>
-    </MoreSpecificReturnType>
+<files psalm-version="4.21.0@d8bec4c7aaee111a532daec32fb09de5687053d1">
+  <file src="tests/Persistence/Mapping/ColocatedMappingDriverTest.php">
+    <UndefinedInterfaceMethod occurrences="9">
+      <code>addExcludePaths</code>
+      <code>addPaths</code>
+      <code>getExcludePaths</code>
+      <code>getExcludePaths</code>
+      <code>getFileExtension</code>
+      <code>getFileExtension</code>
+      <code>getPaths</code>
+      <code>getPaths</code>
+      <code>setFileExtension</code>
+    </UndefinedInterfaceMethod>
   </file>
 </files>

@@ -158,7 +158,7 @@ Mapping Driver
 
 In order to load ``ClassMetadata`` instances you can use the ``Doctrine\Persistence\Mapping\Driver\MappingDriver``
 interface. This is the interface that does the core loading of mapping information from wherever they are stored.
-That may be in files, annotations, yaml, xml, etc.
+That may be in files, attributes, yaml, xml, etc.
 
 .. code-block:: php
 
@@ -173,8 +173,8 @@ That may be in files, annotations, yaml, xml, etc.
         public function isTransient($className);
     }
 
-The Doctrine Persistence project offers a few base implementations that make it easy to implement your own XML,
-Annotations or YAML drivers.
+The Doctrine Persistence project offers a few base implementations that
+make it easy to implement your own XML, Attributes or YAML drivers.
 
 FileDriver
 ----------
@@ -232,45 +232,9 @@ AnnotationDriver
 
 .. note::
 
-    This driver requires the ``doctrine/annotations`` project. You can install it with composer.
+    This driver requires the ``doctrine/annotations`` project and is
+    deprecated because of that.
 
-    .. code-block:: php
-
-        composer require doctrine/annotations
-
-The AnnotationDriver reads the mapping metadata from docblock annotations.
-
-.. code-block:: php
-
-    final class MyAnnotationDriver extends AnnotationDriver
-    {
-        public function loadMetadataForClass($className, ClassMetadata $metadata)
-        {
-            /** @var ClassMetadata $class */
-            $reflClass = $class->getReflectionClass();
-
-            $classAnnotations = $this->reader->getClassAnnotations($reflClass);
-
-            // Use the reader to read annotations from your classes to then populate the $metadata instance.
-        }
-    }
-
-Now you can use it like the following:
-
-.. code-block:: php
-
-    use App\Model\User;
-    use Doctrine\Annotations\AnnotationReader;
-    use Doctrine\Persistence\Mapping\ClassMetadata;
-
-    $annotationReader = new AnnotationReader();
-
-    $annotationDriver = new AnnotationDriver($annotationReader, '/path/to/classes/with/annotations');
-
-    $classMetadata = new ClassMetadata();
-
-    // looks for a PHP file at /path/to/classes/with/annotations/App/Model/User.php
-    $annotationDriver->loadMetadataForClass(User::class, $classMetadata);
 
 PHPDriver
 ---------
