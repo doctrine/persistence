@@ -6,8 +6,9 @@ parameters:
     phpVersion: 80100
 
     paths:
-        - lib
+        - src
         - tests
+        - tests_php74
 
     excludePaths:
-        - tests/Doctrine/Tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php
+        - tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php

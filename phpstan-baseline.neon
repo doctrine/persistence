@@ -3,125 +3,124 @@ parameters:
 		-
 			message: "#^Method Doctrine\\\\Persistence\\\\AbstractManagerRegistry\\:\\:getRealClassName\\(\\) should return class\\-string but returns string\\.$#"
 			count: 1
-			path: lib/Doctrine/Persistence/AbstractManagerRegistry.php
+			path: src/Persistence/AbstractManagerRegistry.php
 
 		-
 			message: "#^Call to an undefined static method T of object\\:\\:loadMetadata\\(\\)\\.$#"
 			count: 1
-			path: lib/Doctrine/Persistence/Mapping/Driver/StaticPHPDriver.php
+			path: src/Persistence/Mapping/Driver/StaticPHPDriver.php
 
 		-
 			message: "#^Instantiated class Doctrine\\\\Common\\\\Cache\\\\ArrayCache not found\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/Mapping/ClassMetadataFactoryTest.php
+			path: tests/Persistence/Mapping/ClassMetadataFactoryTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$class of method Doctrine\\\\Persistence\\\\Mapping\\\\RuntimeReflectionService\\:\\:getParentClasses\\(\\) expects class\\-string, string given\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: "#^Parameter \\#3 \\$nsSeparator of class Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\SymfonyFileLocator constructor expects string, null given\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
 
 		-
 			message: "#^Method Doctrine\\\\Tests\\\\Persistence\\\\Mapping\\\\TestClassMetadataFactory\\:\\:getFqcnFromAlias\\(\\) should return class\\-string but returns string\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/Mapping/TestClassMetadataFactory.php
+			path: tests/Persistence/Mapping/TestClassMetadataFactory.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:addAsdf\\(\\)\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:addChildren\\(\\)\\.$#"
 			count: 3
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:asdf\\(\\)\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:getChildren\\(\\)\\.$#"
 			count: 2
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:getId\\(\\)\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:getName\\(\\)\\.$#"
 			count: 2
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:getParent\\(\\)\\.$#"
 			count: 4
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:getUnknown\\(\\)\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:setId\\(\\)\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:setName\\(\\)\\.$#"
 			count: 2
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:setParent\\(\\)\\.$#"
 			count: 4
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:setUnknown\\(\\)\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:undefinedMethod\\(\\)\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/PersistentObjectTest.php
+			path: tests/Persistence/PersistentObjectTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\RuntimePublicReflectionPropertyTestProxyMock\\:\\:\\$checkedProperty \\(string\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests/Persistence/RuntimePublicReflectionPropertyTest.php
+			path: tests/Persistence/RuntimePublicReflectionPropertyTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$nonTypedDefaultProperty is never read, only written\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$nonTypedNoDefaultProperty is unused\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$typedDefaultProperty is never read, only written\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$typedNoDefaultProperty is unused\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Reflection\\\\TypedFoo\\:\\:\\$id is never read, only written\\.$#"
 			count: 1
-			path: tests/Doctrine/Tests_PHP74/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php
-
+			path: tests_php74/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php
