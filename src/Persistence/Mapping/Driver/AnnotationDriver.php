@@ -10,7 +10,7 @@ use function get_class;
 /**
  * The AnnotationDriver reads the mapping metadata from docblock annotations.
  *
- * @deprecated extend ColocatedMappingDriver directly instead.
+ * @deprecated use ColocatedMappingDriver directly instead.
  */
 abstract class AnnotationDriver implements MappingDriver
 {
