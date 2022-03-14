@@ -10,7 +10,7 @@ awareness about deprecated code.
 
 ## BC Break: removed `ObjectManager::merge()`
 
-`ObjectManagerDecorator::merge()` is removed as well.
+`ObjectManagerDecorator::merge()` is removed without replacement.
 
 ## BC Break: removed support for `doctrine/cache`
 
