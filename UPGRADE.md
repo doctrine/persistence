@@ -10,10 +10,12 @@ awareness about deprecated code.
 
 ## Deprecated `AnnotationDriver`
 
-Since attributes were introduced in PHP 8.0, annotations are deprecated. Use
-`ColocatedMappingDriver` instead. This will involve implementing
-`isTransient()` as well as `__construct()` and `getReader()` to
-retain backward compatibility.
+Since attributes were introduced in PHP 8.0, annotations are deprecated.
+`AnnotationDriver` is an abstract class that is used when implementing concrete
+annotation drivers in dependent packages. It is deprecated in favor of using
+`ColocatedMappingDriver` to implement both annotation and attribute based
+drivers. This will involve implementing `isTransient()` as well as
+`__construct()` and `getReader()` to retain backward compatibility.
 
 # Upgrade to 2.3
 
