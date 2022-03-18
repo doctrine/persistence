@@ -117,7 +117,7 @@ interface ObjectManager
      * @return ObjectRepository
      * @psalm-return ObjectRepository<T>
      *
-     * @template T
+     * @template T of object
      */
     public function getRepository($className);
 
