@@ -6,6 +6,12 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 2.5
+
+## Deprecated `MappingException::pathRequired()`
+
+`MappingException::pathRequiredForDriver()` should be used instead.
+
 # Upgrade to 2.4
 
 ## Deprecated `AnnotationDriver`
