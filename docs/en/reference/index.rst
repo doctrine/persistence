@@ -227,14 +227,6 @@ Now if you have a class named ``App\Model\User`` and you can load the mapping in
     // looks for a file at /path/to/mapping/files/App.Model.User.json
     $jsonFileDriver->loadMetadataForClass(User::class, $classMetadata);
 
-AnnotationDriver
-----------------
-
-.. note::
-
-    This driver requires the ``doctrine/annotations`` project and is
-    deprecated because of that.
-
 
 PHPDriver
 ---------

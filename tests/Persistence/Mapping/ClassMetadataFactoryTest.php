@@ -10,6 +10,7 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
+use Foo;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use ReflectionMethod;
@@ -49,15 +50,15 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
     public function testGetMetadataFor(): void
     {
-        $metadata = $this->cmf->getMetadataFor('stdClass');
+        $metadata = $this->cmf->getMetadataFor(stdClass::class);
 
-        self::assertTrue($this->cmf->hasMetadataFor('stdClass'));
+        self::assertTrue($this->cmf->hasMetadataFor(stdClass::class));
     }
 
     public function testGetMetadataForAbsentClass(): void
     {
         $this->expectException(MappingException::class);
-        $this->cmf->getMetadataFor(__NAMESPACE__ . '\AbsentClass');
+        $this->cmf->getMetadataFor(Foo::class);
     }
 
     public function testGetParentMetadata(): void
@@ -93,39 +94,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertEquals($loadedMetadata, $item->get());
     }
 
-    public function testGetAliasedMetadata(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
-
-        $this->cmf->getMetadataFor('prefix:ChildEntity');
-
-        self::assertTrue($this->cmf->hasMetadataFor(__NAMESPACE__ . '\ChildEntity'));
-        self::assertTrue($this->cmf->hasMetadataFor('prefix:ChildEntity'));
-    }
-
-    /**
-     * @group DCOM-270
-     */
-    public function testGetInvalidAliasedMetadata(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
-
-        $this->expectException(MappingException::class);
-        $this->expectExceptionMessage(
-            'Class \'Doctrine\Tests\Persistence\Mapping\ChildEntity:Foo\' does not exist'
-        );
-
-        $this->cmf->getMetadataFor('prefix:ChildEntity:Foo');
-    }
-
-    /**
-     * @group DCOM-270
-     */
-    public function testClassIsTransient(): void
-    {
-        self::assertTrue($this->cmf->isTransient('prefix:ChildEntity:Foo'));
-    }
-
     public function testWillFallbackOnNotLoadedMetadata(): void
     {
         $classMetadata = $this->createMock(ClassMetadata::class);
@@ -134,7 +102,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
             return $classMetadata;
         };
 
-        self::assertSame($classMetadata, $this->cmf->getMetadataFor('Foo'));
+        self::assertSame($classMetadata, $this->cmf->getMetadataFor(Foo::class));
     }
 
     public function testWillFailOnFallbackFailureWithNotLoadedMetadata(): void
@@ -146,7 +114,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->expectException(MappingException::class);
         $this->expectExceptionMessage("Class 'Foo' does not exist");
 
-        $this->cmf->getMetadataFor('Foo');
+        $this->cmf->getMetadataFor(Foo::class);
     }
 
     /**
@@ -228,7 +196,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
             return $metadata;
         };
 
-        self::assertSame($metadata, $this->cmf->getMetadataFor('Foo'));
+        self::assertSame($metadata, $this->cmf->getMetadataFor(Foo::class));
     }
 
     /**

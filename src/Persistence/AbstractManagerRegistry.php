@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence;
 
-use Doctrine\Deprecations\Deprecation;
 use InvalidArgumentException;
 use ReflectionClass;
 
-use function explode;
 use function sprintf;
-use function strpos;
 
 /**
  * Abstract implementation of the ManagerRegistry contract.
@@ -171,9 +168,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      */
     public function getManagerForClass(string $class)
     {
-        $className = $this->getRealClassName($class);
-
-        $proxyClass = new ReflectionClass($className);
+        $proxyClass = new ReflectionClass($class);
 
         if ($proxyClass->implementsInterface($this->proxyInterfaceName)) {
             $parentClass = $proxyClass->getParentClass();
@@ -188,7 +183,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         foreach ($this->managers as $id) {
             $manager = $this->getService($id);
 
-            if (! $manager->getMetadataFactory()->isTransient($className)) {
+            if (! $manager->getMetadataFactory()->isTransient($class)) {
                 return $manager;
             }
         }
@@ -263,29 +258,5 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         }
 
         return $this->getManagerForClass($persistentObject) ?? $this->getManager();
-    }
-
-    /**
-     * @psalm-return class-string
-     */
-    private function getRealClassName(string $classNameOrAlias): string
-    {
-        // Check for namespace alias
-        if (strpos($classNameOrAlias, ':') !== false) {
-            Deprecation::trigger(
-                'doctrine/persistence',
-                'https://github.com/doctrine/persistence/issues/204',
-                'Short namespace aliases such as "%s" are deprecated, use ::class constant instead.',
-                $classNameOrAlias
-            );
-
-            [$namespaceAlias, $simpleClassName] = explode(':', $classNameOrAlias, 2);
-
-            /** @psalm-var class-string */
-            return $this->getAliasNamespace($namespaceAlias) . '\\' . $simpleClassName;
-        }
-
-        /** @psalm-var class-string */
-        return $classNameOrAlias;
     }
 }

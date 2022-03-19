@@ -42,5 +42,19 @@
                 <file name="tests/Persistence/Mapping/FileDriverTest.php"/>
             </errorLevel>
         </MoreSpecificReturnType>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <!-- We are testing what happens when calling the API with a non existent class -->
+                <file name="tests/Persistence/Mapping/ClassMetadataFactoryTest.php"/>
+                <file name="tests/Persistence/Mapping/RuntimeReflectionServiceTest.php"/>
+            </errorLevel>
+        </UndefinedClass>
+        <ArgumentTypeCoercion>
+            <errorLevel type="suppress">
+                <!-- Related to the above, since we are coercing a string to class-string -->
+                <file name="tests/Persistence/Mapping/ClassMetadataFactoryTest.php"/>
+                <file name="tests/Persistence/Mapping/RuntimeReflectionServiceTest.php"/>
+            </errorLevel>
+        </ArgumentTypeCoercion>
     </issueHandlers>
 </psalm>

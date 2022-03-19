@@ -23,7 +23,7 @@ interface ClassMetadataFactory
     /**
      * Gets the class metadata descriptor for a class.
      *
-     * @param string $className The name of the class.
+     * @param class-string $className The name of the class.
      *
      * @return ClassMetadata
      * @psalm-return T
@@ -33,6 +33,8 @@ interface ClassMetadataFactory
     /**
      * Checks whether the factory has the metadata for a class loaded already.
      *
+     * @param class-string $className
+     *
      * @return bool TRUE if the metadata of the class in question is already loaded, FALSE otherwise.
      */
     public function hasMetadataFor(string $className);
@@ -40,6 +42,7 @@ interface ClassMetadataFactory
     /**
      * Sets the metadata descriptor for a specific class.
      *
+     * @param class-string $className
      * @psalm-param T $class
      *
      * @return void

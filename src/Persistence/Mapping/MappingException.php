@@ -31,15 +31,6 @@ class MappingException extends Exception
     }
 
     /**
-     * @return self
-     */
-    public static function pathRequired()
-    {
-        return new self('Specifying the paths to your entities is required ' .
-            'in the AnnotationDriver to retrieve all class names.');
-    }
-
-    /**
      * @param class-string $driverClassName
      */
     public static function pathRequiredForDriver(string $driverClassName): self

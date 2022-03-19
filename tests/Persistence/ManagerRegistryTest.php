@@ -16,12 +16,9 @@ use Doctrine\Persistence\Proxy;
 use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\TestClassMetadataFactory;
 use PHPUnit\Framework\MockObject\MockObject;
-use ReflectionException;
 
 use function assert;
 use function call_user_func;
-
-use const PHP_VERSION_ID;
 
 /**
  * @uses Doctrine\Tests\Persistence\TestObject
@@ -59,44 +56,6 @@ class ManagerRegistryTest extends DoctrineTestCase
     public function testGetManagerForProxyInterface(): void
     {
         self::assertNull($this->mr->getManagerForClass(ObjectManagerAware::class));
-    }
-
-    public function testGetManagerForInvalidClass(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
-
-        $this->expectException(ReflectionException::class);
-        $this->expectExceptionMessage(
-            PHP_VERSION_ID < 80000 ?
-            'Class Doctrine\Tests\Persistence\TestObjectInexistent does not exist' :
-            'Class "Doctrine\Tests\Persistence\TestObjectInexistent" does not exist'
-        );
-
-        $this->mr->getManagerForClass('prefix:TestObjectInexistent');
-    }
-
-    public function testGetManagerForAliasedClass(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
-
-        self::assertInstanceOf(
-            ObjectManager::class,
-            $this->mr->getManagerForClass('prefix:TestObject')
-        );
-    }
-
-    public function testGetManagerForInvalidAliasedClass(): void
-    {
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
-
-        $this->expectException(ReflectionException::class);
-        $this->expectExceptionMessage(
-            PHP_VERSION_ID < 80000 ?
-            'Class Doctrine\Tests\Persistence\TestObject:Foo does not exist' :
-            'Class "Doctrine\Tests\Persistence\TestObject:Foo" does not exist'
-        );
-
-        $this->mr->getManagerForClass('prefix:TestObject:Foo');
     }
 
     public function testResetManager(): void

@@ -47,12 +47,6 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     ): void {
     }
 
-    protected function getFqcnFromAlias(string $namespaceAlias, string $simpleClassName): string
-    {
-        /** @psalm-var class-string */
-        return __NAMESPACE__ . '\\' . $simpleClassName;
-    }
-
     protected function initialize(): void
     {
     }

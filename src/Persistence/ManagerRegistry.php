@@ -52,19 +52,6 @@ interface ManagerRegistry extends ConnectionRegistry
     public function resetManager(?string $name = null);
 
     /**
-     * Resolves a registered namespace alias to the full namespace.
-     *
-     * This method looks for the alias in all registered object managers.
-     *
-     * @deprecated This method is deprecated along with short namespace aliases.
-     *
-     * @param string $alias The alias.
-     *
-     * @phpstan-return string The full namespace.
-     */
-    public function getAliasNamespace(string $alias);
-
-    /**
      * Gets all object manager names and associated service IDs. A service ID
      * is a string that allows to obtain an object manager, typically from a
      * PSR-11 container.
@@ -94,7 +81,7 @@ interface ManagerRegistry extends ConnectionRegistry
     /**
      * Gets the object manager associated with a given class.
      *
-     * @param string $class A persistent object class name.
+     * @param class-string $class A persistent object class name.
      *
      * @return ObjectManager|null
      */
