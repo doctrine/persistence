@@ -28,6 +28,8 @@ class MappingException extends Exception
     }
 
     /**
+     * @deprecated Use pathRequiredForDriver instead
+     *
      * @return self
      */
     public static function pathRequired()
