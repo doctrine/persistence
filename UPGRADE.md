@@ -8,6 +8,20 @@ awareness about deprecated code.
 
 # Upgrade to 3.0
 
+## BC Break: removed `AnnotationDriver`
+
+Use `ColocatedMappingDriver` instead.
+
+## BC Break: removed `LifecycleEventArgs::getEntity()`
+
+Use `LifecycleEventArgs::getObject()` instead.
+
+## BC Break: removed support for short namespace aliases
+
+- `AbstractClassMetadataFactory::getFqcnFromAlias()` is removed.
+- `ClassMetadataFactory` methods now require their `$className` argument to be an
+actual FQCN.
+
 ## BC Break: removed `ObjectManager::merge()`
 
 `ObjectManagerDecorator::merge()` is removed as well.

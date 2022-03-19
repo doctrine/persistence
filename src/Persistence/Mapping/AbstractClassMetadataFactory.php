@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
-use Doctrine\Deprecations\Deprecation;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Proxy;
 use Psr\Cache\CacheItemPoolInterface;
@@ -16,9 +15,7 @@ use function array_map;
 use function array_reverse;
 use function array_unshift;
 use function assert;
-use function explode;
 use function str_replace;
-use function strpos;
 use function strrpos;
 use function substr;
 
@@ -112,19 +109,6 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     abstract protected function initialize();
 
     /**
-     * Gets the fully qualified class-name from the namespace alias.
-     *
-     * @deprecated This method is deprecated along with short namespace aliases.
-     *
-     * @return string
-     * @psalm-return class-string
-     */
-    abstract protected function getFqcnFromAlias(
-        string $namespaceAlias,
-        string $simpleClassName
-    );
-
-    /**
      * Returns the mapping driver implementation.
      *
      * @return MappingDriver
@@ -178,22 +162,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
             return $this->loadedMetadata[$className];
         }
 
-        // Check for namespace alias
-        if (strpos($className, ':') !== false) {
-            Deprecation::trigger(
-                'doctrine/persistence',
-                'https://github.com/doctrine/persistence/issues/204',
-                'Short namespace aliases such as "%s" are deprecated, use ::class constant instead.',
-                $className
-            );
-
-            [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
-
-            $realClassName = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
-        } else {
-            /** @psalm-var class-string $className */
-            $realClassName = $this->getRealClass($className);
-        }
+        $realClassName = $this->getRealClass($className);
 
         if (isset($this->loadedMetadata[$realClassName])) {
             // We do not have the alias name in the map, include it
@@ -407,27 +376,11 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
     /**
      * {@inheritDoc}
-     *
-     * @psalm-param class-string|string $className
      */
     public function isTransient(string $className)
     {
         if (! $this->initialized) {
             $this->initialize();
-        }
-
-        // Check for namespace alias
-        if (strpos($className, ':') !== false) {
-            Deprecation::trigger(
-                'doctrine/persistence',
-                'https://github.com/doctrine/persistence/issues/204',
-                'Short namespace aliases such as "%s" are deprecated, use ::class constant instead.',
-                $className
-            );
-
-            [$namespaceAlias, $simpleClassName] = explode(':', $className, 2);
-
-            $className = $this->getFqcnFromAlias($namespaceAlias, $simpleClassName);
         }
 
         /** @psalm-var class-string $className */

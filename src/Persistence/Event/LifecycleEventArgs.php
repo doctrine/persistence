@@ -26,18 +26,6 @@ class LifecycleEventArgs extends EventArgs
     }
 
     /**
-     * Retrieves the associated entity.
-     *
-     * @deprecated
-     *
-     * @return object
-     */
-    public function getEntity()
-    {
-        return $this->object;
-    }
-
-    /**
      * Retrieves the associated object.
      *
      * @return object
