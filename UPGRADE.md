@@ -51,6 +51,12 @@ implement types compatible with both 2.x and 3.x.
 Please implement this functionality directly in your application if you want
 ActiveRecord style functionality.
 
+# Upgrade to 2.5
+
+## Deprecated `MappingException::pathRequired()`
+
+`MappingException::pathRequiredForDriver()` should be used instead.
+
 # Upgrade to 2.4
 
 ## Deprecated `AnnotationDriver`
