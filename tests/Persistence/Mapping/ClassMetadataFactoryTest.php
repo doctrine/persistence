@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Persistence\Mapping;
 
-use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
@@ -22,8 +21,6 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
  */
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
-    use VerifyDeprecations;
-
     /**
      * @var TestClassMetadataFactory
      * @psalm-var TestClassMetadataFactory<ClassMetadata<object>>
