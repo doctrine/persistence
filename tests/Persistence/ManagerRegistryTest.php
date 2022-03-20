@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Persistence;
 
 use Closure;
-use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use Doctrine\Persistence\AbstractManagerRegistry;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
@@ -27,8 +26,6 @@ use function call_user_func;
  */
 class ManagerRegistryTest extends DoctrineTestCase
 {
-    use VerifyDeprecations;
-
     /** @var TestManagerRegistry */
     private $mr;
 
