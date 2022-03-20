@@ -19,7 +19,7 @@ interface ConnectionRegistry
     /**
      * Gets the named connection.
      *
-     * @param string $name The connection name (null for the default one).
+     * @param string|null $name The connection name (null for the default one).
      *
      * @return object
      */
