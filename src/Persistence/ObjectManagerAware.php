@@ -17,6 +17,8 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
  * and increase the coupling of database and objects.
  *
  * Every ObjectManager has to implement this functionality itself.
+ *
+ * @deprecated no replacement planned
  */
 interface ObjectManagerAware
 {
