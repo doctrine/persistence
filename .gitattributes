@@ -1,5 +1,7 @@
 /docs export-ignore
 /tests export-ignore
+/tests_php74 export-ignore
+/tests_php81 export-ignore
 /.github export-ignore
 /.doctrine-project.json export-ignore
 /.gitattributes export-ignore
