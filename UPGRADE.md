@@ -8,6 +8,13 @@ awareness about deprecated code.
 
 # Upgrade to 2.5
 
+## Deprecated `ObjectManagerAware`
+
+Along with deprecating `PersistentObject`, deprecating `ObjectManagerAware`
+means deprecating support for active record, which already came with a word of
+warning. Please implement this directly in your application with a `postLoad`
+event if you need active record style functionality.
+
 ## Deprecated `MappingException::pathRequired()`
 
 `MappingException::pathRequiredForDriver()` should be used instead.
