@@ -8,6 +8,11 @@ awareness about deprecated code.
 
 # Upgrade to 3.0
 
+## BC Break: removed `ObjectManagerAware`
+
+Implement active record style functionality directly in your application, by
+using a `postLoad` event.
+
 ## BC Break: removed `AnnotationDriver`
 
 Use `ColocatedMappingDriver` instead.
