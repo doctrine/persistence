@@ -40,7 +40,7 @@ interface ObjectRepository
      * @param string[]|null        $orderBy
      * @param int|null             $limit
      * @param int|null             $offset
-     * @psalm-param array<string, 'asc'|'desc'|'ASC'|'DESC'> $orderBy
+     * @psalm-param array<string, 'asc'|'desc'|'ASC'|'DESC'>|null $orderBy
      *
      * @return object[] The objects.
      * @psalm-return T[]
