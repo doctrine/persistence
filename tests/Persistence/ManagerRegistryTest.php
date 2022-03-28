@@ -9,7 +9,6 @@ use Doctrine\Persistence\AbstractManagerRegistry;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectManagerAware;
 use Doctrine\Persistence\ObjectRepository;
 use Doctrine\Persistence\Proxy;
 use Doctrine\Tests\DoctrineTestCase;
@@ -42,6 +41,9 @@ class ManagerRegistryTest extends DoctrineTestCase
         );
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testGetManagerForClass(): void
     {
         self::assertInstanceOf(
@@ -52,7 +54,7 @@ class ManagerRegistryTest extends DoctrineTestCase
 
     public function testGetManagerForProxyInterface(): void
     {
-        self::assertNull($this->mr->getManagerForClass(ObjectManagerAware::class));
+        self::assertNull($this->mr->getManagerForClass(Proxy::class));
     }
 
     public function testResetManager(): void
@@ -86,7 +88,7 @@ class ManagerRegistryTest extends DoctrineTestCase
             ['default' => 'default_manager', 'other' => 'other_manager'],
             'default',
             'default',
-            ObjectManagerAware::class,
+            Proxy::class,
             $this->getManagerFactory()
         );
 
