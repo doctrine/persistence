@@ -29,13 +29,13 @@
     },
     "require-dev": {
         "composer/package-versions-deprecated": "^1.11",
-        "phpstan/phpstan": "1.4.6",
+        "phpstan/phpstan": "~1.4.10 || 1.5.0",
         "doctrine/annotations": "^1.0",
         "doctrine/coding-standard": "^9.0",
         "doctrine/common": "^3.0",
         "phpunit/phpunit": "^7.5.20 || ^8.5 || ^9.5",
         "symfony/cache": "^4.4 || ^5.4 || ^6.0",
-        "vimeo/psalm": "4.21.0"
+        "vimeo/psalm": "4.22.0"
     },
     "conflict": {
         "doctrine/annotations": "<1.0 || >=2.0",
