@@ -38,9 +38,9 @@ interface ObjectRepository
      * an UnexpectedValueException if certain values of the sorting or limiting details are
      * not supported.
      *
-     * @param array<string, mixed>  $criteria
-     * @param array<string, string> $orderBy
-     * @psalm-param array<string, 'asc'|'desc'|'ASC'|'DESC'> $orderBy
+     * @param array<string, mixed>       $criteria
+     * @param array<string, string>|null $orderBy
+     * @psalm-param array<string, 'asc'|'desc'|'ASC'|'DESC'>|null $orderBy
      *
      * @return array<int, object> The objects.
      * @psalm-return T[]

@@ -41,9 +41,6 @@ class ManagerRegistryTest extends DoctrineTestCase
         );
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
     public function testGetManagerForClass(): void
     {
         self::assertInstanceOf(

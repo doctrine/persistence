@@ -46,26 +46,6 @@ parameters:
 			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
 
 		-
-			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with '\\.php' and mixed will always evaluate to true\\.$#"
-			count: 1
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
-			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with '\\.php1' and mixed will always evaluate to true\\.$#"
-			count: 1
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
-			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'.*'\\} and mixed will always evaluate to true\\.$#"
-			count: 3
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
-			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{\\} and mixed will always evaluate to true\\.$#"
-			count: 1
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Doctrine\\\\\\\\Tests…', 'Doctrine\\\\\\\\Tests\\\\\\\\ORM…', 'Doctrine\\\\\\\\Tests\\\\\\\\ORM…'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
 			path: tests/Persistence/Mapping/DriverChainTest.php
@@ -119,3 +99,4 @@ parameters:
 			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Reflection\\\\TypedFoo\\:\\:\\$id is never read, only written\\.$#"
 			count: 1
 			path: tests_php74/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php
+
