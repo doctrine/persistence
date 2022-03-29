@@ -58,6 +58,13 @@ ActiveRecord style functionality.
 
 # Upgrade to 2.5
 
+## Deprecated `OnClearEventArgs::clearsAllEntities()` and `OnClearEventArgs::getEntityClass()`
+
+These methods only make sense when partially clearing the object manager, which
+is deprecated.
+Passing a second argument to the constructor of `OnClearEventArgs` is
+deprecated as well.
+
 ## Deprecated `ObjectManagerAware`
 
 Along with deprecating `PersistentObject`, deprecating `ObjectManagerAware`
