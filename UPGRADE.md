@@ -8,6 +8,12 @@ awareness about deprecated code.
 
 # Upgrade to 3.0
 
+## Removed `OnClearEventArgs::clearsAllEntities()` and `OnClearEventArgs::getEntityClass()`
+
+These methods only make sense when partially clearing the object manager, which
+is no longer possible.
+The second argument of the constructor of `OnClearEventArgs` is removed as well.
+
 ## BC Break: removed `ObjectManagerAware`
 
 Implement active record style functionality directly in your application, by
