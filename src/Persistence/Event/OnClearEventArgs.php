@@ -10,10 +10,15 @@ use function func_num_args;
 
 /**
  * Provides event arguments for the onClear event.
+ *
+ * @template TObjectManager of ObjectManager
  */
 class OnClearEventArgs extends EventArgs
 {
-    /** @var ObjectManager */
+    /**
+     * @var ObjectManager
+     * @psalm-var TObjectManager
+     */
     private $objectManager;
 
     /** @var string|null */
@@ -22,6 +27,7 @@ class OnClearEventArgs extends EventArgs
     /**
      * @param ObjectManager $objectManager The object manager.
      * @param string|null   $entityClass   The optional entity class.
+     * @psalm-param TObjectManager $objectManager
      */
     public function __construct($objectManager, $entityClass = null)
     {
@@ -42,6 +48,7 @@ class OnClearEventArgs extends EventArgs
      * Retrieves the associated ObjectManager.
      *
      * @return ObjectManager
+     * @psalm-return TObjectManager
      */
     public function getObjectManager()
     {
