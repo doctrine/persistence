@@ -8,10 +8,15 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Lifecycle Events are triggered by the UnitOfWork during lifecycle transitions
  * of entities.
+ *
+ * @template TObjectManager of ObjectManager
  */
 class LifecycleEventArgs extends EventArgs
 {
-    /** @var ObjectManager */
+    /**
+     * @var ObjectManager
+     * @psalm-var TObjectManager
+     */
     private $objectManager;
 
     /** @var object */
@@ -19,6 +24,7 @@ class LifecycleEventArgs extends EventArgs
 
     /**
      * @param object $object
+     * @psalm-param TObjectManager $objectManager
      */
     public function __construct($object, ObjectManager $objectManager)
     {
@@ -52,6 +58,7 @@ class LifecycleEventArgs extends EventArgs
      * Retrieves the associated ObjectManager.
      *
      * @return ObjectManager
+     * @psalm-return TObjectManager
      */
     public function getObjectManager()
     {

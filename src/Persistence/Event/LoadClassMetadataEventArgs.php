@@ -8,20 +8,27 @@ use Doctrine\Persistence\ObjectManager;
 
 /**
  * Class that holds event arguments for a loadMetadata event.
+ *
+ * @template TClassMetadata of ClassMetadata<object>
+ * @template TObjectManager of ObjectManager
  */
 class LoadClassMetadataEventArgs extends EventArgs
 {
     /**
      * @var ClassMetadata
-     * @psalm-var ClassMetadata<object>
+     * @psalm-var TClassMetadata
      */
     private $classMetadata;
 
-    /** @var ObjectManager */
+    /**
+     * @var ObjectManager
+     * @psalm-var TObjectManager
+     */
     private $objectManager;
 
     /**
-     * @psalm-param ClassMetadata<object> $classMetadata
+     * @psalm-param TClassMetadata $classMetadata
+     * @psalm-param TObjectManager $objectManager
      */
     public function __construct(ClassMetadata $classMetadata, ObjectManager $objectManager)
     {
@@ -33,7 +40,7 @@ class LoadClassMetadataEventArgs extends EventArgs
      * Retrieves the associated ClassMetadata.
      *
      * @return ClassMetadata
-     * @psalm-return ClassMetadata<object>
+     * @psalm-return TClassMetadata
      */
     public function getClassMetadata()
     {
@@ -43,7 +50,7 @@ class LoadClassMetadataEventArgs extends EventArgs
     /**
      * Retrieves the associated ObjectManager.
      *
-     * @return ObjectManager
+     * @return TObjectManager
      */
     public function getObjectManager()
     {
