@@ -11,7 +11,7 @@ use function sprintf;
 /**
  * Class that holds event arguments for a preUpdate event.
  *
- * @template TObjectManager of ObjectManager
+ * @template-covariant TObjectManager of ObjectManager
  * @extends LifecycleEventArgs<TObjectManager>
  */
 class PreUpdateEventArgs extends LifecycleEventArgs

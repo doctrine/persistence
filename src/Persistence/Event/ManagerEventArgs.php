@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Provides event arguments for the preFlush event.
  *
- * @template TObjectManager of ObjectManager
+ * @template-covariant TObjectManager of ObjectManager
  */
 class ManagerEventArgs extends EventArgs
 {
