@@ -12,6 +12,9 @@ use function sprintf;
 
 /**
  * Class that holds event arguments for a preUpdate event.
+ *
+ * @template-covariant TObjectManager of ObjectManager
+ * @extends LifecycleEventArgs<TObjectManager>
  */
 class PreUpdateEventArgs extends LifecycleEventArgs
 {
@@ -20,6 +23,7 @@ class PreUpdateEventArgs extends LifecycleEventArgs
 
     /**
      * @param array<string, array<int, mixed>> $changeSet
+     * @psalm-param TObjectManager $objectManager
      */
     public function __construct(object $entity, ObjectManager $objectManager, array &$changeSet)
     {
