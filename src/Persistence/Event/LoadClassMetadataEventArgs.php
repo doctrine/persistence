@@ -9,8 +9,8 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Class that holds event arguments for a loadMetadata event.
  *
- * @template TClassMetadata of ClassMetadata<object>
- * @template TObjectManager of ObjectManager
+ * @template-covariant TClassMetadata of ClassMetadata<object>
+ * @template-covariant TObjectManager of ObjectManager
  */
 class LoadClassMetadataEventArgs extends EventArgs
 {

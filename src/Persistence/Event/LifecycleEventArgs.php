@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
  * Lifecycle Events are triggered by the UnitOfWork during lifecycle transitions
  * of entities.
  *
- * @template TObjectManager of ObjectManager
+ * @template-covariant TObjectManager of ObjectManager
  */
 class LifecycleEventArgs extends EventArgs
 {

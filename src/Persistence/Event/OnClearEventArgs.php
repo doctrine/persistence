@@ -11,7 +11,7 @@ use function func_num_args;
 /**
  * Provides event arguments for the onClear event.
  *
- * @template TObjectManager of ObjectManager
+ * @template-covariant TObjectManager of ObjectManager
  */
 class OnClearEventArgs extends EventArgs
 {
