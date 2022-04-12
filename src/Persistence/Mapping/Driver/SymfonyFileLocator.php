@@ -2,6 +2,7 @@
 
 namespace Doctrine\Persistence\Mapping\Driver;
 
+use Doctrine\Persistence\Mapping\Exception\MappingFileNotFound;
 use Doctrine\Persistence\Mapping\MappingException;
 use InvalidArgumentException;
 use RecursiveDirectoryIterator;
@@ -236,6 +237,9 @@ class SymfonyFileLocator implements FileLocator
             }
         }
 
-        throw MappingException::mappingFileNotFound($className, substr($className, (int) strrpos($className, '\\') + 1) . $this->fileExtension);
+        throw MappingFileNotFound::create(
+            $className,
+            substr($className, (int) strrpos($className, '\\') + 1) . $this->fileExtension
+        );
     }
 }

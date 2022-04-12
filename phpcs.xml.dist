@@ -53,6 +53,7 @@
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix">
         <exclude-pattern>src/Persistence/Mapping/MappingException.php</exclude-pattern>
+        <exclude-pattern>src/Persistence/Mapping/Exception/MappingException.php</exclude-pattern>
     </rule>
 
     <rule ref="Generic.WhiteSpace.ScopeIndent.Incorrect">

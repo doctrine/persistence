@@ -136,7 +136,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
         $this->expectException(MappingException::class);
         $this->expectExceptionMessage(
-            'Class \'Doctrine\Tests\Persistence\Mapping\ChildEntity:Foo\' does not exist'
+            'Class "Doctrine\Tests\Persistence\Mapping\ChildEntity:Foo" does not exist'
         );
 
         $this->cmf->getMetadataFor('prefix:ChildEntity:Foo');

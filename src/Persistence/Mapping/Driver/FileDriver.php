@@ -3,6 +3,7 @@
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\Exception\InvalidMappingFile;
 use Doctrine\Persistence\Mapping\MappingException;
 
 use function array_keys;
@@ -97,7 +98,10 @@ abstract class FileDriver implements MappingDriver
 
         $result = $this->loadMappingFile($this->locator->findMappingFile($className));
         if (! isset($result[$className])) {
-            throw MappingException::invalidMappingFile($className, str_replace('\\', '.', $className) . $this->locator->getFileExtension());
+            throw InvalidMappingFile::create(
+                $className,
+                str_replace('\\', '.', $className) . $this->locator->getFileExtension()
+            );
         }
 
         $this->classCache[$className] = $result[$className];

@@ -2,7 +2,8 @@
 
 namespace Doctrine\Persistence\Mapping\Driver;
 
-use Doctrine\Persistence\Mapping\MappingException;
+use Doctrine\Persistence\Mapping\Exception\InvalidFileMappingDriverPath;
+use Doctrine\Persistence\Mapping\Exception\MappingFileNotFound;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -107,7 +108,7 @@ class DefaultFileLocator implements FileLocator
             }
         }
 
-        throw MappingException::mappingFileNotFound($className, $fileName);
+        throw MappingFileNotFound::create($className, $fileName);
     }
 
     /**
@@ -120,7 +121,7 @@ class DefaultFileLocator implements FileLocator
         if ($this->paths) {
             foreach ($this->paths as $path) {
                 if (! is_dir($path)) {
-                    throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
+                    throw InvalidFileMappingDriverPath::create($path);
                 }
 
                 $iterator = new RecursiveIteratorIterator(

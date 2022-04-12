@@ -3,6 +3,7 @@
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\Exception\PathRequiredForDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -78,7 +79,7 @@ class StaticPHPDriver implements MappingDriver
         }
 
         if (! $this->paths) {
-            throw MappingException::pathRequiredForDriver(static::class);
+            throw PathRequiredForDriver::create(static::class);
         }
 
         $classes       = [];

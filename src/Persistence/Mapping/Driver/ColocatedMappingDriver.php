@@ -2,6 +2,7 @@
 
 namespace Doctrine\Persistence\Mapping\Driver;
 
+use Doctrine\Persistence\Mapping\Exception\PathRequiredForDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
@@ -144,7 +145,7 @@ trait ColocatedMappingDriver
         }
 
         if (! $this->paths) {
-            throw MappingException::pathRequiredForDriver(static::class);
+            throw PathRequiredForDriver::create(static::class);
         }
 
         $classes       = [];

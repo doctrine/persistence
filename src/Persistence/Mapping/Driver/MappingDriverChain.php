@@ -3,7 +3,7 @@
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
-use Doctrine\Persistence\Mapping\MappingException;
+use Doctrine\Persistence\Mapping\Exception\ClassNotFoundInNamespaces;
 
 use function array_keys;
 use function assert;
@@ -88,7 +88,7 @@ class MappingDriverChain implements MappingDriver
             return;
         }
 
-        throw MappingException::classNotFoundInNamespaces($className, array_keys($this->drivers));
+        throw ClassNotFoundInNamespaces::create($className, array_keys($this->drivers));
     }
 
     /**

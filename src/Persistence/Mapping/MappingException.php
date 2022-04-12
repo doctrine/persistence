@@ -9,10 +9,14 @@ use function sprintf;
 
 /**
  * A MappingException indicates that something is wrong with the mapping setup.
+ *
+ * @deprecated use Doctrine\Persistence\Mapping\Exception\MappingException for catch and instanceof
  */
 class MappingException extends Exception
 {
     /**
+     * @deprecated use ClassNotFoundInNamespaces
+     *
      * @param string   $className
      * @param string[] $namespaces
      *
@@ -39,6 +43,8 @@ class MappingException extends Exception
     }
 
     /**
+     * @deprecated Use PathRequiredForDriver instead
+     *
      * @param class-string $driverClassName
      */
     public static function pathRequiredForDriver(string $driverClassName): self
@@ -50,6 +56,8 @@ class MappingException extends Exception
     }
 
     /**
+     * @deprecated use InvalidFileMappingDriverPath instead
+     *
      * @param string|null $path
      *
      * @return self
@@ -68,6 +76,8 @@ class MappingException extends Exception
     }
 
     /**
+     * @deprecated use MappingFileNotFound instead
+     *
      * @param string $entityName
      * @param string $fileName
      *
@@ -83,6 +93,8 @@ class MappingException extends Exception
     }
 
     /**
+     * @deprecated use InvalidMappingFile instead
+     *
      * @param string $entityName
      * @param string $fileName
      *
@@ -98,6 +110,8 @@ class MappingException extends Exception
     }
 
     /**
+     * @deprecated use NonExistingClass instead
+     *
      * @param string $className
      *
      * @return self

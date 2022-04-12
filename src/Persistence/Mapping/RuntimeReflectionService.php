@@ -2,6 +2,7 @@
 
 namespace Doctrine\Persistence\Mapping;
 
+use Doctrine\Persistence\Mapping\Exception\NonExistingClass;
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
 use Doctrine\Persistence\Reflection\TypedNoDefaultRuntimePublicReflectionProperty;
@@ -36,7 +37,7 @@ class RuntimeReflectionService implements ReflectionService
     public function getParentClasses($class)
     {
         if (! class_exists($class)) {
-            throw MappingException::nonExistingClass($class);
+            throw NonExistingClass::create($class);
         }
 
         $parents = class_parents($class);

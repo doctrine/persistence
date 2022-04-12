@@ -55,7 +55,7 @@ class DefaultFileLocatorTest extends DoctrineTestCase
         $locator = new DefaultFileLocator([$path], '.yml');
 
         $this->expectException(MappingException::class);
-        $this->expectExceptionMessage("No mapping file found named 'stdClass2.yml' for class 'stdClass2'");
+        $this->expectExceptionMessage('No mapping file found named "stdClass2.yml" for class "stdClass2"');
         $locator->findMappingFile('stdClass2');
     }
 

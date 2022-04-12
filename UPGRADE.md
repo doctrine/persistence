@@ -8,6 +8,14 @@ awareness about deprecated code.
 
 # Upgrade to 2.5
 
+## Deprecated `MappingException`
+
+Referring to `Doctrine\Persistence\Mapping\MappingException` with `catch` or
+`instanceof` is deprecated in favor of
+`Doctrine\Persistence\Mapping\Exception\MappingException`.
+
+All methods inside this class are deprecated in favor of standalone exceptions.
+
 ## Deprecated `OnClearEventArgs::clearsAllEntities()` and `OnClearEventArgs::getEntityClass()`
 
 These methods only make sense when partially clearing the object manager, which
