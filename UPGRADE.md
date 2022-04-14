@@ -23,6 +23,10 @@ using a `postLoad` event.
 
 Use `ColocatedMappingDriver` instead.
 
+## BC Break: Removed `MappingException::pathRequired()`
+
+Use `MappingException::pathRequiredForDriver()` instead.
+
 ## BC Break: removed `LifecycleEventArgs::getEntity()`
 
 Use `LifecycleEventArgs::getObject()` instead.
