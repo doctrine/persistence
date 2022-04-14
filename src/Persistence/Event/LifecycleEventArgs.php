@@ -3,6 +3,7 @@
 namespace Doctrine\Persistence\Event;
 
 use Doctrine\Common\EventArgs;
+use Doctrine\Deprecations\Deprecation;
 use Doctrine\Persistence\ObjectManager;
 
 /**
@@ -41,6 +42,13 @@ class LifecycleEventArgs extends EventArgs
      */
     public function getEntity()
     {
+        Deprecation::trigger(
+            'doctrine/persistence',
+            'https://github.com/doctrine/common/pull/222',
+            '%s is deprecated and will be removed in 3.0, use getObject() instead',
+            __METHOD__
+        );
+
         return $this->object;
     }
 
