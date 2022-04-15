@@ -134,6 +134,7 @@ interface ClassMetadata
      *
      * Has to return an empty array if no identifier isset.
      *
+     * @psalm-param T $object
      * @return array<string, mixed>
      */
     public function getIdentifierValues(object $object);
