@@ -7,18 +7,19 @@
         {
             "name": "3.0",
             "branchName": "3.0.x",
-            "slug": "latest",
-            "upcoming": true
+            "slug": "3.0",
+            "current": true,
+            "aliases": [
+                "latest",
+                "current",
+                "stable"
+            ]
         },
         {
             "name": "2.5",
             "branchName": "2.5.x",
             "slug": "2.5",
-            "current": true,
-            "aliases": [
-                "current",
-                "stable"
-            ]
+            "maintained": true
         },
         {
             "name": "2.4",
