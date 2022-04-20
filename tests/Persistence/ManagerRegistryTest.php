@@ -79,7 +79,7 @@ class ManagerRegistryTest extends DoctrineTestCase
         $this->mr->getManagerForClass('prefix:TestObject');
     }
 
-    public function testGetManagerForInvalidAliasedClasj(): void
+    public function testGetManagerForInvalidAliasedClass(): void
     {
         $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/issues/204');
 
