@@ -6,6 +6,7 @@ use Doctrine\Deprecations\Deprecation;
 use InvalidArgumentException;
 use ReflectionClass;
 
+use function class_exists;
 use function explode;
 use function sprintf;
 use function strpos;
@@ -163,12 +164,16 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      */
     public function getManagerForClass($class)
     {
+        if (class_exists($class, false) && (new ReflectionClass($class))->isAnonymous()) {
+            return null;
+        }
+
         $className = $this->getRealClassName($class);
 
-        $proxyClass = new ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
 
-        if ($proxyClass->implementsInterface($this->proxyInterfaceName)) {
-            $parentClass = $proxyClass->getParentClass();
+        if ($reflection->implementsInterface($this->proxyInterfaceName)) {
+            $parentClass = $reflection->getParentClass();
 
             if (! $parentClass) {
                 return null;

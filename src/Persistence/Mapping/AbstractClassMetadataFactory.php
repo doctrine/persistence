@@ -9,6 +9,7 @@ use Doctrine\Deprecations\Deprecation;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Proxy;
 use Psr\Cache\CacheItemPoolInterface;
+use ReflectionClass;
 use ReflectionException;
 
 use function array_combine;
@@ -17,6 +18,7 @@ use function array_map;
 use function array_reverse;
 use function array_unshift;
 use function assert;
+use function class_exists;
 use function explode;
 use function is_array;
 use function str_replace;
@@ -222,6 +224,10 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     {
         if (isset($this->loadedMetadata[$className])) {
             return $this->loadedMetadata[$className];
+        }
+
+        if (class_exists($className, false) && (new ReflectionClass($className))->isAnonymous()) {
+            throw MappingException::classIsAnonymous($className);
         }
 
         // Check for namespace alias
@@ -462,7 +468,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         }
 
         // Check for namespace alias
-        if (strpos($className, ':') !== false) {
+        if (! class_exists($className, false) && strpos($className, ':') !== false) {
             Deprecation::trigger(
                 'doctrine/persistence',
                 'https://github.com/doctrine/persistence/issues/204',
