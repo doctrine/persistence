@@ -17,6 +17,7 @@ use ReflectionException;
 
 use function assert;
 use function call_user_func;
+use function get_class;
 
 use const PHP_VERSION_ID;
 
@@ -91,6 +92,12 @@ class ManagerRegistryTest extends DoctrineTestCase
         );
 
         $this->mr->getManagerForClass('prefix:TestObject:Foo');
+    }
+
+    public function testGetManagerForAnonymousClass(): void
+    {
+        self::assertNull($this->mr->getManagerForClass(get_class(new class {
+        })));
     }
 
     public function testResetManager(): void

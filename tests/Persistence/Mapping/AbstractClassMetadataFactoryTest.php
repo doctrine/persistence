@@ -8,7 +8,10 @@ use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
+use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
+
+use function get_class;
 
 final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
 {
@@ -57,6 +60,25 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
             ->willReturnOnConsecutiveCalls(false, true);
 
         $cmf->getMetadataFor(SomeEntity::class);
+    }
+
+    public function testItThrowsWhenAttemptingToGetMetadataForAnonymousClass(): void
+    {
+        $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
+        $this->expectException(MappingException::class);
+        $cmf->getMetadataFor(get_class(new class {
+        }));
+    }
+
+    public function testAnonymousClassIsNotMistakenForShortAlias(): void
+    {
+        $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
+        $cmf->method('getDriver')->willReturn($this->createMock(MappingDriver::class));
+        $this->expectNoDeprecationWithIdentifier(
+            'https://github.com/doctrine/persistence/issues/204'
+        );
+        $cmf->isTransient(get_class(new class () {
+        }));
     }
 }
 
