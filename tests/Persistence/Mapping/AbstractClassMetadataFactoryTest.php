@@ -72,13 +72,17 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
 
     public function testAnonymousClassIsNotMistakenForShortAlias(): void
     {
+        $driverMock = $this->createMock(MappingDriver::class);
+        $driverMock->expects(self::once())->method('isTransient')->willReturn(false);
         $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
-        $cmf->method('getDriver')->willReturn($this->createMock(MappingDriver::class));
+        $cmf->method('getDriver')->willReturn($driverMock);
+
         $this->expectNoDeprecationWithIdentifier(
             'https://github.com/doctrine/persistence/issues/204'
         );
-        $cmf->isTransient(get_class(new class () {
-        }));
+
+        self::assertFalse($cmf->isTransient(get_class(new class () {
+        })));
     }
 }
 
