@@ -17,6 +17,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 use function assert;
 use function call_user_func;
+use function get_class;
 
 /**
  * @uses Doctrine\Tests\Persistence\TestObject
@@ -52,6 +53,12 @@ class ManagerRegistryTest extends DoctrineTestCase
     public function testGetManagerForProxyInterface(): void
     {
         self::assertNull($this->mr->getManagerForClass(Proxy::class));
+    }
+
+    public function testGetManagerForAnonymousClass(): void
+    {
+        self::assertNull($this->mr->getManagerForClass(get_class(new class {
+        })));
     }
 
     public function testResetManager(): void

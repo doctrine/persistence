@@ -7,7 +7,10 @@ namespace Doctrine\Tests\Persistence\Mapping;
 use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
+use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
+
+use function get_class;
 
 final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
 {
@@ -34,6 +37,25 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
             ->willReturnOnConsecutiveCalls(false, true);
 
         $cmf->getMetadataFor(SomeEntity::class);
+    }
+
+    public function testItThrowsWhenAttemptingToGetMetadataForAnonymousClass(): void
+    {
+        $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
+        $this->expectException(MappingException::class);
+        $cmf->getMetadataFor(get_class(new class {
+        }));
+    }
+
+    public function testAnonymousClassIsNotMistakenForShortAlias(): void
+    {
+        $driverMock = $this->createMock(MappingDriver::class);
+        $driverMock->expects(self::once())->method('isTransient')->willReturn(false);
+        $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
+        $cmf->method('getDriver')->willReturn($driverMock);
+
+        self::assertFalse($cmf->isTransient(get_class(new class () {
+        })));
     }
 }
 

@@ -7,6 +7,7 @@ namespace Doctrine\Persistence\Mapping;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Proxy;
 use Psr\Cache\CacheItemPoolInterface;
+use ReflectionClass;
 use ReflectionException;
 
 use function array_combine;
@@ -15,6 +16,7 @@ use function array_map;
 use function array_reverse;
 use function array_unshift;
 use function assert;
+use function class_exists;
 use function str_replace;
 use function strrpos;
 use function substr;
@@ -160,6 +162,10 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     {
         if (isset($this->loadedMetadata[$className])) {
             return $this->loadedMetadata[$className];
+        }
+
+        if (class_exists($className, false) && (new ReflectionClass($className))->isAnonymous()) {
+            throw MappingException::classIsAnonymous($className);
         }
 
         $realClassName = $this->getRealClass($className);
