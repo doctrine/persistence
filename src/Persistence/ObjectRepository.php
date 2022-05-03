@@ -7,7 +7,7 @@ use UnexpectedValueException;
 /**
  * Contract for a Doctrine persistence layer ObjectRepository class to implement.
  *
- * @template T of object
+ * @template-covariant T of object
  */
 interface ObjectRepository
 {
