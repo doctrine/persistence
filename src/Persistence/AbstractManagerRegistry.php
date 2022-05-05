@@ -180,7 +180,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
                 return null;
             }
 
-            $className = $parentClass->getName();
+            $class = $parentClass->getName();
         }
 
         foreach ($this->managers as $id) {
