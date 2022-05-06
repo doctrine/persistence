@@ -50,6 +50,14 @@ class ManagerRegistryTest extends DoctrineTestCase
         );
     }
 
+    public function testGetManagerForProxiedClass(): void
+    {
+        self::assertInstanceOf(
+            ObjectManager::class,
+            $this->mr->getManagerForClass(TestObjectProxy::class)
+        );
+    }
+
     public function testGetManagerForProxyInterface(): void
     {
         self::assertNull($this->mr->getManagerForClass(Proxy::class));
