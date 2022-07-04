@@ -154,6 +154,24 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     abstract protected function isEntity(ClassMetadata $class);
 
     /**
+     * Removes the prepended backslash of a class string to conform with how php outputs class names
+     *
+     * @psalm-param string $className
+     *
+     * @psalm-return class-string
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     */
+    private function normalizeClassName(string $className): string
+    {
+        /**
+         * @phpstan-ignore-next-line
+         * @psalm-suppress LessSpecificReturnStatement
+         */
+        return ltrim($className, '\\');
+    }
+    
+    /**
      * {@inheritDoc}
      *
      * @throws ReflectionException
@@ -161,6 +179,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function getMetadataFor(string $className)
     {
+        $className = $this->normalizeClassName($className);
+        
         if (isset($this->loadedMetadata[$className])) {
             return $this->loadedMetadata[$className];
         }
@@ -232,6 +252,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function hasMetadataFor(string $className)
     {
+        $className = $this->normalizeClassName($className);
         return isset($this->loadedMetadata[$className]);
     }
 
@@ -246,6 +267,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function setMetadataFor(string $className, ClassMetadata $class)
     {
+        $className = $this->normalizeClassName($className);
         $this->loadedMetadata[$className] = $class;
     }
 
