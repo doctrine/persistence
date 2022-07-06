@@ -10,6 +10,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use ReflectionClass;
 use ReflectionException;
 
+use function ltrim;
 use function array_combine;
 use function array_keys;
 use function array_map;
@@ -167,7 +168,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
          */
         return ltrim($className, '\\');
     }
-    
+
     /**
      * {@inheritDoc}
      *
@@ -177,7 +178,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     public function getMetadataFor(string $className)
     {
         $className = $this->normalizeClassName($className);
-        
+
         if (isset($this->loadedMetadata[$className])) {
             return $this->loadedMetadata[$className];
         }
@@ -250,6 +251,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     public function hasMetadataFor(string $className)
     {
         $className = $this->normalizeClassName($className);
+
         return isset($this->loadedMetadata[$className]);
     }
 
@@ -265,8 +267,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function setMetadataFor(string $className, ClassMetadata $class)
     {
-        $className = $this->normalizeClassName($className);
-        $this->loadedMetadata[$className] = $class;
+        $this->loadedMetadata[$this->normalizeClassName($className)] = $class;
     }
 
     /**

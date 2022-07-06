@@ -92,7 +92,7 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
         /**
          * @psalm-suppress ArgumentTypeCoercion
          */
-        self::assertSame($cmf->getMetadataFor(SomeOtherEntity::class), $cmf->getMetadataFor('\\'.SomeOtherEntity::class));
+        self::assertSame($cmf->getMetadataFor(SomeOtherEntity::class), $cmf->getMetadataFor('\\' . SomeOtherEntity::class));
     }
 }
 
@@ -111,4 +111,3 @@ final class SomeEntity extends SomeParentEntity
 final class SomeOtherEntity
 {
 }
-
