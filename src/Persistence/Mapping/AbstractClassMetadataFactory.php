@@ -156,7 +156,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * Removes the prepended backslash of a class string to conform with how php outputs class names
      *
-     * @psalm-param string $className
+     * @psalm-param class-string $className
      *
      * @psalm-return class-string
      *
@@ -261,6 +261,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      *
      * NOTE: This is only useful in very special cases, like when generating proxy classes.
      *
+     * @psalm-param class-string $className
      * @psalm-param CMTemplate $class
      *
      * @return void
