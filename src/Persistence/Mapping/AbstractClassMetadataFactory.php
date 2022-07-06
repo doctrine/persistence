@@ -159,14 +159,11 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @psalm-param class-string $className
      *
      * @psalm-return class-string
-     *
-     * @psalm-suppress MoreSpecificReturnType
      */
     private function normalizeClassName(string $className): string
     {
         /**
          * @phpstan-ignore-next-line
-         * @psalm-suppress LessSpecificReturnStatement
          */
         return ltrim($className, '\\');
     }
