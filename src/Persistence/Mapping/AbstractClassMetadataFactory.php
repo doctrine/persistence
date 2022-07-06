@@ -10,7 +10,6 @@ use Psr\Cache\CacheItemPoolInterface;
 use ReflectionClass;
 use ReflectionException;
 
-use function ltrim;
 use function array_combine;
 use function array_keys;
 use function array_map;
@@ -18,6 +17,7 @@ use function array_reverse;
 use function array_unshift;
 use function assert;
 use function class_exists;
+use function ltrim;
 use function str_replace;
 use function strpos;
 use function strrpos;
