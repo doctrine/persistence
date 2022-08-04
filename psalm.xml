@@ -57,4 +57,7 @@
             </errorLevel>
         </ArgumentTypeCoercion>
     </issueHandlers>
+    <stubs>
+        <file name="psalm.phpstub" />
+    </stubs>
 </psalm>
