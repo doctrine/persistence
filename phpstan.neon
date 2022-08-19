@@ -18,8 +18,6 @@ parameters:
 
     ignoreErrors:
         - '#Variable property access on \$this\(Doctrine\\Persistence\\Reflection\\TypedNoDefaultReflectionProperty\)\.#'
-        - '#Variable property access on Doctrine\\Common\\Proxy\\Proxy\.#'
-        - '#Variable property access on object.#'
         -
             message: '#Parameter \#1 \$class of method Doctrine\\Persistence\\Mapping\\RuntimeReflectionService\:\:getParentClasses\(\) expects class\-string, string given\.#'
             path: 'tests/Persistence/Mapping/RuntimeReflectionServiceTest.php'
