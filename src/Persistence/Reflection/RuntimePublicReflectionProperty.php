@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Reflection;
 
-use Doctrine\Common\Proxy\Proxy;
+use Doctrine\Persistence\Proxy;
+use InvalidArgumentException;
 use ReflectionProperty;
 use ReturnTypeWillChange;
+
+use function method_exists;
+use function sprintf;
 
 /**
  * PHP Runtime Reflection Public Property - special overrides for public properties.
@@ -31,7 +35,7 @@ class RuntimePublicReflectionProperty extends ReflectionProperty
      * {@inheritDoc}
      *
      * Avoids triggering lazy loading via `__set` if the provided object
-     * is a {@see \Doctrine\Common\Proxy\Proxy}.
+     * is a {@see \Doctrine\Persistence\Proxy}.
      *
      * @link https://bugs.php.net/bug.php?id=63463
      *
@@ -47,6 +51,13 @@ class RuntimePublicReflectionProperty extends ReflectionProperty
             parent::setValue($object, $value);
 
             return;
+        }
+
+        if (! method_exists($object, '__getInitializer') || ! method_exists($object, '__setInitializer')) {
+            throw new InvalidArgumentException(sprintf(
+                'The proxy class must have all methods documented with @method on %s.',
+                Proxy::class
+            ));
         }
 
         $originalInitializer = $object->__getInitializer();

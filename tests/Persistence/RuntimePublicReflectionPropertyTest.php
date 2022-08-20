@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Persistence;
 
 use Closure;
-use Doctrine\Common\Proxy\Proxy;
+use Doctrine\Persistence\Proxy;
 use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
+use InvalidArgumentException;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 
@@ -106,6 +107,37 @@ class RuntimePublicReflectionPropertyTest extends TestCase
         $reflProperty->setValue($mockProxy, 'againNewValue');
         self::assertSame('againNewValue', $mockProxy->checkedProperty);
     }
+
+    public function testItThrowsWhenSomeMethodsAreMissingFromAProxy(): void
+    {
+        $object = new MyProxy();
+
+        $reflProperty = new RuntimePublicReflectionProperty(
+            MyProxy::class,
+            'test'
+        );
+
+        $this->expectException(InvalidArgumentException::class);
+        $reflProperty->setValue($object, null);
+    }
+}
+
+/**
+ * @template-implements Proxy<object>
+ */
+class MyProxy implements Proxy
+{
+    /** @var string */
+    public $test = 'test';
+
+    public function __load(): void
+    {
+    }
+
+    public function __isInitialized(): bool
+    {
+        return false;
+    }
 }
 
 /**
@@ -124,30 +156,22 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
     /** @var string */
     public $checkedProperty = 'testValue';
 
-    /**
-     * {@inheritDoc}
-     */
-    public function __getInitializer()
+    public function __getInitializer(): ?Closure
     {
         return $this->initializer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function __setInitializer(?Closure $initializer = null)
+    public function __setInitializer(?Closure $initializer = null): void
     {
         $this->initializer = $initializer;
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return mixed[] Keys are the property names, and values are the default
      *                 values for those properties.
      * @phpstan-return array<string, mixed>
      */
-    public function __getLazyProperties()
+    public function __getLazyProperties(): array
     {
         return [];
     }
@@ -161,10 +185,7 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
         return $this->initialized;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function __setInitialized($initialized)
+    public function __setInitialized(bool $initialized): void
     {
         $this->initialized = $initialized;
     }
@@ -206,17 +227,11 @@ class RuntimePublicReflectionPropertyTestProxyMock implements Proxy
         return isset($this->checkedProperty);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function __setCloner(?Closure $cloner = null)
+    public function __setCloner(?Closure $cloner = null): void
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function __getCloner()
+    public function __getCloner(): ?Closure
     {
         throw new LogicException('Not implemented');
     }

@@ -11,6 +11,16 @@ parameters:
 			path: src/Persistence/Reflection/EnumReflectionProperty.php
 
 		-
+			message: "#^Call to function method_exists\\(\\) with Doctrine\\\\Persistence\\\\Proxy and '__getInitializer' will always evaluate to true\\.$#"
+			count: 1
+			path: src/Persistence/Reflection/RuntimePublicReflectionProperty.php
+
+		-
+			message: "#^Call to function method_exists\\(\\) with Doctrine\\\\Persistence\\\\Proxy and '__setInitializer' will always evaluate to true\\.$#"
+			count: 1
+			path: src/Persistence/Reflection/RuntimePublicReflectionProperty.php
+
+		-
 			message: "#^Variable property access on \\$this\\(Doctrine\\\\Persistence\\\\Reflection\\\\TypedNoDefaultRuntimePublicReflectionProperty\\)\\.$#"
 			count: 1
 			path: src/Persistence/Reflection/TypedNoDefaultRuntimePublicReflectionProperty.php
