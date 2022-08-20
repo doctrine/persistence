@@ -6,6 +6,14 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 3.1
+
+## Deprecated partial implementation of `Doctrine\Persistence\Proxy`
+
+Classes implementing `Doctrine\Persistence\Proxy` should implement all the
+methods described with the standard `@method` phpdoc annotations that were
+added to it. These methods will be added to the interface in 4.0.
+
 # Upgrade to 3.0
 
 ## Removed `OnClearEventArgs::clearsAllEntities()` and `OnClearEventArgs::getEntityClass()`
