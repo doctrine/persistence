@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
-use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
+use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
-use Doctrine\Persistence\Reflection\TypedNoDefaultRuntimePublicReflectionProperty;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
-use ReflectionProperty;
 
 use function array_key_exists;
 use function assert;
@@ -86,16 +84,10 @@ class RuntimeReflectionService implements ReflectionService
      */
     public function getAccessibleProperty(string $class, string $property)
     {
-        $reflectionProperty = new ReflectionProperty($class, $property);
+        $reflectionProperty = new RuntimeReflectionProperty($class, $property);
 
         if ($this->supportsTypedPropertiesWorkaround && ! array_key_exists($property, $this->getClass($class)->getDefaultProperties())) {
-            if ($reflectionProperty->isPublic()) {
-                $reflectionProperty = new TypedNoDefaultRuntimePublicReflectionProperty($class, $property);
-            } else {
-                $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
-            }
-        } elseif ($reflectionProperty->isPublic()) {
-            $reflectionProperty = new RuntimePublicReflectionProperty($class, $property);
+            $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
         }
 
         $reflectionProperty->setAccessible(true);

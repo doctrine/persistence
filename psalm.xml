@@ -27,6 +27,7 @@
         </TypeDoesNotContainType>
         <NullArgument>
             <errorLevel type="suppress">
+                <file name="src/Persistence/Reflection/RuntimeReflectionProperty.php"/>
                 <file name="tests/Persistence/Mapping/SymfonyFileLocatorTest.php"/>
             </errorLevel>
         </NullArgument>
