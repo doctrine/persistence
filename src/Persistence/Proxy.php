@@ -8,6 +8,7 @@ namespace Doctrine\Persistence;
  * Interface for proxy classes.
  *
  * @template T of object
+ * @method void __setInitialized(bool $initialized) Implementing this method will be mandatory in version 4.
  */
 interface Proxy
 {

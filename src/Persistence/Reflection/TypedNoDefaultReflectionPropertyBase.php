@@ -11,6 +11,8 @@ use function assert;
 
 /**
  * PHP Typed No Default Reflection Property Base - special override for typed properties without a default value.
+ *
+ * @internal since version 3.1
  */
 trait TypedNoDefaultReflectionPropertyBase
 {

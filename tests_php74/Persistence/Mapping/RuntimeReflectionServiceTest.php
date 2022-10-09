@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Doctrine\Tests_PHP74\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\RuntimeReflectionService;
-use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
+use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
-use Doctrine\Persistence\Reflection\TypedNoDefaultRuntimePublicReflectionProperty;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -54,8 +53,8 @@ class RuntimeReflectionServiceTest extends TestCase
     public function testGetTypedPublicNoDefaultPropertyWorksWithGetValue(): void
     {
         $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'typedNoDefaultPublicProperty');
-        self::assertInstanceOf(RuntimePublicReflectionProperty::class, $reflProp);
-        self::assertInstanceOf(TypedNoDefaultRuntimePublicReflectionProperty::class, $reflProp);
+        self::assertInstanceOf(RuntimeReflectionProperty::class, $reflProp);
+        self::assertInstanceOf(TypedNoDefaultReflectionProperty::class, $reflProp);
         self::assertNull($reflProp->getValue($this));
     }
 
@@ -82,6 +81,6 @@ class RuntimeReflectionServiceTest extends TestCase
     public function testGetNonTypedPublicDefaultPropertyWorksWithGetValue(): void
     {
         $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'nonTypedDefaultPublicProperty');
-        self::assertInstanceOf(RuntimePublicReflectionProperty::class, $reflProp);
+        self::assertInstanceOf(RuntimeReflectionProperty::class, $reflProp);
     }
 }

@@ -6,7 +6,7 @@ namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Persistence\Mapping\RuntimeReflectionService;
-use Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty;
+use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -63,6 +63,6 @@ class RuntimeReflectionServiceTest extends TestCase
         self::assertInstanceOf(RuntimeReflectionService::class, $reflProp->getValue($this));
 
         $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'unusedPublicProperty');
-        self::assertInstanceOf(RuntimePublicReflectionProperty::class, $reflProp);
+        self::assertInstanceOf(RuntimeReflectionProperty::class, $reflProp);
     }
 }

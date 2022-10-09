@@ -10,6 +10,8 @@ use ReturnTypeWillChange;
 
 /**
  * PHP Runtime Reflection Public Property - special overrides for public properties.
+ *
+ * @deprecated since version 3.1, use RuntimeReflectionProperty instead.
  */
 class RuntimePublicReflectionProperty extends ReflectionProperty
 {
