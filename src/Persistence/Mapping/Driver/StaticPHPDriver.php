@@ -37,9 +37,7 @@ class StaticPHPDriver implements MappingDriver
      */
     private $classNames;
 
-    /**
-     * @param string[]|string $paths
-     */
+    /** @param string[]|string $paths */
     public function __construct($paths)
     {
         $this->addPaths((array) $paths);

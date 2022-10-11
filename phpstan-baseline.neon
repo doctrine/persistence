@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Doctrine\\\\Persistence\\\\AbstractManagerRegistry\\:\\:getRealClassName\\(\\) should return class\\-string but returns string\\.$#"
-			count: 1
-			path: src/Persistence/AbstractManagerRegistry.php
-
-		-
 			message: "#^Call to an undefined static method T of object\\:\\:loadMetadata\\(\\)\\.$#"
 			count: 1
 			path: src/Persistence/Mapping/Driver/StaticPHPDriver.php
@@ -24,11 +19,6 @@ parameters:
 			message: "#^Parameter \\#3 \\$nsSeparator of class Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\SymfonyFileLocator constructor expects string, null given\\.$#"
 			count: 1
 			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
-
-		-
-			message: "#^Method Doctrine\\\\Tests\\\\Persistence\\\\Mapping\\\\TestClassMetadataFactory\\:\\:getFqcnFromAlias\\(\\) should return class\\-string but returns string\\.$#"
-			count: 1
-			path: tests/Persistence/Mapping/TestClassMetadataFactory.php
 
 		-
 			message: "#^Call to an undefined method Doctrine\\\\Tests\\\\Persistence\\\\TestObject\\:\\:addAsdf\\(\\)\\.$#"

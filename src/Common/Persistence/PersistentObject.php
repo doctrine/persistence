@@ -67,9 +67,7 @@ abstract class PersistentObject implements ObjectManagerAware
         self::$objectManager = $objectManager;
     }
 
-    /**
-     * @return ObjectManager|null
-     */
+    /** @return ObjectManager|null */
     public static function getObjectManager()
     {
         return self::$objectManager;
