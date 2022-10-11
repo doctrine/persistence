@@ -244,9 +244,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $this->getManager($name);
     }
 
-    /**
-     * @psalm-param class-string $persistentObjectName
-     */
+    /** @psalm-param class-string $persistentObjectName */
     private function selectManager(string $persistentObjectName, ?string $persistentManagerName = null): ObjectManager
     {
         if ($persistentManagerName !== null) {
@@ -256,9 +254,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $this->getManagerForClass($persistentObjectName) ?? $this->getManager();
     }
 
-    /**
-     * @psalm-return class-string
-     */
+    /** @psalm-return class-string */
     private function getRealClassName(string $classNameOrAlias): string
     {
         // Check for namespace alias

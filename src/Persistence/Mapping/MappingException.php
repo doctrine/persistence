@@ -38,9 +38,7 @@ class MappingException extends Exception
             'in the AnnotationDriver to retrieve all class names.');
     }
 
-    /**
-     * @param class-string $driverClassName
-     */
+    /** @param class-string $driverClassName */
     public static function pathRequiredForDriver(string $driverClassName): self
     {
         return new self(sprintf(
@@ -107,9 +105,7 @@ class MappingException extends Exception
         return new self(sprintf("Class '%s' does not exist", $className));
     }
 
-    /**
-     * @param class-string $className
-     */
+    /** @param class-string $className */
     public static function classIsAnonymous(string $className): self
     {
         return new self(sprintf('Class "%s" is anonymous', $className));
