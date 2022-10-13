@@ -20,9 +20,7 @@ final class TestClassMetadata implements ClassMetadata
      */
     private $className;
 
-    /**
-     * @psalm-param class-string<T> $className
-     */
+    /** @psalm-param class-string<T> $className */
     public function __construct(string $className)
     {
         $this->className = $className;

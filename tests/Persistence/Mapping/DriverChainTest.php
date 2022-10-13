@@ -80,9 +80,7 @@ class DriverChainTest extends DoctrineTestCase
         ], $chain->getAllClassNames());
     }
 
-    /**
-     * @group DDC-706
-     */
+    /** @group DDC-706 */
     public function testIsTransient(): void
     {
         $driver1 = $this->createMock(MappingDriver::class);
@@ -92,9 +90,7 @@ class DriverChainTest extends DoctrineTestCase
         self::assertTrue($chain->isTransient(stdClass::class), 'stdClass isTransient');
     }
 
-    /**
-     * @group DDC-1412
-     */
+    /** @group DDC-1412 */
     public function testDefaultDriver(): void
     {
         $companyDriver    = $this->createMock(MappingDriver::class);

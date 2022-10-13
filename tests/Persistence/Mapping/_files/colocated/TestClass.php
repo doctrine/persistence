@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Doctrine;
 
-/**
- * @Doctrine\Entity
- */
+/** @Doctrine\Entity */
 class TestClass
 {
 }
 
-/**
- * @Annotation
- */
+/** @Annotation */
 class Entity
 {
 }

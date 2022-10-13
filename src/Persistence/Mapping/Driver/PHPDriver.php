@@ -18,9 +18,7 @@ class PHPDriver extends FileDriver
      */
     protected $metadata;
 
-    /**
-     * @param string|array<int, string>|FileLocator $locator
-     */
+    /** @param string|array<int, string>|FileLocator $locator */
     public function __construct($locator)
     {
         parent::__construct($locator, '.php');
