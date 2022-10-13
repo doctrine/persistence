@@ -10,9 +10,7 @@ use stdClass;
 
 use function count;
 
-/**
- * @group DCOM-93
- */
+/** @group DCOM-93 */
 class StaticReflectionServiceTest extends TestCase
 {
     /** @var StaticReflectionService */

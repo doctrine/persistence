@@ -6,9 +6,7 @@ namespace Doctrine\Tests\Persistence;
 
 use Doctrine\Persistence\Proxy;
 
-/**
- * @implements Proxy<TestObject>
- */
+/** @implements Proxy<TestObject> */
 class TestObjectProxy extends TestObject implements Proxy
 {
     public function __load(): void

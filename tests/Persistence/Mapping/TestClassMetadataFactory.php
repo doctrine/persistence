@@ -27,9 +27,7 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     /** @var callable|null */
     public $fallbackCallback;
 
-    /**
-     * @psalm-param CMTemplate $metadata
-     */
+    /** @psalm-param CMTemplate $metadata */
     public function __construct(MappingDriver $driver, ClassMetadata $metadata)
     {
         $this->driver   = $driver;

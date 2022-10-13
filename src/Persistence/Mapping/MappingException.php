@@ -30,9 +30,7 @@ class MappingException extends Exception
         ));
     }
 
-    /**
-     * @param class-string $driverClassName
-     */
+    /** @param class-string $driverClassName */
     public static function pathRequiredForDriver(string $driverClassName): self
     {
         return new self(sprintf(
@@ -41,9 +39,7 @@ class MappingException extends Exception
         ));
     }
 
-    /**
-     * @return self
-     */
+    /** @return self */
     public static function fileMappingDriversRequireConfiguredDirectoryPath(
         ?string $path = null
     ) {
@@ -58,9 +54,7 @@ class MappingException extends Exception
         ));
     }
 
-    /**
-     * @return self
-     */
+    /** @return self */
     public static function mappingFileNotFound(string $entityName, string $fileName)
     {
         return new self(sprintf(
@@ -70,9 +64,7 @@ class MappingException extends Exception
         ));
     }
 
-    /**
-     * @return self
-     */
+    /** @return self */
     public static function invalidMappingFile(string $entityName, string $fileName)
     {
         return new self(sprintf(
@@ -82,17 +74,13 @@ class MappingException extends Exception
         ));
     }
 
-    /**
-     * @return self
-     */
+    /** @return self */
     public static function nonExistingClass(string $className)
     {
         return new self(sprintf("Class '%s' does not exist", $className));
     }
 
-    /**
-     * @param class-string $className
-     */
+    /** @param class-string $className */
     public static function classIsAnonymous(string $className): self
     {
         return new self(sprintf('Class "%s" is anonymous', $className));

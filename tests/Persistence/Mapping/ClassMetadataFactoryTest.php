@@ -16,9 +16,7 @@ use ReflectionMethod;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
-/**
- * @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory
- */
+/** @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory */
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
     /**
@@ -114,9 +112,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf->getMetadataFor(Foo::class);
     }
 
-    /**
-     * @group 717
-     */
+    /** @group 717 */
     public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances(): void
     {
         $key = $this->cmf->getCacheKey(RootEntity::class);
@@ -196,9 +192,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertSame($metadata, $this->cmf->getMetadataFor(Foo::class));
     }
 
-    /**
-     * @psalm-param AbstractClassMetadataFactory<ClassMetadata<object>> $classMetadataFactory
-     */
+    /** @psalm-param AbstractClassMetadataFactory<ClassMetadata<object>> $classMetadataFactory */
     private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): ?CacheItemPoolInterface
     {
         $method = new ReflectionMethod($classMetadataFactory, 'getCache');

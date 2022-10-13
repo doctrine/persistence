@@ -89,9 +89,7 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
                 $this->createStub(ClassMetadata::class)
             );
 
-        /**
-         * @psalm-suppress ArgumentTypeCoercion
-         */
+        /** @psalm-suppress ArgumentTypeCoercion */
         self::assertSame($cmf->getMetadataFor(SomeOtherEntity::class), $cmf->getMetadataFor('\\' . SomeOtherEntity::class));
     }
 }

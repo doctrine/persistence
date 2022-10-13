@@ -12,9 +12,7 @@ use ReflectionProperty;
 
 use function count;
 
-/**
- * @group DCOM-93
- */
+/** @group DCOM-93 */
 class RuntimeReflectionServiceTest extends TestCase
 {
     /** @var RuntimeReflectionService */

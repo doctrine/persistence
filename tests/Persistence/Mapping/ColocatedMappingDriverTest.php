@@ -54,9 +54,7 @@ class ColocatedMappingDriverTest extends TestCase
         self::assertSame('.php1', $driver->getFileExtension());
     }
 
-    /**
-     * @dataProvider pathProvider
-     */
+    /** @dataProvider pathProvider */
     public function testGetAllClassNames(string $path): void
     {
         $driver = $this->createDriver($path);
@@ -66,9 +64,7 @@ class ColocatedMappingDriverTest extends TestCase
         self::assertSame([TestClass::class], $classes);
     }
 
-    /**
-     * @return Generator<string, array{string}>
-     */
+    /** @return Generator<string, array{string}> */
     public function pathProvider(): Generator
     {
         yield 'straigthforward path' => [__DIR__ . '/_files/colocated'];
@@ -85,9 +81,7 @@ final class MyDriver implements MappingDriver
 {
     use ColocatedMappingDriver;
 
-    /**
-     * @param string ...$paths One or multiple paths where mapping classes can be found.
-     */
+    /** @param string ...$paths One or multiple paths where mapping classes can be found. */
     public function __construct(string ...$paths)
     {
         $this->addPaths(array_values($paths));
