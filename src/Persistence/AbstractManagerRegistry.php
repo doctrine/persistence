@@ -20,10 +20,10 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     private $name;
 
     /** @var string[] */
-    private $connections;
+    protected $connections;
 
     /** @var string[] */
-    private $managers;
+    protected $managers;
 
     /** @var string */
     private $defaultConnection;
