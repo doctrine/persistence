@@ -6,6 +6,7 @@ namespace Doctrine\Persistence;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadataFactory;
+use Exception;
 
 /**
  * Contract for a Doctrine persistence layer ObjectManager class to implement.
@@ -24,6 +25,8 @@ interface ObjectManager
      * @return object|null The found object.
      * @psalm-return T|null
      *
+     * @throws Exception
+     *
      * @template T of object
      */
     public function find(string $className, $id);
@@ -39,6 +42,8 @@ interface ObjectManager
      * @param object $object The instance to make managed and persistent.
      *
      * @return void
+     *
+     * @throws Exception
      */
     public function persist(object $object);
 
@@ -90,6 +95,8 @@ interface ObjectManager
      * database.
      *
      * @return void
+     *
+     * @throws Exception
      */
     public function flush();
 
