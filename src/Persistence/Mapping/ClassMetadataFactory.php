@@ -16,7 +16,7 @@ interface ClassMetadataFactory
      * mapping driver.
      *
      * @return ClassMetadata[] The ClassMetadata instances of all mapped classes.
-     * @psalm-return T[]
+     * @psalm-return list<T>
      */
     public function getAllMetadata();
 
