@@ -21,36 +21,6 @@ parameters:
 			path: src/Persistence/Reflection/TypedNoDefaultRuntimePublicReflectionProperty.php
 
 		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:addExcludePaths\\(\\)\\.$#"
-			count: 1
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:addPaths\\(\\)\\.$#"
-			count: 1
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:getExcludePaths\\(\\)\\.$#"
-			count: 2
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:getFileExtension\\(\\)\\.$#"
-			count: 2
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:getPaths\\(\\)\\.$#"
-			count: 2
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\Mapping\\\\Driver\\\\MappingDriver\\:\\:setFileExtension\\(\\)\\.$#"
-			count: 1
-			path: tests/Persistence/Mapping/ColocatedMappingDriverTest.php
-
-		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Doctrine\\\\\\\\Tests…', 'Doctrine\\\\\\\\Tests\\\\\\\\ORM…', 'Doctrine\\\\\\\\Tests\\\\\\\\ORM…'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
 			path: tests/Persistence/Mapping/DriverChainTest.php
