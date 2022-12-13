@@ -71,7 +71,7 @@ class ColocatedMappingDriverTest extends TestCase
         yield 'winding path' => [__DIR__ . '/../Mapping/_files/colocated'];
     }
 
-    protected function createDriver(string $path): MappingDriver
+    private function createDriver(string $path): MyDriver
     {
         return new MyDriver($path);
     }
@@ -94,10 +94,7 @@ final class MyDriver implements MappingDriver
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isTransient($className): bool
+    public function isTransient(string $className): bool
     {
         return $className !== TestClass::class;
     }
