@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
-  <file src="tests/Persistence/Mapping/ColocatedMappingDriverTest.php">
-    <UndefinedInterfaceMethod occurrences="9">
-      <code>addExcludePaths</code>
-      <code>addPaths</code>
-      <code>getExcludePaths</code>
-      <code>getExcludePaths</code>
-      <code>getFileExtension</code>
-      <code>getFileExtension</code>
-      <code>getPaths</code>
-      <code>getPaths</code>
-      <code>setFileExtension</code>
-    </UndefinedInterfaceMethod>
+<files psalm-version="5.3.0@b6faa3e96b8eb50ec71384c53799b8a107236bb6">
+  <file src="src/Persistence/AbstractManagerRegistry.php">
+    <PossiblyNullReference occurrences="1">
+      <code>getName</code>
+    </PossiblyNullReference>
+    <TypeDoesNotContainType occurrences="1">
+      <code>$parentClass === false</code>
+    </TypeDoesNotContainType>
   </file>
 </files>
