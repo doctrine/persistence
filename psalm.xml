@@ -47,5 +47,11 @@
                 <file name="tests/Persistence/Mapping/FileDriverTest.php"/>
             </errorLevel>
         </MoreSpecificReturnType>
+        <RedundantCast>
+            <errorLevel type="suppress">
+                <!-- We're filtering invalid input- -->
+                <file name="src/Persistence/Mapping/Driver/SymfonyFileLocator.php"/>
+            </errorLevel>
+        </RedundantCast>
     </issueHandlers>
 </psalm>
