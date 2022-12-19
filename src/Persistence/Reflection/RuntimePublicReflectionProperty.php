@@ -53,7 +53,9 @@ class RuntimePublicReflectionProperty extends ReflectionProperty
 
         $originalInitializer = $object->__getInitializer();
         $object->__setInitializer(null);
+
         parent::setValue($object, $value);
+
         $object->__setInitializer($originalInitializer);
     }
 }
