@@ -1,15 +1,24 @@
 <?php
 
-namespace Doctrine\Persistence\Util;
+declare(strict_types=1);
+
+namespace Doctrine\Persistence\Proxy;
 
 use Doctrine\Persistence\Proxy;
 use ReflectionClass;
+
+use function get_class;
+use function get_parent_class;
+use function ltrim;
+use function rtrim;
+use function strrpos;
+use function substr;
 
 /**
  * Class and reflection related functionality for objects that
  * might or not be proxy objects at the moment.
  */
-class ClassUtils
+class ProxyResolver
 {
     /**
      * Gets the real class name of a class name that could be a proxy.
@@ -31,6 +40,7 @@ class ClassUtils
             return $className;
         }
 
+        /** @psalm-var class-string<T> */
         return substr($className, $pos + Proxy::MARKER_LENGTH + 2);
     }
 
@@ -61,6 +71,7 @@ class ClassUtils
      */
     public static function getParentClass($className)
     {
+        /** @psalm-var class-string */
         return get_parent_class(self::getRealClass($className));
     }
 
@@ -68,9 +79,11 @@ class ClassUtils
      * Creates a new reflection class.
      *
      * @param string $className
-     * @psalm-param class-string $className
+     * @psalm-param class-string<Proxy<T>>|class-string<T> $className
      *
-     * @return ReflectionClass
+     * @return ReflectionClass<T>
+     *
+     * @template T of object
      */
     public static function newReflectionClass($className)
     {
@@ -81,8 +94,11 @@ class ClassUtils
      * Creates a new reflection object.
      *
      * @param object $object
+     * @psalm-param Proxy<T>|T $object
      *
-     * @return ReflectionClass
+     * @return ReflectionClass<T>
+     *
+     * @template T of object
      */
     public static function newReflectionObject($object)
     {
@@ -101,6 +117,7 @@ class ClassUtils
      */
     public static function generateProxyClassName($className, $proxyNamespace)
     {
+        /** @psalm-var class-string */
         return rtrim($proxyNamespace, '\\') . '\\' . Proxy::MARKER . '\\' . ltrim($className, '\\');
     }
 }

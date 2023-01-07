@@ -63,6 +63,12 @@
                 <file name="tests/Persistence/Mapping/RuntimeReflectionServiceTest.php"/>
             </errorLevel>
         </ArgumentTypeCoercion>
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <!-- https://github.com/vimeo/psalm/issues/9076 -->
+                <file name="src/Persistence/Proxy/ProxyResolver.php"/>
+            </errorLevel>
+        </InvalidArgument>
     </issueHandlers>
     <stubs>
         <file name="psalm.phpstub" />
