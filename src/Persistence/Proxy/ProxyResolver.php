@@ -23,15 +23,13 @@ class ProxyResolver
     /**
      * Gets the real class name of a class name that could be a proxy.
      *
-     * @param string $className
      * @psalm-param class-string<Proxy<T>>|class-string<T> $className
      *
-     * @return string
      * @psalm-return class-string<T>
      *
      * @template T of object
      */
-    public static function getRealClass($className)
+    public static function getRealClass(string $className): string
     {
         $pos = strrpos($className, '\\' . Proxy::MARKER . '\\');
 
@@ -47,15 +45,13 @@ class ProxyResolver
     /**
      * Gets the real class name of an object (even if its a proxy).
      *
-     * @param object $object
      * @psalm-param Proxy<T>|T $object
      *
-     * @return string
      * @psalm-return class-string<T>
      *
      * @template T of object
      */
-    public static function getClass($object)
+    public static function getClass(object $object): string
     {
         return self::getRealClass(get_class($object));
     }
@@ -63,13 +59,11 @@ class ProxyResolver
     /**
      * Gets the real parent class name of a class or object.
      *
-     * @param string $className
      * @psalm-param class-string $className
      *
-     * @return string
      * @psalm-return class-string
      */
-    public static function getParentClass($className)
+    public static function getParentClass(string $className): string
     {
         /** @psalm-var class-string */
         return get_parent_class(self::getRealClass($className));
@@ -78,14 +72,13 @@ class ProxyResolver
     /**
      * Creates a new reflection class.
      *
-     * @param string $className
      * @psalm-param class-string<Proxy<T>>|class-string<T> $className
      *
      * @return ReflectionClass<T>
      *
      * @template T of object
      */
-    public static function newReflectionClass($className)
+    public static function newReflectionClass(string $className): ReflectionClass
     {
         return new ReflectionClass(self::getRealClass($className));
     }
@@ -93,14 +86,13 @@ class ProxyResolver
     /**
      * Creates a new reflection object.
      *
-     * @param object $object
      * @psalm-param Proxy<T>|T $object
      *
      * @return ReflectionClass<T>
      *
      * @template T of object
      */
-    public static function newReflectionObject($object)
+    public static function newReflectionObject(string $object): ReflectionClass
     {
         return self::newReflectionClass(self::getClass($object));
     }
@@ -108,14 +100,11 @@ class ProxyResolver
     /**
      * Given a class name and a proxy namespace returns the proxy name.
      *
-     * @param string $className
-     * @param string $proxyNamespace
      * @psalm-param class-string $className
      *
-     * @return string
      * @psalm-return class-string
      */
-    public static function generateProxyClassName($className, $proxyNamespace)
+    public static function generateProxyClassName(string $className, string $proxyNamespace): string
     {
         /** @psalm-var class-string */
         return rtrim($proxyNamespace, '\\') . '\\' . Proxy::MARKER . '\\' . ltrim($className, '\\');

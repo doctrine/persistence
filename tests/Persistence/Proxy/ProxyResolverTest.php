@@ -12,7 +12,7 @@ namespace Doctrine\Tests\Persistence\Proxy
     class ProxyResolverTest extends DoctrineTestCase
     {
         /** @psalm-return list<array{class-string, class-string}> */
-        public static function dataGetClass()
+        public static function dataGetClass(): array
         {
             return [
                 [\stdClass::class, \stdClass::class],
