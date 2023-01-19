@@ -36,6 +36,7 @@ class RuntimeReflectionPropertyTest extends TestCase
 
         self::assertSame($value, $reflProperty->getValue($object));
 
+        $reflProperty->setAccessible(true);
         $reflProperty->setValue($object, 'changedValue');
 
         self::assertSame('changedValue', $reflProperty->getValue($object));
@@ -46,6 +47,7 @@ class RuntimeReflectionPropertyTest extends TestCase
      *
      * @testWith ["Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock"]
      *           ["Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestCommonProxyMock"]
+     *           ["\\Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock"]
      */
     public function testGetValueOnProxyProperty(string $proxyClass): void
     {
@@ -245,5 +247,10 @@ class RuntimeReflectionPropertyTestClass
     public $test = 'testValue';
 
     /** @var string|null */
-    public $privateTest = 'privateTestValue';
+    private $privateTest = 'privateTestValue';
+
+    public function getPrivateTest(): ?string
+    {
+        return $this->privateTest;
+    }
 }
