@@ -376,8 +376,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * Actually loads the metadata from the underlying metadata.
      *
-     * @param string[] $nonSuperclassParents All parent class names that are
-     *                                       not marked as mapped superclasses.
+     * @param bool               $rootEntityFound      True when there is another entity (non-mapped superclass) class above the current class in the PHP class hierarchy.
+     * @param list<class-string> $nonSuperclassParents All parent class names that are not marked as mapped superclasses, with the direct parent class being the first and the root entity class the last element.
      * @psalm-param CMTemplate $class
      * @psalm-param CMTemplate|null $parent
      *
