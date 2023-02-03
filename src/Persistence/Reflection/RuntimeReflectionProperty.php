@@ -9,6 +9,7 @@ use Doctrine\Persistence\Proxy;
 use ReflectionProperty;
 use ReturnTypeWillChange;
 
+use function ltrim;
 use function method_exists;
 
 /**
@@ -26,7 +27,7 @@ class RuntimeReflectionProperty extends ReflectionProperty
     {
         parent::__construct($class, $name);
 
-        $this->key = $this->isPrivate() ? "\0" . $class . "\0" . $name : ($this->isProtected() ? "\0*\0" . $name : $name);
+        $this->key = $this->isPrivate() ? "\0" . ltrim($class, '\\') . "\0" . $name : ($this->isProtected() ? "\0*\0" . $name : $name);
     }
 
     /**
