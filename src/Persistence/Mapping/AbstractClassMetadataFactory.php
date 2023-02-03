@@ -348,7 +348,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @psalm-param class-string $name
      *
      * @return string[]
-     * @psalm-return class-string[]
+     * @psalm-return list<class-string>
      */
     protected function getParentClasses($name)
     {
@@ -379,7 +379,8 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @param string $name The name of the class for which the metadata should get loaded.
      * @psalm-param class-string $name
      *
-     * @return string[]
+     * @return array<int, string>
+     * @psalm-return list<string>
      */
     protected function loadMetadata($name)
     {
