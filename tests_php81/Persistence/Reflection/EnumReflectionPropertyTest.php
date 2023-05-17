@@ -29,7 +29,6 @@ class EnumReflectionPropertyTest extends TestCase
 
         $reflProperty->setValue($object);
         self::assertNull($reflProperty->getValue($object));
-        /** @psalm-suppress TypeDoesNotContainNull */
         self::assertNull($object->suit);
 
         $reflProperty->setValue($object, 'D');
@@ -45,11 +44,33 @@ class EnumReflectionPropertyTest extends TestCase
         $this->expectException(ValueError::class);
         $reflProperty->setValue($object, 'A');
     }
+
+    public function testSetValidArrayValue(): void
+    {
+        $object        = new TypedEnumClass();
+        $object->suits = [Suit::Hearts, Suit::Clubs];
+
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suits'), Suit::class);
+
+        $reflProperty->setValue($object);
+        self::assertNull($reflProperty->getValue($object));
+        self::assertNull($object->suits);
+
+        $reflProperty->setValue($object, []);
+        self::assertSame([], $reflProperty->getValue($object));
+        self::assertSame([], $object->suits);
+
+        $reflProperty->setValue($object, ['H', 'D']);
+        self::assertSame(['H', 'D'], $reflProperty->getValue($object));
+        self::assertSame([Suit::Hearts, Suit::Diamonds], $object->suits);
+    }
 }
 
 class TypedEnumClass
 {
     public ?Suit $suit = null;
+
+    public ?array $suits = null;
 }
 
 enum Suit: string
