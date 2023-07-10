@@ -9,6 +9,8 @@ use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 
 /**
  * Contract for a Doctrine persistence layer ObjectManager class to implement.
+ *
+ * @method bool isUninitializedObject(mixed $value) Implementing this method will be mandatory in version 4.
  */
 interface ObjectManager
 {

@@ -11,11 +11,6 @@ parameters:
 			path: src/Persistence/Reflection/EnumReflectionProperty.php
 
 		-
-			message: "#^Call to function method_exists\\(\\) with Doctrine\\\\Persistence\\\\Proxy and '__setInitialized' will always evaluate to true\\.$#"
-			count: 1
-			path: src/Persistence/Reflection/RuntimeReflectionProperty.php
-
-		-
 			message: "#^Variable property access on \\$this\\(Doctrine\\\\Persistence\\\\Reflection\\\\TypedNoDefaultRuntimePublicReflectionProperty\\)\\.$#"
 			count: 1
 			path: src/Persistence/Reflection/TypedNoDefaultRuntimePublicReflectionProperty.php
