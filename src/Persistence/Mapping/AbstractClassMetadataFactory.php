@@ -9,6 +9,7 @@ use Doctrine\Persistence\Proxy;
 use Psr\Cache\CacheItemPoolInterface;
 use ReflectionClass;
 use ReflectionException;
+use Traversable;
 
 use function array_combine;
 use function array_keys;
@@ -205,17 +206,14 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
                     $loadedMetadata = $this->loadMetadata($realClassName);
-                    $classNames     = array_combine(
-                        array_map([$this, 'getCacheKey'], $loadedMetadata),
-                        $loadedMetadata
-                    );
+                    $cacheItems = $this->cache->getItems(array_map([$this, 'getCacheKey'], $loadedMetadata));
+                    if ($cacheItems instanceof Traversable) {
+                        $cacheItems = iterator_to_array($cacheItems);
+                    }
+					$loadedMetadataItems = array_combine($loadedMetadata, $cacheItems);
 
-                    foreach ($this->cache->getItems(array_keys($classNames)) as $item) {
-                        if (! isset($classNames[$item->getKey()])) {
-                            continue;
-                        }
-
-                        $item->set($this->loadedMetadata[$classNames[$item->getKey()]]);
+					foreach ($loadedMetadataItems as $loadedClassName => $item) {
+						$item->set($this->loadedMetadata[$loadedClassName]);
                         $this->cache->saveDeferred($item);
                     }
 
