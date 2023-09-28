@@ -12,12 +12,12 @@ use ReflectionException;
 use Traversable;
 
 use function array_combine;
-use function array_keys;
 use function array_map;
 use function array_reverse;
 use function array_unshift;
 use function assert;
 use function class_exists;
+use function iterator_to_array;
 use function ltrim;
 use function str_replace;
 use function strpos;
@@ -206,14 +206,16 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
                     $loadedMetadata = $this->loadMetadata($realClassName);
-                    $cacheItems = $this->cache->getItems(array_map([$this, 'getCacheKey'], $loadedMetadata));
+                    $cacheItems     = $this->cache->getItems(array_map([$this, 'getCacheKey'], $loadedMetadata));
+
                     if ($cacheItems instanceof Traversable) {
                         $cacheItems = iterator_to_array($cacheItems);
                     }
-					$loadedMetadataItems = array_combine($loadedMetadata, $cacheItems);
 
-					foreach ($loadedMetadataItems as $loadedClassName => $item) {
-						$item->set($this->loadedMetadata[$loadedClassName]);
+                    $loadedMetadataItems = array_combine($loadedMetadata, $cacheItems);
+
+                    foreach ($loadedMetadataItems as $loadedClassName => $item) {
+                        $item->set($this->loadedMetadata[$loadedClassName]);
                         $this->cache->saveDeferred($item);
                     }
 
