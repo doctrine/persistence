@@ -37,7 +37,7 @@ class DriverChainTest extends DoctrineTestCase
                 ->with(self::equalTo($className))
                 ->willReturn(true);
 
-        $chain->addDriver($driver1, 'Doctrine\Tests\Models\Company');
+        $chain->addDriver($driver1, 'Doctrine\Tests\Persistence\Map');
         $chain->addDriver($driver2, 'Doctrine\Tests\Persistence\Mapping');
 
         $chain->loadMetadataForClass($className, $classMetadata);
@@ -63,7 +63,7 @@ class DriverChainTest extends DoctrineTestCase
         $driver1 = $this->createMock(MappingDriver::class);
         $driver1->expects(self::once())
                 ->method('getAllClassNames')
-                ->will(self::returnValue(['Doctrine\Tests\Models\Company\Foo']));
+                ->will(self::returnValue(['Doctrine\Tests\Models\Company\Foo','Doctrine\Tests\Models\Company2\Foo']));
 
         $driver2 = $this->createMock(MappingDriver::class);
         $driver2->expects(self::once())
