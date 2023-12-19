@@ -8,8 +8,9 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\MappingException;
 
 use function array_keys;
+use function dirname;
 use function spl_object_hash;
-use function strpos;
+use function trim;
 
 /**
  * The DriverChain allows you to add multiple other mapping drivers for
@@ -73,7 +74,7 @@ class MappingDriverChain implements MappingDriver
     public function loadMetadataForClass(string $className, ClassMetadata $metadata)
     {
         foreach ($this->drivers as $namespace => $driver) {
-            if (strpos($className, $namespace . '\\') === 0) {
+            if (self::isMatchingNamespace($className, $namespace)) {
                 $driver->loadMetadataForClass($className, $metadata);
 
                 return;
@@ -105,7 +106,7 @@ class MappingDriverChain implements MappingDriver
             }
 
             foreach ($driverClasses[$oid] as $className) {
-                if (strpos($className, $namespace . '\\') !== 0) {
+                if (! self::isMatchingNamespace($className, $namespace)) {
                     continue;
                 }
 
@@ -128,7 +129,7 @@ class MappingDriverChain implements MappingDriver
     public function isTransient(string $className)
     {
         foreach ($this->drivers as $namespace => $driver) {
-            if (strpos($className, $namespace . '\\') === 0) {
+            if (self::isMatchingNamespace($className, $namespace)) {
                 return $driver->isTransient($className);
             }
         }
@@ -138,5 +139,13 @@ class MappingDriverChain implements MappingDriver
         }
 
         return true;
+    }
+
+    /**
+     * Checks if the given class name matches the namespace.
+     */
+    protected static function isMatchingNamespace(string $className, string $namespace): bool
+    {
+        return dirname($className) === trim($namespace, '\\');
     }
 }
