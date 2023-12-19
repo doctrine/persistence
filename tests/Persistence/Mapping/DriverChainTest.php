@@ -147,6 +147,24 @@ class DriverChainTest extends DoctrineTestCase
 
         self::assertSame(['Doctrine\Tests\Models\Company\Foo', 'Other\Class'], $classNames);
     }
+
+    public function testMatchingNamespace(): void
+    {
+        // Expose the protected method as public
+        $mdc = new class extends MappingDriverChain {
+            public static function isMatchingNamespace(string $className, string $namespace): bool
+            {
+                return parent::isMatchingNamespace($className, $namespace);
+            }
+        };
+
+        $className = DriverChainEntity::class;
+
+        self::assertTrue($mdc::isMatchingNamespace($className, 'Doctrine\Tests\Persistence\Mapping\\'));
+        self::assertTrue($mdc::isMatchingNamespace($className, 'Doctrine\Tests\Persistence\Mapping'));
+        self::assertFalse($mdc::isMatchingNamespace($className, 'Doctrine\Tests\Persistence\Map'));
+        self::assertFalse($mdc::isMatchingNamespace($className, 'Doctrine\Tests\Persistence'));
+    }
 }
 
 class DriverChainEntity
