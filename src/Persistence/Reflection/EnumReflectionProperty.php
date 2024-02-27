@@ -27,6 +27,7 @@ class EnumReflectionProperty extends ReflectionProperty
     {
         $this->originalReflectionProperty = $originalReflectionProperty;
         $this->enumType                   = $enumType;
+
         parent::__construct($originalReflectionProperty->class, $originalReflectionProperty->name);
     }
 
