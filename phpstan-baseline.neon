@@ -11,6 +11,16 @@ parameters:
 			path: src/Persistence/Reflection/EnumReflectionProperty.php
 
 		-
+			message: "#^Method Doctrine\\\\Persistence\\\\Reflection\\\\EnumReflectionProperty\\:\\:toEnum\\(\\) should return array\\<BackedEnum\\>\\|BackedEnum but returns array\\<BackedEnum\\|int\\|string\\>\\.$#"
+			count: 1
+			path: src/Persistence/Reflection/EnumReflectionProperty.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(BackedEnum\\|int\\|string\\)\\: mixed\\)\\|null, array\\{class\\-string\\<BackedEnum\\>, 'from'\\} given\\.$#"
+			count: 1
+			path: src/Persistence/Reflection/EnumReflectionProperty.php
+
+		-
 			message: "#^Variable property access on \\$this\\(Doctrine\\\\Persistence\\\\Reflection\\\\TypedNoDefaultRuntimePublicReflectionProperty\\)\\.$#"
 			count: 1
 			path: src/Persistence/Reflection/TypedNoDefaultRuntimePublicReflectionProperty.php
