@@ -64,6 +64,14 @@ class EnumReflectionPropertyTest extends TestCase
         self::assertSame(['H', 'D'], $reflProperty->getValue($object));
         self::assertSame([Suit::Hearts, Suit::Diamonds], $object->suits);
     }
+
+    public function testParentReflectionPropertyMethods(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+
+        self::assertIsArray($reflProperty->getAttributes());
+        self::assertIsInt($reflProperty->getModifiers());
+    }
 }
 
 class TypedEnumClass
