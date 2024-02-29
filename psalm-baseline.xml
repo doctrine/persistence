@@ -8,4 +8,12 @@
       <code>$parentClass === false</code>
     </TypeDoesNotContainType>
   </file>
+  <file src="src/Persistence/Reflection/EnumReflectionProperty.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>$value</code>
+    </InvalidReturnStatement>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$value</code>
+    </PossiblyInvalidArgument>
+  </file>
 </files>

@@ -10,6 +10,7 @@ use ReturnTypeWillChange;
 
 use function array_map;
 use function is_array;
+use function reset;
 
 /**
  * PHP Enum Reflection Property - special override for backed enums.
@@ -86,13 +87,22 @@ class EnumReflectionProperty extends ReflectionProperty
     }
 
     /**
-     * @param int|string|int[]|string[] $value
+     * @param int|string|int[]|string[]|BackedEnum|BackedEnum[] $value
      *
-     * @return ($value is int|string ? BackedEnum : BackedEnum[])
+     * @return ($value is int|string|BackedEnum ? BackedEnum : BackedEnum[])
      */
     private function toEnum($value)
     {
+        if ($value instanceof BackedEnum) {
+            return $value;
+        }
+
         if (is_array($value)) {
+            $v = reset($value);
+            if ($v instanceof BackedEnum) {
+                return $value;
+            }
+
             return array_map([$this->enumType, 'from'], $value);
         }
 
