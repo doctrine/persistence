@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Reflection;
 
 use BackedEnum;
+use ReflectionClass;
 use ReflectionProperty;
+use ReflectionType;
 use ReturnTypeWillChange;
 
 use function array_map;
@@ -28,6 +30,44 @@ class EnumReflectionProperty extends ReflectionProperty
     {
         $this->originalReflectionProperty = $originalReflectionProperty;
         $this->enumType                   = $enumType;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @psalm-external-mutation-free
+     */
+    public function getDeclaringClass(): ReflectionClass
+    {
+        return $this->originalReflectionProperty->getDeclaringClass();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @psalm-external-mutation-free
+     */
+    public function getName(): string
+    {
+        return $this->originalReflectionProperty->getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @psalm-external-mutation-free
+     */
+    public function getType(): ?ReflectionType
+    {
+        return $this->originalReflectionProperty->getType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributes(?string $name = null, int $flags = 0): array
+    {
+        return $this->originalReflectionProperty->getAttributes($name, $flags);
     }
 
     /**

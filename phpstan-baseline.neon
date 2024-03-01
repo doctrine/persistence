@@ -11,6 +11,16 @@ parameters:
 			path: src/Persistence/Reflection/EnumReflectionProperty.php
 
 		-
+			message: "#^Method Doctrine\\\\Persistence\\\\Reflection\\\\EnumReflectionProperty\\:\\:getDeclaringClass\\(\\) return type with generic class ReflectionClass does not specify its types\\: T$#"
+			count: 1
+			path: src/Persistence/Reflection/EnumReflectionProperty.php
+
+		-
+			message: "#^Method Doctrine\\\\Persistence\\\\Reflection\\\\EnumReflectionProperty\\:\\:getType\\(\\) should return ReflectionNamedType\\|ReflectionUnionType\\|null but returns ReflectionType\\|null\\.$#"
+			count: 1
+			path: src/Persistence/Reflection/EnumReflectionProperty.php
+
+		-
 			message: "#^Method Doctrine\\\\Persistence\\\\Reflection\\\\EnumReflectionProperty\\:\\:toEnum\\(\\) should return array\\<BackedEnum\\>\\|BackedEnum but returns array\\<BackedEnum\\|int\\|string\\>\\.$#"
 			count: 1
 			path: src/Persistence/Reflection/EnumReflectionProperty.php
