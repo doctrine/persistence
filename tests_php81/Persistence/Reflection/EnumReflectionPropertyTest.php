@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\Tests_PHP81\Persistence\Reflection;
 
+use Attribute;
 use Doctrine\Persistence\Reflection\EnumReflectionProperty;
 use PHPUnit\Framework\TestCase;
+use ReflectionNamedType;
 use ReflectionProperty;
 use ValueError;
 
@@ -18,6 +22,33 @@ class EnumReflectionPropertyTest extends TestCase
         self::assertSame('C', $reflProperty->getValue($object));
         $object->suit = null;
         self::assertNull($reflProperty->getValue($object));
+    }
+
+    public function testGetDeclaringClass(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+        self::assertSame(TypedEnumClass::class, $reflProperty->getDeclaringClass()->getName());
+    }
+
+    public function testGetName(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+        self::assertSame('suit', $reflProperty->getName());
+    }
+
+    public function testGetType(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+        $type         = $reflProperty->getType();
+        self::assertInstanceOf(ReflectionNamedType::class, $type);
+        self::assertSame(Suit::class, $type->getName());
+    }
+
+    public function testGetAttributes(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+        self::assertCount(1, $reflProperty->getAttributes());
+        self::assertSame(MyAttribute::class, $reflProperty->getAttributes()[0]->getName());
     }
 
     public function testSetValidValue(): void
@@ -84,8 +115,14 @@ class EnumReflectionPropertyTest extends TestCase
     }
 }
 
+#[Attribute(Attribute::TARGET_PROPERTY)]
+class MyAttribute
+{
+}
+
 class TypedEnumClass
 {
+    #[MyAttribute]
     public ?Suit $suit = null;
 
     public ?array $suits = null;
@@ -93,8 +130,8 @@ class TypedEnumClass
 
 enum Suit: string
 {
-    case Hearts = 'H';
+    case Hearts   = 'H';
     case Diamonds = 'D';
-    case Clubs = 'C';
-    case Spades = 'S';
+    case Clubs    = 'C';
+    case Spades   = 'S';
 }
