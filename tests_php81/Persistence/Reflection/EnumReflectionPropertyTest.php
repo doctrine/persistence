@@ -113,6 +113,18 @@ class EnumReflectionPropertyTest extends TestCase
 
         self::assertSame([Suit::Hearts, Suit::Diamonds], $object->suits);
     }
+
+    public function testGetModifiers(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+        self::assertSame(ReflectionProperty::IS_PUBLIC, $reflProperty->getModifiers());
+    }
+
+    public function testGetDocComment(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+        self::assertStringContainsString('@MyDoc', $reflProperty->getDocComment());
+    }
 }
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
@@ -122,6 +134,7 @@ class MyAttribute
 
 class TypedEnumClass
 {
+    /** @MyDoc */
     #[MyAttribute]
     public ?Suit $suit = null;
 
