@@ -61,7 +61,7 @@ class RuntimePublicReflectionPropertyTest extends TestCase
         $mockProxy->__setInitializer($initializer);
 
         $reflProperty = new RuntimePublicReflectionProperty(
-            __NAMESPACE__ . '\RuntimePublicReflectionPropertyTestProxyMock',
+            RuntimePublicReflectionPropertyTestProxyMock::class,
             'checkedProperty'
         );
 
@@ -82,7 +82,7 @@ class RuntimePublicReflectionPropertyTest extends TestCase
         $mockProxy->__setInitializer($initializer);
 
         $reflProperty = new RuntimePublicReflectionProperty(
-            __NAMESPACE__ . '\RuntimePublicReflectionPropertyTestProxyMock',
+            RuntimePublicReflectionPropertyTestProxyMock::class,
             'checkedProperty'
         );
 
