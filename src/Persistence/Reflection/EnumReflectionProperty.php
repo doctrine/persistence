@@ -168,4 +168,14 @@ class EnumReflectionProperty extends ReflectionProperty
     {
         return $this->originalReflectionProperty->getDocComment();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @psalm-external-mutation-free
+     */
+    public function isPrivate(): bool
+    {
+        return $this->originalReflectionProperty->isPrivate();
+    }
 }
