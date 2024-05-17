@@ -125,6 +125,12 @@ class EnumReflectionPropertyTest extends TestCase
         $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
         self::assertStringContainsString('@MyDoc', $reflProperty->getDocComment());
     }
+
+    public function testIsPrivate(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+        self::assertFalse($reflProperty->isPrivate());
+    }
 }
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
