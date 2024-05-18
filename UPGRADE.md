@@ -6,6 +6,13 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 4.0
+
+Deprecated classes have been removed:
+
+- `Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty`
+- `Doctrine\Persistence\Reflection\TypedNoDefaultRuntimePublicReflectionProperty`
+
 # Upgrade to 3.3
 
 ## Added method `ObjectManager::isUninitializedObject()`
