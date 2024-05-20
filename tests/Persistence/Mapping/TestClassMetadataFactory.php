@@ -15,23 +15,12 @@ use Doctrine\Persistence\Mapping\ReflectionService;
  */
 class TestClassMetadataFactory extends AbstractClassMetadataFactory
 {
-    /** @var MappingDriver */
-    public $driver;
-
-    /**
-     * @var ClassMetadata
-     * @psalm-var CMTemplate
-     */
-    public $metadata;
-
     /** @var callable|null */
     public $fallbackCallback;
 
     /** @psalm-param CMTemplate $metadata */
-    public function __construct(MappingDriver $driver, ClassMetadata $metadata)
+    public function __construct(public MappingDriver $driver, public ClassMetadata $metadata)
     {
-        $this->driver   = $driver;
-        $this->metadata = $metadata;
     }
 
     /**
@@ -39,9 +28,9 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
      */
     protected function doLoadMetadata(
         ClassMetadata $class,
-        ?ClassMetadata $parent,
+        ClassMetadata|null $parent,
         bool $rootEntityFound,
-        array $nonSuperclassParents
+        array $nonSuperclassParents,
     ): void {
     }
 
@@ -72,7 +61,7 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
         return true;
     }
 
-    protected function onNotFoundMetadata(string $className): ?ClassMetadata
+    protected function onNotFoundMetadata(string $className): ClassMetadata|null
     {
         if ($this->fallbackCallback === null) {
             return null;

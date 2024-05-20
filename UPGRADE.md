@@ -8,6 +8,11 @@ awareness about deprecated code.
 
 # Upgrade to 4.0
 
+## BC Break: Added type declarations
+
+The code base is now fully typed, meaning properties, parameters and return
+type declarations have been added to all types.
+
 ## BC Break: Dropped support for Common proxies
 
 Proxy objects implementing the `Doctrine\Common\Proxy\Proxy` interface are not

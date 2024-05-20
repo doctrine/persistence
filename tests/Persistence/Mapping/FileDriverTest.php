@@ -15,7 +15,7 @@ use Doctrine\Tests\Persistence\Mapping\Fixtures\TestClassMetadata;
 use PHPUnit\Framework\MockObject\MockObject;
 use stdClass;
 
-use function strpos;
+use function str_contains;
 
 class FileDriverTest extends DoctrineTestCase
 {
@@ -185,7 +185,7 @@ class FileDriverTest extends DoctrineTestCase
     }
 
     /** @param string|array<int, string>|FileLocator $locator */
-    private function createTestFileDriver($locator, ?string $fileExtension = null): TestFileDriver
+    private function createTestFileDriver(string|array|FileLocator $locator, string|null $fileExtension = null): TestFileDriver
     {
         $driver = new TestFileDriver($locator, $fileExtension);
 
@@ -200,20 +200,20 @@ class FileDriverTest extends DoctrineTestCase
 class TestFileDriver extends FileDriver
 {
     /** @var ClassMetadata<object> */
-    public $stdGlobal;
+    public ClassMetadata $stdGlobal;
 
     /** @var ClassMetadata<object> */
-    public $stdGlobal2;
+    public ClassMetadata $stdGlobal2;
 
     /** @var ClassMetadata<object> */
-    public $stdClass;
+    public ClassMetadata $stdClass;
 
     /**
      * {@inheritDoc}
      */
     protected function loadMappingFile(string $file): array
     {
-        if (strpos($file, 'global.yml') !== false) {
+        if (str_contains($file, 'global.yml')) {
             return [
                 GlobalClass::class => new TestClassMetadata(GlobalClass::class),
                 AnotherGlobalClass::class => new TestClassMetadata(AnotherGlobalClass::class),

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Doctrine\Tests_PHP81\Persistence\Reflection;
+namespace Doctrine\Tests\Persistence\Reflection;
 
 use Attribute;
 use Doctrine\Persistence\Reflection\EnumReflectionProperty;
@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 use ReflectionNamedType;
 use ReflectionProperty;
 use ValueError;
+
+use function assert;
 
 class EnumReflectionPropertyTest extends TestCase
 {
@@ -123,7 +125,9 @@ class EnumReflectionPropertyTest extends TestCase
     public function testGetDocComment(): void
     {
         $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
-        self::assertStringContainsString('@MyDoc', $reflProperty->getDocComment());
+        $comment      = $reflProperty->getDocComment();
+        assert($comment !== false);
+        self::assertStringContainsString('@MyDoc', $comment);
     }
 
     public function testIsPrivate(): void
@@ -142,9 +146,10 @@ class TypedEnumClass
 {
     /** @MyDoc */
     #[MyAttribute]
-    public ?Suit $suit = null;
+    public Suit|null $suit = null;
 
-    public ?array $suits = null;
+    /** @var Suit[]|null */
+    public array|null $suits = null;
 }
 
 enum Suit: string

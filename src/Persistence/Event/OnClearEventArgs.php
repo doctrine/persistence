@@ -15,27 +15,19 @@ use Doctrine\Persistence\ObjectManager;
 class OnClearEventArgs extends EventArgs
 {
     /**
-     * @var ObjectManager
-     * @psalm-var TObjectManager
-     */
-    private $objectManager;
-
-    /**
      * @param ObjectManager $objectManager The object manager.
      * @psalm-param TObjectManager $objectManager
      */
-    public function __construct(ObjectManager $objectManager)
+    public function __construct(private readonly ObjectManager $objectManager)
     {
-        $this->objectManager = $objectManager;
     }
 
     /**
      * Retrieves the associated ObjectManager.
      *
-     * @return ObjectManager
      * @psalm-return TObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }

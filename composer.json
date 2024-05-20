@@ -20,7 +20,7 @@
         {"name": "Marco Pivetta", "email": "ocramius@gmail.com"}
     ],
     "require": {
-        "php": "^7.2 || ^8.0",
+        "php": "^8.1",
         "doctrine/event-manager": "^1 || ^2",
         "psr/cache": "^1.0 || ^2.0 || ^3.0"
     },
@@ -29,7 +29,7 @@
         "phpstan/phpstan-phpunit": "^1",
         "phpstan/phpstan-strict-rules": "^1.1",
         "doctrine/coding-standard": "^12",
-        "phpunit/phpunit": "^8.5 || ^9.5",
+        "phpunit/phpunit": "^9.6",
         "symfony/cache": "^4.4 || ^5.4 || ^6.0",
         "vimeo/psalm": "4.30.0 || 5.24.0"
     },
@@ -43,9 +43,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests",
-            "Doctrine\\Tests_PHP74\\": "tests_php74",
-            "Doctrine\\Tests_PHP81\\": "tests_php81"
+            "Doctrine\\Tests\\": "tests"
         }
     },
     "config": {

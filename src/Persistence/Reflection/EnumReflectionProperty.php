@@ -8,7 +8,6 @@ use BackedEnum;
 use ReflectionClass;
 use ReflectionProperty;
 use ReflectionType;
-use ReturnTypeWillChange;
 
 use function array_map;
 use function is_array;
@@ -19,17 +18,9 @@ use function reset;
  */
 class EnumReflectionProperty extends ReflectionProperty
 {
-    /** @var ReflectionProperty */
-    private $originalReflectionProperty;
-
-    /** @var class-string<BackedEnum> */
-    private $enumType;
-
     /** @param class-string<BackedEnum> $enumType */
-    public function __construct(ReflectionProperty $originalReflectionProperty, string $enumType)
+    public function __construct(private readonly ReflectionProperty $originalReflectionProperty, private readonly string $enumType)
     {
-        $this->originalReflectionProperty = $originalReflectionProperty;
-        $this->enumType                   = $enumType;
     }
 
     /**
@@ -57,7 +48,7 @@ class EnumReflectionProperty extends ReflectionProperty
      *
      * @psalm-external-mutation-free
      */
-    public function getType(): ?ReflectionType
+    public function getType(): ReflectionType|null
     {
         return $this->originalReflectionProperty->getType();
     }
@@ -65,7 +56,7 @@ class EnumReflectionProperty extends ReflectionProperty
     /**
      * {@inheritDoc}
      */
-    public function getAttributes(?string $name = null, int $flags = 0): array
+    public function getAttributes(string|null $name = null, int $flags = 0): array
     {
         return $this->originalReflectionProperty->getAttributes($name, $flags);
     }
@@ -79,8 +70,7 @@ class EnumReflectionProperty extends ReflectionProperty
      *
      * @return int|string|int[]|string[]|null
      */
-    #[ReturnTypeWillChange]
-    public function getValue($object = null)
+    public function getValue($object = null): int|string|array|null
     {
         if ($object === null) {
             return null;
@@ -98,10 +88,9 @@ class EnumReflectionProperty extends ReflectionProperty
     /**
      * Converts enum value to enum instance.
      *
-     * @param object $object
-     * @param mixed  $value
+     * @param object|null $object
      */
-    public function setValue($object, $value = null): void
+    public function setValue(mixed $object, mixed $value = null): void
     {
         if ($value !== null) {
             $value = $this->toEnum($value);
@@ -115,12 +104,10 @@ class EnumReflectionProperty extends ReflectionProperty
      *
      * @return ($enum is BackedEnum ? (string|int) : (string[]|int[]))
      */
-    private function fromEnum($enum)
+    private function fromEnum(BackedEnum|array $enum)
     {
         if (is_array($enum)) {
-            return array_map(static function (BackedEnum $enum) {
-                return $enum->value;
-            }, $enum);
+            return array_map(static fn (BackedEnum $enum) => $enum->value, $enum);
         }
 
         return $enum->value;
@@ -131,7 +118,7 @@ class EnumReflectionProperty extends ReflectionProperty
      *
      * @return ($value is int|string|BackedEnum ? BackedEnum : BackedEnum[])
      */
-    private function toEnum($value)
+    private function toEnum(int|string|array|BackedEnum $value)
     {
         if ($value instanceof BackedEnum) {
             return $value;

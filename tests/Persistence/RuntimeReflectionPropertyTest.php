@@ -90,21 +90,15 @@ class RuntimeReflectionPropertyTest extends TestCase
  */
 class RuntimeReflectionPropertyTestProxyMock implements Proxy
 {
-    /** @var Closure|null */
-    protected $initializer = null;
+    private bool $initialized = false;
 
-    /** @var bool */
-    private $initialized = false;
-
-    /** @var string */
-    public $checkedProperty = 'testValue';
+    public string $checkedProperty = 'testValue';
 
     /**
      * {@inheritDoc}
      */
-    public function __construct(?Closure $initializer = null)
+    public function __construct(protected Closure|null $initializer = null)
     {
-        $this->initializer = $initializer;
     }
 
     public function __load(): void
@@ -124,8 +118,7 @@ class RuntimeReflectionPropertyTestProxyMock implements Proxy
         $this->initialized = $initialized;
     }
 
-    /** @return mixed */
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         if (! $this->initialized && $this->initializer !== null) {
             ($this->initializer)();
@@ -134,8 +127,7 @@ class RuntimeReflectionPropertyTestProxyMock implements Proxy
         return $this->checkedProperty;
     }
 
-    /** @param mixed $value */
-    public function __set(string $name, $value): void
+    public function __set(string $name, mixed $value): void
     {
         if (! $this->initialized && $this->initializer !== null) {
             ($this->initializer)();
@@ -156,13 +148,11 @@ class RuntimeReflectionPropertyTestProxyMock implements Proxy
 
 class RuntimeReflectionPropertyTestClass
 {
-    /** @var string|null */
-    public $test = 'testValue';
+    public string $test = 'testValue';
 
-    /** @var string|null */
-    private $privateTest = 'privateTestValue';
+    private string $privateTest = 'privateTestValue';
 
-    public function getPrivateTest(): ?string
+    public function getPrivateTest(): string|null
     {
         return $this->privateTest;
     }

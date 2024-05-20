@@ -13,8 +13,7 @@ use function count;
 /** @group DCOM-93 */
 class StaticReflectionServiceTest extends TestCase
 {
-    /** @var StaticReflectionService */
-    private $reflectionService;
+    private StaticReflectionService $reflectionService;
 
     protected function setUp(): void
     {

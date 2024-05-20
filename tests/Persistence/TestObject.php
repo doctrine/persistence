@@ -6,15 +6,11 @@ namespace Doctrine\Tests\Persistence;
 
 class TestObject
 {
-    /** @var int */
-    protected $id = 1;
+    protected int $id = 1;
 
-    /** @var string */
-    protected $name = 'beberlei';
+    protected string $name = 'beberlei';
 
-    /** @var TestObject */
-    protected $parent;
+    protected TestObject $parent;
 
-    /** @var TestObject */
-    protected $children;
+    protected TestObject $children;
 }

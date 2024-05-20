@@ -17,8 +17,32 @@
     <InvalidReturnStatement>
       <code><![CDATA[$value]]></code>
     </InvalidReturnStatement>
+    <MethodSignatureMismatch>
+      <code><![CDATA[$object]]></code>
+    </MethodSignatureMismatch>
     <PossiblyInvalidArgument>
       <code><![CDATA[$value]]></code>
     </PossiblyInvalidArgument>
+  </file>
+  <file src="src/Persistence/Reflection/RuntimeReflectionProperty.php">
+    <MethodSignatureMismatch>
+      <code><![CDATA[$object]]></code>
+    </MethodSignatureMismatch>
+  </file>
+  <file src="src/Persistence/Reflection/TypedNoDefaultReflectionProperty.php">
+    <MethodSignatureMismatch>
+      <code><![CDATA[$object]]></code>
+    </MethodSignatureMismatch>
+  </file>
+  <file src="tests/Persistence/Mapping/DriverChainTest.php">
+    <TypeDoesNotContainType>
+      <code><![CDATA[assertSame]]></code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="tests/Persistence/Reflection/Reflection/EnumReflectionPropertyTest.php">
+    <TypeDoesNotContainNull>
+      <code><![CDATA[assertNull]]></code>
+      <code><![CDATA[assertNull]]></code>
+    </TypeDoesNotContainNull>
   </file>
 </files>

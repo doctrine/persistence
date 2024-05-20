@@ -15,22 +15,22 @@ use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 abstract class ObjectManagerDecorator implements ObjectManager
 {
     /** @var TObjectManager */
-    protected $wrapped;
+    protected ObjectManager $wrapped;
 
     /**
      * {@inheritDoc}
      */
-    public function find(string $className, $id)
+    public function find(string $className, $id): object|null
     {
         return $this->wrapped->find($className, $id);
     }
 
-    public function persist(object $object)
+    public function persist(object $object): void
     {
         $this->wrapped->persist($object);
     }
 
-    public function remove(object $object)
+    public function remove(object $object): void
     {
         $this->wrapped->remove($object);
     }
@@ -40,52 +40,43 @@ abstract class ObjectManagerDecorator implements ObjectManager
         $this->wrapped->clear();
     }
 
-    public function detach(object $object)
+    public function detach(object $object): void
     {
         $this->wrapped->detach($object);
     }
 
-    public function refresh(object $object)
+    public function refresh(object $object): void
     {
         $this->wrapped->refresh($object);
     }
 
-    public function flush()
+    public function flush(): void
     {
         $this->wrapped->flush();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getRepository(string $className)
+    public function getRepository(string $className): ObjectRepository
     {
         return $this->wrapped->getRepository($className);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getClassMetadata(string $className)
+    public function getClassMetadata(string $className): ClassMetadata
     {
         return $this->wrapped->getClassMetadata($className);
     }
 
     /** @psalm-return ClassMetadataFactory<ClassMetadata<object>> */
-    public function getMetadataFactory()
+    public function getMetadataFactory(): ClassMetadataFactory
     {
         return $this->wrapped->getMetadataFactory();
     }
 
-    public function initializeObject(object $obj)
+    public function initializeObject(object $obj): void
     {
         $this->wrapped->initializeObject($obj);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function contains(object $object)
+    public function contains(object $object): bool
     {
         return $this->wrapped->contains($object);
     }

@@ -200,7 +200,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
 
         self::assertSame(
             __DIR__ . '/_match_ns/Bar/barEntity.yml',
-            $locator->findMappingFile("Foo\\Bar\\barEntity")
+            $locator->findMappingFile("Foo\\Bar\\barEntity"),
         );
     }
 
@@ -214,7 +214,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
 
         self::assertSame(
             __DIR__ . '/_match_ns/Bar/barEntity.yml',
-            $locator->findMappingFile("Foo\\Bar\\barEntity")
+            $locator->findMappingFile("Foo\\Bar\\barEntity"),
         );
     }
 }

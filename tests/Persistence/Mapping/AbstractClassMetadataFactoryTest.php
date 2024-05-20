@@ -10,8 +10,6 @@ use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 
-use function get_class;
-
 final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
 {
     public function testItSkipsTransientClasses(): void
@@ -22,7 +20,7 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
             ->withConsecutive([SomeGrandParentEntity::class], [SomeEntity::class])
             ->willReturnOnConsecutiveCalls(
                 $this->createMock(ClassMetadata::class),
-                $this->createMock(ClassMetadata::class)
+                $this->createMock(ClassMetadata::class),
             );
         $driver = $this->createMock(MappingDriver::class);
         $cmf->method('getDriver')
@@ -32,7 +30,7 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
             ->method('isTransient')
             ->withConsecutive(
                 [SomeGrandParentEntity::class],
-                [SomeParentEntity::class]
+                [SomeParentEntity::class],
             )
             ->willReturnOnConsecutiveCalls(false, true);
 
@@ -43,16 +41,16 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
     {
         $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
         $this->expectException(MappingException::class);
-        $cmf->getMetadataFor(get_class(new class {
-        }));
+        $cmf->getMetadataFor((new class {
+        })::class);
     }
 
     public function testAnonymousClassIsNotMistakenForShortAlias(): void
     {
         $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
 
-        self::assertFalse($cmf->isTransient(get_class(new class () {
-        })));
+        self::assertFalse($cmf->isTransient((new class () {
+        })::class));
     }
 
     public function testItThrowsWhenAttemptingToGetMetadataForShortAlias(): void
@@ -86,7 +84,7 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
             ->method('newClassMetadataInstance')
             ->with(SomeOtherEntity::class)
             ->willReturn(
-                $this->createStub(ClassMetadata::class)
+                $this->createStub(ClassMetadata::class),
             );
 
         /** @psalm-suppress ArgumentTypeCoercion */
