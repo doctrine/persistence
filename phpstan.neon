@@ -25,11 +25,11 @@ parameters:
         # https://github.com/phpstan/phpstan/issues/5009
         -
             message: '#Call to function assert\(\) with true will always evaluate to true\.#'
-            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionPropertyBase.php'
+            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'
 
         -
             message: '#Instanceof between Closure and Closure will always evaluate to true\.#'
-            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionPropertyBase.php'
+            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'
 
         -
             message: '#Class Foo not found#'

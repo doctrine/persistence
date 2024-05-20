@@ -31,11 +31,6 @@ parameters:
 			path: src/Persistence/Reflection/EnumReflectionProperty.php
 
 		-
-			message: "#^Variable property access on \\$this\\(Doctrine\\\\Persistence\\\\Reflection\\\\TypedNoDefaultRuntimePublicReflectionProperty\\)\\.$#"
-			count: 1
-			path: src/Persistence/Reflection/TypedNoDefaultRuntimePublicReflectionProperty.php
-
-		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Doctrine\\\\\\\\Tests…', 'Doctrine\\\\\\\\Tests\\\\\\\\ORM…', 'Doctrine\\\\\\\\Tests\\\\\\\\ORM…'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
 			path: tests/Persistence/Mapping/DriverChainTest.php
@@ -59,11 +54,6 @@ parameters:
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Foo\\\\\\\\stdClass', 'Foo\\\\\\\\sub\\\\\\\\subClass', 'Foo\\\\\\\\sub\\\\\\\\subsub…'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
 			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
-
-		-
-			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\RuntimePublicReflectionPropertyTestProxyMock\\:\\:\\$checkedProperty \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: tests/Persistence/RuntimePublicReflectionPropertyTest.php
 
 		-
 			message: "#^Method Doctrine\\\\Tests\\\\Persistence\\\\RuntimeReflectionPropertyTestProxyMock\\:\\:__setInitialized\\(\\) has parameter \\$initialized with no type specified\\.$#"
