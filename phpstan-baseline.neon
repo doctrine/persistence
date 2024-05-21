@@ -16,11 +16,6 @@ parameters:
 			path: src/Persistence/Reflection/EnumReflectionProperty.php
 
 		-
-			message: "#^Method Doctrine\\\\Persistence\\\\Reflection\\\\EnumReflectionProperty\\:\\:getType\\(\\) should return ReflectionNamedType\\|ReflectionUnionType\\|null but returns ReflectionType\\|null\\.$#"
-			count: 1
-			path: src/Persistence/Reflection/EnumReflectionProperty.php
-
-		-
 			message: "#^Method Doctrine\\\\Persistence\\\\Reflection\\\\EnumReflectionProperty\\:\\:toEnum\\(\\) should return array\\<BackedEnum\\>\\|BackedEnum but returns array\\<BackedEnum\\|int\\|string\\>\\.$#"
 			count: 1
 			path: src/Persistence/Reflection/EnumReflectionProperty.php
@@ -46,17 +41,17 @@ parameters:
 			path: tests/Persistence/Mapping/DriverChainTest.php
 
 		-
-			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Foo\\\\\\\\Bar\\\\\\\\subDirClass', 'Foo\\\\\\\\global', 'Foo\\\\\\\\stdClass'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
-			count: 1
-			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
-
-		-
-			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Foo\\\\\\\\Bar\\\\\\\\subDirClass', 'Foo\\\\\\\\stdClass'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
-			count: 1
-			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
-
-		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Foo\\\\\\\\stdClass', 'Foo\\\\\\\\sub\\\\\\\\subClass', 'Foo\\\\\\\\sub\\\\\\\\subsub…'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with non\\-empty\\-array\\<int, 'Foo\\\\\\\\Bar\\\\\\\\subDirClass'\\|'Foo\\\\\\\\global'\\|'Foo\\\\\\\\stdClass'\\> and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with non\\-empty\\-array\\<int, 'Foo\\\\\\\\Bar\\\\\\\\subDirClass'\\|'Foo\\\\\\\\stdClass'\\> and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
 			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
 
