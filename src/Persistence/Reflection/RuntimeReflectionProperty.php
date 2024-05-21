@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Reflection;
 
-use Doctrine\Common\Proxy\Proxy as CommonProxy;
 use Doctrine\Persistence\Proxy;
 use ReflectionProperty;
 use ReturnTypeWillChange;
@@ -59,17 +58,6 @@ class RuntimeReflectionProperty extends ReflectionProperty
     {
         if (! ($object instanceof Proxy && ! $object->__isInitialized())) {
             parent::setValue($object, $value);
-
-            return;
-        }
-
-        if ($object instanceof CommonProxy) {
-            $originalInitializer = $object->__getInitializer();
-            $object->__setInitializer(null);
-
-            parent::setValue($object, $value);
-
-            $object->__setInitializer($originalInitializer);
 
             return;
         }

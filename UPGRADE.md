@@ -8,6 +8,13 @@ awareness about deprecated code.
 
 # Upgrade to 4.0
 
+## BC Break: Dropped support for Common proxies
+
+Proxy objects implementing the `Doctrine\Common\Proxy\Proxy` interface are not
+supported anymore. Implement `Doctrine\Persistence\Proxy` instead.
+
+## BC Break: Removed deprecated ReflectionProperty overrides
+
 Deprecated classes have been removed:
 
 - `Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty`
