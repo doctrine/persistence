@@ -173,7 +173,7 @@ abstract class FileDriver implements MappingDriver
     protected function initialize()
     {
         $this->classCache = [];
-        if ($this->globalBasename === null) {
+        if ($this->globalBasename === '') {
             return;
         }
 
