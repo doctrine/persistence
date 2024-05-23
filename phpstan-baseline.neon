@@ -36,6 +36,36 @@ parameters:
 			path: tests/Persistence/Mapping/DriverChainTest.php
 
 		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with 'Doctrine\\\\\\\\Persistence\\\\\\\\Reflection\\\\\\\\RuntimeReflectionProperty' and Doctrine\\\\Persistence\\\\Reflection\\\\RuntimeReflectionProperty will always evaluate to true\\.$#"
+			count: 3
+			path: tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with 'ReflectionProperty' and Doctrine\\\\Persistence\\\\Reflection\\\\RuntimeReflectionProperty will always evaluate to true\\.$#"
+			count: 5
+			path: tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
+
+		-
+			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$nonTypedDefaultProperty is never read, only written\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
+
+		-
+			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$nonTypedNoDefaultProperty is unused\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
+
+		-
+			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$typedDefaultProperty is never read, only written\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
+
+		-
+			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$typedNoDefaultProperty is unused\\.$#"
+			count: 1
+			path: tests/Persistence/Mapping/RuntimeReflectionServiceTest.php
+
+		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with array\\{'Foo\\\\\\\\stdClass', 'Foo\\\\\\\\sub\\\\\\\\subClass', 'Foo\\\\\\\\sub\\\\\\\\subsub…'\\} and array\\<int, class\\-string\\> will always evaluate to false\\.$#"
 			count: 1
 			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
@@ -51,36 +81,11 @@ parameters:
 			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
 
 		-
+			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\Reflection\\\\TypedFoo\\:\\:\\$id is never read, only written\\.$#"
+			count: 1
+			path: tests/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php
+
+		-
 			message: "#^Method Doctrine\\\\Tests\\\\Persistence\\\\RuntimeReflectionPropertyTestProxyMock\\:\\:__setInitialized\\(\\) has parameter \\$initialized with no type specified\\.$#"
 			count: 1
 			path: tests/Persistence/RuntimeReflectionPropertyTest.php
-
-		-
-			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\RuntimeReflectionPropertyTestProxyMock\\:\\:\\$checkedProperty \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: tests/Persistence/RuntimeReflectionPropertyTest.php
-
-		-
-			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$nonTypedDefaultProperty is never read, only written\\.$#"
-			count: 1
-			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
-
-		-
-			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$nonTypedNoDefaultProperty is unused\\.$#"
-			count: 1
-			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
-
-		-
-			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$typedDefaultProperty is never read, only written\\.$#"
-			count: 1
-			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
-
-		-
-			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Mapping\\\\RuntimeReflectionServiceTest\\:\\:\\$typedNoDefaultProperty is unused\\.$#"
-			count: 1
-			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
-
-		-
-			message: "#^Property Doctrine\\\\Tests_PHP74\\\\Persistence\\\\Reflection\\\\TypedFoo\\:\\:\\$id is never read, only written\\.$#"
-			count: 1
-			path: tests_php74/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php

@@ -21,8 +21,8 @@ use function is_dir;
 use function preg_match;
 use function preg_quote;
 use function realpath;
+use function str_contains;
 use function str_replace;
-use function strpos;
 
 /**
  * The ColocatedMappingDriver reads the mapping metadata located near the code.
@@ -34,21 +34,17 @@ trait ColocatedMappingDriver
      *
      * @var array<int, string>
      */
-    protected $paths = [];
+    protected array $paths = [];
 
     /**
      * The paths excluded from path where to look for mapping files.
      *
      * @var array<int, string>
      */
-    protected $excludePaths = [];
+    protected array $excludePaths = [];
 
-    /**
-     * The file extension of mapping documents.
-     *
-     * @var string
-     */
-    protected $fileExtension = '.php';
+    /** The file extension of mapping documents. */
+    protected string $fileExtension = '.php';
 
     /**
      * Cache for getAllClassNames().
@@ -56,16 +52,14 @@ trait ColocatedMappingDriver
      * @var array<int, string>|null
      * @psalm-var list<class-string>|null
      */
-    protected $classNames;
+    protected array|null $classNames = null;
 
     /**
      * Appends lookup paths to metadata driver.
      *
      * @param array<int, string> $paths
-     *
-     * @return void
      */
-    public function addPaths(array $paths)
+    public function addPaths(array $paths): void
     {
         $this->paths = array_unique(array_merge($this->paths, $paths));
     }
@@ -75,7 +69,7 @@ trait ColocatedMappingDriver
      *
      * @return array<int, string>
      */
-    public function getPaths()
+    public function getPaths(): array
     {
         return $this->paths;
     }
@@ -84,10 +78,8 @@ trait ColocatedMappingDriver
      * Append exclude lookup paths to metadata driver.
      *
      * @param string[] $paths
-     *
-     * @return void
      */
-    public function addExcludePaths(array $paths)
+    public function addExcludePaths(array $paths): void
     {
         $this->excludePaths = array_unique(array_merge($this->excludePaths, $paths));
     }
@@ -97,27 +89,19 @@ trait ColocatedMappingDriver
      *
      * @return array<int, string>
      */
-    public function getExcludePaths()
+    public function getExcludePaths(): array
     {
         return $this->excludePaths;
     }
 
-    /**
-     * Gets the file extension used to look for mapping files under.
-     *
-     * @return string
-     */
-    public function getFileExtension()
+    /** Gets the file extension used to look for mapping files under. */
+    public function getFileExtension(): string
     {
         return $this->fileExtension;
     }
 
-    /**
-     * Sets the file extension used to look for mapping files under.
-     *
-     * @return void
-     */
-    public function setFileExtension(string $fileExtension)
+    /** Sets the file extension used to look for mapping files under. */
+    public function setFileExtension(string $fileExtension): void
     {
         $this->fileExtension = $fileExtension;
     }
@@ -129,10 +113,8 @@ trait ColocatedMappingDriver
      * classes, that is entities and mapped superclasses, should have their metadata loaded.
      *
      * @psalm-param class-string $className
-     *
-     * @return bool
      */
-    abstract public function isTransient(string $className);
+    abstract public function isTransient(string $className): bool;
 
     /**
      * Gets the names of all mapped classes known to this driver.
@@ -140,7 +122,7 @@ trait ColocatedMappingDriver
      * @return string[] The names of all mapped classes known to this driver.
      * @psalm-return list<class-string>
      */
-    public function getAllClassNames()
+    public function getAllClassNames(): array
     {
         if ($this->classNames !== null) {
             return $this->classNames;
@@ -161,10 +143,10 @@ trait ColocatedMappingDriver
             $iterator = new RegexIterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
-                    RecursiveIteratorIterator::LEAVES_ONLY
+                    RecursiveIteratorIterator::LEAVES_ONLY,
                 ),
                 '/^.+' . preg_quote($this->fileExtension) . '$/i',
-                RecursiveRegexIterator::GET_MATCH
+                RecursiveRegexIterator::GET_MATCH,
             );
 
             foreach ($iterator as $file) {
@@ -180,7 +162,7 @@ trait ColocatedMappingDriver
                     $exclude = str_replace('\\', '/', $realExcludePath);
                     $current = str_replace('\\', '/', $sourceFile);
 
-                    if (strpos($current, $exclude) !== false) {
+                    if (str_contains($current, $exclude)) {
                         continue 2;
                     }
                 }

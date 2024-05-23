@@ -14,16 +14,9 @@ use ReflectionClass;
  */
 final class TestClassMetadata implements ClassMetadata
 {
-    /**
-     * @var string
-     * @psalm-var class-string<T>
-     */
-    private $className;
-
     /** @psalm-param class-string<T> $className */
-    public function __construct(string $className)
+    public function __construct(private readonly string $className)
     {
-        $this->className = $className;
     }
 
     public function getName(): string
@@ -54,26 +47,17 @@ final class TestClassMetadata implements ClassMetadata
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function hasAssociation(string $fieldName)
+    public function hasAssociation(string $fieldName): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isSingleValuedAssociation(string $fieldName)
+    public function isSingleValuedAssociation(string $fieldName): bool
     {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isCollectionValuedAssociation(string $fieldName)
+    public function isCollectionValuedAssociation(string $fieldName): bool
     {
         return false;
     }
@@ -102,18 +86,12 @@ final class TestClassMetadata implements ClassMetadata
         return [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getTypeOfField(string $fieldName)
+    public function getTypeOfField(string $fieldName): never
     {
         throw new LogicException('Not implemented');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getAssociationTargetClass(string $assocName)
+    public function getAssociationTargetClass(string $assocName): never
     {
         throw new LogicException('Not implemented');
     }
@@ -123,10 +101,7 @@ final class TestClassMetadata implements ClassMetadata
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getAssociationMappedByTargetField(string $assocName)
+    public function getAssociationMappedByTargetField(string $assocName): never
     {
         throw new LogicException('Not implemented');
     }

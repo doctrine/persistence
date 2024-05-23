@@ -22,8 +22,7 @@ use function version_compare;
  */
 class RuntimeReflectionService implements ReflectionService
 {
-    /** @var bool */
-    private $supportsTypedPropertiesWorkaround;
+    private readonly bool $supportsTypedPropertiesWorkaround;
 
     public function __construct()
     {
@@ -33,7 +32,7 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getParentClasses(string $class)
+    public function getParentClasses(string $class): array
     {
         if (! class_exists($class)) {
             throw MappingException::nonExistingClass($class);
@@ -46,20 +45,14 @@ class RuntimeReflectionService implements ReflectionService
         return $parents;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getClassShortName(string $class)
+    public function getClassShortName(string $class): string
     {
         $reflectionClass = new ReflectionClass($class);
 
         return $reflectionClass->getShortName();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getClassNamespace(string $class)
+    public function getClassNamespace(string $class): string
     {
         $reflectionClass = new ReflectionClass($class);
 
@@ -69,20 +62,16 @@ class RuntimeReflectionService implements ReflectionService
     /**
      * @psalm-param class-string<T> $class
      *
-     * @return ReflectionClass
      * @psalm-return ReflectionClass<T>
      *
      * @template T of object
      */
-    public function getClass(string $class)
+    public function getClass(string $class): ReflectionClass
     {
         return new ReflectionClass($class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getAccessibleProperty(string $class, string $property)
+    public function getAccessibleProperty(string $class, string $property): RuntimeReflectionProperty
     {
         $reflectionProperty = new RuntimeReflectionProperty($class, $property);
 
@@ -95,14 +84,11 @@ class RuntimeReflectionService implements ReflectionService
         return $reflectionProperty;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function hasPublicMethod(string $class, string $method)
+    public function hasPublicMethod(string $class, string $method): bool
     {
         try {
             $reflectionMethod = new ReflectionMethod($class, $method);
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             return false;
         }
 

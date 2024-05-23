@@ -12,22 +12,16 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
  */
 class PHPDriver extends FileDriver
 {
-    /**
-     * @var ClassMetadata
-     * @psalm-var ClassMetadata<object>
-     */
-    protected $metadata;
+    /** @psalm-var ClassMetadata<object> */
+    protected ClassMetadata $metadata;
 
     /** @param string|array<int, string>|FileLocator $locator */
-    public function __construct($locator)
+    public function __construct(string|array|FileLocator $locator)
     {
         parent::__construct($locator, '.php');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function loadMetadataForClass(string $className, ClassMetadata $metadata)
+    public function loadMetadataForClass(string $className, ClassMetadata $metadata): void
     {
         $this->metadata = $metadata;
 
@@ -37,7 +31,7 @@ class PHPDriver extends FileDriver
     /**
      * {@inheritDoc}
      */
-    protected function loadMappingFile(string $file)
+    protected function loadMappingFile(string $file): array
     {
         $metadata = $this->metadata;
         include $file;

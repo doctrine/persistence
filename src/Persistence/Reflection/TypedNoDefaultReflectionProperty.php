@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Reflection;
 
 use Closure;
-use ReturnTypeWillChange;
 
 use function assert;
 
@@ -20,13 +19,8 @@ class TypedNoDefaultReflectionProperty extends RuntimeReflectionProperty
      * Checks that a typed property is initialized before accessing its value.
      * This is necessary to avoid PHP error "Error: Typed property must not be accessed before initialization".
      * Should be used only for reflecting typed properties without a default value.
-     *
-     * @param object|null $object
-     *
-     * @return mixed
      */
-    #[ReturnTypeWillChange]
-    public function getValue($object = null)
+    public function getValue(object|null $object = null): mixed
     {
         return $object !== null && $this->isInitialized($object) ? parent::getValue($object) : null;
     }
@@ -40,11 +34,8 @@ class TypedNoDefaultReflectionProperty extends RuntimeReflectionProperty
      * @link https://github.com/doctrine/orm/issues/7999
      *
      * @param object|null $object
-     *
-     * @return void
      */
-    #[ReturnTypeWillChange]
-    public function setValue($object, $value = null)
+    public function setValue(mixed $object, mixed $value = null): void
     {
         if ($value === null && $this->hasType() && ! $this->getType()->allowsNull()) {
             $propertyName = $this->getName();

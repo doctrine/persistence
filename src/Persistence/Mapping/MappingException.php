@@ -14,19 +14,15 @@ use function sprintf;
  */
 class MappingException extends Exception
 {
-    /**
-     * @param array<int, string> $namespaces
-     *
-     * @return self
-     */
+    /** @param array<int, string> $namespaces */
     public static function classNotFoundInNamespaces(
         string $className,
-        array $namespaces
-    ) {
+        array $namespaces,
+    ): self {
         return new self(sprintf(
             "The class '%s' was not found in the chain configured namespaces %s",
             $className,
-            implode(', ', $namespaces)
+            implode(', ', $namespaces),
         ));
     }
 
@@ -35,14 +31,13 @@ class MappingException extends Exception
     {
         return new self(sprintf(
             'Specifying the paths to your entities is required when using %s to retrieve all class names.',
-            $driverClassName
+            $driverClassName,
         ));
     }
 
-    /** @return self */
     public static function fileMappingDriversRequireConfiguredDirectoryPath(
-        ?string $path = null
-    ) {
+        string|null $path = null,
+    ): self {
         if ($path !== null) {
             $path = '[' . $path . ']';
         }
@@ -50,32 +45,29 @@ class MappingException extends Exception
         return new self(sprintf(
             'File mapping drivers must have a valid directory path, ' .
             'however the given path %s seems to be incorrect!',
-            (string) $path
+            (string) $path,
         ));
     }
 
-    /** @return self */
-    public static function mappingFileNotFound(string $entityName, string $fileName)
+    public static function mappingFileNotFound(string $entityName, string $fileName): self
     {
         return new self(sprintf(
             "No mapping file found named '%s' for class '%s'.",
             $fileName,
-            $entityName
+            $entityName,
         ));
     }
 
-    /** @return self */
-    public static function invalidMappingFile(string $entityName, string $fileName)
+    public static function invalidMappingFile(string $entityName, string $fileName): self
     {
         return new self(sprintf(
             "Invalid mapping file '%s' for class '%s'.",
             $fileName,
-            $entityName
+            $entityName,
         ));
     }
 
-    /** @return self */
-    public static function nonExistingClass(string $className)
+    public static function nonExistingClass(string $className): self
     {
         return new self(sprintf("Class '%s' does not exist", $className));
     }

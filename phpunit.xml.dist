@@ -8,8 +8,6 @@
     <testsuites>
         <testsuite name="Doctrine Persistence Test Suite">
             <directory>tests</directory>
-            <directory phpVersion="7.4" phpVersionOperator=">=">tests_php74</directory>
-            <directory phpVersion="8.1" phpVersionOperator=">=">tests_php81</directory>
         </testsuite>
     </testsuites>
 

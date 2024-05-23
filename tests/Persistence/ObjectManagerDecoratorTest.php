@@ -14,11 +14,9 @@ use PHPUnit\Framework\TestCase;
 
 class ObjectManagerDecoratorTest extends TestCase
 {
-    /** @var MockObject&ObjectManager */
-    private $wrapped;
+    private ObjectManager&MockObject $wrapped;
 
-    /** @var NullObjectManagerDecorator */
-    private $decorated;
+    private NullObjectManagerDecorator $decorated;
 
     protected function setUp(): void
     {

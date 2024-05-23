@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
+use ReflectionClass;
+use ReflectionProperty;
+
+use function str_contains;
 use function strpos;
 use function strrev;
 use function strrpos;
@@ -17,15 +21,12 @@ class StaticReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getParentClasses(string $class)
+    public function getParentClasses(string $class): array
     {
         return [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getClassShortName(string $class)
+    public function getClassShortName(string $class): string
     {
         $nsSeparatorLastPosition = strrpos($class, '\\');
 
@@ -36,42 +37,28 @@ class StaticReflectionService implements ReflectionService
         return $class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getClassNamespace(string $class)
+    public function getClassNamespace(string $class): string
     {
         $namespace = '';
 
-        if (strpos($class, '\\') !== false) {
+        if (str_contains($class, '\\')) {
             $namespace = strrev(substr(strrev($class), (int) strpos(strrev($class), '\\') + 1));
         }
 
         return $namespace;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return null
-     */
-    public function getClass(string $class)
+    public function getClass(string $class): ReflectionClass|null
     {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getAccessibleProperty(string $class, string $property)
+    public function getAccessibleProperty(string $class, string $property): ReflectionProperty|null
     {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function hasPublicMethod(string $class, string $method)
+    public function hasPublicMethod(string $class, string $method): bool
     {
         return true;
     }

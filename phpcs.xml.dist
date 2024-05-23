@@ -9,29 +9,13 @@
     <!-- Ignore warnings and show progress of the run -->
     <arg value="nps"/>
 
-    <config name="php_version" value="70200"/>
+    <config name="php_version" value="80100"/>
 
     <file>src</file>
     <file>tests</file>
 
     <rule ref="Doctrine">
-        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>
         <exclude name="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly.ReferencedGeneralException"/>
-    </rule>
-
-    <!-- Disable the rules that will require PHP 7.4 -->
-    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
-        <properties>
-            <property name="enableNativeTypeHint" value="false"/>
-        </properties>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
-        <exclude-pattern>src/*</exclude-pattern>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
-        <exclude-pattern>src/*</exclude-pattern>
     </rule>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">

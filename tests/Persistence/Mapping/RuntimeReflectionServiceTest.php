@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Persistence\Mapping;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Persistence\Mapping\RuntimeReflectionService;
 use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
+use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -15,11 +16,19 @@ use function count;
 /** @group DCOM-93 */
 class RuntimeReflectionServiceTest extends TestCase
 {
-    /** @var RuntimeReflectionService */
-    private $reflectionService;
+    private RuntimeReflectionService $reflectionService;
 
-    /** @var mixed */
-    public $unusedPublicProperty;
+    public mixed $unusedPublicProperty;
+
+    private string $typedNoDefaultProperty;
+    private string $typedDefaultProperty = '';
+    private string $nonTypedNoDefaultProperty; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
+    private string $nonTypedDefaultProperty = ''; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
+
+    public string $typedNoDefaultPublicProperty;
+    public string $typedDefaultPublicProperty = '';
+    public string $nonTypedNoDefaultPublicProperty;
+    public string $nonTypedDefaultPublicProperty = '';
 
     protected function setUp(): void
     {
@@ -61,6 +70,53 @@ class RuntimeReflectionServiceTest extends TestCase
         self::assertInstanceOf(RuntimeReflectionService::class, $reflProp->getValue($this));
 
         $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'unusedPublicProperty');
+        self::assertInstanceOf(RuntimeReflectionProperty::class, $reflProp);
+    }
+
+    public function testGetTypedNoDefaultReflectionProperty(): void
+    {
+        $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'typedNoDefaultProperty');
+        self::assertInstanceOf(TypedNoDefaultReflectionProperty::class, $reflProp);
+    }
+
+    public function testGetTypedDefaultReflectionProperty(): void
+    {
+        $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'typedDefaultProperty');
+        self::assertInstanceOf(ReflectionProperty::class, $reflProp);
+        self::assertNotInstanceOf(TypedNoDefaultReflectionProperty::class, $reflProp);
+    }
+
+    public function testGetTypedPublicNoDefaultPropertyWorksWithGetValue(): void
+    {
+        $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'typedNoDefaultPublicProperty');
+        self::assertInstanceOf(RuntimeReflectionProperty::class, $reflProp);
+        self::assertInstanceOf(TypedNoDefaultReflectionProperty::class, $reflProp);
+        self::assertNull($reflProp->getValue($this));
+    }
+
+    public function testGetNonTypedNoDefaultReflectionProperty(): void
+    {
+        $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'nonTypedNoDefaultProperty');
+        self::assertInstanceOf(ReflectionProperty::class, $reflProp);
+    }
+
+    public function testGetNonTypedDefaultReflectionProperty(): void
+    {
+        $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'nonTypedDefaultProperty');
+        self::assertInstanceOf(ReflectionProperty::class, $reflProp);
+        self::assertNotInstanceOf(TypedNoDefaultReflectionProperty::class, $reflProp);
+    }
+
+    public function testGetTypedPublicDefaultPropertyWorksWithGetValue(): void
+    {
+        $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'typedDefaultPublicProperty');
+        self::assertInstanceOf(ReflectionProperty::class, $reflProp);
+        self::assertNotInstanceOf(TypedNoDefaultReflectionProperty::class, $reflProp);
+    }
+
+    public function testGetNonTypedPublicDefaultPropertyWorksWithGetValue(): void
+    {
+        $reflProp = $this->reflectionService->getAccessibleProperty(self::class, 'nonTypedDefaultPublicProperty');
         self::assertInstanceOf(RuntimeReflectionProperty::class, $reflProp);
     }
 }

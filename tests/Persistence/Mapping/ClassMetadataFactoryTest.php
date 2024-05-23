@@ -19,11 +19,8 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 /** @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory */
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
-    /**
-     * @var TestClassMetadataFactory
-     * @psalm-var TestClassMetadataFactory<ClassMetadata<object>>
-     */
-    private $cmf;
+    /** @psalm-var TestClassMetadataFactory<ClassMetadata<object>> */
+    private TestClassMetadataFactory $cmf;
 
     protected function setUp(): void
     {
@@ -93,18 +90,14 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     {
         $classMetadata = $this->createMock(ClassMetadata::class);
 
-        $this->cmf->fallbackCallback = static function () use ($classMetadata) {
-            return $classMetadata;
-        };
+        $this->cmf->fallbackCallback = static fn () => $classMetadata;
 
         self::assertSame($classMetadata, $this->cmf->getMetadataFor(Foo::class));
     }
 
     public function testWillFailOnFallbackFailureWithNotLoadedMetadata(): void
     {
-        $this->cmf->fallbackCallback = static function () {
-            return null;
-        };
+        $this->cmf->fallbackCallback = static fn () => null;
 
         $this->expectException(MappingException::class);
         $this->expectExceptionMessage("Class 'Foo' does not exist");
@@ -185,15 +178,13 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
         $this->cmf->setCache($cacheDriver);
 
-        $this->cmf->fallbackCallback = static function () use ($metadata): ClassMetadata {
-            return $metadata;
-        };
+        $this->cmf->fallbackCallback = static fn (): ClassMetadata => $metadata;
 
         self::assertSame($metadata, $this->cmf->getMetadataFor(Foo::class));
     }
 
     /** @psalm-param AbstractClassMetadataFactory<ClassMetadata<object>> $classMetadataFactory */
-    private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): ?CacheItemPoolInterface
+    private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): CacheItemPoolInterface|null
     {
         $method = new ReflectionMethod($classMetadataFactory, 'getCache');
         $method->setAccessible(true);
