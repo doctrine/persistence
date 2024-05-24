@@ -6,6 +6,11 @@ parameters:
 			path: src/Persistence/Mapping/Driver/StaticPHPDriver.php
 
 		-
+			message: "#^Call to function method_exists\\(\\) with TObjectManager of Doctrine\\\\Persistence\\\\ObjectManager and 'isUninitializedObje…' will always evaluate to true\\.$#"
+			count: 1
+			path: src/Persistence/ObjectManagerDecorator.php
+
+		-
 			message: "#^Doctrine\\\\Persistence\\\\Reflection\\\\EnumReflectionProperty\\:\\:__construct\\(\\) does not call parent constructor from ReflectionProperty\\.$#"
 			count: 1
 			path: src/Persistence/Reflection/EnumReflectionProperty.php
