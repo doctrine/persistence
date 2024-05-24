@@ -30,7 +30,7 @@
         "phpstan/phpstan-strict-rules": "^1.1",
         "doctrine/coding-standard": "^12",
         "doctrine/common": "^3.0",
-        "phpunit/phpunit": "^8.5 || ^9.5",
+        "phpunit/phpunit": "^8.5.38 || ^9.5",
         "symfony/cache": "^4.4 || ^5.4 || ^6.0",
         "vimeo/psalm": "4.30.0 || 5.24.0"
     },
