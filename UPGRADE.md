@@ -8,6 +8,11 @@ awareness about deprecated code.
 
 # Upgrade to 4.0
 
+## BC Break: Added `ObjectManager::isUninitializedObject()`
+
+Classes implementing `Doctrine\Persistence\ObjectManager` must implement this
+new method.
+
 ## BC Break: Added type declarations
 
 The code base is now fully typed, meaning properties, parameters and return

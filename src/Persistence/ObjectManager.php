@@ -7,11 +7,7 @@ namespace Doctrine\Persistence;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 
-/**
- * Contract for a Doctrine persistence layer ObjectManager class to implement.
- *
- * @method bool isUninitializedObject(mixed $value) Implementing this method will be mandatory in version 4.
- */
+/** Contract for a Doctrine persistence layer ObjectManager class to implement. */
 interface ObjectManager
 {
     /**
@@ -121,6 +117,9 @@ interface ObjectManager
      * This method is a no-op for other objects.
      */
     public function initializeObject(object $obj): void;
+
+    /** Helper method to check whether a lazy loading proxy or persistent collection has been initialized. */
+    public function isUninitializedObject(mixed $value): bool;
 
     /**
      * Checks if the object is part of the current UnitOfWork and therefore managed.
