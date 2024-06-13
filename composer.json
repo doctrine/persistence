@@ -25,15 +25,14 @@
         "psr/cache": "^1.0 || ^2.0 || ^3.0"
     },
     "require-dev": {
-        "composer/package-versions-deprecated": "^1.11",
-        "phpstan/phpstan": "1.9.4",
+        "phpstan/phpstan": "1.11.1",
         "phpstan/phpstan-phpunit": "^1",
         "phpstan/phpstan-strict-rules": "^1.1",
-        "doctrine/coding-standard": "^11",
+        "doctrine/coding-standard": "^12",
         "doctrine/common": "^3.0",
         "phpunit/phpunit": "^8.5 || ^9.5",
         "symfony/cache": "^4.4 || ^5.4 || ^6.0",
-        "vimeo/psalm": "4.30.0 || 5.3.0"
+        "vimeo/psalm": "4.30.0 || 5.24.0"
     },
     "conflict": {
         "doctrine/common": "<2.10"

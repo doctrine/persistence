@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.3.0@b6faa3e96b8eb50ec71384c53799b8a107236bb6">
-  <file src="src/Persistence/AbstractManagerRegistry.php">
-    <PossiblyNullReference occurrences="1">
-      <code>getName</code>
-    </PossiblyNullReference>
-    <TypeDoesNotContainType occurrences="1">
-      <code>$parentClass === false</code>
-    </TypeDoesNotContainType>
+<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+  <file src="src/Persistence/Mapping/AbstractClassMetadataFactory.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$class]]></code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Persistence/Mapping/Driver/SymfonyFileLocator.php">
+    <PossiblyInvalidOperand>
+      <code><![CDATA[str_replace($this->nsSeparator, '\\', $fileName)]]></code>
+    </PossiblyInvalidOperand>
+  </file>
+  <file src="src/Persistence/Reflection/EnumReflectionProperty.php">
+    <InvalidArgument>
+      <code><![CDATA[$name]]></code>
+    </InvalidArgument>
+    <InvalidReturnStatement>
+      <code><![CDATA[$value]]></code>
+    </InvalidReturnStatement>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$value]]></code>
+    </PossiblyInvalidArgument>
   </file>
 </files>

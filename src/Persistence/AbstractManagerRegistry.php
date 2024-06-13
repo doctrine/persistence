@@ -89,7 +89,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getConnection(?string $name = null)
     {
@@ -107,7 +107,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getConnectionNames()
     {
@@ -115,7 +115,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getConnections()
     {
@@ -128,7 +128,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDefaultConnectionName()
     {
@@ -136,7 +136,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDefaultManagerName()
     {
@@ -144,7 +144,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws InvalidArgumentException
      */
@@ -195,7 +195,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getManagerNames()
     {
@@ -203,7 +203,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getManagers()
     {
@@ -218,7 +218,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getRepository(
         string $persistentObject,
@@ -230,7 +230,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function resetManager(?string $name = null)
     {

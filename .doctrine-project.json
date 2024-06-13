@@ -5,20 +5,22 @@
     "docsSlug": "doctrine-persistence",
     "versions": [
         {
-            "name": "3.3",
-            "branchName": "3.3.x",
+            "name": "3.4",
+            "branchName": "3.4.x",
             "slug": "latest",
             "upcoming": true
+        },
+        {
+            "name": "3.3",
+            "branchName": "3.3.x",
+            "slug": "3.3",
+            "current": true
         },
         {
             "name": "3.2",
             "branchName": "3.2.x",
             "slug": "3.2",
-            "current": true,
-            "aliases": [
-                "current",
-                "stable"
-            ]
+            "maintained": false
         },
         {
             "name": "3.1",
@@ -36,7 +38,7 @@
             "name": "2.5",
             "branchName": "2.5.x",
             "slug": "2.5",
-            "maintained": true
+            "maintained": false
         },
         {
             "name": "2.4",
