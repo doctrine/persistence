@@ -7,6 +7,7 @@ namespace Doctrine\Persistence;
 use InvalidArgumentException;
 use ReflectionClass;
 
+use function assert;
 use function sprintf;
 
 /**
@@ -63,7 +64,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      *
      * @param string $name The name of the service.
      *
-     * @return ObjectManager The instance of the given service.
+     * @return object The instance of the given service.
      */
     abstract protected function getService(string $name);
 
@@ -160,7 +161,10 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
             );
         }
 
-        return $this->getService($this->managers[$name]);
+        $service = $this->getService($this->managers[$name]);
+        assert($service instanceof ObjectManager);
+
+        return $service;
     }
 
     /**
@@ -185,6 +189,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
 
         foreach ($this->managers as $id) {
             $manager = $this->getService($id);
+            assert($manager instanceof ObjectManager);
 
             if (! $manager->getMetadataFactory()->isTransient($class)) {
                 return $manager;
@@ -210,7 +215,8 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         $managers = [];
 
         foreach ($this->managers as $name => $id) {
-            $manager         = $this->getService($id);
+            $manager = $this->getService($id);
+            assert($manager instanceof ObjectManager);
             $managers[$name] = $manager;
         }
 
