@@ -36,9 +36,9 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      *
      * @param string $name The name of the service.
      *
-     * @return ObjectManager The instance of the given service.
+     * @return object The instance of the given service.
      */
-    abstract protected function getService(string $name): ObjectManager;
+    abstract protected function getService(string $name): object;
 
     /**
      * Resets the given services.
@@ -55,7 +55,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $this->name;
     }
 
-    public function getConnection(string|null $name = null): ObjectManager
+    public function getConnection(string|null $name = null): object
     {
         if ($name === null) {
             $name = $this->defaultConnection;
