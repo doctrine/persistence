@@ -71,7 +71,7 @@ abstract class FileDriver implements MappingDriver
      *
      * @throws MappingException
      */
-    public function getElement(string $className): ClassMetadata
+    public function getElement(string $className)
     {
         if ($this->classCache === null) {
             $this->initialize();
@@ -139,7 +139,7 @@ abstract class FileDriver implements MappingDriver
      * @return ClassMetadata[]
      * @psalm-return array<class-string, ClassMetadata<object>>
      */
-    abstract protected function loadMappingFile(string $file): array;
+    abstract protected function loadMappingFile(string $file);
 
     /**
      * Initializes the class cache from all the global files.

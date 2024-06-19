@@ -35,7 +35,7 @@ interface ClassMetadata
      *
      * @return ReflectionClass<T>
      */
-    public function getReflectionClass(): ReflectionClass;
+    public function getReflectionClass();
 
     /** Checks if the given field name is a mapped identifier for this class. */
     public function isIdentifier(string $fieldName): bool;
