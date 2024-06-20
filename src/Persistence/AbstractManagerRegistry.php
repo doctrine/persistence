@@ -7,6 +7,7 @@ namespace Doctrine\Persistence;
 use InvalidArgumentException;
 use ReflectionClass;
 
+use function assert;
 use function sprintf;
 
 /**
@@ -36,9 +37,9 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      *
      * @param string $name The name of the service.
      *
-     * @return ObjectManager The instance of the given service.
+     * @return object The instance of the given service.
      */
-    abstract protected function getService(string $name): ObjectManager;
+    abstract protected function getService(string $name): object;
 
     /**
      * Resets the given services.
@@ -55,7 +56,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $this->name;
     }
 
-    public function getConnection(string|null $name = null): ObjectManager
+    public function getConnection(string|null $name = null): object
     {
         if ($name === null) {
             $name = $this->defaultConnection;
@@ -118,7 +119,10 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
             );
         }
 
-        return $this->getService($this->managers[$name]);
+        $service = $this->getService($this->managers[$name]);
+        assert($service instanceof ObjectManager);
+
+        return $service;
     }
 
     public function getManagerForClass(string $class): ObjectManager|null
@@ -140,6 +144,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
 
         foreach ($this->managers as $id) {
             $manager = $this->getService($id);
+            assert($manager instanceof ObjectManager);
 
             if (! $manager->getMetadataFactory()->isTransient($class)) {
                 return $manager;
@@ -165,7 +170,8 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         $managers = [];
 
         foreach ($this->managers as $name => $id) {
-            $manager         = $this->getService($id);
+            $manager = $this->getService($id);
+            assert($manager instanceof ObjectManager);
             $managers[$name] = $manager;
         }
 

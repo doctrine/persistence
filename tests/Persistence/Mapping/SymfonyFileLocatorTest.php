@@ -93,7 +93,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
     }
 
     /** @return array<string, array{string, string}> */
-    public function customNamespaceSeparatorProvider(): array
+    public static function customNamespaceSeparatorProvider(): array
     {
         return [
             'directory separator' => [DIRECTORY_SEPARATOR, '/_custom_ns/dir'],
@@ -122,7 +122,7 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
     }
 
     /** @return array<array{string, string, array<string, string>}> */
-    public function customNamespaceLookupQueryProvider(): array
+    public static function customNamespaceLookupQueryProvider(): array
     {
         return [
             'directory separator'  => [

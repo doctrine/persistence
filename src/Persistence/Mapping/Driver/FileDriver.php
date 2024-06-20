@@ -20,14 +20,16 @@ use function str_replace;
  * classes on demand. This requires the user to adhere to the convention of 1 mapping
  * file per class and the file names of the mapping files must correspond to the full
  * class name, including namespace, with the namespace delimiters '\', replaced by dots '.'.
+ *
+ * @template T
  */
 abstract class FileDriver implements MappingDriver
 {
     protected FileLocator $locator;
 
     /**
-     * @var ClassMetadata[]|null
-     * @psalm-var array<class-string, ClassMetadata<object>>|null
+     * @var mixed[]|null
+     * @psalm-var array<class-string, T>|null
      */
     protected array|null $classCache = null;
     protected string $globalBasename = '';
@@ -66,12 +68,11 @@ abstract class FileDriver implements MappingDriver
      *
      * @psalm-param class-string $className
      *
-     * @return ClassMetadata The element of schema meta data.
-     * @psalm-return ClassMetadata<object>
+     * @return T The element of schema meta data.
      *
      * @throws MappingException
      */
-    public function getElement(string $className): ClassMetadata
+    public function getElement(string $className): mixed
     {
         if ($this->classCache === null) {
             $this->initialize();
@@ -136,8 +137,8 @@ abstract class FileDriver implements MappingDriver
      *
      * @param string $file The mapping file to load.
      *
-     * @return ClassMetadata[]
-     * @psalm-return array<class-string, ClassMetadata<object>>
+     * @return mixed[]
+     * @psalm-return array<class-string, T>
      */
     abstract protected function loadMappingFile(string $file): array;
 

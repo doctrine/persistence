@@ -9,7 +9,7 @@ use LogicException;
 use ReflectionClass;
 
 /**
- * @template T of object
+ * @template-covariant T of object
  * @template-implements ClassMetadata<T>
  */
 final class TestClassMetadata implements ClassMetadata
