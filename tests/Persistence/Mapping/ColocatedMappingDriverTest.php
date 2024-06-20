@@ -65,7 +65,7 @@ class ColocatedMappingDriverTest extends TestCase
     }
 
     /** @return Generator<string, array{string}> */
-    public function pathProvider(): Generator
+    public static function pathProvider(): Generator
     {
         yield 'straigthforward path' => [__DIR__ . '/_files/colocated'];
         yield 'winding path' => [__DIR__ . '/../Mapping/_files/colocated'];
