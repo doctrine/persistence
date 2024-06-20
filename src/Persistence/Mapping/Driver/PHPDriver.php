@@ -9,6 +9,8 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 /**
  * The PHPDriver includes php files which just populate ClassMetadataInfo
  * instances with plain PHP code.
+ *
+ * @template-extends FileDriver<ClassMetadata<object>>
  */
 class PHPDriver extends FileDriver
 {
