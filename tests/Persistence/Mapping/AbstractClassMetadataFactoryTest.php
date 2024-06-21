@@ -108,13 +108,11 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
         $cache = $this->createMock(CacheItemPoolInterface::class);
         $cmf->setCache($cache);
 
-        $cache->method('getItem')->willReturn($this->createConfiguredMock(CacheItemInterface::class, ['get' => null]));
-
         $cacheItem = $this->createMock(CacheItemInterface::class);
         $cacheItem->method('getKey')->willReturn('prefix__Doctrine__Tests__Persistence__Mapping__SomeOtherEntity__CLASSMETADATA__'); //Cache item's key is prefixed
-        $cache->method('getItems')
-            ->with(['Doctrine__Tests__Persistence__Mapping__SomeOtherEntity__CLASSMETADATA__']) //Key which is generated from class name is not prefixed
-            ->willReturn([$cacheItem]);
+        $cache->method('getItem')
+            ->with('Doctrine__Tests__Persistence__Mapping__SomeOtherEntity__CLASSMETADATA__') //Key which is generated from class name is not prefixed
+            ->willReturn($cacheItem);
 
         $cacheItem->expects(self::once())->method('set');
         $cache->expects(self::once())->method('saveDeferred');
