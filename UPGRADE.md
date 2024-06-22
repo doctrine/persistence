@@ -6,6 +6,13 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 3.4
+
+## Deprecated `StaticReflectionService`
+
+The class `Doctrine\Persistence\Mapping\StaticReflectionService` is deprecated
+without replacement.
+
 # Upgrade to 3.3
 
 ## Added method `ObjectManager::isUninitializedObject()`
