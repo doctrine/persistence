@@ -11,6 +11,8 @@ use function substr;
 
 /**
  * PHP Runtime Reflection Service.
+ *
+ * @deprecated No replacement planned
  */
 class StaticReflectionService implements ReflectionService
 {
