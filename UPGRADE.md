@@ -30,6 +30,13 @@ Deprecated classes have been removed:
 - `Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty`
 - `Doctrine\Persistence\Reflection\TypedNoDefaultRuntimePublicReflectionProperty`
 
+# Upgrade to 3.4
+
+## Deprecated `StaticReflectionService`
+
+The class `Doctrine\Persistence\Mapping\StaticReflectionService` is deprecated
+without replacement.
+
 # Upgrade to 3.3
 
 ## Added method `ObjectManager::isUninitializedObject()`
