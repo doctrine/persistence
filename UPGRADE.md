@@ -8,6 +8,16 @@ awareness about deprecated code.
 
 # Upgrade to 4.0
 
+## BC Break: Removed `StaticReflectionService`
+
+The class `Doctrine\Persistence\Mapping\StaticReflectionService` is removed
+without replacement.
+
+## BC Break: Narrowed `ReflectionService::getClass()` return type
+
+The return type of `ReflectionService::getClass()` has been narrowed so that
+`null` is no longer a valid return value.
+
 ## BC Break: Added `ObjectManager::isUninitializedObject()`
 
 Classes implementing `Doctrine\Persistence\ObjectManager` must implement this

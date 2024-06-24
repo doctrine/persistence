@@ -42,11 +42,11 @@ interface ReflectionService
      *
      * @psalm-param class-string<T> $class
      *
-     * @psalm-return ReflectionClass<T>|null
+     * @psalm-return ReflectionClass<T>
      *
      * @template T of object
      */
-    public function getClass(string $class): ReflectionClass|null;
+    public function getClass(string $class): ReflectionClass;
 
     /**
      * Returns an accessible property (setAccessible(true)) or null.
