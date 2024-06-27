@@ -36,7 +36,11 @@ class LoadClassMetadataEventArgs extends EventArgs
         return $this->classMetadata;
     }
 
-    /** Retrieves the associated ObjectManager. */
+    /**
+     * Retrieves the associated ObjectManager.
+     *
+     * @psalm-return TObjectManager
+     */
     public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
