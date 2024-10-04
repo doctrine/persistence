@@ -9,6 +9,8 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 use function get_class;
 
@@ -91,6 +93,31 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
 
         /** @psalm-suppress ArgumentTypeCoercion */
         self::assertSame($cmf->getMetadataFor(SomeOtherEntity::class), $cmf->getMetadataFor('\\' . SomeOtherEntity::class));
+    }
+
+    public function testCacheStoredWithPrefixedKeys(): void
+    {
+        $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
+        $cmf
+            ->method('newClassMetadataInstance')
+            ->with(SomeOtherEntity::class)
+            ->willReturn(
+                $this->createStub(ClassMetadata::class)
+            );
+
+        $cache = $this->createMock(CacheItemPoolInterface::class);
+        $cmf->setCache($cache);
+
+        $cacheItem = $this->createMock(CacheItemInterface::class);
+        $cacheItem->method('getKey')->willReturn('prefix__Doctrine__Tests__Persistence__Mapping__SomeOtherEntity__CLASSMETADATA__'); //Cache item's key is prefixed
+        $cache->method('getItem')
+            ->with('Doctrine__Tests__Persistence__Mapping__SomeOtherEntity__CLASSMETADATA__') //Key which is generated from class name is not prefixed
+            ->willReturn($cacheItem);
+
+        $cacheItem->expects(self::once())->method('set');
+        $cache->expects(self::once())->method('saveDeferred');
+
+        $cmf->getMetadataFor(SomeOtherEntity::class);
     }
 }
 

@@ -10,9 +10,6 @@ use Psr\Cache\CacheItemPoolInterface;
 use ReflectionClass;
 use ReflectionException;
 
-use function array_combine;
-use function array_keys;
-use function array_map;
 use function array_reverse;
 use function array_unshift;
 use function assert;
@@ -205,17 +202,10 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
                     $loadedMetadata = $this->loadMetadata($realClassName);
-                    $classNames     = array_combine(
-                        array_map([$this, 'getCacheKey'], $loadedMetadata),
-                        $loadedMetadata
-                    );
 
-                    foreach ($this->cache->getItems(array_keys($classNames)) as $item) {
-                        if (! isset($classNames[$item->getKey()])) {
-                            continue;
-                        }
-
-                        $item->set($this->loadedMetadata[$classNames[$item->getKey()]]);
+                    foreach ($loadedMetadata as $loadedClassName) {
+                        $item = $this->cache->getItem($this->getCacheKey($loadedClassName));
+                        $item->set($this->loadedMetadata[$loadedClassName]);
                         $this->cache->saveDeferred($item);
                     }
 
@@ -258,7 +248,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * NOTE: This is only useful in very special cases, like when generating proxy classes.
      *
      * @psalm-param class-string $className
-     * @psalm-param CMTemplate $class
+     * @psalm-param CMTemplate   $class
      *
      * @return void
      */
@@ -378,7 +368,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      *
      * @param bool               $rootEntityFound      True when there is another entity (non-mapped superclass) class above the current class in the PHP class hierarchy.
      * @param list<class-string> $nonSuperclassParents All parent class names that are not marked as mapped superclasses, with the direct parent class being the first and the root entity class the last element.
-     * @psalm-param CMTemplate $class
+     * @psalm-param CMTemplate      $class
      * @psalm-param CMTemplate|null $parent
      *
      * @return void
