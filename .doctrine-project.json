@@ -5,9 +5,15 @@
     "docsSlug": "doctrine-persistence",
     "versions": [
         {
+            "name": "4.0",
+            "branchName": "4.0.x",
+            "slug": "latest",
+            "upcoming": true
+        },
+        {
             "name": "3.4",
             "branchName": "3.4.x",
-            "slug": "latest",
+            "slug": "3.4",
             "upcoming": true
         },
         {
