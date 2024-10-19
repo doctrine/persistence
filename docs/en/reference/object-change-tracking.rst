@@ -9,6 +9,7 @@ the persistence backend.
 
 This approach is based on `the observer pattern <https://en.wikipedia.org/wiki/Observer_pattern>`_
 and consists of the following two interfaces:
+
  * ``Doctrine\Persistence\NotifyPropertyChanged`` that is implemented by the object
    whose changes can be tracked,
  * ``Doctrine\Persistence\PropertyChangedListener`` that is implemented by subscribers
