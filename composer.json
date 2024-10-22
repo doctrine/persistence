@@ -25,7 +25,7 @@
         "psr/cache": "^1.0 || ^2.0 || ^3.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "1.11.1",
+        "phpstan/phpstan": "1.12.7",
         "phpstan/phpstan-phpunit": "^1",
         "phpstan/phpstan-strict-rules": "^1.1",
         "doctrine/coding-standard": "^12",

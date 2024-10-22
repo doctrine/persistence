@@ -86,7 +86,7 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
             ->method('newClassMetadataInstance')
             ->with(SomeOtherEntity::class)
             ->willReturn(
-                $this->createStub(ClassMetadata::class)
+                self::createStub(ClassMetadata::class)
             );
 
         /** @psalm-suppress ArgumentTypeCoercion */
