@@ -16,7 +16,7 @@ class PHPDriver extends FileDriver
 {
     /**
      * @var ClassMetadata
-     * @psalm-var ClassMetadata<object>
+     * @phpstan-var ClassMetadata<object>
      */
     protected $metadata;
 

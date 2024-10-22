@@ -17,14 +17,14 @@ class LifecycleEventArgs extends EventArgs
 {
     /**
      * @var ObjectManager
-     * @psalm-var TObjectManager
+     * @phpstan-var TObjectManager
      */
     private $objectManager;
 
     /** @var object */
     private $object;
 
-    /** @psalm-param TObjectManager $objectManager */
+    /** @phpstan-param TObjectManager $objectManager */
     public function __construct(object $object, ObjectManager $objectManager)
     {
         $this->object        = $object;
@@ -45,7 +45,7 @@ class LifecycleEventArgs extends EventArgs
      * Retrieves the associated ObjectManager.
      *
      * @return ObjectManager
-     * @psalm-return TObjectManager
+     * @phpstan-return TObjectManager
      */
     public function getObjectManager()
     {
