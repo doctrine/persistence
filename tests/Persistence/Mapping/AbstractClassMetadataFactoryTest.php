@@ -59,10 +59,6 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
     {
         $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
         $this->expectException(MappingException::class);
-        /**
-         * @phpstan-suppress ArgumentTypeCoercion
-         * @phpstan-suppress UndefinedClass
-         */
         // @phpstan-ignore-next-line
         $cmf->getMetadataFor('App:Test');
     }
@@ -71,10 +67,6 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
     {
         $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
         $this->expectException(MappingException::class);
-        /**
-         * @phpstan-suppress ArgumentTypeCoercion
-         * @phpstan-suppress UndefinedClass
-         */
         // @phpstan-ignore-next-line
         $cmf->isTransient('App:Test');
     }
@@ -89,7 +81,6 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
                 self::createStub(ClassMetadata::class)
             );
 
-        /** @phpstan-suppress ArgumentTypeCoercion */
         self::assertSame($cmf->getMetadataFor(SomeOtherEntity::class), $cmf->getMetadataFor('\\' . SomeOtherEntity::class));
     }
 }
