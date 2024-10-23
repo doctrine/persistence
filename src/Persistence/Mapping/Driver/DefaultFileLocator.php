@@ -147,7 +147,7 @@ class DefaultFileLocator implements FileLocator
                 // NOTE: All files found here means classes are not transient!
 
                 assert(is_string($fileName));
-                /** @psalm-var class-string */
+                /** @phpstan-var class-string */
                 $class     = str_replace('.', '\\', $fileName);
                 $classes[] = $class;
             }

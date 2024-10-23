@@ -23,7 +23,7 @@ class PreUpdateEventArgs extends LifecycleEventArgs
 
     /**
      * @param array<string, array<int, mixed>> $changeSet
-     * @psalm-param TObjectManager $objectManager
+     * @phpstan-param TObjectManager $objectManager
      */
     public function __construct(object $entity, ObjectManager $objectManager, array &$changeSet)
     {
