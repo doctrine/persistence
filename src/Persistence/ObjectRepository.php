@@ -19,7 +19,7 @@ interface ObjectRepository
      * @param mixed $id The identifier.
      *
      * @return object|null The object.
-     * @psalm-return T|null
+     * @phpstan-return T|null
      */
     public function find($id);
 
@@ -27,7 +27,7 @@ interface ObjectRepository
      * Finds all objects in the repository.
      *
      * @return array<int, object> The objects.
-     * @psalm-return T[]
+     * @phpstan-return T[]
      */
     public function findAll();
 
@@ -40,10 +40,10 @@ interface ObjectRepository
      *
      * @param array<string, mixed>       $criteria
      * @param array<string, string>|null $orderBy
-     * @psalm-param array<string, 'asc'|'desc'|'ASC'|'DESC'>|null $orderBy
+     * @phpstan-param array<string, 'asc'|'desc'|'ASC'|'DESC'>|null $orderBy
      *
      * @return array<int, object> The objects.
-     * @psalm-return T[]
+     * @phpstan-return T[]
      *
      * @throws UnexpectedValueException
      */
@@ -60,14 +60,14 @@ interface ObjectRepository
      * @param array<string, mixed> $criteria The criteria.
      *
      * @return object|null The object.
-     * @psalm-return T|null
+     * @phpstan-return T|null
      */
     public function findOneBy(array $criteria);
 
     /**
      * Returns the class name of the object managed by the repository.
      *
-     * @psalm-return class-string<T>
+     * @phpstan-return class-string<T>
      */
     public function getClassName();
 }
