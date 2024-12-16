@@ -32,9 +32,6 @@
         "phpunit/phpunit": "^9.6",
         "symfony/cache": "^4.4 || ^5.4 || ^6.0 || ^7.0"
     },
-    "conflict": {
-        "doctrine/common": "<2.10"
-    },
     "autoload": {
         "psr-4": {
             "Doctrine\\Persistence\\": "src/Persistence"
