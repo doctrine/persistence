@@ -160,7 +160,7 @@ class ObjectManagerDecoratorTest extends TestCase
 /** @extends ObjectManagerDecorator<ObjectManager&MockObject> */
 class NullObjectManagerDecorator extends ObjectManagerDecorator
 {
-    /** @psalm-param ObjectManager&MockObject $wrapped */
+    /** @phpstan-param ObjectManager&MockObject $wrapped */
     public function __construct(ObjectManager $wrapped)
     {
         $this->wrapped = $wrapped;

@@ -21,7 +21,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 {
     /**
      * @var TestClassMetadataFactory
-     * @psalm-var TestClassMetadataFactory<ClassMetadata<object>>
+     * @phpstan-var TestClassMetadataFactory<ClassMetadata<object>>
      */
     private $cmf;
 
@@ -29,7 +29,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     {
         $driver = $this->createMock(MappingDriver::class);
 
-        /** @psalm-var ClassMetadata<object> */
+        /** @phpstan-var ClassMetadata<object> */
         $metadata  = $this->createMock(ClassMetadata::class);
         $this->cmf = new TestClassMetadataFactory($driver, $metadata);
     }
@@ -192,7 +192,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         self::assertSame($metadata, $this->cmf->getMetadataFor(Foo::class));
     }
 
-    /** @psalm-param AbstractClassMetadataFactory<ClassMetadata<object>> $classMetadataFactory */
+    /** @phpstan-param AbstractClassMetadataFactory<ClassMetadata<object>> $classMetadataFactory */
     private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): ?CacheItemPoolInterface
     {
         $method = new ReflectionMethod($classMetadataFactory, 'getCache');

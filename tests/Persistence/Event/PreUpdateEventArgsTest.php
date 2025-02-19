@@ -65,7 +65,7 @@ class PreUpdateEventArgsTest extends DoctrineTestCase
         $event->setNewValue('does_not_exist', 'new value');
     }
 
-    /** @psalm-return PreUpdateEventArgs<ObjectManager> */
+    /** @phpstan-return PreUpdateEventArgs<ObjectManager> */
     private function createTestPreUpdateEventArgs(): PreUpdateEventArgs
     {
         $entity = new TestObject();

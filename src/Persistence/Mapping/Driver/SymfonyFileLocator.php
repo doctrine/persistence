@@ -202,10 +202,10 @@ class SymfonyFileLocator implements FileLocator
                         '\\'
                     );
 
-                    /** @psalm-var class-string */
+                    /** @phpstan-var class-string */
                     $class = $this->prefixes[$path] . str_replace(DIRECTORY_SEPARATOR, '\\', $nsSuffix) . '\\' . str_replace($this->nsSeparator, '\\', $fileName);
                 } else {
-                    /** @psalm-var class-string */
+                    /** @phpstan-var class-string */
                     $class = str_replace($this->nsSeparator, '\\', $fileName);
                 }
 

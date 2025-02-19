@@ -197,6 +197,7 @@ class FileDriverTest extends DoctrineTestCase
     }
 }
 
+/** @template-extends FileDriver<TestClassMetadata<object>> */
 class TestFileDriver extends FileDriver
 {
     /** @var ClassMetadata<object> */

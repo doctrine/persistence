@@ -21,6 +21,8 @@ use function str_replace;
  * classes on demand. This requires the user to adhere to the convention of 1 mapping
  * file per class and the file names of the mapping files must correspond to the full
  * class name, including namespace, with the namespace delimiters '\', replaced by dots '.'.
+ *
+ * @template T
  */
 abstract class FileDriver implements MappingDriver
 {
@@ -28,8 +30,8 @@ abstract class FileDriver implements MappingDriver
     protected $locator;
 
     /**
-     * @var ClassMetadata[]|null
-     * @psalm-var array<class-string, ClassMetadata<object>>|null
+     * @var mixed[]|null
+     * @phpstan-var array<class-string, T>|null
      */
     protected $classCache;
 
@@ -76,10 +78,9 @@ abstract class FileDriver implements MappingDriver
      * Gets the element of schema meta data for the class from the mapping file.
      * This will lazily load the mapping file if it is not loaded yet.
      *
-     * @psalm-param class-string $className
+     * @phpstan-param class-string $className
      *
-     * @return ClassMetadata The element of schema meta data.
-     * @psalm-return ClassMetadata<object>
+     * @return T The element of schema meta data.
      *
      * @throws MappingException
      */
@@ -136,7 +137,7 @@ abstract class FileDriver implements MappingDriver
             return $this->locator->getAllClassNames($this->globalBasename);
         }
 
-        /** @psalm-var array<class-string, ClassMetadata<object>> $classCache */
+        /** @phpstan-var array<class-string, ClassMetadata<object>> $classCache */
         $classCache = $this->classCache;
 
         /** @var list<class-string> $keys */
@@ -154,8 +155,8 @@ abstract class FileDriver implements MappingDriver
      *
      * @param string $file The mapping file to load.
      *
-     * @return ClassMetadata[]
-     * @psalm-return array<class-string, ClassMetadata<object>>
+     * @return mixed[]
+     * @phpstan-return array<class-string, T>
      */
     abstract protected function loadMappingFile(string $file);
 

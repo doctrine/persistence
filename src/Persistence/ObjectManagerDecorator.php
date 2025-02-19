@@ -71,7 +71,7 @@ abstract class ObjectManagerDecorator implements ObjectManager
         return $this->wrapped->getClassMetadata($className);
     }
 
-    /** @psalm-return ClassMetadataFactory<ClassMetadata<object>> */
+    /** @phpstan-return ClassMetadataFactory<ClassMetadata<object>> */
     public function getMetadataFactory()
     {
         return $this->wrapped->getMetadataFactory();

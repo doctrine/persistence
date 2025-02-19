@@ -9,18 +9,18 @@ use LogicException;
 use ReflectionClass;
 
 /**
- * @template T of object
+ * @template-covariant T of object
  * @template-implements ClassMetadata<T>
  */
 final class TestClassMetadata implements ClassMetadata
 {
     /**
      * @var string
-     * @psalm-var class-string<T>
+     * @phpstan-var class-string<T>
      */
     private $className;
 
-    /** @psalm-param class-string<T> $className */
+    /** @phpstan-param class-string<T> $className */
     public function __construct(string $className)
     {
         $this->className = $className;

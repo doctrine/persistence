@@ -32,31 +32,16 @@ class EnumReflectionProperty extends ReflectionProperty
         $this->enumType                   = $enumType;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @psalm-external-mutation-free
-     */
     public function getDeclaringClass(): ReflectionClass
     {
         return $this->originalReflectionProperty->getDeclaringClass();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @psalm-external-mutation-free
-     */
     public function getName(): string
     {
         return $this->originalReflectionProperty->getName();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @psalm-external-mutation-free
-     */
     public function getType(): ?ReflectionType
     {
         return $this->originalReflectionProperty->getType();
@@ -149,31 +134,16 @@ class EnumReflectionProperty extends ReflectionProperty
         return $this->enumType::from($value);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @psalm-external-mutation-free
-     */
     public function getModifiers(): int
     {
         return $this->originalReflectionProperty->getModifiers();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @psalm-external-mutation-free
-     */
     public function getDocComment(): string|false
     {
         return $this->originalReflectionProperty->getDocComment();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @psalm-external-mutation-free
-     */
     public function isPrivate(): bool
     {
         return $this->originalReflectionProperty->isPrivate();

@@ -18,10 +18,10 @@ interface ReflectionService
     /**
      * Returns an array of the parent classes (not interfaces) for the given class.
      *
-     * @psalm-param class-string $class
+     * @phpstan-param class-string $class
      *
      * @return string[]
-     * @psalm-return class-string[]
+     * @phpstan-return class-string[]
      *
      * @throws MappingException
      */
@@ -30,14 +30,14 @@ interface ReflectionService
     /**
      * Returns the shortname of a class.
      *
-     * @psalm-param class-string $class
+     * @phpstan-param class-string $class
      *
      * @return string
      */
     public function getClassShortName(string $class);
 
     /**
-     * @psalm-param class-string $class
+     * @phpstan-param class-string $class
      *
      * @return string
      */
@@ -46,10 +46,10 @@ interface ReflectionService
     /**
      * Returns a reflection class instance or null.
      *
-     * @psalm-param class-string<T> $class
+     * @phpstan-param class-string<T> $class
      *
      * @return ReflectionClass|null
-     * @psalm-return ReflectionClass<T>|null
+     * @phpstan-return ReflectionClass<T>|null
      *
      * @template T of object
      */
@@ -58,7 +58,7 @@ interface ReflectionService
     /**
      * Returns an accessible property (setAccessible(true)) or null.
      *
-     * @psalm-param class-string $class
+     * @phpstan-param class-string $class
      *
      * @return ReflectionProperty|null
      */
@@ -67,7 +67,7 @@ interface ReflectionService
     /**
      * Checks if the class have a public method with the given name.
      *
-     * @psalm-param class-string $class
+     * @phpstan-param class-string $class
      *
      * @return bool
      */

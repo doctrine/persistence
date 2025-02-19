@@ -17,7 +17,7 @@ interface ClassMetadata
      * Gets the fully-qualified class name of this persistent class.
      *
      * @return string
-     * @psalm-return class-string<T>
+     * @phpstan-return class-string<T>
      */
     public function getName();
 
@@ -27,7 +27,7 @@ interface ClassMetadata
      * The returned structure is an array of the identifier field names.
      *
      * @return array<int, string>
-     * @psalm-return list<string>
+     * @phpstan-return list<string>
      */
     public function getIdentifier();
 
@@ -112,7 +112,7 @@ interface ClassMetadata
      * Returns the target class name of the given association.
      *
      * @return string|null
-     * @psalm-return class-string|null
+     * @phpstan-return class-string|null
      */
     public function getAssociationTargetClass(string $assocName);
 
