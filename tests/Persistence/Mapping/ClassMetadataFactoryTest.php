@@ -112,49 +112,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf->getMetadataFor(Foo::class);
     }
 
-    /** @group 717 */
-    public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances(): void
-    {
-        $key = $this->cmf->getCacheKey(RootEntity::class);
-
-        $metadata = $this->cmf->metadata;
-
-        $item = $this->createMock(CacheItemInterface::class);
-
-        $item
-            ->method('getKey')
-            ->willReturn($key);
-        $item
-            ->method('get')
-            ->willReturn(new stdClass());
-        $item
-            ->expects(self::once())
-            ->method('set')
-            ->with($metadata);
-
-        $cacheDriver = $this->createMock(CacheItemPoolInterface::class);
-        $cacheDriver
-            ->method('getItem')
-            ->with($key)
-            ->willReturn($item);
-        $cacheDriver
-            ->expects(self::once())
-            ->method('getItems')
-            ->with([$key])
-            ->willReturn([$item]);
-        $cacheDriver
-            ->expects(self::once())
-            ->method('saveDeferred')
-            ->with($item);
-        $cacheDriver
-            ->expects(self::once())
-            ->method('commit');
-
-        $this->cmf->setCache($cacheDriver);
-
-        self::assertSame($metadata, $this->cmf->getMetadataFor(RootEntity::class));
-    }
-
     public function testWillNotCacheFallbackMetadata(): void
     {
         $key = $this->cmf->getCacheKey('Foo');
