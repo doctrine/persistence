@@ -43,7 +43,14 @@ trait ColocatedMappingDriver
      */
     protected array $excludePaths = [];
 
-    /** The file extension of mapping documents. */
+    /** The regex used to match mapping files. */
+    protected string $fileRegex = '/^.+\.php$/i';
+
+    /**
+     * The file extension of mapping documents.
+     *
+     * @deprecated Use {@see $fileRegex} instead.
+     */
     protected string $fileExtension = '.php';
 
     /**
@@ -94,16 +101,38 @@ trait ColocatedMappingDriver
         return $this->excludePaths;
     }
 
-    /** Gets the file extension used to look for mapping files under. */
+    /** Gets the file regex used to look for mapping files under. */
+    public function getFileRegex(): string
+    {
+        return $this->fileRegex;
+    }
+
+    /** Sets the file regex used to look for mapping files with. */
+    public function setFileRegex(string $fileRegex): void
+    {
+        $this->fileRegex     = $fileRegex;
+        $this->fileExtension = '';
+    }
+
+    /**
+     * Gets the file extension used to look for mapping files under.
+     *
+     * @deprecated Use {@see getFileRegex()} instead.
+     */
     public function getFileExtension(): string
     {
         return $this->fileExtension;
     }
 
-    /** Sets the file extension used to look for mapping files under. */
+    /**
+     * Sets the file extension used to look for mapping files under.
+     *
+     * @deprecated Use {@see setFileRegex()} instead.
+     */
     public function setFileExtension(string $fileExtension): void
     {
         $this->fileExtension = $fileExtension;
+        $this->fileRegex     = '/^.+' . preg_quote($fileExtension) . '$/i';
     }
 
     /**
@@ -145,7 +174,7 @@ trait ColocatedMappingDriver
                     new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
                     RecursiveIteratorIterator::LEAVES_ONLY,
                 ),
-                '/^.+' . preg_quote($this->fileExtension) . '$/i',
+                $this->fileRegex,
                 RecursiveRegexIterator::GET_MATCH,
             );
 

@@ -6,6 +6,25 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 4.1
+
+## Added `ColocatedMappingDriver::$fileRegex`
+
+You can search for mapping files with regex:
+
+```php
+// Search in all Entity/ directories
+$driver->setFileRegex('/\/Entity\/.+\.php$/');
+```
+
+## Deprecated `ColocatedMappingDriver::$fileExtension`
+
+Property `Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver::$fileExtension` and `getFileExtension()`,
+`setFileExtension()` methods are deprecated.
+
+Use `Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver::$fileRegex` and `getFileRegex()`,
+`setFileRegex()` instead.
+
 # Upgrade to 4.0
 
 ## BC Break: Removed `StaticReflectionService`
@@ -88,8 +107,7 @@ Use `LifecycleEventArgs::getObject()` instead.
 ## BC Break: removed support for short namespace aliases
 
 - `AbstractClassMetadataFactory::getFqcnFromAlias()` is removed.
-- `ClassMetadataFactory` methods now require their `$className` argument to be an
-actual FQCN.
+- `ClassMetadataFactory` methods now require their `$className` argument to be an actual FQCN.
 
 ## BC Break: removed `ObjectManager::merge()`
 
