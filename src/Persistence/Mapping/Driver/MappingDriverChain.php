@@ -8,7 +8,7 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\MappingException;
 
 use function array_keys;
-use function spl_object_hash;
+use function spl_object_id;
 use function str_starts_with;
 
 /**
@@ -81,7 +81,7 @@ class MappingDriverChain implements MappingDriver
         $driverClasses = [];
 
         foreach ($this->drivers as $namespace => $driver) {
-            $oid = spl_object_hash($driver);
+            $oid = spl_object_id($driver);
 
             if (! isset($driverClasses[$oid])) {
                 $driverClasses[$oid] = $driver->getAllClassNames();
