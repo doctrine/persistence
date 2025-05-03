@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Persistence\Mapping;
 
-use Doctrine\Entity;
 use Doctrine\EntityFixture;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
-use Doctrine\TestClass;
+use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity\Entity;
+use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity\TestClass;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
@@ -77,20 +77,20 @@ class ColocatedMappingDriverTest extends TestCase
         $classes = $driver->getAllClassNames();
 
         sort($classes);
-        self::assertSame([Entity::class, EntityFixture::class], $classes);
+        self::assertSame([EntityFixture::class, Entity::class], $classes);
     }
 
     public function testGetAllClassNamesWithRegex(): void
     {
-        $noFixturesRegex = '/^(?!.*Fixture\.php$).*\.php$/';
-        $driver          = $this->createDriver(__DIR__ . '/_files/colocated', $noFixturesRegex);
+        $entitiesRegex = '/\/Entity\/.+\.php$/';
+        $driver        = $this->createDriver(__DIR__ . '/_files/colocated', $entitiesRegex);
 
         $classes = $driver->getAllClassNames();
 
         self::assertSame(
             [Entity::class],
             $classes,
-            'EntityFixture.php should be excluded by the regular expression',
+            'EntityFixture.php should be excluded by the regex, being not in Entity directory.',
         );
     }
 
