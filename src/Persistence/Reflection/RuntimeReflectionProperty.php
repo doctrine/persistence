@@ -38,7 +38,7 @@ class RuntimeReflectionProperty extends ReflectionProperty
     #[ReturnTypeWillChange]
     public function getValue($object = null)
     {
-        if ($object === null) {
+        if ($object === null || $this->isStatic()) {
             return parent::getValue($object);
         }
 
@@ -56,7 +56,7 @@ class RuntimeReflectionProperty extends ReflectionProperty
     #[ReturnTypeWillChange]
     public function setValue($object, $value = null)
     {
-        if (! ($object instanceof Proxy && ! $object->__isInitialized())) {
+        if ((! ($object instanceof Proxy && ! $object->__isInitialized())) || $this->isStatic()) {
             parent::setValue($object, $value);
 
             return;

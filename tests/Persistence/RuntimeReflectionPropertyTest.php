@@ -27,6 +27,7 @@ class RuntimeReflectionPropertyTest extends TestCase
     /**
      * @testWith ["test", "testValue"]
      *           ["privateTest", "privateTestValue"]
+     *           ["staticTest", "staticTestValue"]
      */
     public function testGetSetValue(string $name, string $value): void
     {
@@ -64,6 +65,9 @@ class RuntimeReflectionPropertyTest extends TestCase
         self::assertSame('testValue', $reflProperty->getValue($mockProxy));
         unset($mockProxy->checkedProperty);
         self::assertNull($reflProperty->getValue($mockProxy));
+
+        $reflStaticProperty = new RuntimeReflectionProperty($proxyClass, 'staticCheckedProperty');
+        self::assertSame('testValue', $reflStaticProperty->getValue($mockProxy));
     }
 
     /**
@@ -90,6 +94,12 @@ class RuntimeReflectionPropertyTest extends TestCase
         unset($mockProxy->checkedProperty);
         $reflProperty->setValue($mockProxy, 'otherNewValue');
         self::assertSame('otherNewValue', $mockProxy->checkedProperty);
+
+        $reflStaticProperty = new RuntimeReflectionProperty($proxyClass, 'staticCheckedProperty');
+        $reflStaticProperty->setValue($mockProxy, 'staticNewValue');
+        self::assertSame('staticNewValue', $mockProxy::$staticCheckedProperty);
+        $reflStaticProperty->setValue($mockProxy, 'staticOtherNewValue');
+        self::assertSame('staticOtherNewValue', $mockProxy::$staticCheckedProperty);
 
         if (! $mockProxy instanceof CommonProxy) {
             return;
@@ -125,6 +135,9 @@ class RuntimeReflectionPropertyTestProxyMock implements Proxy
 
     /** @var string */
     public $checkedProperty = 'testValue';
+
+    /** @var string */
+    public static $staticCheckedProperty = 'testValue';
 
     /**
      * {@inheritDoc}
@@ -248,6 +261,9 @@ class RuntimeReflectionPropertyTestClass
 
     /** @var string|null */
     private $privateTest = 'privateTestValue';
+
+    /** @var string|null */
+    public static $staticTest = 'staticTestValue';
 
     public function getPrivateTest(): ?string
     {
