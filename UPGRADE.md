@@ -13,14 +13,14 @@ awareness about deprecated code.
 You can search for mapping files with regex:
 
 ```php
-// Search in all Entity/ directories
-$driver->setFileRegex('/\/Entity\/.+\.php$/');
+// Search for all files but ending with Test, Fixture, Service
+$driver->setFileRegex('/(?<!Test|Fixture|Service)\.php$/');
 ```
 
 ## Deprecated `ColocatedMappingDriver::$fileExtension`
 
-Property `Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver::$fileExtension` and `getFileExtension()`,
-`setFileExtension()` methods are deprecated.
+Property `Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver::$fileExtension` and methods `getFileExtension()`,
+`setFileExtension()` are deprecated.
 
 Use `Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver::$fileRegex` and `getFileRegex()`,
 `setFileRegex()` instead.
@@ -107,7 +107,8 @@ Use `LifecycleEventArgs::getObject()` instead.
 ## BC Break: removed support for short namespace aliases
 
 - `AbstractClassMetadataFactory::getFqcnFromAlias()` is removed.
-- `ClassMetadataFactory` methods now require their `$className` argument to be an actual FQCN.
+- `ClassMetadataFactory` methods now require their `$className` argument to be an
+actual FQCN.
 
 ## BC Break: removed `ObjectManager::merge()`
 

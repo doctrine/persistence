@@ -8,8 +8,8 @@ use Doctrine\EntityFixture;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
-use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity\Entity;
-use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity\TestClass;
+use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
+use Doctrine\Tests\Persistence\Mapping\_files\colocated\TestClass;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
@@ -49,12 +49,12 @@ class ColocatedMappingDriverTest extends TestCase
     public function testGetSetFileRegex(): void
     {
         $driver = $this->createDriver(__DIR__ . '/_files/colocated');
-        self::assertSame('/^.+\.php$/i', $driver->getFileRegex());
+        self::assertSame('/\.php$/', $driver->getFileRegex());
 
-        $driver->setFileRegex('/^(?!.*Test\.php$).*\.php$/');
+        $driver->setFileRegex('/\.php1$/');
 
-        self::assertSame('/^(?!.*Test\.php$).*\.php$/', $driver->getFileRegex());
-        self::assertSame('', $driver->getFileExtension());
+        self::assertSame('/\.php1$/', $driver->getFileRegex());
+        self::assertNull($driver->getFileExtension());
     }
 
     /** @deprecated */
@@ -66,7 +66,7 @@ class ColocatedMappingDriverTest extends TestCase
         $driver->setFileExtension('.php1');
 
         self::assertSame('.php1', $driver->getFileExtension());
-        self::assertSame('/^.+\.php1$/i', $driver->getFileRegex());
+        self::assertSame('/\.php1$/', $driver->getFileRegex());
     }
 
     /** @dataProvider pathProvider */
@@ -82,15 +82,15 @@ class ColocatedMappingDriverTest extends TestCase
 
     public function testGetAllClassNamesWithRegex(): void
     {
-        $entitiesRegex = '/\/Entity\/.+\.php$/';
-        $driver        = $this->createDriver(__DIR__ . '/_files/colocated', $entitiesRegex);
+        $regex  = '/(?<!Fixture)\.php$/';
+        $driver = $this->createDriver(__DIR__ . '/_files/colocated', $regex);
 
         $classes = $driver->getAllClassNames();
 
         self::assertSame(
             [Entity::class],
             $classes,
-            'EntityFixture.php should be excluded by the regex, being not in Entity directory.',
+            'EntityFixture.php should be excluded by the regex, since it ends with Fixture suffix.',
         );
     }
 

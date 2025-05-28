@@ -21,6 +21,7 @@ use function is_dir;
 use function preg_match;
 use function preg_quote;
 use function realpath;
+use function sprintf;
 use function str_contains;
 use function str_replace;
 
@@ -44,14 +45,14 @@ trait ColocatedMappingDriver
     protected array $excludePaths = [];
 
     /** The regex used to match mapping files. */
-    protected string $fileRegex = '/^.+\.php$/i';
+    protected string $fileRegex = '/\.php$/';
 
     /**
      * The file extension of mapping documents.
      *
      * @deprecated Use {@see $fileRegex} instead.
      */
-    protected string $fileExtension = '.php';
+    protected string|null $fileExtension = '.php';
 
     /**
      * Cache for getAllClassNames().
@@ -111,7 +112,7 @@ trait ColocatedMappingDriver
     public function setFileRegex(string $fileRegex): void
     {
         $this->fileRegex     = $fileRegex;
-        $this->fileExtension = '';
+        $this->fileExtension = null;
     }
 
     /**
@@ -119,7 +120,7 @@ trait ColocatedMappingDriver
      *
      * @deprecated Use {@see getFileRegex()} instead.
      */
-    public function getFileExtension(): string
+    public function getFileExtension(): string|null
     {
         return $this->fileExtension;
     }
@@ -132,7 +133,7 @@ trait ColocatedMappingDriver
     public function setFileExtension(string $fileExtension): void
     {
         $this->fileExtension = $fileExtension;
-        $this->fileRegex     = '/^.+' . preg_quote($fileExtension) . '$/i';
+        $this->fileRegex     = sprintf('/%s$/', preg_quote($fileExtension, '/'));
     }
 
     /**
