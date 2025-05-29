@@ -185,6 +185,7 @@ trait ColocatedMappingDriver
 
                 if (preg_match('(^phar:)i', $sourceFile) === 0) {
                     $sourceFile = realpath($sourceFile);
+                    assert($sourceFile !== false);
                 }
 
                 foreach ($this->excludePaths as $excludePath) {
