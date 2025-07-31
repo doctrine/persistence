@@ -13,13 +13,15 @@ use Doctrine\Tests\Persistence\Mapping\_files\colocated\TestClass;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
+use function assert;
+use function is_array;
 use function sort;
 
 class ColocatedMappingDriverTest extends TestCase
 {
     public function testAddGetPaths(): void
     {
-        $driver = $this->createDriver(__DIR__ . '/_files/colocated');
+        $driver = $this->createPathDriver(__DIR__ . '/_files/colocated');
         self::assertSame([
             __DIR__ . '/_files/colocated',
         ], $driver->getPaths());
@@ -35,7 +37,7 @@ class ColocatedMappingDriverTest extends TestCase
 
     public function testAddGetExcludePaths(): void
     {
-        $driver = $this->createDriver(__DIR__ . '/_files/colocated');
+        $driver = $this->createPathDriver(__DIR__ . '/_files/colocated');
         self::assertSame([], $driver->getExcludePaths());
 
         $driver->addExcludePaths(['/test/path1', '/test/path2']);
@@ -48,7 +50,7 @@ class ColocatedMappingDriverTest extends TestCase
 
     public function testGetSetFileExtension(): void
     {
-        $driver = $this->createDriver(__DIR__ . '/_files/colocated');
+        $driver = $this->createPathDriver(__DIR__ . '/_files/colocated');
         self::assertSame('.php', $driver->getFileExtension());
 
         $driver->setFileExtension('.php1');
@@ -57,14 +59,26 @@ class ColocatedMappingDriverTest extends TestCase
     }
 
     /** @dataProvider pathProvider */
-    public function testGetAllClassNames(string $path): void
+    public function testGetAllClassNamesForPath(string $path): void
     {
-        $driver = $this->createDriver($path);
+        $driver = $this->createPathDriver($path);
 
         $classes = $driver->getAllClassNames();
 
         sort($classes);
         self::assertSame([Entity::class, EntityFixture::class], $classes);
+    }
+
+    public function testGetAllClassNamesForIterableFilePathNames(): void
+    {
+        $driver = $this->createFilePathNamesDriver([
+            __DIR__ . '/_files/colocated/Entity.php',
+            __DIR__ . '/_files/colocated/TestClass.php',
+        ]);
+
+        $classes = $driver->getAllClassNames();
+
+        self::assertSame([Entity::class], $classes, 'The driver should only return the class names from the provided file path names, excluding transient class names.');
     }
 
     /** @return Generator<string, array{string}> */
@@ -74,9 +88,15 @@ class ColocatedMappingDriverTest extends TestCase
         yield 'winding path' => [__DIR__ . '/../Mapping/_files/colocated'];
     }
 
-    private function createDriver(string $path): MyDriver
+    private function createPathDriver(string $path): MyDriver
     {
         return new MyDriver([$path]);
+    }
+
+    /** @param list<string> $paths */
+    private function createFilePathNamesDriver(array $paths): MyDriver
+    {
+        return new MyDriver($paths, true);
     }
 }
 
@@ -84,10 +104,16 @@ final class MyDriver implements MappingDriver
 {
     use ColocatedMappingDriver;
 
-    /** @param non-empty-list<string> $paths One or multiple paths where mapping classes can be found. */
-    public function __construct(array $paths)
+    /** @param iterable<string> $paths Source file path names */
+    public function __construct(iterable $paths, bool $sourceFilePathNames = false)
     {
-        $this->addPaths($paths);
+        if (! $sourceFilePathNames) {
+            assert(is_array($paths));
+
+            $this->addPaths($paths);
+        } else {
+            $this->sourceFilePathNames = $paths;
+        }
     }
 
     /**
