@@ -187,7 +187,6 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): CacheItemPoolInterface|null
     {
         $method = new ReflectionMethod($classMetadataFactory, 'getCache');
-        $method->setAccessible(true);
 
         return $method->invoke($classMetadataFactory);
     }
