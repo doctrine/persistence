@@ -21,8 +21,11 @@ use function str_replace;
  */
 trait ColocatedMappingDriver
 {
+    /** @var iterable<array-key,string> */
+    private iterable $filePaths;
+
     /**
-     * The paths where to look for mapping files.
+     * The directory paths where to look for mapping files.
      *
      * @var array<int, string>
      */
@@ -39,7 +42,7 @@ trait ColocatedMappingDriver
     protected string $fileExtension = '.php';
 
     /**
-     * Cache for getAllClassNames().
+     * Cache for {@see getAllClassNames()}.
      *
      * @var array<int, string>|null
      * @phpstan-var list<class-string>|null
@@ -67,7 +70,7 @@ trait ColocatedMappingDriver
     }
 
     /**
-     * Append exclude lookup paths to metadata driver.
+     * Append exclude lookup paths to a metadata driver.
      *
      * @param string[] $paths
      */
@@ -120,13 +123,17 @@ trait ColocatedMappingDriver
             return $this->classNames;
         }
 
-        if ($this->paths === []) {
+        if ($this->paths === [] && ! isset($this->filePaths)) {
             throw MappingException::pathRequiredForDriver(static::class);
         }
 
         $dirFilesIterator = new DirectoryFilesIterator($this->paths, $this->fileExtension);
+
         /** @var iterable<string> $filePathsIterator */
-        $filePathsIterator = new FilePathNameIterator($dirFilesIterator);
+        $filePathsIterator = $this->concatIterables(
+            $this->filePaths ?? [],
+            new FilePathNameIterator($dirFilesIterator),
+        );
 
         /** @var array<string,true> $includedFiles */
         $includedFiles = [];
@@ -171,5 +178,22 @@ trait ColocatedMappingDriver
         $this->classNames = $classes;
 
         return $classes;
+    }
+
+    /**
+     * @internal
+     *
+     * @param iterable<TKey, T> $iterable1
+     * @param iterable<TKey, T> $iterable2
+     *
+     * @return iterable<TKey, T>
+     *
+     * @template TKey
+     * @template T
+     */
+    private function concatIterables(iterable $iterable1, iterable $iterable2): iterable
+    {
+        yield from $iterable1;
+        yield from $iterable2;
     }
 }
