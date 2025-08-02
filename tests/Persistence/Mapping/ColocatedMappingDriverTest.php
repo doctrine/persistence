@@ -7,11 +7,13 @@ namespace Doctrine\Tests\Persistence\Mapping;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
-use Doctrine\TestClass;
+use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
+use Doctrine\Tests\Persistence\Mapping\_files\colocated\EntityFixture;
+use Doctrine\Tests\Persistence\Mapping\_files\colocated\TestClass;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
-use function array_values;
+use function sort;
 
 class ColocatedMappingDriverTest extends TestCase
 {
@@ -61,7 +63,8 @@ class ColocatedMappingDriverTest extends TestCase
 
         $classes = $driver->getAllClassNames();
 
-        self::assertSame([TestClass::class], $classes);
+        sort($classes);
+        self::assertSame([Entity::class, EntityFixture::class], $classes);
     }
 
     /** @return Generator<string, array{string}> */
@@ -73,7 +76,7 @@ class ColocatedMappingDriverTest extends TestCase
 
     private function createDriver(string $path): MyDriver
     {
-        return new MyDriver($path);
+        return new MyDriver([$path]);
     }
 }
 
@@ -81,10 +84,10 @@ final class MyDriver implements MappingDriver
 {
     use ColocatedMappingDriver;
 
-    /** @param string ...$paths One or multiple paths where mapping classes can be found. */
-    public function __construct(string ...$paths)
+    /** @param non-empty-list<string> $paths One or multiple paths where mapping classes can be found. */
+    public function __construct(array $paths)
     {
-        $this->addPaths(array_values($paths));
+        $this->addPaths($paths);
     }
 
     /**
@@ -96,6 +99,6 @@ final class MyDriver implements MappingDriver
 
     public function isTransient(string $className): bool
     {
-        return $className !== TestClass::class;
+        return $className === TestClass::class;
     }
 }
