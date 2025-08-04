@@ -8,9 +8,9 @@ use Doctrine\Persistence\Mapping\MappingException;
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use RecursiveRegexIterator;
 use ReflectionClass;
 use RegexIterator;
+use SplFileInfo;
 
 use function array_merge;
 use function array_unique;
@@ -21,6 +21,7 @@ use function is_dir;
 use function preg_match;
 use function preg_quote;
 use function realpath;
+use function sprintf;
 use function str_contains;
 use function str_replace;
 
@@ -140,20 +141,22 @@ trait ColocatedMappingDriver
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
 
+            /** @var iterable<SplFileInfo> $iterator */
             $iterator = new RegexIterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
                     RecursiveIteratorIterator::LEAVES_ONLY,
                 ),
-                '/^.+' . preg_quote($this->fileExtension) . '$/i',
-                RecursiveRegexIterator::GET_MATCH,
+                sprintf('/%s$/', preg_quote($this->fileExtension, '/')),
+                RegexIterator::MATCH,
             );
 
             foreach ($iterator as $file) {
-                $sourceFile = $file[0];
+                $sourceFile = $file->getPathname();
 
                 if (preg_match('(^phar:)i', $sourceFile) === 0) {
                     $sourceFile = realpath($sourceFile);
+                    assert($sourceFile !== false);
                 }
 
                 foreach ($this->excludePaths as $excludePath) {
