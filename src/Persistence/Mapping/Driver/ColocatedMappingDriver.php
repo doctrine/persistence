@@ -19,7 +19,6 @@ use function array_merge;
 use function array_unique;
 use function assert;
 use function get_declared_classes;
-use function in_array;
 use function is_dir;
 use function preg_match;
 use function preg_quote;
@@ -158,7 +157,8 @@ trait ColocatedMappingDriver
         }
 
         $sourceFilePathNames = $this->pathNameIterator($filesIterator);
-        $includedFiles       = [];
+        /** @var array<string,true> $includedFiles */
+        $includedFiles = [];
 
         foreach ($sourceFilePathNames as $sourceFile) {
             if (preg_match('(^phar:)i', $sourceFile) === 0) {
@@ -179,7 +179,7 @@ trait ColocatedMappingDriver
 
             require_once $sourceFile;
 
-            $includedFiles[] = $sourceFile;
+            $includedFiles[$sourceFile] = true;
         }
 
         $classes  = [];
@@ -190,7 +190,7 @@ trait ColocatedMappingDriver
 
             $sourceFile = $rc->getFileName();
 
-            if (! in_array($sourceFile, $includedFiles, true) || $this->isTransient($className)) {
+            if (! isset($includedFiles[$sourceFile]) || $this->isTransient($className)) {
                 continue;
             }
 
