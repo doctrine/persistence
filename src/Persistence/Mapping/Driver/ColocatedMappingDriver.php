@@ -161,7 +161,10 @@ trait ColocatedMappingDriver
         }
 
         /** @var iterable<string> $sourceFilePathNames */
-        $sourceFilePathNames = $this->sourceFilePathNames ?? $this->pathNameIterator($filesIterator);
+        $sourceFilePathNames = $this->mergeIterables(
+            $this->sourceFilePathNames ?? [],
+            $this->pathNameIterator($filesIterator),
+        );
         $includedFiles       = [];
 
         foreach ($sourceFilePathNames as $sourceFile) {
@@ -216,5 +219,20 @@ trait ColocatedMappingDriver
         foreach ($filesIterator as $file) {
             yield $file->getPathname();
         }
+    }
+
+    /**
+     * @param iterable<TKey, T> $iterable1
+     * @param iterable<TKey, T> $iterable2
+     *
+     * @return Generator<TKey, T>
+     *
+     * @template TKey
+     * @template T
+     */
+    private function mergeIterables(iterable $iterable1, iterable $iterable2): Generator
+    {
+        yield from $iterable1;
+        yield from $iterable2;
     }
 }

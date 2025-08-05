@@ -81,6 +81,22 @@ class ColocatedMappingDriverTest extends TestCase
         self::assertSame([Entity::class], $classes, 'The driver should only return the class names from the provided file path names, excluding transient class names.');
     }
 
+    public function testGetAllClassNamesWorksForBothIterableFilePathNamesAndRetroactivelyAddedDirectoryPaths(): void
+    {
+        $driver = $this->createFilePathNamesDriver([__DIR__ . '/_files/colocated/Entity.php']);
+
+        $driver->addPaths([__DIR__ . '/_files/colocated/']);
+
+        $classes = $driver->getAllClassNames();
+        sort($classes);
+
+        self::assertSame(
+            [Entity::class, EntityFixture::class],
+            $classes,
+            'The driver should return class names from both the provided file path names and the retroactively added directory paths (these should not be ignored).',
+        );
+    }
+
     /** @return Generator<string, array{string}> */
     public static function pathProvider(): Generator
     {
