@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping\Driver;
 
+use AppendIterator;
 use Doctrine\Persistence\Mapping\MappingException;
 use FilesystemIterator;
+use Generator;
+use Iterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use RecursiveRegexIterator;
 use ReflectionClass;
 use RegexIterator;
+use SplFileInfo;
 
 use function array_merge;
 use function array_unique;
@@ -21,6 +24,7 @@ use function is_dir;
 use function preg_match;
 use function preg_quote;
 use function realpath;
+use function sprintf;
 use function str_contains;
 use function str_replace;
 
@@ -29,6 +33,9 @@ use function str_replace;
  */
 trait ColocatedMappingDriver
 {
+    /** @var iterable<string> */
+    private iterable $sourceFilePathNames;
+
     /**
      * The paths where to look for mapping files.
      *
@@ -47,7 +54,7 @@ trait ColocatedMappingDriver
     protected string $fileExtension = '.php';
 
     /**
-     * Cache for getAllClassNames().
+     * Cache for {@see getAllClassNames()}.
      *
      * @var array<int, string>|null
      * @phpstan-var list<class-string>|null
@@ -75,7 +82,7 @@ trait ColocatedMappingDriver
     }
 
     /**
-     * Append exclude lookup paths to metadata driver.
+     * Append exclude lookup paths to a metadata driver.
      *
      * @param string[] $paths
      */
@@ -128,51 +135,58 @@ trait ColocatedMappingDriver
             return $this->classNames;
         }
 
-        if ($this->paths === []) {
+        if ($this->paths === [] && ! isset($this->sourceFilePathNames)) {
             throw MappingException::pathRequiredForDriver(static::class);
         }
 
-        $classes       = [];
-        $includedFiles = [];
+        /** @var AppendIterator<array-key,SplFileInfo,Iterator<array-key,SplFileInfo>> $filesIterator */
+        $filesIterator = new AppendIterator();
 
         foreach ($this->paths as $path) {
             if (! is_dir($path)) {
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
 
+            /** @var Iterator<array-key,SplFileInfo> $iterator */
             $iterator = new RegexIterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
                     RecursiveIteratorIterator::LEAVES_ONLY,
                 ),
-                '/^.+' . preg_quote($this->fileExtension) . '$/i',
-                RecursiveRegexIterator::GET_MATCH,
+                sprintf('/%s$/', preg_quote($this->fileExtension, '/')),
+                RegexIterator::MATCH,
             );
 
-            foreach ($iterator as $file) {
-                $sourceFile = $file[0];
-
-                if (preg_match('(^phar:)i', $sourceFile) === 0) {
-                    $sourceFile = realpath($sourceFile);
-                }
-
-                foreach ($this->excludePaths as $excludePath) {
-                    $realExcludePath = realpath($excludePath);
-                    assert($realExcludePath !== false);
-                    $exclude = str_replace('\\', '/', $realExcludePath);
-                    $current = str_replace('\\', '/', $sourceFile);
-
-                    if (str_contains($current, $exclude)) {
-                        continue 2;
-                    }
-                }
-
-                require_once $sourceFile;
-
-                $includedFiles[] = $sourceFile;
-            }
+            $filesIterator->append($iterator);
         }
 
+        /** @var iterable<string> $sourceFilePathNames */
+        $sourceFilePathNames = $this->sourceFilePathNames ?? $this->pathNameIterator($filesIterator);
+        $includedFiles       = [];
+
+        foreach ($sourceFilePathNames as $sourceFile) {
+            if (preg_match('(^phar:)i', $sourceFile) === 0) {
+                $sourceFile = realpath($sourceFile);
+                assert($sourceFile !== false);
+            }
+
+            foreach ($this->excludePaths as $excludePath) {
+                $realExcludePath = realpath($excludePath);
+                assert($realExcludePath !== false);
+                $exclude = str_replace('\\', '/', $realExcludePath);
+                $current = str_replace('\\', '/', $sourceFile);
+
+                if (str_contains($current, $exclude)) {
+                    continue 2;
+                }
+            }
+
+            require_once $sourceFile;
+
+            $includedFiles[] = $sourceFile;
+        }
+
+        $classes  = [];
         $declared = get_declared_classes();
 
         foreach ($declared as $className) {
@@ -190,5 +204,17 @@ trait ColocatedMappingDriver
         $this->classNames = $classes;
 
         return $classes;
+    }
+
+    /**
+     * @param iterable<SplFileInfo> $filesIterator
+     *
+     * @return Generator<int,string>
+     */
+    private function pathNameIterator(iterable $filesIterator): Generator
+    {
+        foreach ($filesIterator as $file) {
+            yield $file->getPathname();
+        }
     }
 }
