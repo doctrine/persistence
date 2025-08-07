@@ -7,7 +7,6 @@ namespace Doctrine\Persistence\Mapping\Driver;
 use AppendIterator;
 use Doctrine\Persistence\Mapping\MappingException;
 use FilesystemIterator;
-use Generator;
 use Iterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -156,7 +155,8 @@ trait ColocatedMappingDriver
             $filesIterator->append($iterator);
         }
 
-        $sourceFilePathNames = $this->pathNameIterator($filesIterator);
+        /** @var iterable<string> $sourceFilePathNames */
+        $sourceFilePathNames = new FilePathNameIterator($filesIterator);
         /** @var array<string,true> $includedFiles */
         $includedFiles = [];
 
@@ -200,17 +200,5 @@ trait ColocatedMappingDriver
         $this->classNames = $classes;
 
         return $classes;
-    }
-
-    /**
-     * @param iterable<SplFileInfo> $filesIterator
-     *
-     * @return Generator<int,string>
-     */
-    private function pathNameIterator(iterable $filesIterator): Generator
-    {
-        foreach ($filesIterator as $file) {
-            yield $file->getPathname();
-        }
     }
 }
