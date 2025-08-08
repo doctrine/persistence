@@ -33,9 +33,6 @@ use function str_replace;
  */
 trait ColocatedMappingDriver
 {
-    /** @var iterable<string> */
-    private iterable $sourceFilePathNames;
-
     /**
      * The paths where to look for mapping files.
      *
@@ -54,7 +51,7 @@ trait ColocatedMappingDriver
     protected string $fileExtension = '.php';
 
     /**
-     * Cache for {@see getAllClassNames()}.
+     * Cache for getAllClassNames().
      *
      * @var array<int, string>|null
      * @phpstan-var list<class-string>|null
@@ -82,7 +79,7 @@ trait ColocatedMappingDriver
     }
 
     /**
-     * Append exclude lookup paths to a metadata driver.
+     * Append exclude lookup paths to metadata driver.
      *
      * @param string[] $paths
      */
@@ -135,7 +132,7 @@ trait ColocatedMappingDriver
             return $this->classNames;
         }
 
-        if ($this->paths === [] && ! isset($this->sourceFilePathNames)) {
+        if ($this->paths === []) {
             throw MappingException::pathRequiredForDriver(static::class);
         }
 
@@ -160,8 +157,7 @@ trait ColocatedMappingDriver
             $filesIterator->append($iterator);
         }
 
-        /** @var iterable<string> $sourceFilePathNames */
-        $sourceFilePathNames = $this->sourceFilePathNames ?? $this->pathNameIterator($filesIterator);
+        $sourceFilePathNames = $this->pathNameIterator($filesIterator);
         $includedFiles       = [];
 
         foreach ($sourceFilePathNames as $sourceFile) {
