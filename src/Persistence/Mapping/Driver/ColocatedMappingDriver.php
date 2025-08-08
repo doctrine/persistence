@@ -4,25 +4,15 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping\Driver;
 
-use AppendIterator;
 use Doctrine\Persistence\Mapping\MappingException;
-use FilesystemIterator;
-use Iterator;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 use ReflectionClass;
-use RegexIterator;
-use SplFileInfo;
 
 use function array_merge;
 use function array_unique;
 use function assert;
 use function get_declared_classes;
-use function is_dir;
 use function preg_match;
-use function preg_quote;
 use function realpath;
-use function sprintf;
 use function str_contains;
 use function str_replace;
 
@@ -134,33 +124,14 @@ trait ColocatedMappingDriver
             throw MappingException::pathRequiredForDriver(static::class);
         }
 
-        /** @var AppendIterator<array-key,SplFileInfo,Iterator<array-key,SplFileInfo>> $filesIterator */
-        $filesIterator = new AppendIterator();
+        $dirFilesIterator = new DirectoryFilesIterator($this->paths, $this->fileExtension);
+        /** @var iterable<string> $filePathsIterator */
+        $filePathsIterator = new FilePathNameIterator($dirFilesIterator);
 
-        foreach ($this->paths as $path) {
-            if (! is_dir($path)) {
-                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
-            }
-
-            /** @var Iterator<array-key,SplFileInfo> $iterator */
-            $iterator = new RegexIterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
-                    RecursiveIteratorIterator::LEAVES_ONLY,
-                ),
-                sprintf('/%s$/', preg_quote($this->fileExtension, '/')),
-                RegexIterator::MATCH,
-            );
-
-            $filesIterator->append($iterator);
-        }
-
-        /** @var iterable<string> $sourceFilePathNames */
-        $sourceFilePathNames = new FilePathNameIterator($filesIterator);
         /** @var array<string,true> $includedFiles */
         $includedFiles = [];
 
-        foreach ($sourceFilePathNames as $sourceFile) {
+        foreach ($filePathsIterator as $sourceFile) {
             if (preg_match('(^phar:)i', $sourceFile) === 0) {
                 $sourceFile = realpath($sourceFile);
                 assert($sourceFile !== false);
