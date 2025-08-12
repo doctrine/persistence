@@ -5,24 +5,17 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\MappingException;
-use ReflectionClass;
 
+use function array_filter;
 use function array_merge;
 use function array_unique;
-use function assert;
-use function get_declared_classes;
-use function preg_match;
-use function realpath;
-use function str_contains;
-use function str_replace;
 
 /**
  * The ColocatedMappingDriver reads the mapping metadata located near the code.
  */
 trait ColocatedMappingDriver
 {
-    /** @var iterable<array-key,string> */
-    private iterable $filePaths;
+    private ClassLocator $classLocator;
 
     /**
      * The directory paths where to look for mapping files.
@@ -123,75 +116,24 @@ trait ColocatedMappingDriver
             return $this->classNames;
         }
 
-        if ($this->paths === [] && ! isset($this->filePaths)) {
+        if ($this->paths !== []) {
+            $classNames = FileClassLocator::createFromDirectories($this->paths, $this->excludePaths, $this->fileExtension)->getClassNames();
+
+            if (isset($this->classLocator)) {
+                $classNames = array_unique([
+                    ...$classNames,
+                    ...$this->classLocator->getClassNames(),
+                ]);
+            }
+        } elseif (isset($this->classLocator)) {
+            $classNames = $this->classLocator->getClassNames();
+        } else {
             throw MappingException::pathRequiredForDriver(static::class);
         }
 
-        $dirFilesIterator = new DirectoryFilesIterator($this->paths, $this->fileExtension);
-
-        /** @var iterable<string> $filePathsIterator */
-        $filePathsIterator = $this->concatIterables(
-            $this->filePaths ?? [],
-            new FilePathNameIterator($dirFilesIterator),
+        return $this->classNames = array_filter(
+            $classNames,
+            fn (string $className): bool => ! $this->isTransient($className),
         );
-
-        /** @var array<string,true> $includedFiles */
-        $includedFiles = [];
-
-        foreach ($filePathsIterator as $sourceFile) {
-            if (preg_match('(^phar:)i', $sourceFile) === 0) {
-                $sourceFile = realpath($sourceFile);
-                assert($sourceFile !== false);
-            }
-
-            foreach ($this->excludePaths as $excludePath) {
-                $realExcludePath = realpath($excludePath);
-                assert($realExcludePath !== false);
-                $exclude = str_replace('\\', '/', $realExcludePath);
-                $current = str_replace('\\', '/', $sourceFile);
-
-                if (str_contains($current, $exclude)) {
-                    continue 2;
-                }
-            }
-
-            require_once $sourceFile;
-
-            $includedFiles[$sourceFile] = true;
-        }
-
-        $classes  = [];
-        $declared = get_declared_classes();
-
-        foreach ($declared as $className) {
-            $rc = new ReflectionClass($className);
-
-            $sourceFile = $rc->getFileName();
-
-            if (! isset($includedFiles[$sourceFile]) || $this->isTransient($className)) {
-                continue;
-            }
-
-            $classes[] = $className;
-        }
-
-        $this->classNames = $classes;
-
-        return $classes;
-    }
-
-    /**
-     * @param iterable<TKey, T> $iterable1
-     * @param iterable<TKey, T> $iterable2
-     *
-     * @return iterable<TKey, T>
-     *
-     * @template TKey
-     * @template T
-     */
-    private function concatIterables(iterable $iterable1, iterable $iterable2): iterable
-    {
-        yield from $iterable1;
-        yield from $iterable2;
     }
 }

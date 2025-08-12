@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\Driver\ClassLocator;
 use Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver;
+use Doctrine\Persistence\Mapping\Driver\FileClassLocator;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\EntityFixture;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\TestClass;
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Traversable;
 
-use function is_file;
 use function sort;
 
 class ColocatedMappingDriverTest extends TestCase
@@ -112,7 +112,7 @@ class ColocatedMappingDriverTest extends TestCase
     /** @param list<string> $filePaths */
     private function createFilePathsDriver(array $filePaths): MyDriver
     {
-        return new MyDriver($filePaths);
+        return new MyDriver(new FileClassLocator($filePaths));
     }
 }
 
@@ -120,15 +120,13 @@ final class MyDriver implements MappingDriver
 {
     use ColocatedMappingDriver;
 
-    /** @param iterable<string> $paths One or multiple paths where mapping classes can be found. */
-    public function __construct(iterable $paths)
+    /** @param string[]|ClassLocator $paths One or multiple paths where mapping classes can be found. */
+    public function __construct(array|ClassLocator $paths)
     {
-        $isFilePaths = $paths instanceof Traversable || is_file($paths[0]);
-
-        if (! $isFilePaths) {
-            $this->paths = $paths;
+        if ($paths instanceof ClassLocator) {
+            $this->classLocator = $paths;
         } else {
-            $this->filePaths = $paths;
+            $this->paths = $paths;
         }
     }
 
