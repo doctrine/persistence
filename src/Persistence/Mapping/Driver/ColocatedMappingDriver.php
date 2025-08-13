@@ -9,6 +9,7 @@ use Doctrine\Persistence\Mapping\MappingException;
 use function array_filter;
 use function array_merge;
 use function array_unique;
+use function array_values;
 
 /**
  * The ColocatedMappingDriver reads the mapping metadata located near the code.
@@ -129,9 +130,9 @@ trait ColocatedMappingDriver
             ]);
         }
 
-        return $this->classNames = array_filter(
+        return $this->classNames = array_values(array_filter(
             $classNames,
             fn (string $className): bool => ! $this->isTransient($className),
-        );
+        ));
     }
 }

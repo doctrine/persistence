@@ -72,8 +72,10 @@ class ColocatedMappingDriverTest extends TestCase
     public function testGetAllClassNamesForFilePaths(): void
     {
         $driver = $this->createFilePathsDriver([
-            __DIR__ . '/_files/colocated/Entity.php',
             __DIR__ . '/_files/colocated/TestClass.php',
+            // This file is after the transient class, to validate that getAllClassNames()
+            // returns a list without gaps in the indexes
+            __DIR__ . '/_files/colocated/Entity.php',
         ]);
 
         $classes = $driver->getAllClassNames();

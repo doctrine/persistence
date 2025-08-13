@@ -26,6 +26,7 @@ use function is_file;
 use function preg_quote;
 use function realpath;
 use function sprintf;
+use function str_replace;
 use function str_starts_with;
 
 /**
@@ -36,11 +37,7 @@ use function str_starts_with;
  */
 final class FileClassLocator implements ClassLocator
 {
-    /**
-     * @param iterable<string> $fileNames An iterable of file names to include.
-     *
-     * @throws MappingException if any of the files do not exist.
-     */
+    /** @param iterable<string> $fileNames An iterable of file names to include. */
     public function __construct(
         private iterable $fileNames,
     ) {
@@ -59,9 +56,6 @@ final class FileClassLocator implements ClassLocator
             // realpath() can return false if the file is in a phar archive
             // @phpstan-ignore ternary.shortNotAllowed
             $fileName = realpath($fileName) ?: $fileName;
-            if (isset($includedFiles[$fileName])) {
-                continue;
-            }
 
             $includedFiles[$fileName] = true;
             require_once $fileName;
@@ -116,21 +110,17 @@ final class FileClassLocator implements ClassLocator
         }
 
         if ($excludedDirectories !== []) {
-            // Get
             $excludedDirectories = array_map(
                 // @phpstan-ignore ternary.shortNotAllowed
-                static fn (string $dir): string => realpath($dir) ?: $dir,
+                static fn (string $dir): string => str_replace('\\', '/', realpath($dir) ?: $dir),
                 $excludedDirectories,
             );
 
             $filesIterator = new CallbackFilterIterator(
                 $filesIterator,
                 static function (SplFileInfo $file) use ($excludedDirectories): bool {
-                    if (str_starts_with($file->getPath(), 'phar:')) {
-                        $sourceFile = $file->getPathname();
-                    } else {
-                        $sourceFile = $file->getRealPath();
-                    }
+                    // @phpstan-ignore ternary.shortNotAllowed
+                    $sourceFile = str_replace('\\', '/', $file->getRealPath() ?: $file->getPathname());
 
                     foreach ($excludedDirectories as $excludedDirectory) {
                         if (str_starts_with($sourceFile, $excludedDirectory)) {
