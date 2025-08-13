@@ -10,6 +10,7 @@ use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\EntityFixture;
+use Doctrine\Tests\Persistence\Mapping\_files\colocated\Foo;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\TestClass;
 use EmptyIterator;
 use Phar;
@@ -68,8 +69,7 @@ final class FileClassLocatorTest extends DoctrineTestCase
         $classes = $locator->getClassNames();
         sort($classes, SORT_STRING);
 
-        // @phpstan-ignore staticMethod.impossibleType
-        self::assertSame(['Doctrine\Tests\Persistence\Mapping\_files\colocated\Foo'], $classes);
+        self::assertSame([Foo::class], $classes);
     }
 
     public function testCreateFromDirectoryWithNonExistentDirectory(): void
@@ -97,7 +97,7 @@ final class FileClassLocatorTest extends DoctrineTestCase
         self::assertSame([
             Entity::class,
             EntityFixture::class,
-            'Doctrine\Tests\Persistence\Mapping\_files\colocated\Foo',
+            Foo::class,
             TestClass::class,
         ], $classes);
     }
