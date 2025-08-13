@@ -67,11 +67,6 @@ class MappingException extends Exception
         ));
     }
 
-    public static function fileDoesNotExist(string $fileName): self
-    {
-        return new self(sprintf("File '%s' does not exist", $fileName));
-    }
-
     public static function nonExistingClass(string $className): self
     {
         return new self(sprintf("Class '%s' does not exist", $className));

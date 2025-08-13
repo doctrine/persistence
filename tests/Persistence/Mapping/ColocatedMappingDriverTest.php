@@ -6,8 +6,8 @@ namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\ClassLocator;
+use Doctrine\Persistence\Mapping\Driver\ClassNames;
 use Doctrine\Persistence\Mapping\Driver\ColocatedMappingDriver;
-use Doctrine\Persistence\Mapping\Driver\FileClassLocator;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\EntityFixture;
@@ -69,13 +69,14 @@ class ColocatedMappingDriverTest extends TestCase
         self::assertSame([Entity::class, EntityFixture::class], $classes);
     }
 
-    public function testGetAllClassNamesForFilePaths(): void
+    public function testGetAllClassNamesRemovesTransient(): void
     {
-        $driver = $this->createFilePathsDriver([
-            __DIR__ . '/_files/colocated/TestClass.php',
-            // This file is after the transient class, to validate that getAllClassNames()
-            // returns a list without gaps in the indexes
-            __DIR__ . '/_files/colocated/Entity.php',
+        $driver = $this->createClassNamesDriver([
+            // This class is transient, so it should not be returned by getAllClassNames()
+            // placed before the Entity class to validate that the driver returns an
+            // array without gaps in the indexes
+            TestClass::class,
+            Entity::class,
         ]);
 
         $classes = $driver->getAllClassNames();
@@ -85,7 +86,7 @@ class ColocatedMappingDriverTest extends TestCase
 
     public function testGetAllClassNamesWorksBothForFilePathsAndRetroactivelyAddedDirectoryPaths(): void
     {
-        $driver = $this->createFilePathsDriver([__DIR__ . '/_files/colocated/Entity.php']);
+        $driver = $this->createClassNamesDriver([Entity::class]);
 
         $driver->addPaths([__DIR__ . '/_files/colocated/']);
 
@@ -111,10 +112,10 @@ class ColocatedMappingDriverTest extends TestCase
         return new MyDriver([$dirPath]);
     }
 
-    /** @param list<string> $filePaths */
-    private function createFilePathsDriver(array $filePaths): MyDriver
+    /** @param list<class-string> $classes */
+    private function createClassNamesDriver(array $classes): MyDriver
     {
-        return new MyDriver(new FileClassLocator($filePaths));
+        return new MyDriver(new ClassNames($classes));
     }
 }
 

@@ -22,7 +22,6 @@ use function assert;
 use function get_debug_type;
 use function get_declared_classes;
 use function is_dir;
-use function is_file;
 use function preg_quote;
 use function realpath;
 use function sprintf;
@@ -37,9 +36,9 @@ use function str_starts_with;
  */
 final class FileClassLocator implements ClassLocator
 {
-    /** @param iterable<string> $fileNames An iterable of file names to include. */
+    /** @param iterable<SplFileInfo> $files An iterable of file names to include. */
     public function __construct(
-        private iterable $fileNames,
+        private iterable $files,
     ) {
     }
 
@@ -48,14 +47,18 @@ final class FileClassLocator implements ClassLocator
     {
         $includedFiles = [];
 
-        foreach ($this->fileNames as $fileName) {
-            if (! is_file($fileName)) {
-                throw MappingException::fileDoesNotExist($fileName);
+        foreach ($this->files as $file) {
+            // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
+            assert($file instanceof SplFileInfo, new InvalidArgumentException(sprintf('Expected an iterable of SplFileInfo, got %s', get_debug_type($file))));
+
+            // Skip non-files
+            if (! $file->isFile()) {
+                continue;
             }
 
             // realpath() can return false if the file is in a phar archive
             // @phpstan-ignore ternary.shortNotAllowed
-            $fileName = realpath($fileName) ?: $fileName;
+            $fileName = $file->getRealPath() ?: $file->getPathname();
 
             $includedFiles[$fileName] = true;
             require_once $fileName;
@@ -133,32 +136,6 @@ final class FileClassLocator implements ClassLocator
             );
         }
 
-        return self::createFromSplFiles($filesIterator);
-    }
-
-    /**
-     * Creates a FileClassLocator from an iterable of SplFileInfo objects.
-     *
-     * This method can be used with a Symfony Finder or any other iterable
-     *
-     * @param iterable<SplFileInfo> $files
-     */
-    public static function createFromSplFiles(iterable $files): self
-    {
-        return new self((static function ($files) {
-            foreach ($files as $file) {
-                // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
-                assert($file instanceof SplFileInfo, new InvalidArgumentException(sprintf('Expected an iterable of SplFileInfo, got %s', get_debug_type($file))));
-
-                // Skip directories or non-file entries
-                if (! $file->isFile()) {
-                    continue;
-                }
-
-                // Files in phar does not have a real path, so we use the pathname
-                // @phpstan-ignore ternary.shortNotAllowed
-                yield $file->getRealPath() ?: $file->getPathname();
-            }
-        })($files));
+        return new self($filesIterator);
     }
 }

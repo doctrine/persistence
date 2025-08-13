@@ -13,6 +13,7 @@ use Doctrine\Tests\Persistence\Mapping\_files\colocated\EntityFixture;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\TestClass;
 use EmptyIterator;
 use Phar;
+use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 
 use function dirname;
@@ -27,8 +28,8 @@ final class FileClassLocatorTest extends DoctrineTestCase
     public function testGetClassNames(): void
     {
         $locator = new FileClassLocator([
-            __DIR__ . '/../_files/colocated/Entity.php',
-            __DIR__ . '/../_files/colocated/EntityFixture.php',
+            new SplFileInfo(__DIR__ . '/../_files/colocated/Entity.php'),
+            new SplFileInfo(__DIR__ . '/../_files/colocated/EntityFixture.php'),
         ]);
 
         $classes = $locator->getClassNames();
@@ -38,15 +39,6 @@ final class FileClassLocatorTest extends DoctrineTestCase
             Entity::class,
             EntityFixture::class,
         ], $classes);
-    }
-
-    public function testFileDoesNotExistException(): void
-    {
-        $this->expectException(MappingException::class);
-        $this->expectExceptionMessage("File '/non/existent/file' does not exist");
-
-        $locator = new FileClassLocator(['/non/existent/file']);
-        $locator->getClassNames();
     }
 
     public function testGetClassNamesWithEmptyIterator(): void
@@ -95,11 +87,9 @@ final class FileClassLocatorTest extends DoctrineTestCase
         self::assertSame([], $locator->getClassNames());
     }
 
-    public function testCreateFromSplFileIterator(): void
+    public function testCreateFromDirectoryIterator(): void
     {
-        $locator = FileClassLocator::createFromSplFiles(
-            new DirectoryIterator(__DIR__ . '/../_files/colocated'),
-        );
+        $locator = new FileClassLocator(new DirectoryIterator(__DIR__ . '/../_files/colocated'));
 
         $classes = $locator->getClassNames();
         sort($classes, SORT_STRING);
@@ -119,7 +109,7 @@ final class FileClassLocatorTest extends DoctrineTestCase
             ->name('*.php')
             ->notName('Test*');
 
-        $locator = FileClassLocator::createFromSplFiles($finder);
+        $locator = new FileClassLocator($finder);
 
         $classes = $locator->getClassNames();
         sort($classes, SORT_STRING);
