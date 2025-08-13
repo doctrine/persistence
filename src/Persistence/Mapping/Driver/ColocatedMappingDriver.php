@@ -15,7 +15,7 @@ use function array_unique;
  */
 trait ColocatedMappingDriver
 {
-    private ClassLocator $classLocator;
+    private ClassLocator|null $classLocator = null;
 
     /**
      * The directory paths where to look for mapping files.
@@ -116,19 +116,17 @@ trait ColocatedMappingDriver
             return $this->classNames;
         }
 
-        if ($this->paths !== []) {
-            $classNames = FileClassLocator::createFromDirectories($this->paths, $this->excludePaths, $this->fileExtension)->getClassNames();
-
-            if (isset($this->classLocator)) {
-                $classNames = array_unique([
-                    ...$classNames,
-                    ...$this->classLocator->getClassNames(),
-                ]);
-            }
-        } elseif (isset($this->classLocator)) {
-            $classNames = $this->classLocator->getClassNames();
-        } else {
+        if ($this->paths === [] && $this->classLocator === null) {
             throw MappingException::pathRequiredForDriver(static::class);
+        }
+
+        $classNames = $this->classLocator?->getClassNames() ?? [];
+
+        if ($this->paths !== []) {
+            $classNames = array_unique([
+                ...FileClassLocator::createFromDirectories($this->paths, $this->excludePaths, $this->fileExtension)->getClassNames(),
+                ...$classNames,
+            ]);
         }
 
         return $this->classNames = array_filter(
