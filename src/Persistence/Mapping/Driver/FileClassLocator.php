@@ -56,8 +56,8 @@ final class FileClassLocator implements ClassLocator
                 continue;
             }
 
-            // realpath() can return false if the file is in a phar archive
-            // @phpstan-ignore ternary.shortNotAllowed
+            // getRealPath() returns false if the file is in a phar archive
+            // @phpstan-ignore ternary.shortNotAllowed (false is the only falsy value getRealPath() may return)
             $fileName = $file->getRealPath() ?: $file->getPathname();
 
             $includedFiles[$fileName] = true;
@@ -114,7 +114,8 @@ final class FileClassLocator implements ClassLocator
 
         if ($excludedDirectories !== []) {
             $excludedDirectories = array_map(
-                // @phpstan-ignore ternary.shortNotAllowed
+                // realpath() returns false if the file is in a phar archive
+                // @phpstan-ignore ternary.shortNotAllowed (false is the only falsy value realpath() may return)
                 static fn (string $dir): string => str_replace('\\', '/', realpath($dir) ?: $dir),
                 $excludedDirectories,
             );
@@ -122,7 +123,8 @@ final class FileClassLocator implements ClassLocator
             $filesIterator = new CallbackFilterIterator(
                 $filesIterator,
                 static function (SplFileInfo $file) use ($excludedDirectories): bool {
-                    // @phpstan-ignore ternary.shortNotAllowed
+                    // getRealPath() returns false if the file is in a phar archive
+                    // @phpstan-ignore ternary.shortNotAllowed (false is the only falsy value getRealPath() may return)
                     $sourceFile = str_replace('\\', '/', $file->getRealPath() ?: $file->getPathname());
 
                     foreach ($excludedDirectories as $excludedDirectory) {
