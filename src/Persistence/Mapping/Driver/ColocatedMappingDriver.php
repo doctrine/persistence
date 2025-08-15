@@ -4,37 +4,22 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping\Driver;
 
-use AppendIterator;
 use Doctrine\Persistence\Mapping\MappingException;
-use FilesystemIterator;
-use Generator;
-use Iterator;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use ReflectionClass;
-use RegexIterator;
-use SplFileInfo;
 
+use function array_filter;
 use function array_merge;
 use function array_unique;
-use function assert;
-use function get_declared_classes;
-use function in_array;
-use function is_dir;
-use function preg_match;
-use function preg_quote;
-use function realpath;
-use function sprintf;
-use function str_contains;
-use function str_replace;
+use function array_values;
 
 /**
  * The ColocatedMappingDriver reads the mapping metadata located near the code.
  */
 trait ColocatedMappingDriver
 {
+    private ClassLocator|null $classLocator = null;
+
     /**
-     * The paths where to look for mapping files.
+     * The directory paths where to look for mapping files.
      *
      * @var array<int, string>
      */
@@ -51,7 +36,7 @@ trait ColocatedMappingDriver
     protected string $fileExtension = '.php';
 
     /**
-     * Cache for getAllClassNames().
+     * Cache for {@see getAllClassNames()}.
      *
      * @var array<int, string>|null
      * @phpstan-var list<class-string>|null
@@ -79,7 +64,7 @@ trait ColocatedMappingDriver
     }
 
     /**
-     * Append exclude lookup paths to metadata driver.
+     * Append exclude lookup paths to a metadata driver.
      *
      * @param string[] $paths
      */
@@ -132,85 +117,22 @@ trait ColocatedMappingDriver
             return $this->classNames;
         }
 
-        if ($this->paths === []) {
+        if ($this->paths === [] && $this->classLocator === null) {
             throw MappingException::pathRequiredForDriver(static::class);
         }
 
-        /** @var AppendIterator<array-key,SplFileInfo,Iterator<array-key,SplFileInfo>> $filesIterator */
-        $filesIterator = new AppendIterator();
+        $classNames = $this->classLocator?->getClassNames() ?? [];
 
-        foreach ($this->paths as $path) {
-            if (! is_dir($path)) {
-                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
-            }
-
-            /** @var Iterator<array-key,SplFileInfo> $iterator */
-            $iterator = new RegexIterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
-                    RecursiveIteratorIterator::LEAVES_ONLY,
-                ),
-                sprintf('/%s$/', preg_quote($this->fileExtension, '/')),
-                RegexIterator::MATCH,
-            );
-
-            $filesIterator->append($iterator);
+        if ($this->paths !== []) {
+            $classNames = array_unique([
+                ...FileClassLocator::createFromDirectories($this->paths, $this->excludePaths, $this->fileExtension)->getClassNames(),
+                ...$classNames,
+            ]);
         }
 
-        $sourceFilePathNames = $this->pathNameIterator($filesIterator);
-        $includedFiles       = [];
-
-        foreach ($sourceFilePathNames as $sourceFile) {
-            if (preg_match('(^phar:)i', $sourceFile) === 0) {
-                $sourceFile = realpath($sourceFile);
-                assert($sourceFile !== false);
-            }
-
-            foreach ($this->excludePaths as $excludePath) {
-                $realExcludePath = realpath($excludePath);
-                assert($realExcludePath !== false);
-                $exclude = str_replace('\\', '/', $realExcludePath);
-                $current = str_replace('\\', '/', $sourceFile);
-
-                if (str_contains($current, $exclude)) {
-                    continue 2;
-                }
-            }
-
-            require_once $sourceFile;
-
-            $includedFiles[] = $sourceFile;
-        }
-
-        $classes  = [];
-        $declared = get_declared_classes();
-
-        foreach ($declared as $className) {
-            $rc = new ReflectionClass($className);
-
-            $sourceFile = $rc->getFileName();
-
-            if (! in_array($sourceFile, $includedFiles, true) || $this->isTransient($className)) {
-                continue;
-            }
-
-            $classes[] = $className;
-        }
-
-        $this->classNames = $classes;
-
-        return $classes;
-    }
-
-    /**
-     * @param iterable<SplFileInfo> $filesIterator
-     *
-     * @return Generator<int,string>
-     */
-    private function pathNameIterator(iterable $filesIterator): Generator
-    {
-        foreach ($filesIterator as $file) {
-            yield $file->getPathname();
-        }
+        return $this->classNames = array_values(array_filter(
+            $classNames,
+            fn (string $className): bool => ! $this->isTransient($className),
+        ));
     }
 }
