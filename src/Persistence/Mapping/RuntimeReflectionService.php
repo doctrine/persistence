@@ -79,8 +79,6 @@ class RuntimeReflectionService implements ReflectionService
             $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
         }
 
-        $reflectionProperty->setAccessible(true);
-
         return $reflectionProperty;
     }
 

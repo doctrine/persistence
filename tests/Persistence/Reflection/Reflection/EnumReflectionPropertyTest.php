@@ -135,6 +135,18 @@ class EnumReflectionPropertyTest extends TestCase
         $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
         self::assertFalse($reflProperty->isPrivate());
     }
+
+    public function testIsPublic(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+        self::assertTrue($reflProperty->isPublic());
+    }
+
+    public function testHasDefaultValue(): void
+    {
+        $reflProperty = new EnumReflectionProperty(new ReflectionProperty(TypedEnumClass::class, 'suit'), Suit::class);
+        self::assertTrue($reflProperty->hasDefaultValue());
+    }
 }
 
 #[Attribute(Attribute::TARGET_PROPERTY)]

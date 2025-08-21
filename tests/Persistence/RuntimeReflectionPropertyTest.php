@@ -34,7 +34,6 @@ class RuntimeReflectionPropertyTest extends TestCase
 
         self::assertSame($value, $reflProperty->getValue($object));
 
-        $reflProperty->setAccessible(true);
         $reflProperty->setValue($object, 'changedValue');
 
         self::assertSame('changedValue', $reflProperty->getValue($object));
