@@ -49,7 +49,7 @@ interface ReflectionService
     public function getClass(string $class): ReflectionClass;
 
     /**
-     * Returns an accessible property (setAccessible(true)) or null.
+     * Returns an accessible property or null.
      *
      * @phpstan-param class-string $class
      */
