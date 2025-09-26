@@ -7,6 +7,8 @@ namespace Doctrine\Tests_PHP74\Persistence\Reflection;
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
 use PHPUnit\Framework\TestCase;
 
+use const PHP_VERSION_ID;
+
 class TypedNoDefaultReflectionPropertyTest extends TestCase
 {
     public function testGetValue(): void
@@ -29,7 +31,9 @@ class TypedNoDefaultReflectionPropertyTest extends TestCase
     public function testSetValueNull(): void
     {
         $reflection = new TypedNoDefaultReflectionProperty(TypedFoo::class, 'id');
-        $reflection->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $reflection->setAccessible(true);
+        }
 
         $object = new TypedFoo();
         $object->setId(1);
@@ -45,7 +49,9 @@ class TypedNoDefaultReflectionPropertyTest extends TestCase
     public function testSetValueNullOnNullableProperty(): void
     {
         $reflection = new TypedNoDefaultReflectionProperty(TypedNullableFoo::class, 'value');
-        $reflection->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $reflection->setAccessible(true);
+        }
 
         $object = new TypedNullableFoo();
 

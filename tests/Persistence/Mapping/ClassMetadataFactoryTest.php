@@ -16,6 +16,8 @@ use ReflectionMethod;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
+use const PHP_VERSION_ID;
+
 /** @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory */
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
@@ -196,7 +198,9 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): ?CacheItemPoolInterface
     {
         $method = new ReflectionMethod($classMetadataFactory, 'getCache');
-        $method->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $method->setAccessible(true);
+        }
 
         return $method->invoke($classMetadataFactory);
     }
