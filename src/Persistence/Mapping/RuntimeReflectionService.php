@@ -17,6 +17,8 @@ use function class_parents;
 use function phpversion;
 use function version_compare;
 
+use const PHP_VERSION_ID;
+
 /**
  * PHP Runtime Reflection Service.
  */
@@ -90,7 +92,9 @@ class RuntimeReflectionService implements ReflectionService
             $reflectionProperty = new TypedNoDefaultReflectionProperty($class, $property);
         }
 
-        $reflectionProperty->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $reflectionProperty->setAccessible(true);
+        }
 
         return $reflectionProperty;
     }

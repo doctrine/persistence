@@ -11,6 +11,8 @@ use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 
+use const PHP_VERSION_ID;
+
 class DummyMock
 {
     public function callGet(): void
@@ -36,7 +38,10 @@ class RuntimeReflectionPropertyTest extends TestCase
 
         self::assertSame($value, $reflProperty->getValue($object));
 
-        $reflProperty->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $reflProperty->setAccessible(true);
+        }
+
         $reflProperty->setValue($object, 'changedValue');
 
         self::assertSame('changedValue', $reflProperty->getValue($object));
