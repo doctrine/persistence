@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Persistence\Mapping\Fixtures;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\PropertyAccessor;
 use LogicException;
 use ReflectionClass;
 
@@ -112,5 +113,10 @@ final class TestClassMetadata implements ClassMetadata
     public function getIdentifierValues(object $object): array
     {
         return [];
+    }
+
+    public function getPropertyAccessor(string $name): PropertyAccessor|null
+    {
+        return null;
     }
 }

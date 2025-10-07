@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
+use Doctrine\Persistence\PropertyAccessor;
 use ReflectionClass;
 
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
  *
+ * The method getPropertyAccessor will be added in the next major version.
+ *
+ * @method PropertyAccessor|null getPropertyAccessor(string $name)
  * @template-covariant T of object
  */
 interface ClassMetadata
 {
     /**
-     * Gets the fully-qualified class name of this persistent class.
+     * Gets the fully qualified class name of this persistent class.
      *
      * @phpstan-return class-string<T>
      */
