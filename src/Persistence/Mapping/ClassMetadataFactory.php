@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
+use Doctrine\Persistence\PropertyAccessor;
+
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
  *
+ * @method PropertyAccessor createPropertyAccessor(string $className, string $propertyName)
  * @template T of ClassMetadata
  */
 interface ClassMetadataFactory

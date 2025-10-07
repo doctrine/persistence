@@ -8,6 +8,8 @@ use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\ReflectionService;
+use Doctrine\Persistence\PropertyAccessor;
+use Doctrine\Tests\Persistence\PublicPropertyAccessor;
 
 /**
  * @template CMTemplate of ClassMetadata
@@ -78,5 +80,10 @@ class TestClassMetadataFactory extends AbstractClassMetadataFactory
     public function getCacheKey(string $realClassName): string
     {
         return parent::getCacheKey($realClassName);
+    }
+
+    public function createPropertyAccessor(string $className, string $propertyName): PropertyAccessor
+    {
+        return new PublicPropertyAccessor($className, $propertyName);
     }
 }
