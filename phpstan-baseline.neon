@@ -71,6 +71,11 @@ parameters:
 			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
 
 		-
+			message: "#^Variable property access on object\\.$#"
+			count: 2
+			path: tests/Persistence/PublicPropertyAccessor.php
+
+		-
 			message: "#^Property Doctrine\\\\Tests\\\\Persistence\\\\Reflection\\\\TypedFoo\\:\\:\\$id is never read, only written\\.$#"
 			count: 1
 			path: tests/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php
