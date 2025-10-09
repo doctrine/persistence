@@ -47,7 +47,7 @@ class FileDriverTest extends DoctrineTestCase
         $locator->expects(self::once())
                 ->method('findMappingFile')
                 ->with(self::equalTo(stdClass::class))
-                ->will(self::returnValue(__DIR__ . '/_files/stdClass.yml'));
+                ->willReturn(__DIR__ . '/_files/stdClass.yml');
 
         $driver = $this->createTestFileDriver($locator);
 
@@ -61,8 +61,8 @@ class FileDriverTest extends DoctrineTestCase
         // findMappingFile should only be called once
         $locator->expects(self::once())
             ->method('findMappingFile')
-            ->with(self::equalTo(stdClass::class))
-            ->will(self::returnValue(__DIR__ . '/_files/stdClass.yml'));
+                ->with(self::equalTo(stdClass::class))
+                ->willReturn(__DIR__ . '/_files/stdClass.yml');
 
         $driver = $this->createTestFileDriver($locator);
 
@@ -76,10 +76,10 @@ class FileDriverTest extends DoctrineTestCase
     public function testGetAllClassNamesGlobalBasename(): void
     {
         $locator = $this->newLocator();
-        $locator->expects(self::any())->method('getAllClassNames')->with('global')->will(self::returnValue([
+        $locator->expects(self::any())->method('getAllClassNames')->with('global')->willReturn([
             GlobalClass::class,
             AnotherGlobalClass::class,
-        ]));
+        ]);
 
         $driver = $this->createTestFileDriver($locator);
         $driver->setGlobalBasename('global');
@@ -95,7 +95,7 @@ class FileDriverTest extends DoctrineTestCase
         $locator->expects(self::any())
                 ->method('getAllClassNames')
                 ->with(self::equalTo(null))
-                ->will(self::returnValue([stdClass::class]));
+                ->willReturn([stdClass::class]);
         $driver = new TestFileDriver($locator);
 
         $classNames = $driver->getAllClassNames();
@@ -109,7 +109,7 @@ class FileDriverTest extends DoctrineTestCase
         $locator->expects(self::any())
                 ->method('getAllClassNames')
                 ->with(self::equalTo('global'))
-                ->will(self::returnValue([stdClass::class]));
+                ->willReturn([stdClass::class]);
         $driver = new TestFileDriver($locator);
         $driver->setGlobalBasename('global');
 
@@ -128,7 +128,7 @@ class FileDriverTest extends DoctrineTestCase
         $locator->expects(self::once())
                 ->method('findMappingFile')
                 ->with(self::equalTo(stdClass::class))
-                ->will(self::returnValue(__DIR__ . '/_files/stdClass.yml'));
+                ->willReturn(__DIR__ . '/_files/stdClass.yml');
         $driver = new TestFileDriver($locator);
         $driver->setGlobalBasename('global');
 
@@ -144,7 +144,7 @@ class FileDriverTest extends DoctrineTestCase
         $locator->expects(self::once())
                 ->method('fileExists')
                 ->with(self::equalTo(stdClass::class))
-                ->will(self::returnValue(true));
+                ->willReturn(true);
 
         $driver = $this->createTestFileDriver($locator);
         $driver->setGlobalBasename('global');
@@ -160,7 +160,7 @@ class FileDriverTest extends DoctrineTestCase
         $locator->expects(self::once())
                 ->method('fileExists')
                 ->with(self::equalTo(NotLoadedClass::class))
-                ->will(self::returnValue(false));
+                ->willReturn(false);
 
         $driver = $this->createTestFileDriver($locator);
 
@@ -178,8 +178,8 @@ class FileDriverTest extends DoctrineTestCase
     private function newLocator(): MockObject
     {
         $locator = $this->createMock(FileLocator::class);
-        $locator->expects(self::any())->method('getFileExtension')->will(self::returnValue('.yml'));
-        $locator->expects(self::any())->method('getPaths')->will(self::returnValue([__DIR__ . '/_files']));
+        $locator->expects(self::any())->method('getFileExtension')->willReturn('.yml');
+        $locator->expects(self::any())->method('getPaths')->willReturn([__DIR__ . '/_files']);
 
         return $locator;
     }

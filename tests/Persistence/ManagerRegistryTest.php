@@ -13,16 +13,13 @@ use Doctrine\Persistence\ObjectRepository;
 use Doctrine\Persistence\Proxy;
 use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\TestClassMetadataFactory;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 
 use function assert;
 use function call_user_func;
 
-/**
- * @uses Doctrine\Tests\Persistence\TestObject
- *
- * @groups DCOM-270
- */
+#[Group('DCOM-270')]
 class ManagerRegistryTest extends DoctrineTestCase
 {
     private TestManagerRegistry $mr;
@@ -85,7 +82,7 @@ class ManagerRegistryTest extends DoctrineTestCase
             ->expects(self::once())
             ->method('getRepository')
             ->with(self::equalTo(TestObject::class))
-            ->will(self::returnValue($repository));
+            ->willReturn($repository);
 
         self::assertSame($repository, $this->mr->getRepository(TestObject::class));
     }
@@ -116,7 +113,7 @@ class ManagerRegistryTest extends DoctrineTestCase
             ->expects(self::once())
             ->method('getRepository')
             ->with(self::equalTo(TestObject::class))
-            ->will(self::returnValue($repository));
+            ->willReturn($repository);
 
         self::assertSame($repository, $this->mr->getRepository(TestObject::class, 'other'));
     }
@@ -147,7 +144,7 @@ class ManagerRegistryTest extends DoctrineTestCase
             ->expects(self::once())
             ->method('getRepository')
             ->with(self::equalTo(OtherTestObject::class))
-            ->will(self::returnValue($repository));
+            ->willReturn($repository);
 
         self::assertSame($repository, $this->mr->getRepository(OtherTestObject::class));
     }
