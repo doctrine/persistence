@@ -29,7 +29,7 @@
         "phpstan/phpstan-phpunit": "^2",
         "phpstan/phpstan-strict-rules": "^2",
         "doctrine/coding-standard": "^14",
-        "phpunit/phpunit": "^9.6",
+        "phpunit/phpunit": "^10.5",
         "symfony/cache": "^4.4 || ^5.4 || ^6.0 || ^7.0",
         "symfony/finder": "^4.4 || ^5.4 || ^6.0 || ^7.0"
     },

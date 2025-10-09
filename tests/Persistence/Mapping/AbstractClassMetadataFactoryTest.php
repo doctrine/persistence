@@ -15,24 +15,42 @@ final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
     public function testItSkipsTransientClasses(): void
     {
         $cmf = $this->getMockForAbstractClass(AbstractClassMetadataFactory::class);
+
+        $metadataCallCount = 0;
         $cmf
             ->method('newClassMetadataInstance')
-            ->withConsecutive([SomeGrandParentEntity::class], [SomeEntity::class])
-            ->willReturnOnConsecutiveCalls(
-                $this->createMock(ClassMetadata::class),
-                $this->createMock(ClassMetadata::class),
-            );
+            ->willReturnCallback(function ($className) use (&$metadataCallCount) {
+                $metadataCallCount++;
+                if ($metadataCallCount === 1) {
+                    self::assertEquals(SomeGrandParentEntity::class, $className);
+                } elseif ($metadataCallCount === 2) {
+                    self::assertEquals(SomeEntity::class, $className);
+                }
+
+                return $this->createMock(ClassMetadata::class);
+            });
+
         $driver = $this->createMock(MappingDriver::class);
         $cmf->method('getDriver')
             ->willReturn($driver);
 
+        $driverCallCount = 0;
         $driver->expects(self::exactly(2))
             ->method('isTransient')
-            ->withConsecutive(
-                [SomeGrandParentEntity::class],
-                [SomeParentEntity::class],
-            )
-            ->willReturnOnConsecutiveCalls(false, true);
+            ->willReturnCallback(static function ($className) use (&$driverCallCount) {
+                $driverCallCount++;
+                if ($driverCallCount === 1) {
+                    self::assertEquals(SomeGrandParentEntity::class, $className);
+
+                    return false;
+                }
+
+                if ($driverCallCount === 2) {
+                    self::assertEquals(SomeParentEntity::class, $className);
+
+                    return true;
+                }
+            });
 
         $cmf->getMetadataFor(SomeEntity::class);
     }
