@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Persistence;
 use Closure;
 use Doctrine\Persistence\Proxy;
 use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 
 class DummyMock
@@ -22,10 +23,8 @@ class DummyMock
 
 class RuntimeReflectionPropertyTest extends TestCase
 {
-    /**
-     * @testWith ["test", "testValue"]
-     *           ["privateTest", "privateTestValue"]
-     */
+    #[TestWith(['test', 'testValue'])]
+    #[TestWith(['privateTest', 'privateTestValue'])]
     public function testGetSetValue(string $name, string $value): void
     {
         $object = new RuntimeReflectionPropertyTestClass();
@@ -39,12 +38,9 @@ class RuntimeReflectionPropertyTest extends TestCase
         self::assertSame('changedValue', $reflProperty->getValue($object));
     }
 
-    /**
-     * @param class-string<RuntimeReflectionPropertyTestProxyMock> $proxyClass
-     *
-     * @testWith ["Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock"]
-     *           ["\\Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock"]
-     */
+    /** @param class-string<RuntimeReflectionPropertyTestProxyMock> $proxyClass */
+    #[TestWith(['Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock'])]
+    #[TestWith(['\\Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock'])]
     public function testGetValueOnProxyProperty(string $proxyClass): void
     {
         $getCheckMock = $this->createMock(DummyMock::class);

@@ -135,7 +135,7 @@ class TestAbstractClassMetadataFactory extends AbstractClassMetadataFactory
     /** @param ClassMetadata<object>|null $defaultMetadata */
     public function __construct(
         private MappingDriver|null $driver = null,
-        private ClassMetadata|null $defaultMetadata = null
+        private ClassMetadata|null $defaultMetadata = null,
     ) {
     }
 
