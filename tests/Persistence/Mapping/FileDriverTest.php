@@ -76,7 +76,7 @@ class FileDriverTest extends DoctrineTestCase
     public function testGetAllClassNamesGlobalBasename(): void
     {
         $locator = $this->newLocator();
-        $locator->expects(self::any())->method('getAllClassNames')->with('global')->willReturn([
+        $locator->method('getAllClassNames')->with('global')->willReturn([
             GlobalClass::class,
             AnotherGlobalClass::class,
         ]);
@@ -92,8 +92,7 @@ class FileDriverTest extends DoctrineTestCase
     public function testGetAllClassNamesFromMappingFile(): void
     {
         $locator = $this->newLocator();
-        $locator->expects(self::any())
-                ->method('getAllClassNames')
+        $locator->method('getAllClassNames')
                 ->with(self::equalTo(null))
                 ->willReturn([stdClass::class]);
         $driver = new TestFileDriver($locator);
@@ -106,8 +105,7 @@ class FileDriverTest extends DoctrineTestCase
     public function testGetAllClassNamesBothSources(): void
     {
         $locator = $this->newLocator();
-        $locator->expects(self::any())
-                ->method('getAllClassNames')
+        $locator->method('getAllClassNames')
                 ->with(self::equalTo('global'))
                 ->willReturn([stdClass::class]);
         $driver = new TestFileDriver($locator);
@@ -178,8 +176,8 @@ class FileDriverTest extends DoctrineTestCase
     private function newLocator(): MockObject
     {
         $locator = $this->createMock(FileLocator::class);
-        $locator->expects(self::any())->method('getFileExtension')->willReturn('.yml');
-        $locator->expects(self::any())->method('getPaths')->willReturn([__DIR__ . '/_files']);
+        $locator->method('getFileExtension')->willReturn('.yml');
+        $locator->method('getPaths')->willReturn([__DIR__ . '/_files']);
 
         return $locator;
     }

@@ -158,7 +158,6 @@ class ManagerRegistryTest extends DoctrineTestCase
             $metadata = $this->createMock(ClassMetadata::class);
 
             $metadata
-                ->expects(self::any())
                 ->method('getName')
                 ->willReturn($name === 'other_manager' ? OtherTestObject::class : TestObject::class);
 
