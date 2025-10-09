@@ -12,7 +12,11 @@
         </testsuite>
     </testsuites>
 
-    <source>
+    <php>
+        <server name="DOCTRINE_DEPRECATIONS" value="trigger"/>
+    </php>
+
+    <source ignoreSuppressionOfDeprecations="true">
         <include>
             <directory>src</directory>
         </include>
