@@ -11,6 +11,7 @@ use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\Manager\Manager;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\Model;
+use PHPUnit\Framework\Attributes\Group;
 use stdClass;
 
 class DriverChainTest extends DoctrineTestCase
@@ -63,12 +64,12 @@ class DriverChainTest extends DoctrineTestCase
         $driver1 = $this->createMock(MappingDriver::class);
         $driver1->expects(self::once())
                 ->method('getAllClassNames')
-                ->will(self::returnValue(['Doctrine\Tests\Models\Company\Foo']));
+                ->willReturn(['Doctrine\Tests\Models\Company\Foo']);
 
         $driver2 = $this->createMock(MappingDriver::class);
         $driver2->expects(self::once())
                 ->method('getAllClassNames')
-                ->will(self::returnValue(['Doctrine\Tests\ORM\Mapping\Bar', 'Doctrine\Tests\ORM\Mapping\Baz', 'FooBarBaz']));
+                ->willReturn(['Doctrine\Tests\ORM\Mapping\Bar', 'Doctrine\Tests\ORM\Mapping\Baz', 'FooBarBaz']);
 
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\Company');
         $chain->addDriver($driver2, 'Doctrine\Tests\ORM\Mapping');
@@ -80,7 +81,7 @@ class DriverChainTest extends DoctrineTestCase
         ], $chain->getAllClassNames());
     }
 
-    /** @group DDC-706 */
+    #[Group('DDC-706')]
     public function testIsTransient(): void
     {
         $driver1 = $this->createMock(MappingDriver::class);
@@ -90,7 +91,7 @@ class DriverChainTest extends DoctrineTestCase
         self::assertTrue($chain->isTransient(stdClass::class), 'stdClass isTransient');
     }
 
-    /** @group DDC-1412 */
+    #[Group('DDC-1412')]
     public function testDefaultDriver(): void
     {
         $companyDriver    = $this->createMock(MappingDriver::class);
@@ -104,14 +105,14 @@ class DriverChainTest extends DoctrineTestCase
         $companyDriver->expects(self::once())
             ->method('isTransient')
             ->with(self::equalTo($managerClassName))
-            ->will(self::returnValue(false));
+            ->willReturn(false);
 
         $defaultDriver->expects(self::never())
             ->method('loadMetadataForClass');
         $defaultDriver->expects(self::once())
             ->method('isTransient')
             ->with(self::equalTo($entityClassName))
-            ->will(self::returnValue(true));
+            ->willReturn(true);
 
         self::assertNull($chain->getDefaultDriver());
 
@@ -134,11 +135,11 @@ class DriverChainTest extends DoctrineTestCase
 
         $companyDriver->expects(self::once())
             ->method('getAllClassNames')
-            ->will(self::returnValue(['Doctrine\Tests\Models\Company\Foo']));
+            ->willReturn(['Doctrine\Tests\Models\Company\Foo']);
 
         $defaultDriver->expects(self::once())
             ->method('getAllClassNames')
-            ->will(self::returnValue(['Other\Class']));
+            ->willReturn(['Other\Class']);
 
         $chain->setDefaultDriver($defaultDriver);
         $chain->addDriver($companyDriver, 'Doctrine\Tests\Models\Company');

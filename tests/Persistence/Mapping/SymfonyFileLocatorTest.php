@@ -8,6 +8,7 @@ use Doctrine\Persistence\Mapping\Driver\SymfonyFileLocator;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 use function realpath;
 use function sort;
@@ -106,9 +107,8 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
      * @param string $dir       Path to load mapping data from
      *
      * @throws MappingException
-     *
-     * @dataProvider customNamespaceSeparatorProvider
      */
+    #[DataProvider('customNamespaceSeparatorProvider')]
     public function testGetClassNamesWithCustomNsSeparator(string $separator, string $dir): void
     {
         $path   = __DIR__ . $dir;
@@ -152,9 +152,8 @@ class SymfonyFileLocatorTest extends DoctrineTestCase
      * @param string[] $files     Files to lookup classnames
      *
      * @throws MappingException
-     *
-     * @dataProvider customNamespaceLookupQueryProvider
      */
+    #[DataProvider('customNamespaceLookupQueryProvider')]
     public function testFindMappingFileWithCustomNsSeparator(string $separator, string $dir, array $files): void
     {
         $path   = __DIR__ . $dir;

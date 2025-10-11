@@ -13,6 +13,7 @@ use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\EntityFixture;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\TestClass;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function sort;
@@ -58,7 +59,7 @@ class ColocatedMappingDriverTest extends TestCase
         self::assertSame('.php1', $driver->getFileExtension());
     }
 
-    /** @dataProvider directoryPathProvider */
+    #[DataProvider('directoryPathProvider')]
     public function testGetAllClassNamesForDirectory(string $dirPath): void
     {
         $driver = $this->createDirectoryPathDriver($dirPath);
