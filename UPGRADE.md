@@ -6,6 +6,16 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 4.2
+
+## Add `getFieldValue` and `setFieldValue` to `ClassMetadata` implementation
+
+The interface `Doctrine\Persistence\Mapping\ClassMetadata` has two new methods:
+- `getFieldValue(object $object, string $field)`
+- `setFieldValue(object $object, string $field, mixed $value): void`
+
+Not implementing these methods is deprecated. They will be required in 5.0.
+
 # Upgrade to 4.0
 
 ## BC Break: Removed `StaticReflectionService`

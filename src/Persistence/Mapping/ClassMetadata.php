@@ -10,6 +10,8 @@ use ReflectionClass;
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
  *
  * @template-covariant T of object
+ * @method mixed getFieldValue(object $entity, string $field)
+ * @method void  setFieldValue(object $entity, string $field, mixed $value)
  */
 interface ClassMetadata
 {
