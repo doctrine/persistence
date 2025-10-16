@@ -11,6 +11,7 @@ parameters:
     paths:
         - src
         - tests
+        - tests/Persistence/Mapping/_files/colocated/Foo.mphp
 
     excludePaths:
         - tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php

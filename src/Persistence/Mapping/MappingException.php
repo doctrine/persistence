@@ -30,7 +30,7 @@ class MappingException extends Exception
     public static function pathRequiredForDriver(string $driverClassName): self
     {
         return new self(sprintf(
-            'Specifying the paths to your entities is required when using %s to retrieve all class names.',
+            'Specifying source file paths to your entities is required when using %s to retrieve all class names.',
             $driverClassName,
         ));
     }
