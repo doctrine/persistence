@@ -12,11 +12,14 @@ use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\Manager\Manager;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\Model;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\TestWith;
 use stdClass;
 
 class DriverChainTest extends DoctrineTestCase
 {
-    public function testDelegateToMatchingNamespaceDriver(): void
+    #[TestWith(['Doctrine\Tests\Models\Company'])]
+    #[TestWith(['Doctrine\Tests\Persistence\Map'])]
+    public function testDelegateToMatchingNamespaceDriver(string $namespace): void
     {
         $className     = DriverChainEntity::class;
         $classMetadata = $this->createMock(ClassMetadata::class);
@@ -38,7 +41,7 @@ class DriverChainTest extends DoctrineTestCase
                 ->with(self::equalTo($className))
                 ->willReturn(true);
 
-        $chain->addDriver($driver1, 'Doctrine\Tests\Models\Company');
+        $chain->addDriver($driver1, $namespace);
         $chain->addDriver($driver2, 'Doctrine\Tests\Persistence\Mapping');
 
         $chain->loadMetadataForClass($className, $classMetadata);
