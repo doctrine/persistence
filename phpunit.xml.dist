@@ -4,7 +4,12 @@
          colors="true"
          beStrictAboutOutputDuringTests="true"
          displayDetailsOnPhpunitDeprecations="true"
-         displayDetailsOnTestsThatTriggerDeprecations="true"
+         failOnDeprecation="true"
+         failOnNotice="true"
+         failOnWarning="true"
+         failOnIncomplete="true"
+         failOnRisky="true"
+         failOnEmptyTestSuite="true"
 >
     <testsuites>
         <testsuite name="Doctrine Persistence Test Suite">
