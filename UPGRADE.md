@@ -16,6 +16,31 @@ The interface `Doctrine\Persistence\Mapping\ClassMetadata` has two new methods:
 
 Not implementing these methods is deprecated. They will be required in 5.0.
 
+## Deprecated modifying `$metadata` in PHP mapping files
+
+Relying on the `$metadata` variable directly in PHP mapping files is deprecated.
+Instead, wrap the code in a closure that is returned by the configuration file.
+
+Before:
+
+```php
+<?php // mappings/App.Entity.User.php
+
+$metadata->name = \App\Entity\User::class;
+```
+
+After:
+
+```php
+<?php // mappings/App.Entity.User.php
+
+use Doctrine\Persistence\Mapping\ClassMetadata;
+
+return function (ClassMetadata $metadata): void {
+    $metadata->name = \App\Entity\User::class;
+};
+```
+
 # Upgrade to 4.0
 
 ## BC Break: Removed `StaticReflectionService`

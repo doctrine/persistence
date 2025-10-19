@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping\Driver;
 
+use Closure;
+use CompileError;
+use Doctrine\Deprecations\Deprecation;
 use Doctrine\Persistence\Mapping\ClassMetadata;
+use Error;
 
 /**
  * The PHPDriver includes php files which just populate ClassMetadataInfo
@@ -35,6 +39,33 @@ class PHPDriver extends FileDriver
      */
     protected function loadMappingFile(string $file): array
     {
+        try {
+            $callback = Closure::bind(static function (string $file): mixed {
+                $metadata = null;
+
+                return include $file;
+            }, null, null)($file);
+        } catch (CompileError $e) {
+            throw $e;
+        } catch (Error) {
+            // Calling any method on $metadata=null will raise an Error
+            // Falling back to legacy behavior of expecting $metadata to be populated
+            $callback = null;
+        }
+
+        if ($callback instanceof Closure) {
+            $callback($this->metadata);
+
+            return [$this->metadata->getName() => $this->metadata];
+        }
+
+        Deprecation::trigger(
+            'doctrine/persistence',
+            'https://github.com/doctrine/persistence/pull/450',
+            'Not returning a Closure from a PHP mapping file is deprecated',
+        );
+
+        unset($callback);
         $metadata = $this->metadata;
         include $file;
 
