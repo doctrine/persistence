@@ -16,10 +16,10 @@ use stdClass;
 class DriverChainTest extends DoctrineTestCase
 {
     /**
-     * @testWith ["Doctrine\\Tests\\Models\\Company"]
-     *           ["Doctrine\\Tests\\Persistence\\Map"]
+     * @testWith ["Doctrine\\Tests\\Models\\Company", "Doctrine\\Tests\\Persistence\\Mapping"]
+     *           ["Doctrine\\Tests\\Persistence\\Map\\", "Doctrine\\Tests\\Persistence\\Map"]
      */
-    public function testDelegateToMatchingNamespaceDriver(string $namespace): void
+    public function testDelegateToMatchingNamespaceDriver(string $namespace1, string $namespace2): void
     {
         $className     = DriverChainEntity::class;
         $classMetadata = $this->createMock(ClassMetadata::class);
@@ -41,8 +41,8 @@ class DriverChainTest extends DoctrineTestCase
                 ->with(self::equalTo($className))
                 ->willReturn(true);
 
-        $chain->addDriver($driver1, $namespace);
-        $chain->addDriver($driver2, 'Doctrine\Tests\Persistence\Mapping');
+        $chain->addDriver($driver1, $namespace1);
+        $chain->addDriver($driver2, $namespace2);
 
         $chain->loadMetadataForClass($className, $classMetadata);
 
