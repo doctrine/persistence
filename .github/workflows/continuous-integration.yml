@@ -12,8 +12,9 @@ on:
 jobs:
   phpunit:
     name: "PHPUnit"
-    uses: "doctrine/.github/.github/workflows/continuous-integration.yml@12.0.0"
+    uses: "doctrine/.github/.github/workflows/continuous-integration.yml@12.1.0"
     with:
       php-versions: '["8.1", "8.2", "8.3", "8.4", "8.5"]'
+      phpunit-options-lowest: "--do-not-fail-on-deprecation"
     secrets:
       CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
