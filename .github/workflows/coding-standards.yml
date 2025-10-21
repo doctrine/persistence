@@ -13,5 +13,3 @@ jobs:
   coding-standards:
     name: "Coding Standards"
     uses: "doctrine/.github/.github/workflows/coding-standards.yml@12.0.0"
-    with:
-      composer-root-version: "3.0"

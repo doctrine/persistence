@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Doctrine\Tests_PHP74\Persistence\Reflection;
+namespace Doctrine\Tests\Persistence\Reflection;
 
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
 use PHPUnit\Framework\TestCase;
-
-use const PHP_VERSION_ID;
 
 class TypedNoDefaultReflectionPropertyTest extends TestCase
 {
@@ -31,9 +29,6 @@ class TypedNoDefaultReflectionPropertyTest extends TestCase
     public function testSetValueNull(): void
     {
         $reflection = new TypedNoDefaultReflectionProperty(TypedFoo::class, 'id');
-        if (PHP_VERSION_ID < 80100) {
-            $reflection->setAccessible(true);
-        }
 
         $object = new TypedFoo();
         $object->setId(1);
@@ -49,9 +44,6 @@ class TypedNoDefaultReflectionPropertyTest extends TestCase
     public function testSetValueNullOnNullableProperty(): void
     {
         $reflection = new TypedNoDefaultReflectionProperty(TypedNullableFoo::class, 'value');
-        if (PHP_VERSION_ID < 80100) {
-            $reflection->setAccessible(true);
-        }
 
         $object = new TypedNullableFoo();
 
@@ -72,10 +64,7 @@ class TypedFoo
 {
     private int $id;
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
+    public function setId(mixed $id): void
     {
         $this->id = $id;
     }
@@ -83,20 +72,14 @@ class TypedFoo
 
 class TypedNullableFoo
 {
-    private ?string $value;
+    private string|null $value;
 
-    /**
-     * @param mixed $value
-     */
-    public function setValue($value): void
+    public function setValue(mixed $value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }

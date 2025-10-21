@@ -6,6 +6,5 @@ namespace Doctrine\Tests\Persistence;
 
 class OtherTestObject
 {
-    /** @var int */
-    protected $id = 1;
+    protected int $id = 1;
 }

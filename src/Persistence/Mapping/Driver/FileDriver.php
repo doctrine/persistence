@@ -7,7 +7,6 @@ namespace Doctrine\Persistence\Mapping\Driver;
 use Doctrine\Persistence\Mapping\MappingException;
 
 use function array_keys;
-use function array_merge;
 use function array_unique;
 use function array_values;
 use function is_file;
@@ -25,17 +24,14 @@ use function str_replace;
  */
 abstract class FileDriver implements MappingDriver
 {
-    /** @var FileLocator */
-    protected $locator;
+    protected FileLocator $locator;
 
     /**
      * @var mixed[]|null
      * @phpstan-var array<class-string, T>|null
      */
-    protected $classCache;
-
-    /** @var string */
-    protected $globalBasename = '';
+    protected array|null $classCache = null;
+    protected string $globalBasename = '';
 
     /**
      * Initializes a new FileDriver that looks in the given path(s) for mapping
@@ -44,7 +40,7 @@ abstract class FileDriver implements MappingDriver
      * @param string|array<int, string>|FileLocator $locator A FileLocator or one/multiple paths
      *                                                       where mapping documents can be found.
      */
-    public function __construct($locator, ?string $fileExtension = null)
+    public function __construct(string|array|FileLocator $locator, string|null $fileExtension = null)
     {
         if ($locator instanceof FileLocator) {
             $this->locator = $locator;
@@ -53,22 +49,14 @@ abstract class FileDriver implements MappingDriver
         }
     }
 
-    /**
-     * Sets the global basename.
-     *
-     * @return void
-     */
-    public function setGlobalBasename(string $file)
+    /** Sets the global basename. */
+    public function setGlobalBasename(string $file): void
     {
         $this->globalBasename = $file;
     }
 
-    /**
-     * Retrieves the global basename.
-     *
-     * @return string|null
-     */
-    public function getGlobalBasename()
+    /** Retrieves the global basename. */
+    public function getGlobalBasename(): string
     {
         return $this->globalBasename;
     }
@@ -83,7 +71,7 @@ abstract class FileDriver implements MappingDriver
      *
      * @throws MappingException
      */
-    public function getElement(string $className)
+    public function getElement(string $className): mixed
     {
         if ($this->classCache === null) {
             $this->initialize();
@@ -98,7 +86,7 @@ abstract class FileDriver implements MappingDriver
         if (! isset($result[$className])) {
             throw MappingException::invalidMappingFile(
                 $className,
-                str_replace('\\', '.', $className) . $this->locator->getFileExtension()
+                str_replace('\\', '.', $className) . $this->locator->getFileExtension(),
             );
         }
 
@@ -107,10 +95,7 @@ abstract class FileDriver implements MappingDriver
         return $result[$className];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isTransient(string $className)
+    public function isTransient(string $className): bool
     {
         if ($this->classCache === null) {
             $this->initialize();
@@ -126,7 +111,7 @@ abstract class FileDriver implements MappingDriver
     /**
      * {@inheritDoc}
      */
-    public function getAllClassNames()
+    public function getAllClassNames(): array
     {
         if ($this->classCache === null) {
             $this->initialize();
@@ -142,10 +127,7 @@ abstract class FileDriver implements MappingDriver
         /** @var list<class-string> $keys */
         $keys = array_keys($classCache);
 
-        return array_values(array_unique(array_merge(
-            $keys,
-            $this->locator->getAllClassNames($this->globalBasename)
-        )));
+        return array_values(array_unique([...$keys, ...$this->locator->getAllClassNames($this->globalBasename)]));
     }
 
     /**
@@ -157,7 +139,7 @@ abstract class FileDriver implements MappingDriver
      * @return mixed[]
      * @phpstan-return array<class-string, T>
      */
-    abstract protected function loadMappingFile(string $file);
+    abstract protected function loadMappingFile(string $file): array;
 
     /**
      * Initializes the class cache from all the global files.
@@ -167,10 +149,8 @@ abstract class FileDriver implements MappingDriver
      * necessary. This may not be relevant to scenarios where caching of
      * metadata is in place, however hits very hard in scenarios where no
      * caching is used.
-     *
-     * @return void
      */
-    protected function initialize()
+    protected function initialize(): void
     {
         $this->classCache = [];
         if ($this->globalBasename === '') {
@@ -183,29 +163,18 @@ abstract class FileDriver implements MappingDriver
                 continue;
             }
 
-            $this->classCache = array_merge(
-                $this->classCache,
-                $this->loadMappingFile($file)
-            );
+            $this->classCache = [...$this->classCache, ...$this->loadMappingFile($file)];
         }
     }
 
-    /**
-     * Retrieves the locator used to discover mapping files by className.
-     *
-     * @return FileLocator
-     */
-    public function getLocator()
+    /** Retrieves the locator used to discover mapping files by className. */
+    public function getLocator(): FileLocator
     {
         return $this->locator;
     }
 
-    /**
-     * Sets the locator used to discover mapping files by className.
-     *
-     * @return void
-     */
-    public function setLocator(FileLocator $locator)
+    /** Sets the locator used to discover mapping files by className. */
+    public function setLocator(FileLocator $locator): void
     {
         $this->locator = $locator;
     }

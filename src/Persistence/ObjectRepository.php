@@ -21,7 +21,7 @@ interface ObjectRepository
      * @return object|null The object.
      * @phpstan-return T|null
      */
-    public function find($id);
+    public function find(mixed $id): object|null;
 
     /**
      * Finds all objects in the repository.
@@ -29,7 +29,7 @@ interface ObjectRepository
      * @return array<int, object> The objects.
      * @phpstan-return T[]
      */
-    public function findAll();
+    public function findAll(): array;
 
     /**
      * Finds objects by a set of criteria.
@@ -49,10 +49,10 @@ interface ObjectRepository
      */
     public function findBy(
         array $criteria,
-        ?array $orderBy = null,
-        ?int $limit = null,
-        ?int $offset = null
-    );
+        array|null $orderBy = null,
+        int|null $limit = null,
+        int|null $offset = null,
+    ): array;
 
     /**
      * Finds a single object by a set of criteria.
@@ -62,12 +62,12 @@ interface ObjectRepository
      * @return object|null The object.
      * @phpstan-return T|null
      */
-    public function findOneBy(array $criteria);
+    public function findOneBy(array $criteria): object|null;
 
     /**
      * Returns the class name of the object managed by the repository.
      *
      * @phpstan-return class-string<T>
      */
-    public function getClassName();
+    public function getClassName(): string;
 }

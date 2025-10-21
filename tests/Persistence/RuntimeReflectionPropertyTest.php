@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Persistence;
 
 use Closure;
-use Doctrine\Common\Proxy\Proxy as CommonProxy;
 use Doctrine\Persistence\Proxy;
 use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
-use LogicException;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
-
-use const PHP_VERSION_ID;
 
 class DummyMock
 {
@@ -26,10 +23,8 @@ class DummyMock
 
 class RuntimeReflectionPropertyTest extends TestCase
 {
-    /**
-     * @testWith ["test", "testValue"]
-     *           ["privateTest", "privateTestValue"]
-     */
+    #[TestWith(['test', 'testValue'])]
+    #[TestWith(['privateTest', 'privateTestValue'])]
     public function testGetSetValue(string $name, string $value): void
     {
         $object = new RuntimeReflectionPropertyTestClass();
@@ -38,22 +33,14 @@ class RuntimeReflectionPropertyTest extends TestCase
 
         self::assertSame($value, $reflProperty->getValue($object));
 
-        if (PHP_VERSION_ID < 80100) {
-            $reflProperty->setAccessible(true);
-        }
-
         $reflProperty->setValue($object, 'changedValue');
 
         self::assertSame('changedValue', $reflProperty->getValue($object));
     }
 
-    /**
-     * @param class-string<RuntimeReflectionPropertyTestProxyMock> $proxyClass
-     *
-     * @testWith ["Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock"]
-     *           ["Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestCommonProxyMock"]
-     *           ["\\Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock"]
-     */
+    /** @param class-string<RuntimeReflectionPropertyTestProxyMock> $proxyClass */
+    #[TestWith(['Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock'])]
+    #[TestWith(['\\Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock'])]
     public function testGetValueOnProxyProperty(string $proxyClass): void
     {
         $getCheckMock = $this->createMock(DummyMock::class);
@@ -71,13 +58,7 @@ class RuntimeReflectionPropertyTest extends TestCase
         self::assertNull($reflProperty->getValue($mockProxy));
     }
 
-    /**
-     * @param class-string<RuntimeReflectionPropertyTestProxyMock> $proxyClass
-     *
-     * @testWith ["Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock"]
-     *           ["Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestCommonProxyMock"]
-     */
-    public function testSetValueOnProxyProperty(string $proxyClass): void
+    public function testSetValueOnProxyProperty(): void
     {
         $setCheckMock = $this->createMock(DummyMock::class);
         $setCheckMock->expects(self::never())->method('callSet');
@@ -85,9 +66,8 @@ class RuntimeReflectionPropertyTest extends TestCase
             $setCheckMock->callSet();
         };
 
-        $mockProxy = new $proxyClass($initializer);
-
-        $reflProperty = new RuntimeReflectionProperty($proxyClass, 'checkedProperty');
+        $mockProxy    = new RuntimeReflectionPropertyTestProxyMock($initializer);
+        $reflProperty = new RuntimeReflectionProperty(RuntimeReflectionPropertyTestProxyMock::class, 'checkedProperty');
 
         $reflProperty->setValue($mockProxy, 'newValue');
         self::assertSame('newValue', $mockProxy->checkedProperty);
@@ -95,23 +75,6 @@ class RuntimeReflectionPropertyTest extends TestCase
         unset($mockProxy->checkedProperty);
         $reflProperty->setValue($mockProxy, 'otherNewValue');
         self::assertSame('otherNewValue', $mockProxy->checkedProperty);
-
-        if (! $mockProxy instanceof CommonProxy) {
-            return;
-        }
-
-        $setCheckMock = $this->createMock(DummyMock::class);
-        $setCheckMock->expects(self::once())->method('callSet');
-        $initializer = static function () use ($setCheckMock): void {
-            $setCheckMock->callSet();
-        };
-
-        $mockProxy->__setInitializer($initializer);
-        $mockProxy->__setInitialized(true);
-
-        unset($mockProxy->checkedProperty);
-        $reflProperty->setValue($mockProxy, 'againNewValue');
-        self::assertSame('againNewValue', $mockProxy->checkedProperty);
     }
 }
 
@@ -122,21 +85,15 @@ class RuntimeReflectionPropertyTest extends TestCase
  */
 class RuntimeReflectionPropertyTestProxyMock implements Proxy
 {
-    /** @var Closure|null */
-    protected $initializer = null;
+    private bool $initialized = false;
 
-    /** @var bool */
-    private $initialized = false;
-
-    /** @var string */
-    public $checkedProperty = 'testValue';
+    public string $checkedProperty = 'testValue';
 
     /**
      * {@inheritDoc}
      */
-    public function __construct(?Closure $initializer = null)
+    public function __construct(protected Closure|null $initializer = null)
     {
-        $this->initializer = $initializer;
     }
 
     public function __load(): void
@@ -156,8 +113,7 @@ class RuntimeReflectionPropertyTestProxyMock implements Proxy
         $this->initialized = $initialized;
     }
 
-    /** @return mixed */
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         if (! $this->initialized && $this->initializer !== null) {
             ($this->initializer)();
@@ -166,8 +122,7 @@ class RuntimeReflectionPropertyTestProxyMock implements Proxy
         return $this->checkedProperty;
     }
 
-    /** @param mixed $value */
-    public function __set(string $name, $value): void
+    public function __set(string $name, mixed $value): void
     {
         if (! $this->initialized && $this->initializer !== null) {
             ($this->initializer)();
@@ -185,76 +140,14 @@ class RuntimeReflectionPropertyTestProxyMock implements Proxy
         return isset($this->checkedProperty);
     }
 }
-/**
- * Mock that simulates proxy property lazy loading
- *
- * @implements CommonProxy<object>
- */
-class RuntimeReflectionPropertyTestCommonProxyMock extends RuntimeReflectionPropertyTestProxyMock implements CommonProxy
-{
-    /** @param mixed $value */
-    public function __set(string $name, $value): void
-    {
-        if ($this->initializer !== null) {
-            ($this->initializer)();
-        }
-
-        $this->checkedProperty = $value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __getInitializer()
-    {
-        return $this->initializer;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __setInitializer(?Closure $initializer = null)
-    {
-        $this->initializer = $initializer;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return mixed[] Keys are the property names, and values are the default
-     *                 values for those properties.
-     * @phpstan-return array<string, mixed>
-     */
-    public function __getLazyProperties()
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __setCloner(?Closure $cloner = null)
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __getCloner()
-    {
-        throw new LogicException('Not implemented');
-    }
-}
 
 class RuntimeReflectionPropertyTestClass
 {
-    /** @var string|null */
-    public $test = 'testValue';
+    public string $test = 'testValue';
 
-    /** @var string|null */
-    private $privateTest = 'privateTestValue';
+    private string $privateTest = 'privateTestValue';
 
-    public function getPrivateTest(): ?string
+    public function getPrivateTest(): string|null
     {
         return $this->privateTest;
     }

@@ -16,10 +16,9 @@ interface ClassMetadata
     /**
      * Gets the fully-qualified class name of this persistent class.
      *
-     * @return string
      * @phpstan-return class-string<T>
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Gets the mapped identifier field name.
@@ -29,49 +28,29 @@ interface ClassMetadata
      * @return array<int, string>
      * @phpstan-return list<string>
      */
-    public function getIdentifier();
+    public function getIdentifier(): array;
 
     /**
      * Gets the ReflectionClass instance for this mapped class.
      *
      * @return ReflectionClass<T>
      */
-    public function getReflectionClass();
+    public function getReflectionClass(): ReflectionClass;
 
-    /**
-     * Checks if the given field name is a mapped identifier for this class.
-     *
-     * @return bool
-     */
-    public function isIdentifier(string $fieldName);
+    /** Checks if the given field name is a mapped identifier for this class. */
+    public function isIdentifier(string $fieldName): bool;
 
-    /**
-     * Checks if the given field is a mapped property for this class.
-     *
-     * @return bool
-     */
-    public function hasField(string $fieldName);
+    /** Checks if the given field is a mapped property for this class. */
+    public function hasField(string $fieldName): bool;
 
-    /**
-     * Checks if the given field is a mapped association for this class.
-     *
-     * @return bool
-     */
-    public function hasAssociation(string $fieldName);
+    /** Checks if the given field is a mapped association for this class. */
+    public function hasAssociation(string $fieldName): bool;
 
-    /**
-     * Checks if the given field is a mapped single valued association for this class.
-     *
-     * @return bool
-     */
-    public function isSingleValuedAssociation(string $fieldName);
+    /** Checks if the given field is a mapped single valued association for this class. */
+    public function isSingleValuedAssociation(string $fieldName): bool;
 
-    /**
-     * Checks if the given field is a mapped collection valued association for this class.
-     *
-     * @return bool
-     */
-    public function isCollectionValuedAssociation(string $fieldName);
+    /** Checks if the given field is a mapped collection valued association for this class. */
+    public function isCollectionValuedAssociation(string $fieldName): bool;
 
     /**
      * A numerically indexed list of field names of this persistent class.
@@ -80,14 +59,14 @@ interface ClassMetadata
      *
      * @return array<int, string>
      */
-    public function getFieldNames();
+    public function getFieldNames(): array;
 
     /**
      * Returns an array of identifier field names numerically indexed.
      *
      * @return array<int, string>
      */
-    public function getIdentifierFieldNames();
+    public function getIdentifierFieldNames(): array;
 
     /**
      * Returns a numerically indexed list of association names of this persistent class.
@@ -96,39 +75,28 @@ interface ClassMetadata
      *
      * @return array<int, string>
      */
-    public function getAssociationNames();
+    public function getAssociationNames(): array;
 
     /**
      * Returns a type name of this field.
      *
      * This type names can be implementation specific but should at least include the php types:
      * integer, string, boolean, float/double, datetime.
-     *
-     * @return string|null
      */
-    public function getTypeOfField(string $fieldName);
+    public function getTypeOfField(string $fieldName): string|null;
 
     /**
      * Returns the target class name of the given association.
      *
-     * @return string|null
      * @phpstan-return class-string|null
      */
-    public function getAssociationTargetClass(string $assocName);
+    public function getAssociationTargetClass(string $assocName): string|null;
 
-    /**
-     * Checks if the association is the inverse side of a bidirectional association.
-     *
-     * @return bool
-     */
-    public function isAssociationInverseSide(string $assocName);
+    /** Checks if the association is the inverse side of a bidirectional association. */
+    public function isAssociationInverseSide(string $assocName): bool;
 
-    /**
-     * Returns the target field of the owning side of the association.
-     *
-     * @return string
-     */
-    public function getAssociationMappedByTargetField(string $assocName);
+    /** Returns the target field of the owning side of the association. */
+    public function getAssociationMappedByTargetField(string $assocName): string;
 
     /**
      * Returns the identifier of this object as an array with field name as key.
@@ -137,5 +105,5 @@ interface ClassMetadata
      *
      * @return array<string, mixed>
      */
-    public function getIdentifierValues(object $object);
+    public function getIdentifierValues(object $object): array;
 }

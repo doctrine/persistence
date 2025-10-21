@@ -6,6 +6,40 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 4.0
+
+## BC Break: Removed `StaticReflectionService`
+
+The class `Doctrine\Persistence\Mapping\StaticReflectionService` is removed
+without replacement.
+
+## BC Break: Narrowed `ReflectionService::getClass()` return type
+
+The return type of `ReflectionService::getClass()` has been narrowed so that
+`null` is no longer a valid return value.
+
+## BC Break: Added `ObjectManager::isUninitializedObject()`
+
+Classes implementing `Doctrine\Persistence\ObjectManager` must implement this
+new method.
+
+## BC Break: Added type declarations
+
+The code base is now fully typed, meaning properties, parameters and return
+type declarations have been added to all types.
+
+## BC Break: Dropped support for Common proxies
+
+Proxy objects implementing the `Doctrine\Common\Proxy\Proxy` interface are not
+supported anymore. Implement `Doctrine\Persistence\Proxy` instead.
+
+## BC Break: Removed deprecated ReflectionProperty overrides
+
+Deprecated classes have been removed:
+
+- `Doctrine\Persistence\Reflection\RuntimePublicReflectionProperty`
+- `Doctrine\Persistence\Reflection\TypedNoDefaultRuntimePublicReflectionProperty`
+
 # Upgrade to 3.4
 
 ## Deprecated `StaticReflectionService`

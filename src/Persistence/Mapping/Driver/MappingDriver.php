@@ -17,11 +17,9 @@ interface MappingDriver
      * @phpstan-param class-string<T> $className
      * @phpstan-param ClassMetadata<T> $metadata
      *
-     * @return void
-     *
      * @template T of object
      */
-    public function loadMetadataForClass(string $className, ClassMetadata $metadata);
+    public function loadMetadataForClass(string $className, ClassMetadata $metadata): void;
 
     /**
      * Gets the names of all mapped classes known to this driver.
@@ -29,15 +27,13 @@ interface MappingDriver
      * @return array<int, string> The names of all mapped classes known to this driver.
      * @phpstan-return list<class-string>
      */
-    public function getAllClassNames();
+    public function getAllClassNames(): array;
 
     /**
      * Returns whether the class with the specified name should have its metadata loaded.
      * This is only the case if it is either mapped as an Entity or a MappedSuperclass.
      *
      * @phpstan-param class-string $className
-     *
-     * @return bool
      */
-    public function isTransient(string $className);
+    public function isTransient(string $className): bool;
 }

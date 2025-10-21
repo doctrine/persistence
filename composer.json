@@ -20,21 +20,18 @@
         {"name": "Marco Pivetta", "email": "ocramius@gmail.com"}
     ],
     "require": {
-        "php": "^7.2 || ^8.0",
+        "php": "^8.1",
         "doctrine/event-manager": "^1 || ^2",
         "psr/cache": "^1.0 || ^2.0 || ^3.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1 || 2.1.30",
-        "phpstan/phpstan-phpunit": "^1 || ^2",
-        "phpstan/phpstan-strict-rules": "^1 || ^2",
-        "doctrine/coding-standard": "^12 || ^14",
-        "doctrine/common": "^3.0",
-        "phpunit/phpunit": "^8.5.38 || ^9.5",
-        "symfony/cache": "^4.4 || ^5.4 || ^6.0 || ^7.0"
-    },
-    "conflict": {
-        "doctrine/common": "<2.10"
+        "phpstan/phpstan": "2.1.30",
+        "phpstan/phpstan-phpunit": "^2",
+        "phpstan/phpstan-strict-rules": "^2",
+        "doctrine/coding-standard": "^14",
+        "phpunit/phpunit": "^10.5.58 || ^12",
+        "symfony/cache": "^4.4 || ^5.4 || ^6.0 || ^7.0",
+        "symfony/finder": "^4.4 || ^5.4 || ^6.0 || ^7.0"
     },
     "autoload": {
         "psr-4": {
@@ -43,9 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests",
-            "Doctrine\\Tests_PHP74\\": "tests_php74",
-            "Doctrine\\Tests_PHP81\\": "tests_php81"
+            "Doctrine\\Tests\\": "tests"
         }
     },
     "config": {

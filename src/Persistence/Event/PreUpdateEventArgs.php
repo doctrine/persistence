@@ -7,7 +7,6 @@ namespace Doctrine\Persistence\Event;
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
 
-use function get_class;
 use function sprintf;
 
 /**
@@ -19,7 +18,7 @@ use function sprintf;
 class PreUpdateEventArgs extends LifecycleEventArgs
 {
     /** @var array<string, array<int, mixed>> */
-    private $entityChangeSet;
+    private array $entityChangeSet;
 
     /**
      * @param array<string, array<int, mixed>> $changeSet
@@ -37,53 +36,35 @@ class PreUpdateEventArgs extends LifecycleEventArgs
      *
      * @return array<string, array<int, mixed>>
      */
-    public function getEntityChangeSet()
+    public function getEntityChangeSet(): array
     {
         return $this->entityChangeSet;
     }
 
-    /**
-     * Checks if field has a changeset.
-     *
-     * @return bool
-     */
-    public function hasChangedField(string $field)
+    /** Checks if field has a changeset. */
+    public function hasChangedField(string $field): bool
     {
         return isset($this->entityChangeSet[$field]);
     }
 
-    /**
-     * Gets the old value of the changeset of the changed field.
-     *
-     * @return mixed
-     */
-    public function getOldValue(string $field)
+    /** Gets the old value of the changeset of the changed field. */
+    public function getOldValue(string $field): mixed
     {
         $this->assertValidField($field);
 
         return $this->entityChangeSet[$field][0];
     }
 
-    /**
-     * Gets the new value of the changeset of the changed field.
-     *
-     * @return mixed
-     */
-    public function getNewValue(string $field)
+    /** Gets the new value of the changeset of the changed field. */
+    public function getNewValue(string $field): mixed
     {
         $this->assertValidField($field);
 
         return $this->entityChangeSet[$field][1];
     }
 
-    /**
-     * Sets the new value of this field.
-     *
-     * @param mixed $value
-     *
-     * @return void
-     */
-    public function setNewValue(string $field, $value)
+    /** Sets the new value of this field. */
+    public function setNewValue(string $field, mixed $value): void
     {
         $this->assertValidField($field);
 
@@ -93,17 +74,15 @@ class PreUpdateEventArgs extends LifecycleEventArgs
     /**
      * Asserts the field exists in changeset.
      *
-     * @return void
-     *
      * @throws InvalidArgumentException
      */
-    private function assertValidField(string $field)
+    private function assertValidField(string $field): void
     {
         if (! isset($this->entityChangeSet[$field])) {
             throw new InvalidArgumentException(sprintf(
                 'Field "%s" is not a valid field of the entity "%s" in PreUpdateEventArgs.',
                 $field,
-                get_class($this->getObject())
+                $this->getObject()::class,
             ));
         }
     }

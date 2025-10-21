@@ -12,12 +12,8 @@ namespace Doctrine\Persistence\Mapping\Driver;
  */
 interface FileLocator
 {
-    /**
-     * Locates mapping file for the given class name.
-     *
-     * @return string
-     */
-    public function findMappingFile(string $className);
+    /** Locates mapping file for the given class name. */
+    public function findMappingFile(string $className): string;
 
     /**
      * Gets all class names that are found with this file locator.
@@ -27,26 +23,18 @@ interface FileLocator
      * @return array<int, string>
      * @phpstan-return list<class-string>
      */
-    public function getAllClassNames(string $globalBasename);
+    public function getAllClassNames(string $globalBasename): array;
 
-    /**
-     * Checks if a file can be found for this class name.
-     *
-     * @return bool
-     */
-    public function fileExists(string $className);
+    /** Checks if a file can be found for this class name. */
+    public function fileExists(string $className): bool;
 
     /**
      * Gets all the paths that this file locator looks for mapping files.
      *
      * @return array<int, string>
      */
-    public function getPaths();
+    public function getPaths(): array;
 
-    /**
-     * Gets the file extension that mapping files are suffixed with.
-     *
-     * @return string|null
-     */
-    public function getFileExtension();
+    /** Gets the file extension that mapping files are suffixed with. */
+    public function getFileExtension(): string|null;
 }

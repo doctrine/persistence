@@ -3,19 +3,22 @@
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          colors="true"
          beStrictAboutOutputDuringTests="true"
-         beStrictAboutTodoAnnotatedTests="true"
+         displayDetailsOnPhpunitDeprecations="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
 >
     <testsuites>
         <testsuite name="Doctrine Persistence Test Suite">
             <directory>tests</directory>
-            <directory phpVersion="7.4" phpVersionOperator=">=">tests_php74</directory>
-            <directory phpVersion="8.1" phpVersionOperator=">=">tests_php81</directory>
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+    <php>
+        <server name="DOCTRINE_DEPRECATIONS" value="trigger"/>
+    </php>
+
+    <source ignoreSuppressionOfDeprecations="true">
+        <include>
             <directory>src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </source>
 </phpunit>

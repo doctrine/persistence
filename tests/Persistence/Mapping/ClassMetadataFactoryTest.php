@@ -10,22 +10,19 @@ use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use Foo;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use ReflectionMethod;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
-use const PHP_VERSION_ID;
-
-/** @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory */
+#[CoversClass(AbstractClassMetadataFactory::class)]
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
-    /**
-     * @var TestClassMetadataFactory
-     * @phpstan-var TestClassMetadataFactory<ClassMetadata<object>>
-     */
-    private $cmf;
+    /** @phpstan-var TestClassMetadataFactory<ClassMetadata<object>> */
+    private TestClassMetadataFactory $cmf;
 
     protected function setUp(): void
     {
@@ -95,18 +92,14 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
     {
         $classMetadata = $this->createMock(ClassMetadata::class);
 
-        $this->cmf->fallbackCallback = static function () use ($classMetadata) {
-            return $classMetadata;
-        };
+        $this->cmf->fallbackCallback = static fn () => $classMetadata;
 
         self::assertSame($classMetadata, $this->cmf->getMetadataFor(Foo::class));
     }
 
     public function testWillFailOnFallbackFailureWithNotLoadedMetadata(): void
     {
-        $this->cmf->fallbackCallback = static function () {
-            return null;
-        };
+        $this->cmf->fallbackCallback = static fn () => null;
 
         $this->expectException(MappingException::class);
         $this->expectExceptionMessage("Class 'Foo' does not exist");
@@ -114,7 +107,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf->getMetadataFor(Foo::class);
     }
 
-    /** @group 717 */
+    #[Group('717')]
     public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances(): void
     {
         $key = $this->cmf->getCacheKey(RootEntity::class);
@@ -187,20 +180,15 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
 
         $this->cmf->setCache($cacheDriver);
 
-        $this->cmf->fallbackCallback = static function () use ($metadata): ClassMetadata {
-            return $metadata;
-        };
+        $this->cmf->fallbackCallback = static fn (): ClassMetadata => $metadata;
 
         self::assertSame($metadata, $this->cmf->getMetadataFor(Foo::class));
     }
 
     /** @phpstan-param AbstractClassMetadataFactory<ClassMetadata<object>> $classMetadataFactory */
-    private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): ?CacheItemPoolInterface
+    private static function getCache(AbstractClassMetadataFactory $classMetadataFactory): CacheItemPoolInterface|null
     {
         $method = new ReflectionMethod($classMetadataFactory, 'getCache');
-        if (PHP_VERSION_ID < 80100) {
-            $method->setAccessible(true);
-        }
 
         return $method->invoke($classMetadataFactory);
     }

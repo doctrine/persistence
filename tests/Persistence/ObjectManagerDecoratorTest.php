@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Persistence;
 
-use BadMethodCallException;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Doctrine\Persistence\ObjectManager;
@@ -15,11 +14,9 @@ use PHPUnit\Framework\TestCase;
 
 class ObjectManagerDecoratorTest extends TestCase
 {
-    /** @var MockObject&ObjectManager */
-    private $wrapped;
+    private ObjectManager&MockObject $wrapped;
 
-    /** @var NullObjectManagerDecorator */
-    private $decorated;
+    private NullObjectManagerDecorator $decorated;
 
     protected function setUp(): void
     {
@@ -157,36 +154,17 @@ class ObjectManagerDecoratorTest extends TestCase
         self::assertTrue($this->decorated->contains($object));
     }
 
-    /** @requires PHP 8.0 */
     public function testIsUninitializedObject(): void
     {
         $object = new TestObject();
 
-        $wrapped   = $this->createMock(ObjectManagerV4::class);
-        $decorated = new NullObjectManagerDecorator($wrapped);
-        $wrapped->expects(self::once())
+        $this->wrapped->expects(self::once())
             ->method('isUninitializedObject')
             ->with($object)
             ->willReturn(false);
 
-        self::assertFalse($decorated->isUninitializedObject($object));
+        self::assertFalse($this->decorated->isUninitializedObject($object));
     }
-
-    /** @requires PHP 8.0 */
-    public function testIsThrowsWhenTheWrappedObjectManagerDoesNotImplementObjectManagerV4(): void
-    {
-        $object = new TestObject();
-
-        $this->expectException(BadMethodCallException::class);
-        $decorated = new NullObjectManagerDecorator($this->createMock(ObjectManager::class));
-
-        self::assertFalse($decorated->isUninitializedObject($object));
-    }
-}
-
-interface ObjectManagerV4 extends ObjectManager
-{
-    public function isUninitializedObject(mixed $object): bool;
 }
 
 /** @extends ObjectManagerDecorator<ObjectManager&MockObject> */

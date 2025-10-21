@@ -11,7 +11,7 @@ parameters:
     paths:
         - src
         - tests
-        - tests_php74
+        - tests/Persistence/Mapping/_files/colocated/Foo.mphp
 
     excludePaths:
         - tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php
@@ -25,11 +25,11 @@ parameters:
         # https://github.com/phpstan/phpstan/issues/5009
         -
             message: '#Call to function assert\(\) with true will always evaluate to true\.#'
-            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionPropertyBase.php'
+            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'
 
         -
             message: '#Instanceof between Closure and Closure will always evaluate to true\.#'
-            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionPropertyBase.php'
+            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'
 
         -
             message: '#Class Foo not found#'
