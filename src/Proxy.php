@@ -7,6 +7,8 @@ namespace Doctrine\Persistence;
 /**
  * Interface for proxy classes.
  *
+ * @deprecated Since 5.0: Native lazy objects don't use proxy classes anymore, this interface will be removed in Doctrine Persistence 6.0.
+ *
  * @template T of object
  */
 interface Proxy

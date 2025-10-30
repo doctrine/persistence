@@ -18,7 +18,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * @param array<string, string> $connections
      * @param array<string, string> $managers
-     * @phpstan-param class-string $proxyInterfaceName
+     * @phpstan-param class-string|null $proxyInterfaceName
      */
     public function __construct(
         private readonly string $name,
@@ -26,7 +26,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         private array $managers,
         private readonly string $defaultConnection,
         private readonly string $defaultManager,
-        private readonly string $proxyInterfaceName,
+        private readonly string|null $proxyInterfaceName = null,
     ) {
     }
 
@@ -132,7 +132,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
             return null;
         }
 
-        if ($proxyClass->implementsInterface($this->proxyInterfaceName)) {
+        if ($this->proxyInterfaceName !== null && $proxyClass->implementsInterface($this->proxyInterfaceName)) {
             $parentClass = $proxyClass->getParentClass();
 
             if ($parentClass === false) {

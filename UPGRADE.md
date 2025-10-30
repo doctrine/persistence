@@ -8,6 +8,13 @@ awareness about deprecated code.
 
 # Upgrade to 5.0
 
+## Deprecate `Proxy` and `ProxyClassNameResolver` interfaces
+
+Use native lazy objects instead of proxy classes for lazy objects.
+Don't use the `Doctrine\Persistence\Proxy` interface to identify lazy objects.
+Remove implementations and usages of the `ProxyClassNameResolver`. Native lazy
+objects have the same class.
+
 ## BC Break: added type declarations to constants
 
 The code base now has constants with type declarations. If you extend types
