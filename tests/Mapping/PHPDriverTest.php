@@ -7,12 +7,12 @@ namespace Doctrine\Tests\Persistence\Mapping;
 use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\PHPDriver;
-use Doctrine\Tests\DoctrineTestCase;
 use Error;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\TestWith;
+use PHPUnit\Framework\TestCase;
 
-class PHPDriverTest extends DoctrineTestCase
+class PHPDriverTest extends TestCase
 {
     use VerifyDeprecations;
 

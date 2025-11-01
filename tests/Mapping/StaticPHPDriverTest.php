@@ -6,9 +6,9 @@ namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
-use Doctrine\Tests\DoctrineTestCase;
+use PHPUnit\Framework\TestCase;
 
-class StaticPHPDriverTest extends DoctrineTestCase
+class StaticPHPDriverTest extends TestCase
 {
     public function testLoadMetadata(): void
     {

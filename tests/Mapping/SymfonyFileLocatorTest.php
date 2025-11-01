@@ -6,16 +6,16 @@ namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\Driver\SymfonyFileLocator;
 use Doctrine\Persistence\Mapping\MappingException;
-use Doctrine\Tests\DoctrineTestCase;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 use function realpath;
 use function sort;
 
 use const DIRECTORY_SEPARATOR;
 
-class SymfonyFileLocatorTest extends DoctrineTestCase
+class SymfonyFileLocatorTest extends TestCase
 {
     public function testGetPaths(): void
     {

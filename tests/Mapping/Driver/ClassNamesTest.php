@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\Driver\ClassNames;
-use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\EntityFixture;
+use PHPUnit\Framework\TestCase;
 
-class ClassNamesTest extends DoctrineTestCase
+class ClassNamesTest extends TestCase
 {
     public function testGetClassNames(): void
     {
