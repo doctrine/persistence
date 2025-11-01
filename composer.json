@@ -35,12 +35,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Doctrine\\Persistence\\": "src/Persistence"
+            "Doctrine\\Persistence\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests"
+            "Doctrine\\Tests\\Persistence\\": "tests"
         }
     },
     "config": {
