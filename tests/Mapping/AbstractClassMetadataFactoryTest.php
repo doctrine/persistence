@@ -9,10 +9,10 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Persistence\Mapping\ReflectionService;
-use Doctrine\Tests\DoctrineTestCase;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-final class AbstractClassMetadataFactoryTest extends DoctrineTestCase
+final class AbstractClassMetadataFactoryTest extends TestCase
 {
     /** @param ClassMetadata<object>|null $metadata */
     private function createTestFactory(

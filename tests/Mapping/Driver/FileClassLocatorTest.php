@@ -7,13 +7,13 @@ namespace Doctrine\Tests\Persistence\Mapping\Driver;
 use DirectoryIterator;
 use Doctrine\Persistence\Mapping\Driver\FileClassLocator;
 use Doctrine\Persistence\Mapping\MappingException;
-use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\EntityFixture;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\Foo;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\TestClass;
 use EmptyIterator;
 use Phar;
+use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 
@@ -24,7 +24,7 @@ use function unlink;
 
 use const SORT_STRING;
 
-final class FileClassLocatorTest extends DoctrineTestCase
+final class FileClassLocatorTest extends TestCase
 {
     public function testGetClassNames(): void
     {
