@@ -258,10 +258,15 @@ mapping metadata.
 .. code-block:: php
 
     use App\Model\User;
+    use Doctrine\Persistence\Mapping\ClassMetadata;
 
-    $metadata->name = User::class;
+    return function (ClassMetadata $metadata): void {
+        $metadata->name = User::class;
 
-    // ...
+        // ...
+
+    };
+
 
 StaticPHPDriver
 --------------
@@ -283,6 +288,8 @@ Your class in ``App\Model\User`` would look like the following.
 .. code-block:: php
 
     namespace App\Model;
+
+    use Doctrine\Persistence\Mapping\ClassMetadata;
 
     final class User
     {

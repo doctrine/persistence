@@ -14,7 +14,7 @@ parameters:
         - tests/Persistence/Mapping/_files/colocated/Foo.mphp
 
     excludePaths:
-        - tests/Persistence/Mapping/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php
+        - tests/Persistence/Mapping/_files/Doctrine.*.php
 
     ignoreErrors:
         - '#Variable property access on \$this\(Doctrine\\Persistence\\Reflection\\TypedNoDefaultReflectionProperty\)\.#'
