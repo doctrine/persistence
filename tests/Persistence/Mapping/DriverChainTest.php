@@ -8,12 +8,12 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\Persistence\Mapping\MappingException;
-use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\Manager\Manager;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\Model;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class DriverChainTest extends DoctrineTestCase
+class DriverChainTest extends TestCase
 {
     /**
      * @testWith ["Doctrine\\Tests\\Models\\Company", "Doctrine\\Tests\\Persistence\\Mapping"]
