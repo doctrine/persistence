@@ -8,8 +8,8 @@ use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
-use Doctrine\Tests\DoctrineTestCase;
 use Foo;
+use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use ReflectionMethod;
@@ -19,7 +19,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use const PHP_VERSION_ID;
 
 /** @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory */
-class ClassMetadataFactoryTest extends DoctrineTestCase
+class ClassMetadataFactoryTest extends TestCase
 {
     /**
      * @var TestClassMetadataFactory

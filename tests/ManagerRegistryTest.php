@@ -11,9 +11,9 @@ use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Doctrine\Persistence\Proxy;
-use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\TestClassMetadataFactory;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 use function assert;
 use function call_user_func;
@@ -24,7 +24,7 @@ use function get_class;
  *
  * @groups DCOM-270
  */
-class ManagerRegistryTest extends DoctrineTestCase
+class ManagerRegistryTest extends TestCase
 {
     /** @var TestManagerRegistry */
     private $mr;

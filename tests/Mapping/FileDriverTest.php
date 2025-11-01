@@ -7,17 +7,17 @@ namespace Doctrine\Tests\Persistence\Mapping;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\FileDriver;
 use Doctrine\Persistence\Mapping\Driver\FileLocator;
-use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\AnotherGlobalClass;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\GlobalClass;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\NotLoadedClass;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\TestClassMetadata;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function strpos;
 
-class FileDriverTest extends DoctrineTestCase
+class FileDriverTest extends TestCase
 {
     public function testGlobalBasename(): void
     {

@@ -6,13 +6,13 @@ namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 use Doctrine\Persistence\Mapping\MappingException;
-use Doctrine\Tests\DoctrineTestCase;
+use PHPUnit\Framework\TestCase;
 
 use function sort;
 
 use const DIRECTORY_SEPARATOR;
 
-class DefaultFileLocatorTest extends DoctrineTestCase
+class DefaultFileLocatorTest extends TestCase
 {
     public function testGetPaths(): void
     {

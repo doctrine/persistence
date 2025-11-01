@@ -6,11 +6,11 @@ namespace Doctrine\Tests\Persistence\Event;
 
 use Doctrine\Persistence\Event\PreUpdateEventArgs;
 use Doctrine\Persistence\ObjectManager;
-use Doctrine\Tests\DoctrineTestCase;
 use Doctrine\Tests\Persistence\TestObject;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class PreUpdateEventArgsTest extends DoctrineTestCase
+class PreUpdateEventArgsTest extends TestCase
 {
     public function testPreUpdateEventArgs(): void
     {

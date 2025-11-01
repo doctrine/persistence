@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
-<ruleset>
+<ruleset
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
+>
     <arg name="basepath" value="."/>
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="80"/>
@@ -43,11 +46,11 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming">
-        <exclude-pattern>src/Persistence/AbstractManagerRegistry.php</exclude-pattern>
-        <exclude-pattern>src/Persistence/Mapping/AbstractClassMetadataFactory.php</exclude-pattern>
+        <exclude-pattern>src/AbstractManagerRegistry.php</exclude-pattern>
+        <exclude-pattern>src/Mapping/AbstractClassMetadataFactory.php</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix">
-        <exclude-pattern>src/Persistence/Mapping/MappingException.php</exclude-pattern>
+        <exclude-pattern>src/Mapping/MappingException.php</exclude-pattern>
     </rule>
 </ruleset>
