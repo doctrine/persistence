@@ -4,136 +4,136 @@ parameters:
 			message: '#^Call to an undefined static method T of object\:\:loadMetadata\(\)\.$#'
 			identifier: staticMethod.notFound
 			count: 1
-			path: src/Persistence/Mapping/Driver/StaticPHPDriver.php
+			path: src/Mapping/Driver/StaticPHPDriver.php
 
 		-
 			message: '#^Call to function method_exists\(\) with TObjectManager of Doctrine\\Persistence\\ObjectManager and ''isUninitializedObje…'' will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
-			path: src/Persistence/ObjectManagerDecorator.php
+			path: src/ObjectManagerDecorator.php
 
 		-
 			message: '#^Template type TObjectManager is declared as covariant, but occurs in invariant position in property Doctrine\\Persistence\\ObjectManagerDecorator\:\:\$wrapped\.$#'
 			identifier: generics.variance
 			count: 1
-			path: src/Persistence/ObjectManagerDecorator.php
+			path: src/ObjectManagerDecorator.php
 
 		-
 			message: '#^Doctrine\\Persistence\\Reflection\\EnumReflectionProperty\:\:__construct\(\) does not call parent constructor from ReflectionProperty\.$#'
 			identifier: constructor.missingParentCall
 			count: 1
-			path: src/Persistence/Reflection/EnumReflectionProperty.php
+			path: src/Reflection/EnumReflectionProperty.php
 
 		-
 			message: '#^Method Doctrine\\Persistence\\Reflection\\EnumReflectionProperty\:\:getDeclaringClass\(\) return type with generic class ReflectionClass does not specify its types\: T$#'
 			identifier: missingType.generics
 			count: 1
-			path: src/Persistence/Reflection/EnumReflectionProperty.php
+			path: src/Reflection/EnumReflectionProperty.php
 
 		-
 			message: '#^Method Doctrine\\Persistence\\Reflection\\EnumReflectionProperty\:\:toEnum\(\) should return array\<BackedEnum\>\|BackedEnum but returns array\<BackedEnum\|int\|string\>\.$#'
 			identifier: return.type
 			count: 1
-			path: src/Persistence/Reflection/EnumReflectionProperty.php
+			path: src/Reflection/EnumReflectionProperty.php
 
 		-
 			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(BackedEnum\|int\|string\)\: mixed\)\|null, array\{class\-string\<BackedEnum\>, ''from''\} given\.$#'
 			identifier: argument.type
 			count: 1
-			path: src/Persistence/Reflection/EnumReflectionProperty.php
+			path: src/Reflection/EnumReflectionProperty.php
 
 		-
 			message: '#^Variable property access on \$this\(Doctrine\\Persistence\\Reflection\\TypedNoDefaultRuntimePublicReflectionProperty\)\.$#'
 			identifier: property.dynamicName
 			count: 1
-			path: src/Persistence/Reflection/TypedNoDefaultRuntimePublicReflectionProperty.php
+			path: src/Reflection/TypedNoDefaultRuntimePublicReflectionProperty.php
 
 		-
 			message: '#^PHPDoc tag @var with type Doctrine\\Persistence\\Mapping\\ClassMetadata\<object\> is not subtype of native type PHPUnit\\Framework\\MockObject\\MockObject\.$#'
 			identifier: varTag.nativeType
 			count: 1
-			path: tests/Persistence/Mapping/ClassMetadataFactoryTest.php
+			path: tests/Mapping/ClassMetadataFactoryTest.php
 
 		-
 			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with array\{''Doctrine\\\\Tests…'', ''Doctrine\\\\Tests\\\\ORM…'', ''Doctrine\\\\Tests\\\\ORM…''\} and list\<class\-string\> will always evaluate to false\.$#'
 			identifier: staticMethod.impossibleType
 			count: 1
-			path: tests/Persistence/Mapping/DriverChainTest.php
+			path: tests/Mapping/DriverChainTest.php
 
 		-
 			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with array\{''Doctrine\\\\Tests…'', ''Other\\\\Class''\} and list\<class\-string\> will always evaluate to false\.$#'
 			identifier: staticMethod.impossibleType
 			count: 1
-			path: tests/Persistence/Mapping/DriverChainTest.php
+			path: tests/Mapping/DriverChainTest.php
 
 		-
 			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with array\{''Foo\\\\stdClass'', ''Foo\\\\sub\\\\subClass'', ''Foo\\\\sub\\\\subsub…''\} and list\<class\-string\> will always evaluate to false\.$#'
 			identifier: staticMethod.impossibleType
 			count: 1
-			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+			path: tests/Mapping/SymfonyFileLocatorTest.php
 
 		-
 			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with non\-empty\-list\<''Foo\\\\Bar\\\\subDirClass''\|''Foo\\\\global''\|''Foo\\\\stdClass''\> and list\<class\-string\> will always evaluate to false\.$#'
 			identifier: staticMethod.impossibleType
 			count: 1
-			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+			path: tests/Mapping/SymfonyFileLocatorTest.php
 
 		-
 			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with non\-empty\-list\<''Foo\\\\Bar\\\\subDirClass''\|''Foo\\\\stdClass''\> and list\<class\-string\> will always evaluate to false\.$#'
 			identifier: staticMethod.impossibleType
 			count: 1
-			path: tests/Persistence/Mapping/SymfonyFileLocatorTest.php
+			path: tests/Mapping/SymfonyFileLocatorTest.php
 
 		-
 			message: '#^Property Doctrine\\Tests\\Persistence\\RuntimePublicReflectionPropertyTestProxyMock\:\:\$checkedProperty \(string\) in isset\(\) is not nullable\.$#'
 			identifier: isset.property
 			count: 1
-			path: tests/Persistence/RuntimePublicReflectionPropertyTest.php
+			path: tests/RuntimePublicReflectionPropertyTest.php
 
 		-
 			message: '#^Method Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock\:\:__setInitialized\(\) has parameter \$initialized with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
-			path: tests/Persistence/RuntimeReflectionPropertyTest.php
+			path: tests/RuntimeReflectionPropertyTest.php
 
 		-
 			message: '#^Property Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestClass\:\:\$privateTest \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
 			identifier: property.unusedType
 			count: 1
-			path: tests/Persistence/RuntimeReflectionPropertyTest.php
+			path: tests/RuntimeReflectionPropertyTest.php
 
 		-
 			message: '#^Property Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock\:\:\$checkedProperty \(string\) in isset\(\) is not nullable\.$#'
 			identifier: isset.property
 			count: 1
-			path: tests/Persistence/RuntimeReflectionPropertyTest.php
+			path: tests/RuntimeReflectionPropertyTest.php
 
 		-
 			message: '#^Property Doctrine\\Tests_PHP74\\Persistence\\Mapping\\RuntimeReflectionServiceTest\:\:\$nonTypedDefaultProperty is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
-			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: '#^Property Doctrine\\Tests_PHP74\\Persistence\\Mapping\\RuntimeReflectionServiceTest\:\:\$nonTypedNoDefaultProperty is unused\.$#'
 			identifier: property.unused
 			count: 1
-			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: '#^Property Doctrine\\Tests_PHP74\\Persistence\\Mapping\\RuntimeReflectionServiceTest\:\:\$typedDefaultProperty is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
-			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: '#^Property Doctrine\\Tests_PHP74\\Persistence\\Mapping\\RuntimeReflectionServiceTest\:\:\$typedNoDefaultProperty is unused\.$#'
 			identifier: property.unused
 			count: 1
-			path: tests_php74/Persistence/Mapping/RuntimeReflectionServiceTest.php
+			path: tests_php74/Mapping/RuntimeReflectionServiceTest.php
 
 		-
 			message: '#^Property Doctrine\\Tests_PHP74\\Persistence\\Reflection\\TypedFoo\:\:\$id is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
-			path: tests_php74/Persistence/Reflection/TypedNoDefaultReflectionPropertyTest.php
+			path: tests_php74/Reflection/TypedNoDefaultReflectionPropertyTest.php

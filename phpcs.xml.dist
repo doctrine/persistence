@@ -46,11 +46,11 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming">
-        <exclude-pattern>src/Persistence/AbstractManagerRegistry.php</exclude-pattern>
-        <exclude-pattern>src/Persistence/Mapping/AbstractClassMetadataFactory.php</exclude-pattern>
+        <exclude-pattern>src/AbstractManagerRegistry.php</exclude-pattern>
+        <exclude-pattern>src/Mapping/AbstractClassMetadataFactory.php</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix">
-        <exclude-pattern>src/Persistence/Mapping/MappingException.php</exclude-pattern>
+        <exclude-pattern>src/Mapping/MappingException.php</exclude-pattern>
     </rule>
 </ruleset>
