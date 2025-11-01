@@ -11,26 +11,26 @@ parameters:
     paths:
         - src
         - tests
-        - tests/Persistence/Mapping/_files/colocated/Foo.mphp
+        - tests/Mapping/_files/colocated/Foo.mphp
 
     excludePaths:
-        - tests/Persistence/Mapping/_files/Doctrine.*.php
+        - tests/Mapping/_files/Doctrine.*.php
 
     ignoreErrors:
         - '#Variable property access on \$this\(Doctrine\\Persistence\\Reflection\\TypedNoDefaultReflectionProperty\)\.#'
         -
             message: '#Parameter \#1 \$class of method Doctrine\\Persistence\\Mapping\\RuntimeReflectionService\:\:getParentClasses\(\) expects class\-string, string given\.#'
-            path: 'tests/Persistence/Mapping/RuntimeReflectionServiceTest.php'
+            path: 'tests/Mapping/RuntimeReflectionServiceTest.php'
 
         # https://github.com/phpstan/phpstan/issues/5009
         -
             message: '#Call to function assert\(\) with true will always evaluate to true\.#'
-            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'
+            path: 'src/Reflection/TypedNoDefaultReflectionProperty.php'
 
         -
             message: '#Instanceof between Closure and Closure will always evaluate to true\.#'
-            path: 'src/Persistence/Reflection/TypedNoDefaultReflectionProperty.php'
+            path: 'src/Reflection/TypedNoDefaultReflectionProperty.php'
 
         -
             message: '#Class Foo not found#'
-            path: 'tests/Persistence/Mapping/ClassMetadataFactoryTest.php'
+            path: 'tests/Mapping/ClassMetadataFactoryTest.php'
