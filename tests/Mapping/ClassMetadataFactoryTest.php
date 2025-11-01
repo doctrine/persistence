@@ -8,10 +8,10 @@ use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
-use Doctrine\Tests\DoctrineTestCase;
 use Foo;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use ReflectionMethod;
@@ -19,7 +19,7 @@ use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 #[CoversClass(AbstractClassMetadataFactory::class)]
-class ClassMetadataFactoryTest extends DoctrineTestCase
+class ClassMetadataFactoryTest extends TestCase
 {
     /** @phpstan-var TestClassMetadataFactory<ClassMetadata<object>> */
     private TestClassMetadataFactory $cmf;
