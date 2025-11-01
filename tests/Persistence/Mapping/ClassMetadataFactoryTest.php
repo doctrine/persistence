@@ -10,13 +10,15 @@ use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Tests\DoctrineTestCase;
 use Foo;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use ReflectionMethod;
 use stdClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
-/** @covers \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory */
+#[CoversClass(AbstractClassMetadataFactory::class)]
 class ClassMetadataFactoryTest extends DoctrineTestCase
 {
     /** @phpstan-var TestClassMetadataFactory<ClassMetadata<object>> */
@@ -105,7 +107,7 @@ class ClassMetadataFactoryTest extends DoctrineTestCase
         $this->cmf->getMetadataFor(Foo::class);
     }
 
-    /** @group 717 */
+    #[Group('717')]
     public function testWillIgnoreCacheEntriesThatAreNotMetadataInstances(): void
     {
         $key = $this->cmf->getCacheKey(RootEntity::class);
