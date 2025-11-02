@@ -54,6 +54,7 @@ class RuntimeReflectionPropertyTest extends TestCase
         $reflProperty = new RuntimeReflectionProperty($proxyClass, 'checkedProperty');
 
         self::assertSame('testValue', $reflProperty->getValue($mockProxy));
+        /** @phpstan-ignore unset.possiblyHookedProperty */
         unset($mockProxy->checkedProperty);
         self::assertNull($reflProperty->getValue($mockProxy));
     }
