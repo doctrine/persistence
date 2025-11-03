@@ -6,6 +6,14 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 5.0
+
+## BC Break: added type declarations to constants
+
+The code base now has constants with type declarations. If you extend types
+from the library and override the constants, you will need to add compatible
+type declarations.
+
 # Upgrade to 4.2
 
 ## Add `getFieldValue` and `setFieldValue` to `ClassMetadata` implementation

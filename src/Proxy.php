@@ -14,12 +14,12 @@ interface Proxy
     /**
      * Marker for Proxy class names.
      */
-    public const MARKER = '__CG__';
+    public const string MARKER = '__CG__';
 
     /**
      * Length of the proxy marker.
      */
-    public const MARKER_LENGTH = 6;
+    public const int MARKER_LENGTH = 6;
 
     /**
      * Initializes this proxy if its not yet initialized.

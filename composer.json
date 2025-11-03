@@ -20,7 +20,7 @@
         {"name": "Marco Pivetta", "email": "ocramius@gmail.com"}
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.4",
         "doctrine/deprecations": "^1",
         "doctrine/event-manager": "^1 || ^2",
         "psr/cache": "^1.0 || ^2.0 || ^3.0"
