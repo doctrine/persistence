@@ -34,7 +34,7 @@ interface ClassMetadata
     /**
      * Gets the ReflectionClass instance for this mapped class.
      *
-     * @return ReflectionClass<T>
+     * @return ReflectionClass<covariant T>
      */
     public function getReflectionClass();
 
