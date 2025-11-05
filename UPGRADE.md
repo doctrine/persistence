@@ -41,6 +41,11 @@ return function (ClassMetadata $metadata): void {
 };
 ```
 
+## Do not pass any proxy interface to `AbstractManagerRegistry` when using native proxies
+
+With PHP 8.4 native lazy objects, you don't need to pass any proxy interface to
+`AbstractManagerRegistry`. The class of the lazy objects is the class being mapped.
+
 # Upgrade to 4.0
 
 ## BC Break: Removed `StaticReflectionService`

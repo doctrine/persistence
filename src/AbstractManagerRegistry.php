@@ -18,7 +18,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * @param array<string, string> $connections
      * @param array<string, string> $managers
-     * @phpstan-param class-string $proxyInterfaceName
+     * @phpstan-param class-string|null $proxyInterfaceName Set to null when native lazy objects are used.
      */
     public function __construct(
         private readonly string $name,
@@ -26,7 +26,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         private array $managers,
         private readonly string $defaultConnection,
         private readonly string $defaultManager,
-        private readonly string $proxyInterfaceName,
+        private readonly string|null $proxyInterfaceName = null,
     ) {
     }
 
@@ -127,19 +127,21 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
 
     public function getManagerForClass(string $class): ObjectManager|null
     {
-        $proxyClass = new ReflectionClass($class);
-        if ($proxyClass->isAnonymous()) {
-            return null;
-        }
-
-        if ($proxyClass->implementsInterface($this->proxyInterfaceName)) {
-            $parentClass = $proxyClass->getParentClass();
-
-            if ($parentClass === false) {
+        if ($this->proxyInterfaceName !== null) {
+            $proxyClass = new ReflectionClass($class);
+            if ($proxyClass->isAnonymous()) {
                 return null;
             }
 
-            $class = $parentClass->getName();
+            if ($proxyClass->implementsInterface($this->proxyInterfaceName)) {
+                $parentClass = $proxyClass->getParentClass();
+
+                if ($parentClass === false) {
+                    return null;
+                }
+
+                $class = $parentClass->getName();
+            }
         }
 
         foreach ($this->managers as $id) {
