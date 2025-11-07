@@ -6,6 +6,7 @@ namespace Doctrine\Persistence\Mapping;
 
 use Doctrine\Persistence\Proxy;
 
+/** @deprecated Since 5.0: Native lazy objects don't use proxy classes anymore, this interface will be removed in Doctrine Persistence 6.0. */
 interface ProxyClassNameResolver
 {
     /**

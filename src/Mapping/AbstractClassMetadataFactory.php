@@ -25,7 +25,7 @@ use function substr;
 
 /**
  * The ClassMetadataFactory is used to create ClassMetadata objects that contain all the
- * metadata mapping informations of a class which describes how a class should be mapped
+ * metadata mapping information of a class which describes how a class should be mapped
  * to a relational database.
  *
  * This class was abstracted from the ORM ClassMetadataFactory.
@@ -91,6 +91,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         return $metadata;
     }
 
+    /** @deprecated Since 5.0, native lazy objects don't use proxy classes and thus do not require a proxy class name resolver */
     public function setProxyClassNameResolver(ProxyClassNameResolver $resolver): void
     {
         $this->proxyClassNameResolver = $resolver;
