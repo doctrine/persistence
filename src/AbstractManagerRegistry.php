@@ -18,7 +18,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * @param array<string, string> $connections
      * @param array<string, string> $managers
-     * @phpstan-param class-string|null $proxyInterfaceName
+     * @phpstan-param class-string|null $proxyInterfaceName Set to null when native lazy objects are used.
      */
     public function __construct(
         private readonly string $name,
