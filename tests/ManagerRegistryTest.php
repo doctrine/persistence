@@ -45,6 +45,22 @@ class ManagerRegistryTest extends TestCase
         );
     }
 
+    public function testGetManagerForClassAnonymous(): void
+    {
+        $anonymousClass = new class extends TestObject implements Proxy {
+            public function __isInitialized(): bool
+            {
+                return true;
+            }
+
+            public function __load(): void
+            {
+            }
+        };
+
+        self::assertNull($this->mr->getManagerForClass($anonymousClass::class));
+    }
+
     public function testGetManagerForProxiedClass(): void
     {
         self::assertInstanceOf(
@@ -62,6 +78,39 @@ class ManagerRegistryTest extends TestCase
     {
         self::assertNull($this->mr->getManagerForClass((new class {
         })::class));
+    }
+
+    public function testGetManagerForWithoutProxyInterface(): void
+    {
+        $mr = new TestManagerRegistry(
+            'ORM',
+            ['default' => 'default_connection'],
+            ['default' => 'default_manager'],
+            'default',
+            'default',
+            null,
+            $this->getManagerFactory(),
+        );
+
+        self::assertInstanceOf(
+            ObjectManager::class,
+            $mr->getManagerForClass(TestObject::class),
+        );
+
+        self::assertNull($mr->getManagerForClass(TestObjectProxy::class));
+
+        $anonymousClass = new class extends TestObject implements Proxy {
+            public function __isInitialized(): bool
+            {
+                return true;
+            }
+
+            public function __load(): void
+            {
+            }
+        };
+
+        self::assertNull($mr->getManagerForClass($anonymousClass::class));
     }
 
     public function testResetManager(): void
@@ -179,7 +228,7 @@ class TestManagerRegistry extends AbstractManagerRegistry
     /**
      * {@inheritDoc}
      *
-     * @phpstan-param class-string $proxyInterfaceName
+     * @phpstan-param class-string|null $proxyInterfaceName
      */
     public function __construct(
         string $name,
@@ -187,7 +236,7 @@ class TestManagerRegistry extends AbstractManagerRegistry
         array $managers,
         string $defaultConnection,
         string $defaultManager,
-        string $proxyInterfaceName,
+        string|null $proxyInterfaceName,
         callable $managerFactory,
     ) {
         $this->managerFactory = $managerFactory;

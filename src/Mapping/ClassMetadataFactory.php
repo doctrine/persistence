@@ -41,6 +41,8 @@ interface ClassMetadataFactory
     /**
      * Sets the metadata descriptor for a specific class.
      *
+     * @deprecated Since 4.2, use a custom ClassMetadataFactory implementation if you need to set metadata manually.
+     *
      * @param class-string $className
      * @phpstan-param T $class
      */
