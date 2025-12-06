@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Persistence\Mapping;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\ClassNames;
 use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
+use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
 use PHPUnit\Framework\TestCase;
 
 class StaticPHPDriverTest extends TestCase
@@ -16,32 +17,23 @@ class StaticPHPDriverTest extends TestCase
         $metadata = $this->createMock(ClassMetadata::class);
         $metadata->expects(self::once())->method('getFieldNames');
 
-        $driver = new StaticPHPDriver([__DIR__]);
-        $driver->loadMetadataForClass(TestEntity::class, $metadata);
+        $driver = new StaticPHPDriver([]);
+        $driver->loadMetadataForClass(Entity::class, $metadata);
     }
 
     public function testGetAllClassNames(): void
     {
-        $driver     = new StaticPHPDriver([__DIR__]);
+        $driver     = new StaticPHPDriver([__DIR__ . '/_files/colocated/']);
         $classNames = $driver->getAllClassNames();
 
-        self::assertContains(TestEntity::class, $classNames);
+        self::assertContains(Entity::class, $classNames);
     }
 
     public function testGetAllClassesNamesWithClassLocator(): void
     {
-        $driver     = new StaticPHPDriver(new ClassNames([TestEntity::class]));
+        $driver     = new StaticPHPDriver(new ClassNames([Entity::class]));
         $classNames = $driver->getAllClassNames();
 
-        self::assertSame([TestEntity::class], $classNames);
-    }
-}
-
-class TestEntity
-{
-    /** @phpstan-param ClassMetadata<object> $metadata */
-    public static function loadMetadata(ClassMetadata $metadata): void
-    {
-        $metadata->getFieldNames();
+        self::assertSame([Entity::class], $classNames);
     }
 }
