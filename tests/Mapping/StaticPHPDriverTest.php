@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Tests\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\Driver\ClassNames;
 use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
 use PHPUnit\Framework\TestCase;
 
@@ -25,6 +26,14 @@ class StaticPHPDriverTest extends TestCase
         $classNames = $driver->getAllClassNames();
 
         self::assertContains(TestEntity::class, $classNames);
+    }
+
+    public function testGetAllClassesNamesWithClassLocator(): void
+    {
+        $driver     = new StaticPHPDriver(new ClassNames([TestEntity::class]));
+        $classNames = $driver->getAllClassNames();
+
+        self::assertSame([TestEntity::class], $classNames);
     }
 }
 
