@@ -130,7 +130,7 @@ final class MyDriver implements MappingDriver
         if ($paths instanceof ClassLocator) {
             $this->classLocator = $paths;
         } else {
-            $this->paths = $paths;
+            $this->addPaths($paths);
         }
     }
 

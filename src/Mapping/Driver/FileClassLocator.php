@@ -81,9 +81,9 @@ final class FileClassLocator implements ClassLocator
     /**
      * Creates a FileClassLocator from an array of directories.
      *
-     * @param list<string> $directories
-     * @param list<string> $excludedDirectories Directories to exclude from the search.
-     * @param string       $fileExtension       The file extension to look for (default is '.php').
+     * @param string[] $directories
+     * @param string[] $excludedDirectories Directories to exclude from the search.
+     * @param string   $fileExtension       The file extension to look for (default is '.php').
      *
      * @throws MappingException if any of the directories are not valid.
      */
