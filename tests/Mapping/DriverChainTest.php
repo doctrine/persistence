@@ -22,7 +22,7 @@ class DriverChainTest extends TestCase
     public function testDelegateToMatchingNamespaceDriver(string $namespace1, string $namespace2): void
     {
         $className     = DriverChainEntity::class;
-        $classMetadata = $this->createMock(ClassMetadata::class);
+        $classMetadata = self::createStub(ClassMetadata::class);
 
         $chain = new MappingDriverChain();
 
@@ -52,7 +52,7 @@ class DriverChainTest extends TestCase
     public function testLoadMetadataShouldThrowMappingExceptionWhenNoDelegatorWasFound(): void
     {
         $className     = DriverChainEntity::class;
-        $classMetadata = $this->createMock(ClassMetadata::class);
+        $classMetadata = self::createStub(ClassMetadata::class);
 
         $chain = new MappingDriverChain();
 
@@ -87,7 +87,7 @@ class DriverChainTest extends TestCase
     #[Group('DDC-706')]
     public function testIsTransient(): void
     {
-        $driver1 = $this->createMock(MappingDriver::class);
+        $driver1 = self::createStub(MappingDriver::class);
         $chain   = new MappingDriverChain();
         $chain->addDriver($driver1, 'Doctrine\Tests\Models\CMS');
 
