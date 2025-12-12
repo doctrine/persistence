@@ -4,30 +4,23 @@ declare(strict_types=1);
 
 namespace Doctrine\Tests\Persistence\Mapping;
 
-use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\PHPDriver;
+use Doctrine\Persistence\Mapping\MappingException;
 use Error;
-use PHPUnit\Framework\Attributes\IgnoreDeprecations;
-use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 
 class PHPDriverTest extends TestCase
 {
-    use VerifyDeprecations;
-
-    /** @phpstan-param class-string $className */
-    #[IgnoreDeprecations]
-    #[TestWith([PHPTestEntity::class])]
-    #[TestWith([PHPTestEntityAssert::class])]
-    public function testLoadMetadata(string $className): void
+    public function testLoadMetadata(): void
     {
-        $metadata = $this->createMock(ClassMetadata::class);
-        $metadata->expects(self::once())->method('getFieldNames');
-        $driver = new PHPDriver([__DIR__ . '/_files']);
+        $metadata = self::createStub(ClassMetadata::class);
+        $driver   = new PHPDriver([__DIR__ . '/_files']);
 
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/persistence/pull/450');
-        $driver->loadMetadataForClass($className, $metadata);
+        self::expectException(MappingException::class);
+        self::expectExceptionMessage('The PHP mapping file "' . __DIR__ . '/_files/Doctrine.Tests.Persistence.Mapping.PHPTestEntity.php" must return a Closure that receives the ClassMetadata instance as argument.');
+
+        $driver->loadMetadataForClass(PHPTestEntity::class, $metadata);
     }
 
     public function testLoadMetadataWithClosure(): void
@@ -63,10 +56,6 @@ class PHPDriverTest extends TestCase
 }
 
 class PHPTestEntity
-{
-}
-
-class PHPTestEntityAssert
 {
 }
 

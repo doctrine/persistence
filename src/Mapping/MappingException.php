@@ -77,4 +77,12 @@ class MappingException extends Exception
     {
         return new self(sprintf('Class "%s" is anonymous', $className));
     }
+
+    public static function phpFileMustReturnAClosure(string $fileName): self
+    {
+        return new self(sprintf(
+            'The PHP mapping file "%s" must return a Closure that receives the ClassMetadata instance as argument.',
+            $fileName,
+        ));
+    }
 }

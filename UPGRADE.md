@@ -21,6 +21,30 @@ The code base now has constants with type declarations. If you extend types
 from the library and override the constants, you will need to add compatible
 type declarations.
 
+## BC Break: Require files loaded by the `PHPDriver` to return a `Closure`
+
+If you use the `PHPDriver` for configuring metadata in PHP files, you must wrap 
+the code in a closure that is returned by the configuration file.
+
+Before:
+
+```php
+<?php // mappings/App.Entity.User.php
+
+$metadata->name = \App\Entity\User::class;
+```
+
+After:
+
+```php
+<?php // mappings/App.Entity.User.php
+
+use Doctrine\Persistence\Mapping\ClassMetadata;
+return function (ClassMetadata $metadata): void {
+    $metadata->name = \App\Entity\User::class;
+};
+```
+
 # Upgrade to 4.2
 
 ## Add `getFieldValue` and `setFieldValue` to `ClassMetadata` implementation
