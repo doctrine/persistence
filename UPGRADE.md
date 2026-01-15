@@ -61,6 +61,17 @@ return function (ClassMetadata $metadata): void {
 };
 ```
 
+## New methods in `StaticPHPDriver`
+
+The `StaticPHPDriver` get new method to configure the scanned directories:
+- `addExcludePaths(array $paths): void`
+- `getExcludePaths(): array`
+- `setFileExtension(string $fileExtension): void`
+- `getFileExtension(): string`
+
+Using the a `ClassLocator` implementation is recommended instead of relying
+on directory scanning.
+
 ## Do not pass any proxy interface to `AbstractManagerRegistry` when using native proxies
 
 With PHP 8.4 native lazy objects, you don't need to pass any proxy interface to
