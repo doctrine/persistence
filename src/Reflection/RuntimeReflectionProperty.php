@@ -15,6 +15,8 @@ use function method_exists;
  *
  * Avoids triggering lazy loading if the provided object
  * is a {@see \Doctrine\Persistence\Proxy}.
+ *
+ * @phpstan-sealed TypedNoDefaultReflectionProperty
  */
 class RuntimeReflectionProperty extends ReflectionProperty
 {

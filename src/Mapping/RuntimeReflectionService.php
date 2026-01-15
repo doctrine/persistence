@@ -17,6 +17,8 @@ use function class_parents;
 
 /**
  * PHP Runtime Reflection Service.
+ *
+ * @final since 4.2
  */
 class RuntimeReflectionService implements ReflectionService
 {
