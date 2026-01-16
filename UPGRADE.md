@@ -16,6 +16,26 @@ The interface `Doctrine\Persistence\Mapping\ClassMetadata` has two new methods:
 
 Not implementing these methods is deprecated. They will be required in 5.0.
 
+## Several classes are marked as `@final`
+
+The following classes are now marked with `@final` and should not be extended:
+
+- `Doctrine\Persistence\Mapping\Driver\DefaultFileLocator`
+- `Doctrine\Persistence\Mapping\Driver\MappingDriverChain`
+- `Doctrine\Persistence\Mapping\Driver\PHPDriver`
+- `Doctrine\Persistence\Mapping\Driver\StaticPHPDriver`
+- `Doctrine\Persistence\Mapping\Driver\SymfonyFileLocator`
+- `Doctrine\Persistence\Mapping\RuntimeReflectionService`
+- `Doctrine\Persistence\Reflection\EnumReflectionProperty`
+- `Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty`
+
+These classes were not designed for extension and will be marked with the `final`
+keyword in 5.0.
+
+Additionally, `Doctrine\Persistence\Reflection\RuntimeReflectionProperty` is marked
+with `@phpstan-sealed` to restrict extension to only `TypedNoDefaultReflectionProperty`.
+Extending this class in your code is not supported.
+
 ## Deprecated modifying `$metadata` in PHP mapping files
 
 Relying on the `$metadata` variable directly in PHP mapping files is deprecated.

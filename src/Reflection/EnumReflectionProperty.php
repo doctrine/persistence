@@ -13,6 +13,8 @@ use function reset;
 
 /**
  * PHP Enum Reflection Property - special override for backed enums.
+ *
+ * @final since 4.2
  */
 class EnumReflectionProperty extends ReflectionProperty
 {
