@@ -20,6 +20,8 @@ use function realpath;
 /**
  * The StaticPHPDriver calls a static loadMetadata() method on your entity
  * classes where you can manually populate the ClassMetadata instance.
+ *
+ * @final since 4.2
  */
 class StaticPHPDriver implements MappingDriver
 {

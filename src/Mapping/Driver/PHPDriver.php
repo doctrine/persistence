@@ -13,6 +13,7 @@ use Doctrine\Persistence\Mapping\MappingException;
  * instances with plain PHP code.
  *
  * @template-extends FileDriver<ClassMetadata<object>>
+ * @final since 4.2
  */
 class PHPDriver extends FileDriver
 {

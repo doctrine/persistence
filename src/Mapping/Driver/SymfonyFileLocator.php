@@ -30,6 +30,8 @@ use const DIRECTORY_SEPARATOR;
  * The Symfony File Locator makes a simplifying assumptions compared
  * to the DefaultFileLocator. By assuming paths only contain entities of a certain
  * namespace the mapping files consists of the short classname only.
+ *
+ * @final since 4.2
  */
 class SymfonyFileLocator implements FileLocator
 {

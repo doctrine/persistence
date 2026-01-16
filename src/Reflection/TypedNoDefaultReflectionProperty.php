@@ -10,6 +10,8 @@ use function assert;
 
 /**
  * PHP Typed No Default Reflection Property - special override for typed properties without a default value.
+ *
+ * @final since 4.2
  */
 class TypedNoDefaultReflectionProperty extends RuntimeReflectionProperty
 {
