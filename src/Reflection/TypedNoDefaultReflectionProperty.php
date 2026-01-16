@@ -11,7 +11,7 @@ use function assert;
 /**
  * PHP Typed No Default Reflection Property - special override for typed properties without a default value.
  */
-class TypedNoDefaultReflectionProperty extends RuntimeReflectionProperty
+final class TypedNoDefaultReflectionProperty extends RuntimeReflectionProperty
 {
     /**
      * {@inheritDoc}

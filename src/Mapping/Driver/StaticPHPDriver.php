@@ -21,7 +21,7 @@ use function realpath;
  * The StaticPHPDriver calls a static loadMetadata() method on your entity
  * classes where you can manually populate the ClassMetadata instance.
  */
-class StaticPHPDriver implements MappingDriver
+final class StaticPHPDriver implements MappingDriver
 {
     /**
      * Paths of entity directories.

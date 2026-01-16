@@ -18,7 +18,7 @@ use function class_parents;
 /**
  * PHP Runtime Reflection Service.
  */
-class RuntimeReflectionService implements ReflectionService
+final class RuntimeReflectionService implements ReflectionService
 {
     /**
      * {@inheritDoc}

@@ -14,7 +14,7 @@ use function reset;
 /**
  * PHP Enum Reflection Property - special override for backed enums.
  */
-class EnumReflectionProperty extends ReflectionProperty
+final class EnumReflectionProperty extends ReflectionProperty
 {
     /** @param class-string<BackedEnum> $enumType */
     public function __construct(private readonly ReflectionProperty $originalReflectionProperty, private readonly string $enumType)

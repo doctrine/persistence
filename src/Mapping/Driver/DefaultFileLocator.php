@@ -23,7 +23,7 @@ use const DIRECTORY_SEPARATOR;
  * This behavior is independent of the actual content of the file. It just detects
  * the file which is responsible for the given class name.
  */
-class DefaultFileLocator implements FileLocator
+final class DefaultFileLocator implements FileLocator
 {
     /**
      * The paths where to look for mapping files.

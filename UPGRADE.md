@@ -8,6 +8,19 @@ awareness about deprecated code.
 
 # Upgrade to 5.0
 
+## BC Break: Final classes
+
+The following classes are now final and cannot be extended:
+
+- `Doctrine\Persistence\Mapping\Driver\DefaultFileLocator`
+- `Doctrine\Persistence\Mapping\Driver\MappingDriverChain`
+- `Doctrine\Persistence\Mapping\Driver\PHPDriver`
+- `Doctrine\Persistence\Mapping\Driver\StaticPHPDriver`
+- `Doctrine\Persistence\Mapping\Driver\SymfonyFileLocator`
+- `Doctrine\Persistence\Mapping\RuntimeReflectionService`
+- `Doctrine\Persistence\Reflection\EnumReflectionProperty`
+- `Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty`
+
 ## Deprecate `Proxy` and `ProxyClassNameResolver` interfaces
 
 Use native lazy objects instead of proxy classes for lazy objects.
@@ -23,7 +36,7 @@ type declarations.
 
 ## BC Break: Require files loaded by the `PHPDriver` to return a `Closure`
 
-If you use the `PHPDriver` for configuring metadata in PHP files, you must wrap 
+If you use the `PHPDriver` for configuring metadata in PHP files, you must wrap
 the code in a closure that is returned by the configuration file.
 
 Before:

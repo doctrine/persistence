@@ -15,7 +15,7 @@ use function strpos;
  * The DriverChain allows you to add multiple other mapping drivers for
  * certain namespaces.
  */
-class MappingDriverChain implements MappingDriver
+final class MappingDriverChain implements MappingDriver
 {
     /**
      * The default driver.

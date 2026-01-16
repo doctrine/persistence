@@ -31,7 +31,7 @@ use const DIRECTORY_SEPARATOR;
  * to the DefaultFileLocator. By assuming paths only contain entities of a certain
  * namespace the mapping files consists of the short classname only.
  */
-class SymfonyFileLocator implements FileLocator
+final class SymfonyFileLocator implements FileLocator
 {
     /**
      * The paths where to look for mapping files.
