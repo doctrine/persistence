@@ -15,7 +15,7 @@ use Doctrine\Persistence\Mapping\MappingException;
  * @template-extends FileDriver<ClassMetadata<object>>
  * @final since 4.2
  */
-class PHPDriver extends FileDriver
+final class PHPDriver extends FileDriver
 {
     /** @phpstan-var ClassMetadata<object> */
     protected ClassMetadata $metadata;

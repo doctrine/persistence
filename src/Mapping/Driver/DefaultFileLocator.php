@@ -25,7 +25,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @final since 4.2
  */
-class DefaultFileLocator implements FileLocator
+final class DefaultFileLocator implements FileLocator
 {
     /**
      * The paths where to look for mapping files.

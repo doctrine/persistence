@@ -23,7 +23,7 @@ use function realpath;
  *
  * @final since 4.2
  */
-class StaticPHPDriver implements MappingDriver
+final class StaticPHPDriver implements MappingDriver
 {
     /**
      * Paths of entity directories.

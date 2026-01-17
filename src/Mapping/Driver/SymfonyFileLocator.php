@@ -33,7 +33,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @final since 4.2
  */
-class SymfonyFileLocator implements FileLocator
+final class SymfonyFileLocator implements FileLocator
 {
     /**
      * The paths where to look for mapping files.

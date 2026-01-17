@@ -13,7 +13,7 @@ use function assert;
  *
  * @final since 4.2
  */
-class TypedNoDefaultReflectionProperty extends RuntimeReflectionProperty
+final class TypedNoDefaultReflectionProperty extends RuntimeReflectionProperty
 {
     /**
      * {@inheritDoc}

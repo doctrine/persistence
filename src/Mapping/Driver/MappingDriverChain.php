@@ -17,7 +17,7 @@ use function strpos;
  *
  * @final since 4.2
  */
-class MappingDriverChain implements MappingDriver
+final class MappingDriverChain implements MappingDriver
 {
     /**
      * The default driver.

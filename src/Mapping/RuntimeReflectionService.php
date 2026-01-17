@@ -20,7 +20,7 @@ use function class_parents;
  *
  * @final since 4.2
  */
-class RuntimeReflectionService implements ReflectionService
+final class RuntimeReflectionService implements ReflectionService
 {
     /**
      * {@inheritDoc}

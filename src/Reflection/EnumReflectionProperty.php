@@ -16,7 +16,7 @@ use function reset;
  *
  * @final since 4.2
  */
-class EnumReflectionProperty extends ReflectionProperty
+final class EnumReflectionProperty extends ReflectionProperty
 {
     /** @param class-string<BackedEnum> $enumType */
     public function __construct(private readonly ReflectionProperty $originalReflectionProperty, private readonly string $enumType)
