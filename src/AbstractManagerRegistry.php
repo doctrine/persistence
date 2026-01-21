@@ -22,8 +22,8 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      */
     public function __construct(
         private readonly string $name,
-        private array $connections,
-        private array $managers,
+        private readonly array $connections,
+        private readonly array $managers,
         private readonly string $defaultConnection,
         private readonly string $defaultManager,
         private readonly string|null $proxyInterfaceName = null,

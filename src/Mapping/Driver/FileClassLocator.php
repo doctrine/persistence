@@ -34,7 +34,7 @@ use function str_starts_with;
  *
  * It is compatible with the Symfony Finder component, but does not require it.
  */
-final class FileClassLocator implements ClassLocator
+final readonly class FileClassLocator implements ClassLocator
 {
     /** @param iterable<SplFileInfo> $files An iterable of files to include. */
     public function __construct(
