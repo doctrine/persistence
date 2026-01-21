@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\MappingException;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -66,12 +67,14 @@ final class DefaultFileLocator implements FileLocator
      *
      * @return array<int, string>
      */
+    #[Override]
     public function getPaths(): array
     {
         return $this->paths;
     }
 
     /** Gets the file extension used to look for mapping files under. */
+    #[Override]
     public function getFileExtension(): string|null
     {
         return $this->fileExtension;
@@ -87,6 +90,7 @@ final class DefaultFileLocator implements FileLocator
         $this->fileExtension = $fileExtension;
     }
 
+    #[Override]
     public function findMappingFile(string $className): string
     {
         $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
@@ -104,6 +108,7 @@ final class DefaultFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getAllClassNames(string $globalBasename): array
     {
         if ($this->paths === []) {
@@ -141,6 +146,7 @@ final class DefaultFileLocator implements FileLocator
         return $classes;
     }
 
+    #[Override]
     public function fileExists(string $className): bool
     {
         $fileName = str_replace('\\', '.', $className) . $this->fileExtension;

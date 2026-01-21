@@ -6,6 +6,7 @@ namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\MappingException;
 use InvalidArgumentException;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
@@ -101,11 +102,13 @@ final class SymfonyFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getPaths(): array
     {
         return $this->paths;
     }
 
+    #[Override]
     public function getFileExtension(): string|null
     {
         return $this->fileExtension;
@@ -121,6 +124,7 @@ final class SymfonyFileLocator implements FileLocator
         $this->fileExtension = $fileExtension;
     }
 
+    #[Override]
     public function fileExists(string $className): bool
     {
         $defaultFileName = str_replace('\\', $this->nsSeparator, $className) . $this->fileExtension;
@@ -153,6 +157,7 @@ final class SymfonyFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getAllClassNames(string|null $globalBasename = null): array
     {
         if ($this->paths === []) {
@@ -201,6 +206,7 @@ final class SymfonyFileLocator implements FileLocator
         return $classes;
     }
 
+    #[Override]
     public function findMappingFile(string $className): string
     {
         $defaultFileName = str_replace('\\', $this->nsSeparator, $className) . $this->fileExtension;

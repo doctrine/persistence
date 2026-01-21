@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Persistence;
 use Closure;
 use Doctrine\Persistence\Proxy;
 use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
+use Override;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 
@@ -97,10 +98,12 @@ class RuntimeReflectionPropertyTestProxyMock implements Proxy
     {
     }
 
+    #[Override]
     public function __load(): void
     {
     }
 
+    #[Override]
     public function __isInitialized(): bool
     {
         return $this->initialized;

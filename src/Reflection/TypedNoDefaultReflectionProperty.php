@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Reflection;
 
 use Closure;
+use Override;
 
 use function assert;
 
@@ -22,6 +23,7 @@ final class TypedNoDefaultReflectionProperty extends RuntimeReflectionProperty
      * This is necessary to avoid PHP error "Error: Typed property must not be accessed before initialization".
      * Should be used only for reflecting typed properties without a default value.
      */
+    #[Override]
     public function getValue(object|null $object = null): mixed
     {
         return $object !== null && $this->isInitialized($object) ? parent::getValue($object) : null;
@@ -37,6 +39,7 @@ final class TypedNoDefaultReflectionProperty extends RuntimeReflectionProperty
      *
      * @param object|null $object
      */
+    #[Override]
     public function setValue(mixed $object, mixed $value = null): void
     {
         if ($value === null && $this->hasType() && ! $this->getType()->allowsNull()) {

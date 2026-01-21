@@ -9,6 +9,7 @@ use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManagerDecorator;
 use Doctrine\Persistence\ObjectRepository;
+use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -18,6 +19,7 @@ class ObjectManagerDecoratorTest extends TestCase
 
     private NullObjectManagerDecorator $decorated;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->wrapped   = $this->createMock(ObjectManager::class);

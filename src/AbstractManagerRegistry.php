@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Persistence;
 
 use InvalidArgumentException;
+use Override;
 use ReflectionClass;
 
 use function assert;
@@ -56,6 +57,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $this->name;
     }
 
+    #[Override]
     public function getConnection(string|null $name = null): object
     {
         if ($name === null) {
@@ -74,6 +76,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getConnectionNames(): array
     {
         return $this->connections;
@@ -82,6 +85,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getConnections(): array
     {
         $connections = [];
@@ -92,11 +96,13 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $connections;
     }
 
+    #[Override]
     public function getDefaultConnectionName(): string
     {
         return $this->defaultConnection;
     }
 
+    #[Override]
     public function getDefaultManagerName(): string
     {
         return $this->defaultManager;
@@ -107,6 +113,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
      *
      * @throws InvalidArgumentException
      */
+    #[Override]
     public function getManager(string|null $name = null): ObjectManager
     {
         if ($name === null) {
@@ -125,6 +132,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $service;
     }
 
+    #[Override]
     public function getManagerForClass(string $class): ObjectManager|null
     {
         $proxyClass = new ReflectionClass($class);
@@ -157,6 +165,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getManagerNames(): array
     {
         return $this->managers;
@@ -165,6 +174,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getManagers(): array
     {
         $managers = [];
@@ -178,6 +188,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $managers;
     }
 
+    #[Override]
     public function getRepository(
         string $persistentObject,
         string|null $persistentManagerName = null,
@@ -187,6 +198,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
             ->getRepository($persistentObject);
     }
 
+    #[Override]
     public function resetManager(string|null $name = null): ObjectManager
     {
         if ($name === null) {

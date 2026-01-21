@@ -6,6 +6,7 @@ namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\MappingException;
+use Override;
 
 use function array_keys;
 use function spl_object_id;
@@ -55,6 +56,7 @@ final class MappingDriverChain implements MappingDriver
         return $this->drivers;
     }
 
+    #[Override]
     public function loadMetadataForClass(string $className, ClassMetadata $metadata): void
     {
         foreach ($this->drivers as $namespace => $driver) {
@@ -77,6 +79,7 @@ final class MappingDriverChain implements MappingDriver
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getAllClassNames(): array
     {
         $classNames    = [];
@@ -107,6 +110,7 @@ final class MappingDriverChain implements MappingDriver
         return array_keys($classNames);
     }
 
+    #[Override]
     public function isTransient(string $className): bool
     {
         foreach ($this->drivers as $namespace => $driver) {

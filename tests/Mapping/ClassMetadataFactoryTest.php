@@ -9,6 +9,7 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Foo;
+use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -24,6 +25,7 @@ class ClassMetadataFactoryTest extends TestCase
     /** @phpstan-var TestClassMetadataFactory<ClassMetadata<object>> */
     private TestClassMetadataFactory $cmf;
 
+    #[Override]
     protected function setUp(): void
     {
         $driver = $this->createMock(MappingDriver::class);

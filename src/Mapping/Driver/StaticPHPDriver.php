@@ -6,6 +6,7 @@ namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\MappingException;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
@@ -52,6 +53,7 @@ final class StaticPHPDriver implements MappingDriver
         $this->paths = array_unique([...$this->paths, ...$paths]);
     }
 
+    #[Override]
     public function loadMetadataForClass(string $className, ClassMetadata $metadata): void
     {
         $className::loadMetadata($metadata);
@@ -63,6 +65,7 @@ final class StaticPHPDriver implements MappingDriver
      * @todo Same code exists in ColocatedMappingDriver, should we re-use it
      * somehow or not worry about it?
      */
+    #[Override]
     public function getAllClassNames(): array
     {
         if ($this->classNames !== null) {
@@ -116,6 +119,7 @@ final class StaticPHPDriver implements MappingDriver
         return $classes;
     }
 
+    #[Override]
     public function isTransient(string $className): bool
     {
         return ! method_exists($className, 'loadMetadata');

@@ -10,6 +10,7 @@ use Doctrine\Persistence\Mapping\MappingException;
 use FilesystemIterator;
 use InvalidArgumentException;
 use Iterator;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
@@ -43,6 +44,7 @@ final readonly class FileClassLocator implements ClassLocator
     }
 
     /** @return list<class-string> */
+    #[Override]
     public function getClassNames(): array
     {
         $includedFiles = [];

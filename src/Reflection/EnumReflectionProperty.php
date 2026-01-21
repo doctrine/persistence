@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Reflection;
 
 use BackedEnum;
+use Override;
 use ReflectionProperty;
 
 use function array_map;
@@ -33,6 +34,7 @@ final class EnumReflectionProperty extends ReflectionProperty
      *
      * @return int|string|int[]|string[]|null
      */
+    #[Override]
     public function getValue($object = null): int|string|array|null
     {
         if ($object === null) {
@@ -53,6 +55,7 @@ final class EnumReflectionProperty extends ReflectionProperty
      *
      * @param object|null $object
      */
+    #[Override]
     public function setValue(mixed $object, mixed $value = null): void
     {
         if ($value !== null) {

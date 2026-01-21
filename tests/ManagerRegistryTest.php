@@ -12,6 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Doctrine\Persistence\Proxy;
 use Doctrine\Tests\Persistence\Mapping\TestClassMetadataFactory;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -24,6 +25,7 @@ class ManagerRegistryTest extends TestCase
 {
     private TestManagerRegistry $mr;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->mr = new TestManagerRegistry(
@@ -48,11 +50,13 @@ class ManagerRegistryTest extends TestCase
     public function testGetManagerForClassAnonymous(): void
     {
         $anonymousClass = new class extends TestObject implements Proxy {
+            #[Override]
             public function __isInitialized(): bool
             {
                 return true;
             }
 
+            #[Override]
             public function __load(): void
             {
             }
@@ -100,11 +104,13 @@ class ManagerRegistryTest extends TestCase
         self::assertNull($mr->getManagerForClass(TestObjectProxy::class));
 
         $anonymousClass = new class extends TestObject implements Proxy {
+            #[Override]
             public function __isInitialized(): bool
             {
                 return true;
             }
 
+            #[Override]
             public function __load(): void
             {
             }
@@ -251,6 +257,7 @@ class TestManagerRegistry extends AbstractManagerRegistry
         );
     }
 
+    #[Override]
     protected function getService(string $name): ObjectManager
     {
         if (! isset($this->services[$name])) {
@@ -260,6 +267,7 @@ class TestManagerRegistry extends AbstractManagerRegistry
         return $this->services[$name];
     }
 
+    #[Override]
     protected function resetService(string $name): void
     {
         unset($this->services[$name]);

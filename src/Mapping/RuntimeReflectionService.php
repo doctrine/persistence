@@ -6,6 +6,7 @@ namespace Doctrine\Persistence\Mapping;
 
 use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
+use Override;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -25,6 +26,7 @@ final class RuntimeReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getParentClasses(string $class): array
     {
         if (! class_exists($class)) {
@@ -38,6 +40,7 @@ final class RuntimeReflectionService implements ReflectionService
         return $parents;
     }
 
+    #[Override]
     public function getClassShortName(string $class): string
     {
         $reflectionClass = new ReflectionClass($class);
@@ -45,6 +48,7 @@ final class RuntimeReflectionService implements ReflectionService
         return $reflectionClass->getShortName();
     }
 
+    #[Override]
     public function getClassNamespace(string $class): string
     {
         $reflectionClass = new ReflectionClass($class);
@@ -59,11 +63,13 @@ final class RuntimeReflectionService implements ReflectionService
      *
      * @template T of object
      */
+    #[Override]
     public function getClass(string $class): ReflectionClass
     {
         return new ReflectionClass($class);
     }
 
+    #[Override]
     public function getAccessibleProperty(string $class, string $property): RuntimeReflectionProperty
     {
         $reflectionProperty = new RuntimeReflectionProperty($class, $property);
@@ -75,6 +81,7 @@ final class RuntimeReflectionService implements ReflectionService
         return $reflectionProperty;
     }
 
+    #[Override]
     public function hasPublicMethod(string $class, string $method): bool
     {
         try {

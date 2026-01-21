@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\MappingException;
+use Override;
 
 use function array_keys;
 use function array_unique;
@@ -95,6 +96,7 @@ abstract class FileDriver implements MappingDriver
         return $result[$className];
     }
 
+    #[Override]
     public function isTransient(string $className): bool
     {
         if ($this->classCache === null) {
@@ -111,6 +113,7 @@ abstract class FileDriver implements MappingDriver
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getAllClassNames(): array
     {
         if ($this->classCache === null) {
