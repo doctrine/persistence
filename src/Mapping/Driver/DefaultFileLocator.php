@@ -34,9 +34,6 @@ final class DefaultFileLocator implements FileLocator
      */
     private array $paths = [];
 
-    /** The file extension of mapping documents. */
-    private string|null $fileExtension;
-
     /**
      * Initializes a new FileDriver that looks in the given path(s) for mapping
      * documents and operates in the specified operating mode.
@@ -46,8 +43,10 @@ final class DefaultFileLocator implements FileLocator
      * @param string|null               $fileExtension The file extension of mapping documents,
      *                                                 usually prefixed with a dot.
      */
-    public function __construct(string|array $paths, string|null $fileExtension = null)
-    {
+    public function __construct(
+        string|array $paths,
+        private string|null $fileExtension = null,
+    ) {
         $this->addPaths((array) $paths);
         $this->fileExtension = $fileExtension;
     }
