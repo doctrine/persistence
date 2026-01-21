@@ -32,10 +32,10 @@ final class DefaultFileLocator implements FileLocator
      *
      * @var array<int, string>
      */
-    protected array $paths = [];
+    private array $paths = [];
 
     /** The file extension of mapping documents. */
-    protected string|null $fileExtension;
+    private string|null $fileExtension;
 
     /**
      * Initializes a new FileDriver that looks in the given path(s) for mapping
