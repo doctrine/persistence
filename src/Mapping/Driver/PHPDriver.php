@@ -14,7 +14,6 @@ use Override;
  * instances with plain PHP code.
  *
  * @template-extends FileDriver<ClassMetadata<object>>
- * @final since 4.2
  */
 final class PHPDriver extends FileDriver
 {

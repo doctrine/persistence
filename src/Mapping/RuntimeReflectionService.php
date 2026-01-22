@@ -18,8 +18,6 @@ use function class_parents;
 
 /**
  * PHP Runtime Reflection Service.
- *
- * @final since 4.2
  */
 final class RuntimeReflectionService implements ReflectionService
 {

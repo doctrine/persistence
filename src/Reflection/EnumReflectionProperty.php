@@ -14,8 +14,6 @@ use function reset;
 
 /**
  * PHP Enum Reflection Property - special override for backed enums.
- *
- * @final since 4.2
  */
 final class EnumReflectionProperty extends ReflectionProperty
 {
