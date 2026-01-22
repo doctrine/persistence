@@ -8,6 +8,7 @@ use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Persistence\Mapping\RuntimeReflectionService;
 use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
 use Doctrine\Persistence\Reflection\TypedNoDefaultReflectionProperty;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
@@ -31,6 +32,7 @@ class RuntimeReflectionServiceTest extends TestCase
     public string $nonTypedNoDefaultPublicProperty;
     public string $nonTypedDefaultPublicProperty = '';
 
+    #[Override]
     protected function setUp(): void
     {
         $this->reflectionService = new RuntimeReflectionService();

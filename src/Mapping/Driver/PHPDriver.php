@@ -7,13 +7,13 @@ namespace Doctrine\Persistence\Mapping\Driver;
 use Closure;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\MappingException;
+use Override;
 
 /**
  * The PHPDriver includes php files which just populate ClassMetadataInfo
  * instances with plain PHP code.
  *
  * @template-extends FileDriver<ClassMetadata<object>>
- * @final since 4.2
  */
 final class PHPDriver extends FileDriver
 {
@@ -26,6 +26,7 @@ final class PHPDriver extends FileDriver
         parent::__construct($locator, '.php');
     }
 
+    #[Override]
     public function loadMetadataForClass(string $className, ClassMetadata $metadata): void
     {
         $this->metadata = $metadata;
@@ -36,6 +37,7 @@ final class PHPDriver extends FileDriver
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function loadMappingFile(string $file): array
     {
         $callback = Closure::bind(static function (string $file): mixed {

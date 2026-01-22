@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Reflection;
 
 use Doctrine\Persistence\Proxy;
+use Override;
 use ReflectionProperty;
 
 use function ltrim;
@@ -30,6 +31,7 @@ class RuntimeReflectionProperty extends ReflectionProperty
         $this->key = $this->isPrivate() ? "\0" . ltrim($class, '\\') . "\0" . $name : ($this->isProtected() ? "\0*\0" . $name : $name);
     }
 
+    #[Override]
     public function getValue(object|null $object = null): mixed
     {
         if ($object === null) {
@@ -44,6 +46,7 @@ class RuntimeReflectionProperty extends ReflectionProperty
      *
      * @param object|null $object
      */
+    #[Override]
     public function setValue(mixed $object, mixed $value = null): void
     {
         if (! ($object instanceof Proxy && ! $object->__isInitialized())) {

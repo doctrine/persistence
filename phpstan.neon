@@ -6,6 +6,7 @@ includes:
 
 parameters:
     level: 7
+    checkMissingOverrideMethodAttribute: true
     phpVersion: 80400
 
     paths:

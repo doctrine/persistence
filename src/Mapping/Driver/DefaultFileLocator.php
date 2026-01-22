@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Mapping\Driver;
 
 use Doctrine\Persistence\Mapping\MappingException;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -22,8 +23,6 @@ use const DIRECTORY_SEPARATOR;
  *
  * This behavior is independent of the actual content of the file. It just detects
  * the file which is responsible for the given class name.
- *
- * @final since 4.2
  */
 final class DefaultFileLocator implements FileLocator
 {
@@ -32,10 +31,7 @@ final class DefaultFileLocator implements FileLocator
      *
      * @var array<int, string>
      */
-    protected array $paths = [];
-
-    /** The file extension of mapping documents. */
-    protected string|null $fileExtension;
+    private array $paths = [];
 
     /**
      * Initializes a new FileDriver that looks in the given path(s) for mapping
@@ -46,8 +42,10 @@ final class DefaultFileLocator implements FileLocator
      * @param string|null               $fileExtension The file extension of mapping documents,
      *                                                 usually prefixed with a dot.
      */
-    public function __construct(string|array $paths, string|null $fileExtension = null)
-    {
+    public function __construct(
+        string|array $paths,
+        private string|null $fileExtension = null,
+    ) {
         $this->addPaths((array) $paths);
         $this->fileExtension = $fileExtension;
     }
@@ -67,12 +65,14 @@ final class DefaultFileLocator implements FileLocator
      *
      * @return array<int, string>
      */
+    #[Override]
     public function getPaths(): array
     {
         return $this->paths;
     }
 
     /** Gets the file extension used to look for mapping files under. */
+    #[Override]
     public function getFileExtension(): string|null
     {
         return $this->fileExtension;
@@ -88,6 +88,7 @@ final class DefaultFileLocator implements FileLocator
         $this->fileExtension = $fileExtension;
     }
 
+    #[Override]
     public function findMappingFile(string $className): string
     {
         $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
@@ -105,6 +106,7 @@ final class DefaultFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getAllClassNames(string $globalBasename): array
     {
         if ($this->paths === []) {
@@ -142,6 +144,7 @@ final class DefaultFileLocator implements FileLocator
         return $classes;
     }
 
+    #[Override]
     public function fileExists(string $className): bool
     {
         $fileName = str_replace('\\', '.', $className) . $this->fileExtension;

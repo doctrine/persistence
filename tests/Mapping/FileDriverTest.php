@@ -11,6 +11,7 @@ use Doctrine\Tests\Persistence\Mapping\Fixtures\AnotherGlobalClass;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\GlobalClass;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\NotLoadedClass;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\TestClassMetadata;
+use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -210,6 +211,7 @@ class TestFileDriver extends FileDriver
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function loadMappingFile(string $file): array
     {
         if (str_contains($file, 'global.yml')) {
@@ -223,6 +225,7 @@ class TestFileDriver extends FileDriver
     }
 
     /** @param ClassMetadata<object> $metadata */
+    #[Override]
     public function loadMetadataForClass(string $className, ClassMetadata $metadata): void
     {
     }

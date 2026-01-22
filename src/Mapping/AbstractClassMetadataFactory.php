@@ -6,6 +6,7 @@ namespace Doctrine\Persistence\Mapping;
 
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Proxy;
+use Override;
 use Psr\Cache\CacheItemPoolInterface;
 use ReflectionClass;
 use ReflectionException;
@@ -76,6 +77,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getAllMetadata(): array
     {
         if (! $this->initialized) {
@@ -153,6 +155,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @throws ReflectionException
      * @throws MappingException
      */
+    #[Override]
     public function getMetadataFor(string $className): ClassMetadata
     {
         $className = $this->normalizeClassName($className);
@@ -223,6 +226,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         return $this->loadedMetadata[$className];
     }
 
+    #[Override]
     public function hasMetadataFor(string $className): bool
     {
         $className = $this->normalizeClassName($className);
@@ -238,6 +242,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @phpstan-param class-string $className
      * @phpstan-param CMTemplate $class
      */
+    #[Override]
     public function setMetadataFor(string $className, ClassMetadata $class): void
     {
         $this->loadedMetadata[$this->normalizeClassName($className)] = $class;
@@ -375,6 +380,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     abstract protected function newClassMetadataInstance(string $className): ClassMetadata;
 
+    #[Override]
     public function isTransient(string $className): bool
     {
         if (! $this->initialized) {
@@ -444,6 +450,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
              *
              * @template T of object
              */
+            #[Override]
             public function resolveClassName(string $className): string
             {
                 $pos = strrpos($className, '\\' . Proxy::MARKER . '\\');

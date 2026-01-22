@@ -13,6 +13,7 @@ use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\EntityFixture;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\TestClass;
 use Generator;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -137,10 +138,12 @@ final class MyDriver implements MappingDriver
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function loadMetadataForClass($className, ClassMetadata $metadata): void
     {
     }
 
+    #[Override]
     public function isTransient(string $className): bool
     {
         return $className === TestClass::class;

@@ -9,6 +9,7 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\Persistence\Mapping\ReflectionService;
+use Override;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
@@ -139,32 +140,38 @@ class TestAbstractClassMetadataFactory extends AbstractClassMetadataFactory
     ) {
     }
 
+    #[Override]
     protected function initialize(): void
     {
         $this->initialized = true;
     }
 
+    #[Override]
     protected function getDriver(): MappingDriver
     {
         return $this->driver ?? throw new RuntimeException('Driver not set');
     }
 
+    #[Override]
     protected function wakeupReflection(ClassMetadata $class, ReflectionService $reflService): void
     {
         // No-op for tests
     }
 
+    #[Override]
     protected function initializeReflection(ClassMetadata $class, ReflectionService $reflService): void
     {
         // No-op for tests
     }
 
+    #[Override]
     protected function isEntity(ClassMetadata $class): bool
     {
         return true;
     }
 
     /** @param list<class-string> $nonSuperclassParents */
+    #[Override]
     protected function doLoadMetadata(
         ClassMetadata $class,
         ClassMetadata|null $parent,
@@ -174,6 +181,7 @@ class TestAbstractClassMetadataFactory extends AbstractClassMetadataFactory
         // No-op for tests - metadata loading is handled by driver
     }
 
+    #[Override]
     protected function newClassMetadataInstance(string $className): ClassMetadata
     {
         if ($this->newClassMetadataInstanceCallback !== null) {
