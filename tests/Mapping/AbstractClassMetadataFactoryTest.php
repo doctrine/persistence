@@ -28,7 +28,7 @@ final class AbstractClassMetadataFactoryTest extends TestCase
         $cmf    = $this->createTestFactory($driver);
 
         $metadataCallCount                     = 0;
-        $cmf->newClassMetadataInstanceCallback = function ($className) use (&$metadataCallCount) {
+        $cmf->newClassMetadataInstanceCallback = static function ($className) use (&$metadataCallCount) {
             $metadataCallCount++;
             if ($metadataCallCount === 1) {
                 self::assertEquals(SomeGrandParentEntity::class, $className);
@@ -36,7 +36,7 @@ final class AbstractClassMetadataFactoryTest extends TestCase
                 self::assertEquals(SomeEntity::class, $className);
             }
 
-            return $this->createMock(ClassMetadata::class);
+            return self::createStub(ClassMetadata::class);
         };
 
         $driverCallCount = 0;
@@ -70,7 +70,7 @@ final class AbstractClassMetadataFactoryTest extends TestCase
 
     public function testAnonymousClassIsNotMistakenForShortAlias(): void
     {
-        $driver = $this->createMock(MappingDriver::class);
+        $driver = self::createStub(MappingDriver::class);
         $driver->method('isTransient')->willReturn(false);
         $cmf = $this->createTestFactory($driver);
 
@@ -96,7 +96,7 @@ final class AbstractClassMetadataFactoryTest extends TestCase
 
     public function testItGetsTheSameMetadataForBackslashedClassName(): void
     {
-        $driver = $this->createMock(MappingDriver::class);
+        $driver = self::createStub(MappingDriver::class);
         $cmf    = $this->createTestFactory($driver);
 
         $metadata                              = self::createStub(ClassMetadata::class);
@@ -134,8 +134,8 @@ class TestAbstractClassMetadataFactory extends AbstractClassMetadataFactory
 
     /** @param ClassMetadata<object>|null $defaultMetadata */
     public function __construct(
-        private MappingDriver|null $driver = null,
-        private ClassMetadata|null $defaultMetadata = null,
+        private readonly MappingDriver|null $driver = null,
+        private readonly ClassMetadata|null $defaultMetadata = null,
     ) {
     }
 
