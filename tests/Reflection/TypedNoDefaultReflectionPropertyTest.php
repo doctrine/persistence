@@ -72,7 +72,7 @@ class TypedFoo
 
 class TypedNullableFoo
 {
-    private string|null $value;
+    private string|null $value = null;
 
     public function setValue(mixed $value): void
     {
