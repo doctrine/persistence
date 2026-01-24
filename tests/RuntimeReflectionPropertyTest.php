@@ -39,8 +39,8 @@ class RuntimeReflectionPropertyTest extends TestCase
     }
 
     /** @param class-string<RuntimeReflectionPropertyTestProxyMock> $proxyClass */
-    #[TestWith(['Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock'])]
-    #[TestWith(['\\Doctrine\\Tests\\Persistence\\RuntimeReflectionPropertyTestProxyMock'])]
+    #[TestWith([RuntimeReflectionPropertyTestProxyMock::class])]
+    #[TestWith([RuntimeReflectionPropertyTestProxyMock::class])]
     public function testGetValueOnProxyProperty(string $proxyClass): void
     {
         $getCheckMock = $this->createMock(DummyMock::class);

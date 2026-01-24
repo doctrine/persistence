@@ -21,9 +21,11 @@ class RuntimeReflectionServiceTest extends TestCase
 
     public mixed $unusedPublicProperty;
 
-    private string $typedNoDefaultProperty;
+    /** @phpstan-ignore property.uninitializedReadonly */
+    private readonly string $typedNoDefaultProperty;
     private string $typedDefaultProperty = '';
-    private string $nonTypedNoDefaultProperty; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
+    /** @phpstan-ignore property.uninitializedReadonly */
+    private readonly string $nonTypedNoDefaultProperty; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
     private string $nonTypedDefaultProperty = ''; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
 
     public string $typedNoDefaultPublicProperty;
