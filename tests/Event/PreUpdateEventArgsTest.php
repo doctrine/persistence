@@ -70,7 +70,7 @@ class PreUpdateEventArgsTest extends TestCase
     {
         $entity = new TestObject();
 
-        $objectManager = $this->createMock(ObjectManager::class);
+        $objectManager = self::createStub(ObjectManager::class);
 
         $entityChangeset = [
             'name' => ['old', 'new'],

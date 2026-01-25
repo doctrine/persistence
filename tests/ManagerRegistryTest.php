@@ -129,7 +129,7 @@ class ManagerRegistryTest extends TestCase
 
     public function testGetRepository(): void
     {
-        $repository = $this->createMock(ObjectRepository::class);
+        $repository = self::createStub(ObjectRepository::class);
 
         $defaultManager = $this->mr->getManager();
         assert($defaultManager instanceof MockObject);
@@ -154,7 +154,7 @@ class ManagerRegistryTest extends TestCase
             $this->getManagerFactory(),
         );
 
-        $repository = $this->createMock(ObjectRepository::class);
+        $repository = self::createStub(ObjectRepository::class);
 
         $defaultManager = $this->mr->getManager();
         assert($defaultManager instanceof MockObject);
@@ -185,7 +185,7 @@ class ManagerRegistryTest extends TestCase
             $this->getManagerFactory(),
         );
 
-        $repository = $this->createMock(ObjectRepository::class);
+        $repository = self::createStub(ObjectRepository::class);
 
         $defaultManager = $this->mr->getManager();
         assert($defaultManager instanceof MockObject);
@@ -208,9 +208,10 @@ class ManagerRegistryTest extends TestCase
     {
         return function (string $name) {
             $mock = $this->createMock(ObjectManager::class);
+            $mock->expects($this->never())->method('clear');
 
-            $driver   = $this->createMock(MappingDriver::class);
-            $metadata = $this->createMock(ClassMetadata::class);
+            $driver   = self::createStub(MappingDriver::class);
+            $metadata = self::createStub(ClassMetadata::class);
 
             $metadata
                 ->method('getName')

@@ -39,7 +39,7 @@ final readonly class FileClassLocator implements ClassLocator
 {
     /** @param iterable<SplFileInfo> $files An iterable of files to include. */
     public function __construct(
-        private iterable $files,
+        private readonly iterable $files,
     ) {
     }
 

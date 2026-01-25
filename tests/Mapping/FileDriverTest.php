@@ -13,6 +13,7 @@ use Doctrine\Tests\Persistence\Mapping\Fixtures\NotLoadedClass;
 use Doctrine\Tests\Persistence\Mapping\Fixtures\TestClassMetadata;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -44,7 +45,7 @@ class FileDriverTest extends TestCase
 
     public function testGetElementFromFile(): void
     {
-        $locator = $this->newLocator();
+        $locator = $this->newLocator(true);
         $locator->expects(self::once())
                 ->method('findMappingFile')
                 ->with(self::equalTo(stdClass::class))
@@ -57,7 +58,7 @@ class FileDriverTest extends TestCase
 
     public function testGetElementUpdatesClassCache(): void
     {
-        $locator = $this->newLocator();
+        $locator = $this->newLocator(true);
 
         // findMappingFile should only be called once
         $locator->expects(self::once())
@@ -119,7 +120,7 @@ class FileDriverTest extends TestCase
 
     public function testGetAllClassNamesBothSourcesNoDupes(): void
     {
-        $locator = $this->newLocator();
+        $locator = $this->newLocator(true);
         $locator->expects(self::once())
                 ->method('getAllClassNames')
                 ->with(self::equalTo('global'))
@@ -139,7 +140,7 @@ class FileDriverTest extends TestCase
 
     public function testIsNotTransient(): void
     {
-        $locator = $this->newLocator();
+        $locator = $this->newLocator(true);
         $locator->expects(self::once())
                 ->method('fileExists')
                 ->with(self::equalTo(stdClass::class))
@@ -155,7 +156,7 @@ class FileDriverTest extends TestCase
 
     public function testIsTransient(): void
     {
-        $locator = $this->newLocator();
+        $locator = $this->newLocator(true);
         $locator->expects(self::once())
                 ->method('fileExists')
                 ->with(self::equalTo(NotLoadedClass::class))
@@ -173,10 +174,10 @@ class FileDriverTest extends TestCase
         self::assertFalse($driver->isTransient(stdClass::class));
     }
 
-    /** @return FileLocator&MockObject */
-    private function newLocator(): MockObject
+    /** @return ($mock is true ? (FileLocator&MockObject) : (FileLocator&Stub)) */
+    private function newLocator(bool $mock = false): FileLocator
     {
-        $locator = $this->createMock(FileLocator::class);
+        $locator = $mock ? $this->createMock(FileLocator::class) : self::createStub(FileLocator::class);
         $locator->method('getFileExtension')->willReturn('.yml');
         $locator->method('getPaths')->willReturn([__DIR__ . '/_files']);
 
@@ -188,9 +189,9 @@ class FileDriverTest extends TestCase
     {
         $driver = new TestFileDriver($locator, $fileExtension);
 
-        $driver->stdClass   = $this->createMock(ClassMetadata::class);
-        $driver->stdGlobal  = $this->createMock(ClassMetadata::class);
-        $driver->stdGlobal2 = $this->createMock(ClassMetadata::class);
+        $driver->stdClass   = self::createStub(ClassMetadata::class);
+        $driver->stdGlobal  = self::createStub(ClassMetadata::class);
+        $driver->stdGlobal2 = self::createStub(ClassMetadata::class);
 
         return $driver;
     }

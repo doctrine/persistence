@@ -25,7 +25,7 @@ parameters:
 			path: src/Reflection/EnumReflectionProperty.php
 
 		-
-			message: '#^PHPDoc tag @var with type Doctrine\\Persistence\\Mapping\\ClassMetadata\<object\> is not subtype of native type PHPUnit\\Framework\\MockObject\\MockObject\.$#'
+			message: '#^PHPDoc tag @var with type Doctrine\\Persistence\\Mapping\\ClassMetadata\<object\> is not subtype of native type PHPUnit\\Framework\\MockObject\\Stub\.$#'
 			identifier: varTag.nativeType
 			count: 1
 			path: tests/Mapping/ClassMetadataFactoryTest.php
