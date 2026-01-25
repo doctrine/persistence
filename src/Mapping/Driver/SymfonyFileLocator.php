@@ -49,9 +49,6 @@ class SymfonyFileLocator implements FileLocator
      */
     protected array $prefixes = [];
 
-    /** File extension that is searched for. */
-    protected string|null $fileExtension;
-
     /**
      * Represents PHP namespace delimiters when looking for files
      */
@@ -64,11 +61,11 @@ class SymfonyFileLocator implements FileLocator
      */
     public function __construct(
         array $prefixes,
-        string $fileExtension = '',
+        /** File extension that is searched for. */
+        protected string|null $fileExtension = '',
         string $nsSeparator = '.',
     ) {
         $this->addNamespacePrefixes($prefixes);
-        $this->fileExtension = $fileExtension;
 
         if ($nsSeparator === '') {
             throw new InvalidArgumentException('Namespace separator should not be empty');
