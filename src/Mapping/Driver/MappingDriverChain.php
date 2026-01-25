@@ -10,7 +10,7 @@ use Override;
 
 use function array_keys;
 use function spl_object_id;
-use function strpos;
+use function str_starts_with;
 
 /**
  * The DriverChain allows you to add multiple other mapping drivers for
@@ -58,7 +58,7 @@ final class MappingDriverChain implements MappingDriver
     public function loadMetadataForClass(string $className, ClassMetadata $metadata): void
     {
         foreach ($this->drivers as $namespace => $driver) {
-            if (strpos($className, $namespace) === 0) {
+            if (str_starts_with($className, $namespace)) {
                 $driver->loadMetadataForClass($className, $metadata);
 
                 return;
@@ -91,7 +91,7 @@ final class MappingDriverChain implements MappingDriver
             }
 
             foreach ($driverClasses[$oid] as $className) {
-                if (strpos($className, $namespace) !== 0) {
+                if (! str_starts_with($className, $namespace)) {
                     continue;
                 }
 
@@ -112,7 +112,7 @@ final class MappingDriverChain implements MappingDriver
     public function isTransient(string $className): bool
     {
         foreach ($this->drivers as $namespace => $driver) {
-            if (strpos($className, $namespace) === 0) {
+            if (str_starts_with($className, $namespace)) {
                 return $driver->isTransient($className);
             }
         }

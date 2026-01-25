@@ -13,7 +13,7 @@ final readonly class ClassNames implements ClassLocator
 {
     /** @param list<class-string> $classNames */
     public function __construct(
-        private array $classNames,
+        private readonly array $classNames,
     ) {
     }
 

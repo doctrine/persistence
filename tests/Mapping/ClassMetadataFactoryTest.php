@@ -28,10 +28,10 @@ class ClassMetadataFactoryTest extends TestCase
     #[Override]
     protected function setUp(): void
     {
-        $driver = $this->createMock(MappingDriver::class);
+        $driver = self::createStub(MappingDriver::class);
 
         /** @phpstan-var ClassMetadata<object> */
-        $metadata  = $this->createMock(ClassMetadata::class);
+        $metadata  = self::createStub(ClassMetadata::class);
         $this->cmf = new TestClassMetadataFactory($driver, $metadata);
     }
 
@@ -67,7 +67,7 @@ class ClassMetadataFactoryTest extends TestCase
 
     public function testGetCachedMetadata(): void
     {
-        $metadata = $this->createMock(ClassMetadata::class);
+        $metadata = self::createStub(ClassMetadata::class);
         $cache    = new ArrayAdapter();
         $item     = $cache->getItem($this->cmf->getCacheKey(ChildEntity::class));
         $item->set($metadata);
@@ -92,7 +92,7 @@ class ClassMetadataFactoryTest extends TestCase
 
     public function testWillFallbackOnNotLoadedMetadata(): void
     {
-        $classMetadata = $this->createMock(ClassMetadata::class);
+        $classMetadata = self::createStub(ClassMetadata::class);
 
         $this->cmf->fallbackCallback = static fn () => $classMetadata;
 

@@ -47,7 +47,6 @@ final class DefaultFileLocator implements FileLocator
         private string|null $fileExtension = null,
     ) {
         $this->addPaths((array) $paths);
-        $this->fileExtension = $fileExtension;
     }
 
     /**

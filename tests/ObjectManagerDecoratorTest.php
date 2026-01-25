@@ -100,7 +100,7 @@ class ObjectManagerDecoratorTest extends TestCase
 
     public function testGetRepository(): void
     {
-        $repository = $this->createMock(ObjectRepository::class);
+        $repository = self::createStub(ObjectRepository::class);
 
         $this->wrapped->expects(self::once())
             ->method('getRepository')
@@ -112,7 +112,7 @@ class ObjectManagerDecoratorTest extends TestCase
 
     public function testGetClassMetadata(): void
     {
-        $classMetadata = $this->createMock(ClassMetadata::class);
+        $classMetadata = self::createStub(ClassMetadata::class);
 
         $this->wrapped->expects(self::once())
             ->method('getClassMetadata')
@@ -124,7 +124,7 @@ class ObjectManagerDecoratorTest extends TestCase
 
     public function testGetClassMetadataFactory(): void
     {
-        $classMetadataFactory = $this->createMock(ClassMetadataFactory::class);
+        $classMetadataFactory = self::createStub(ClassMetadataFactory::class);
 
         $this->wrapped->expects(self::once())
             ->method('getMetadataFactory')
