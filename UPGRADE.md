@@ -61,15 +61,16 @@ return function (ClassMetadata $metadata): void {
 };
 ```
 
-## New methods in `StaticPHPDriver`
+## `StaticPHPDriver` now accepts a `ClassLocator`
 
-The `StaticPHPDriver` get new method to configure the scanned directories:
-- `addExcludePaths(array $paths): void`
-- `getExcludePaths(): array`
-- `setFileExtension(string $fileExtension): void`
-- `getFileExtension(): string`
+The constructor of `StaticPHPDriver` now accepts a `ClassLocator` instance
+in addition to a path or array of paths:
 
-Using the a `ClassLocator` implementation is recommended instead of relying
+```php
+$driver = new StaticPHPDriver(new ClassNames([MyEntity::class, AnotherEntity::class]));
+```
+
+Using a `ClassLocator` implementation is recommended instead of relying
 on directory scanning.
 
 ## Do not pass any proxy interface to `AbstractManagerRegistry` when using native proxies

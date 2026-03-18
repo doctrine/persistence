@@ -9,9 +9,30 @@ use Doctrine\Persistence\Mapping\Driver\ClassNames;
 use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
 use Doctrine\Tests\Persistence\Mapping\_files\colocated\Entity;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionMethod;
+
+use function array_map;
+use function sort;
 
 class StaticPHPDriverTest extends TestCase
 {
+    public function testPublicApi(): void
+    {
+        $publicMethods = array_map(
+            static fn (ReflectionMethod $m): string => $m->getName(),
+            (new ReflectionClass(StaticPHPDriver::class))->getMethods(ReflectionMethod::IS_PUBLIC),
+        );
+        sort($publicMethods);
+
+        self::assertSame([
+            '__construct',
+            'getAllClassNames',
+            'isTransient',
+            'loadMetadataForClass',
+        ], $publicMethods);
+    }
+
     public function testLoadMetadata(): void
     {
         $metadata = $this->createMock(ClassMetadata::class);

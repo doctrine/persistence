@@ -16,7 +16,14 @@ use function method_exists;
  */
 class StaticPHPDriver implements MappingDriver
 {
-    use ColocatedMappingDriver;
+    use ColocatedMappingDriver {
+        addPaths as private;
+        getPaths as private;
+        addExcludePaths as private;
+        getExcludePaths as private;
+        getFileExtension as private;
+        setFileExtension as private;
+    }
 
     /** @param array<int, string>|string|ClassLocator $paths */
     public function __construct(array|string|ClassLocator $paths)
