@@ -31,18 +31,6 @@ parameters:
 			path: tests/Mapping/ClassMetadataFactoryTest.php
 
 		-
-			message: '#^Parameter \#1 \$directories of static method Doctrine\\Persistence\\Mapping\\Driver\\FileClassLocator\:\:createFromDirectories\(\) expects list\<string\>, non\-empty\-array\<int, string\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Mapping/ColocatedMappingDriverTest.php
-
-		-
-			message: '#^Parameter \#2 \$excludedDirectories of static method Doctrine\\Persistence\\Mapping\\Driver\\FileClassLocator\:\:createFromDirectories\(\) expects list\<string\>, array\<int, string\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Mapping/ColocatedMappingDriverTest.php
-
-		-
 			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with array\{''Doctrine\\\\Tests…'', ''Doctrine\\\\Tests\\\\ORM…'', ''Doctrine\\\\Tests\\\\ORM…''\} and list\<class\-string\> will always evaluate to false\.$#'
 			identifier: staticMethod.impossibleType
 			count: 1

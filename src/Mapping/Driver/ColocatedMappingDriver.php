@@ -50,7 +50,7 @@ trait ColocatedMappingDriver
      */
     public function addPaths(array $paths): void
     {
-        $this->paths = array_unique(array_merge($this->paths, $paths));
+        $this->paths = array_unique([...$this->paths, ...$paths]);
     }
 
     /**
