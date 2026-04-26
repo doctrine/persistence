@@ -113,6 +113,18 @@ return function (ClassMetadata $metadata): void {
 };
 ```
 
+## `StaticPHPDriver` now accepts a `ClassLocator`
+
+The constructor of `StaticPHPDriver` now accepts a `ClassLocator` instance
+in addition to a path or array of paths:
+
+```php
+$driver = new StaticPHPDriver(new ClassNames([MyEntity::class, AnotherEntity::class]));
+```
+
+Using a `ClassLocator` implementation is recommended instead of relying
+on directory scanning.
+
 ## Do not pass any proxy interface to `AbstractManagerRegistry` when using native proxies
 
 With PHP 8.4 native lazy objects, you don't need to pass any proxy interface to

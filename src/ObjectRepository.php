@@ -27,7 +27,7 @@ interface ObjectRepository
      * Finds all objects in the repository.
      *
      * @return array<int, object> The objects.
-     * @phpstan-return T[]
+     * @phpstan-return list<T>
      */
     public function findAll(): array;
 
@@ -43,7 +43,7 @@ interface ObjectRepository
      * @phpstan-param array<string, 'asc'|'desc'|'ASC'|'DESC'>|null $orderBy
      *
      * @return array<int, object> The objects.
-     * @phpstan-return T[]
+     * @phpstan-return list<T>
      *
      * @throws UnexpectedValueException
      */
