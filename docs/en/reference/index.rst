@@ -125,6 +125,8 @@ ClassMetadata
         public function isSingleValuedAssociation($fieldName);
         public function isCollectionValuedAssociation($fieldName);
         public function getFieldNames();
+        public function getFieldValue(object $object, string $field): mixed;
+        public function setFieldValue(object $object, string $field, mixed $value): void;
         public function getIdentifierFieldNames();
         public function getAssociationNames();
         public function getTypeOfField($fieldName);

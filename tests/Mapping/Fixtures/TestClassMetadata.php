@@ -80,6 +80,18 @@ final class TestClassMetadata implements ClassMetadata
         return [];
     }
 
+    #[Override]
+    public function getFieldValue(object $object, string $field): mixed
+    {
+        throw new LogicException('Not implemented');
+    }
+
+    #[Override]
+    public function setFieldValue(object $object, string $field, mixed $value): void
+    {
+        throw new LogicException('Not implemented');
+    }
+
     /**
      * {@inheritDoc}
      */

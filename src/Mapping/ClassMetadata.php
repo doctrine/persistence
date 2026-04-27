@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence\Mapping;
 
+use InvalidArgumentException;
 use ReflectionClass;
 
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
  *
  * @template-covariant T of object
- * @method mixed getFieldValue(object $entity, string $field)
- * @method void  setFieldValue(object $entity, string $field, mixed $value)
  */
 interface ClassMetadata
 {
@@ -62,6 +61,20 @@ interface ClassMetadata
      * @return array<int, string>
      */
     public function getFieldNames(): array;
+
+    /**
+     * Gets the value of the given field of the given object.
+     *
+     * @throws InvalidArgumentException if the object is not supported, or the field is not mapped.
+     */
+    public function getFieldValue(object $object, string $field): mixed;
+
+    /**
+     * Sets the value of the given field of the given object to the given value.
+     *
+     * @throws InvalidArgumentException if the object is not supported, or the field is not mapped.
+     */
+    public function setFieldValue(object $object, string $field, mixed $value): void;
 
     /**
      * Returns an array of identifier field names numerically indexed.
