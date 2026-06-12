@@ -19,18 +19,6 @@ parameters:
 			path: src/ObjectManagerDecorator.php
 
 		-
-			message: '#^Doctrine\\Persistence\\Reflection\\EnumReflectionProperty\:\:__construct\(\) does not call parent constructor from ReflectionProperty\.$#'
-			identifier: constructor.missingParentCall
-			count: 1
-			path: src/Reflection/EnumReflectionProperty.php
-
-		-
-			message: '#^Method Doctrine\\Persistence\\Reflection\\EnumReflectionProperty\:\:getDeclaringClass\(\) return type with generic class ReflectionClass does not specify its types\: T$#'
-			identifier: missingType.generics
-			count: 1
-			path: src/Reflection/EnumReflectionProperty.php
-
-		-
 			message: '#^Method Doctrine\\Persistence\\Reflection\\EnumReflectionProperty\:\:toEnum\(\) should return array\<BackedEnum\>\|BackedEnum but returns array\<BackedEnum\|int\|string\>\.$#'
 			identifier: return.type
 			count: 1

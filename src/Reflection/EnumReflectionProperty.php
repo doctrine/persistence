@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Persistence\Reflection;
 
 use BackedEnum;
-use ReflectionClass;
 use ReflectionProperty;
-use ReflectionType;
 use ReturnTypeWillChange;
 
 use function array_map;
@@ -28,31 +26,10 @@ class EnumReflectionProperty extends ReflectionProperty
     /** @param class-string<BackedEnum> $enumType */
     public function __construct(ReflectionProperty $originalReflectionProperty, string $enumType)
     {
+        parent::__construct($originalReflectionProperty->class, $originalReflectionProperty->name);
+
         $this->originalReflectionProperty = $originalReflectionProperty;
         $this->enumType                   = $enumType;
-    }
-
-    public function getDeclaringClass(): ReflectionClass
-    {
-        return $this->originalReflectionProperty->getDeclaringClass();
-    }
-
-    public function getName(): string
-    {
-        return $this->originalReflectionProperty->getName();
-    }
-
-    public function getType(): ?ReflectionType
-    {
-        return $this->originalReflectionProperty->getType();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAttributes(?string $name = null, int $flags = 0): array
-    {
-        return $this->originalReflectionProperty->getAttributes($name, $flags);
     }
 
     /**
@@ -132,20 +109,5 @@ class EnumReflectionProperty extends ReflectionProperty
         }
 
         return $this->enumType::from($value);
-    }
-
-    public function getModifiers(): int
-    {
-        return $this->originalReflectionProperty->getModifiers();
-    }
-
-    public function getDocComment(): string|false
-    {
-        return $this->originalReflectionProperty->getDocComment();
-    }
-
-    public function isPrivate(): bool
-    {
-        return $this->originalReflectionProperty->isPrivate();
     }
 }
