@@ -19,7 +19,7 @@ use function reset;
 class EnumReflectionProperty extends ReflectionProperty
 {
     /** @param class-string<BackedEnum> $enumType */
-    public function __construct(private readonly ReflectionProperty $originalReflectionProperty, private readonly string $enumType)
+    public function __construct(ReflectionProperty $originalReflectionProperty, private readonly string $enumType)
     {
         parent::__construct($originalReflectionProperty->class, $originalReflectionProperty->name);
     }
@@ -39,7 +39,7 @@ class EnumReflectionProperty extends ReflectionProperty
             return null;
         }
 
-        $enum = $this->originalReflectionProperty->getValue($object);
+        $enum = parent::getValue($object);
 
         if ($enum === null) {
             return null;
@@ -59,7 +59,7 @@ class EnumReflectionProperty extends ReflectionProperty
             $value = $this->toEnum($value);
         }
 
-        $this->originalReflectionProperty->setValue($object, $value);
+        parent::setValue($object, $value);
     }
 
     /**
