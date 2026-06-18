@@ -8,6 +8,12 @@ awareness about deprecated code.
 
 # Upgrade to 5.0
 
+## BC Break: `ClassMetadata::getFieldValue()` and `setFieldValue()` are now required
+
+The methods `getFieldValue()` and `setFieldValue()` are now required by the
+`Doctrine\Persistence\Mapping\ClassMetadata` interface. Implement them in your
+`ClassMetadata` implementations.
+
 ## BC Break: Final classes
 
 The following classes are now final and cannot be extended:
