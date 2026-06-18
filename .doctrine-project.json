@@ -34,9 +34,8 @@
         },
         {
             "name": "3.4",
-            "branchName": "3.4.x",
             "slug": "3.4",
-            "maintained": true
+            "maintained": false
         },
         {
             "name": "3.3",
