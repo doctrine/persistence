@@ -189,6 +189,22 @@ class SymfonyFileLocatorTest extends TestCase
         $locator->findMappingFile('Foo\\stdClass2');
     }
 
+    public function testFindMappingFileNotFoundForClassInRootNamespace(): void
+    {
+        $path   = __DIR__ . '/_files';
+        $prefix = 'Foo';
+
+        $locator = new SymfonyFileLocator([$path => $prefix], '.yml');
+
+        // A class with no namespace separator used to fail the assertion that
+        // computed the short name for this message, so with zend.assertions
+        // on this threw AssertionError instead of MappingException. Reported
+        // from \DateTime reaching here through AbstractQuery::setParameter().
+        $this->expectException(MappingException::class);
+        $this->expectExceptionMessage("No mapping file found named 'DateTime.yml' for class 'DateTime'.");
+        $locator->findMappingFile('DateTime');
+    }
+
     public function testFindMappingFileLeastSpecificNamespaceFirst(): void
     {
         // Low -> High

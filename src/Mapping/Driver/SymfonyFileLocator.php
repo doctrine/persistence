@@ -12,10 +12,8 @@ use RuntimeException;
 
 use function array_keys;
 use function array_merge;
-use function assert;
 use function is_dir;
 use function is_file;
-use function is_int;
 use function realpath;
 use function sprintf;
 use function str_replace;
@@ -244,11 +242,14 @@ class SymfonyFileLocator implements FileLocator
         }
 
         $pos = strrpos($className, '\\');
-        assert(is_int($pos));
 
         throw MappingException::mappingFileNotFound(
             $className,
-            substr($className, $pos + 1) . $this->fileExtension
+            // A class in the root namespace has no separator, and then its
+            // short name is the whole name: DateTime is DateTime, which is a
+            // perfectly good thing to name in the message rather than a
+            // reason to fail an assertion.
+            ($pos === false ? $className : substr($className, $pos + 1)) . $this->fileExtension
         );
     }
 
