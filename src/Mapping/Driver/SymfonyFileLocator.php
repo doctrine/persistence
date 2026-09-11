@@ -11,6 +11,7 @@ use RecursiveIteratorIterator;
 use RuntimeException;
 
 use function array_keys;
+use function basename;
 use function is_dir;
 use function is_file;
 use function realpath;
@@ -18,7 +19,6 @@ use function sprintf;
 use function str_replace;
 use function str_starts_with;
 use function strlen;
-use function strrpos;
 use function strtr;
 use function substr;
 
@@ -220,12 +220,9 @@ class SymfonyFileLocator implements FileLocator
             }
         }
 
-        $pos            = strrpos($className, '\\');
-        $shortClassName = $pos === false ? $className : substr($className, $pos + 1);
-
         throw MappingException::mappingFileNotFound(
             $className,
-            $shortClassName . $this->fileExtension,
+            basename(str_replace('\\', '/', $className)) . $this->fileExtension,
         );
     }
 
