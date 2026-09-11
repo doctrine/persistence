@@ -6,6 +6,34 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 4.3
+
+## `ObjectRepository::findBy()` `$orderBy` additionally accepts the `SortDirection` enum
+
+The PHPDoc contract of `Doctrine\Persistence\ObjectRepository::findBy()` now also
+accepts the PHP 8.6 `SortDirection` enum (`SortDirection::Ascending` /
+`SortDirection::Descending`) for the values of the `$orderBy` parameter, in addition
+to the `'asc'`, `'desc'`, `'ASC'` and `'DESC'` literal strings. The native signature
+is unchanged and the strings remain accepted.
+
+Callers may now pass `SortDirection` values. Implementations of `ObjectRepository`
+that do not already do so must accept the enum and map it to their underlying sort
+direction, otherwise a caller passing `SortDirection` will trigger a runtime error.
+
+Support already shipped by downstream packages:
+
+- `doctrine/orm` supports `SortDirection` in `findBy()` and `findOneBy()` starting
+  with `3.7.0`. Older versions (`3.6.x` and below, including the `2.20.x`/`2.21.x`
+  LTS lines) only accept strings and will not receive this change; upgrade to
+  `3.7.0` or later to use the enum.
+- `doctrine/mongodb-odm` supports `SortDirection` in `findBy()` starting with
+  `2.18`. Older versions (`2.17.x` and below) only accept strings and will not
+  receive this change; upgrade to `2.18` or later. Its query builder `sort()`
+  already accepts the enum since `2.17.0`, but `findBy()` bypasses the query
+  builder.
+
+Passing the enum requires PHP 8.6+ at runtime (or `symfony/polyfill-php86`).
+
 # Upgrade to 4.2
 
 ## Add `getFieldValue` and `setFieldValue` to `ClassMetadata` implementation
