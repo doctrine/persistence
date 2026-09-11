@@ -8,6 +8,15 @@ awareness about deprecated code.
 
 # Upgrade to 5.0
 
+## BC Break: `ObjectRepository::findBy()` `$orderBy` additionally accepts the `SortDirection` enum
+
+The `$orderBy` parameter of `findBy()` now also accepts the PHP 8.6 `SortDirection`
+enum, in addition to the `'asc'`, `'desc'`, `'ASC'` and `'DESC'` strings. The native
+signature is unchanged and strings remain accepted.
+
+Implementations of `ObjectRepository` must accept the enum and cannot declare a
+more restrictive type for `$orderBy`.
+
 ## BC Break: `ClassMetadata::getFieldValue()` and `setFieldValue()` are now required
 
 The methods `getFieldValue()` and `setFieldValue()` are now required by the

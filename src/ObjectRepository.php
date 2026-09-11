@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Doctrine\Persistence;
 
+use SortDirection;
 use UnexpectedValueException;
 
 /**
@@ -38,9 +39,9 @@ interface ObjectRepository
      * an UnexpectedValueException if certain values of the sorting or limiting details are
      * not supported.
      *
-     * @param array<string, mixed>       $criteria
-     * @param array<string, string>|null $orderBy
-     * @phpstan-param array<string, 'asc'|'desc'|'ASC'|'DESC'>|null $orderBy
+     * @param array<string, mixed>                     $criteria
+     * @param array<string, string|SortDirection>|null $orderBy
+     * @phpstan-param array<string, 'asc'|'desc'|'ASC'|'DESC'|SortDirection>|null $orderBy
      *
      * @return array<int, object> The objects.
      * @phpstan-return list<T>
