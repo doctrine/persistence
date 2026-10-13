@@ -188,6 +188,15 @@ class SymfonyFileLocatorTest extends TestCase
         $locator->findMappingFile('Foo\\stdClass2');
     }
 
+    public function testFindMappingFileNotFoundForClassInRootNamespace(): void
+    {
+        $locator = new SymfonyFileLocator([], '.yml');
+
+        $this->expectException(MappingException::class);
+        $this->expectExceptionMessage("No mapping file found named 'DateTime.yml' for class 'DateTime'.");
+        $locator->findMappingFile('DateTime');
+    }
+
     public function testFindMappingFileLeastSpecificNamespaceFirst(): void
     {
         // Low -> High

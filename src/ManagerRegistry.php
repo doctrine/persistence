@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\Persistence;
 
 /**
- * Contract covering object managers for a Doctrine persistence layer ManagerRegistry class to implement.
+ * Gives access to the object managers and connections of an application, by name or by class.
  */
 interface ManagerRegistry extends ConnectionRegistry
 {
