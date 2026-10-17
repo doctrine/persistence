@@ -178,6 +178,10 @@ That may be in files, attributes, yaml, xml, etc.
 The Doctrine Persistence project offers a few base implementations that
 make it easy to implement your own XML, Attributes or YAML drivers.
 
+In the following examples, ``$classMetadata`` is an instance of your mapper's
+implementation of ``ClassMetadata`` for ``User``. ``ClassMetadata`` itself is
+an interface and cannot be instantiated.
+
 FileDriver
 ----------
 
@@ -190,20 +194,21 @@ Here is an example JSON file driver implementation.
 
 .. code-block:: php
 
+    use Doctrine\Persistence\Mapping\ClassMetadata;
     use Doctrine\Persistence\Mapping\Driver\FileDriver;
 
     final class JSONFileDriver extends FileDriver
     {
-        public function loadMetadataForClass($className, ClassMetadata $metadata)
+        public function loadMetadataForClass(string $className, ClassMetadata $metadata): void
         {
             $mappingFileData = $this->getElement($className);
 
             // use the array of mapping information from the file to populate the $metadata instance
         }
 
-        protected function loadMappingFile($file)
+        protected function loadMappingFile(string $file): array
         {
-            return json_decode($file, true);
+            return json_decode(file_get_contents($file), true);
         }
     }
 
@@ -213,7 +218,7 @@ Now you can use it like the following.
 
     use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 
-    $fileLocator = new DefaultFileLocator('/path/to/mapping/files', 'json');
+    $fileLocator = new DefaultFileLocator('/path/to/mapping/files', '.json');
 
     $jsonFileDriver = new JSONFileDriver($fileLocator);
 
@@ -223,8 +228,6 @@ Now if you have a class named ``App\Model\User`` and you can load the mapping in
 
     use App\Model\User;
     use Doctrine\Persistence\Mapping\ClassMetadata;
-
-    $classMetadata = new ClassMetadata();
 
     // looks for a file at /path/to/mapping/files/App.Model.User.json
     $jsonFileDriver->loadMetadataForClass(User::class, $classMetadata);
@@ -247,8 +250,6 @@ Now you can use it like the following:
 
     use App\Model\User;
     use Doctrine\Persistence\Mapping\ClassMetadata;
-
-    $classMetadata = new ClassMetadata();
 
     // looks for a PHP file at /path/to/mapping/files/App.Model.User.php
     $phpDriver->loadMetadataForClass(User::class, $classMetadata);
@@ -278,12 +279,12 @@ The StaticPHPDriver calls a static ``loadMetadata()`` method on your model class
 
 .. code-block:: php
 
+    use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
+
     $staticPHPDriver = new StaticPHPDriver('/path/to/classes');
 
-    $classMetadata = new ClassMetadata();
-
-    // looks for a PHP file at /path/to/classes/App/Model/User.php
-    $phpDriver->loadMetadataForClass(User::class, $classMetadata);
+    // calls User::loadMetadata() to populate $classMetadata
+    $staticPHPDriver->loadMetadataForClass(User::class, $classMetadata);
 
 Your class in ``App\Model\User`` would look like the following.
 
