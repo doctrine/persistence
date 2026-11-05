@@ -39,16 +39,6 @@ interface ClassMetadataFactory
     public function hasMetadataFor(string $className): bool;
 
     /**
-     * Sets the metadata descriptor for a specific class.
-     *
-     * @deprecated Since 4.2, use a custom ClassMetadataFactory implementation if you need to set metadata manually.
-     *
-     * @param class-string $className
-     * @phpstan-param T $class
-     */
-    public function setMetadataFor(string $className, ClassMetadata $class): void;
-
-    /**
      * Returns whether the class with the specified name should have its metadata loaded.
      * This is only the case if it is either mapped directly or as a MappedSuperclass.
      *

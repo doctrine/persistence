@@ -235,20 +235,6 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     }
 
     /**
-     * Sets the metadata descriptor for a specific class.
-     *
-     * @deprecated Since 4.2, use a custom ClassMetadataFactory implementation if you need to set metadata manually.
-     *
-     * @phpstan-param class-string $className
-     * @phpstan-param CMTemplate $class
-     */
-    #[Override]
-    public function setMetadataFor(string $className, ClassMetadata $class): void
-    {
-        $this->loadedMetadata[$this->normalizeClassName($className)] = $class;
-    }
-
-    /**
      * Gets an array of parent classes for the given entity class.
      *
      * @phpstan-param class-string $name
