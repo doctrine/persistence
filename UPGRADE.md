@@ -6,6 +6,16 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 4.3
+
+## Deprecated `ClassMetadataFactory::hasMetadataFor()`
+
+The method `Doctrine\Persistence\Mapping\ClassMetadataFactory::hasMetadataFor()` is
+deprecated without direct replacement. It exposes an implementation detail — whether
+a class's metadata has already been lazily loaded from the mapping driver in the
+current process — that does not apply to every `ClassMetadataFactory` implementation,
+such as one backed by a precompiled/snapshot-based metadata source.
+
 # Upgrade to 4.2
 
 ## Add `getFieldValue` and `setFieldValue` to `ClassMetadata` implementation
