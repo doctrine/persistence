@@ -6,6 +6,14 @@ awareness about deprecated code.
 - Use of our low-overhead runtime deprecation API, details:
   https://github.com/doctrine/deprecations/
 
+# Upgrade to 4.3
+
+## `\Doctrine\Persistence\Mapping\AbstractClassMetadataFactory` is considered internal to Doctrine projects
+
+This class now explicitly is an internal, shared implementation detail of Doctrine projects. Extending
+or type-hinting it outside of Doctrine projects is not supported. Clients should refer to the `ClassMetadataFactory`
+interface or more specific sub-interfaces or sub-classes from individual Doctrine projects only.
+
 # Upgrade to 4.2
 
 ## Add `getFieldValue` and `setFieldValue` to `ClassMetadata` implementation

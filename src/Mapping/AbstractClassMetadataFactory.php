@@ -28,8 +28,15 @@ use function substr;
  * metadata mapping informations of a class which describes how a class should be mapped
  * to a relational database.
  *
- * This class was abstracted from the ORM ClassMetadataFactory.
+ * This class was abstracted from the ORM ClassMetadataFactory. It is considered an internal
+ * implementation detail of Doctrine projects (ORM, PHPCR-ODM and MongoDB-ODM) and should not
+ * be extended or type-hinted by other clients. It may change or be removed without further
+ * notice.
  *
+ * @internal
+ *
+ * @psalm-inheritors Doctrine\ORM\Mapping\ClassMetadataFactory|Doctrine\ODM\MongoDB\Mapping\ClassMetadataFactory|Doctrine\ODM\PHPCR\Mapping\ClassMetadataFactory
+ * @phpstan-sealed Doctrine\ORM\Mapping\ClassMetadataFactory|Doctrine\ODM\MongoDB\Mapping\ClassMetadataFactory|Doctrine\ODM\PHPCR\Mapping\ClassMetadataFactory
  * @template CMTemplate of ClassMetadata
  * @template-implements ClassMetadataFactory<CMTemplate>
  */
