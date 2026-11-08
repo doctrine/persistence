@@ -148,12 +148,12 @@ your mapped PHP classes.
     {
         public function getAllMetadata();
         public function getMetadataFor($className);
-        public function hasMetadataFor($className);
+        public function hasMetadataFor($className); // Deprecated
         public function setMetadataFor($className, $class); // Deprecated
         public function isTransient($className);
     }
 
-The method ``setMetadataFor()`` is deprecated and should not be used.
+The methods ``hasMetadataFor()`` and ``setMetadataFor()`` are deprecated and should not be used.
 
 Mapping Driver
 ==============

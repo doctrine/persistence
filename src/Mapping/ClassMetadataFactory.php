@@ -32,6 +32,8 @@ interface ClassMetadataFactory
     /**
      * Checks whether the factory has the metadata for a class loaded already.
      *
+     * @deprecated since 4.3. This method will be removed without direct replacement in a future major version.
+     *
      * @param class-string $className
      *
      * @return bool TRUE if the metadata of the class in question is already loaded, FALSE otherwise.
