@@ -73,6 +73,13 @@ return function (ClassMetadata $metadata): void {
 };
 ```
 
+## BC Break: Removed `ClassMetadataFactory::setMetadataFor()`
+
+The method `setMetadataFor()`, deprecated since 4.2, has been removed from the
+`ClassMetadataFactory` interface and from `AbstractClassMetadataFactory`. If you
+need to inject metadata manually, provide your own `ClassMetadataFactory`
+implementation that exposes a method for that purpose.
+
 # Upgrade to 4.2
 
 ## Add `getFieldValue` and `setFieldValue` to `ClassMetadata` implementation
