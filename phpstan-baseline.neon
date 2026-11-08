@@ -1,24 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^PHPDoc tag @phpstan\-sealed contains unknown class Doctrine\\Persistence\\Mapping\\Doctrine\\ODM\\MongoDB\\Mapping\\ClassMetadataFactory\.$#'
-			identifier: class.notFound
-			count: 2
-			path: src/Mapping/AbstractClassMetadataFactory.php
-
-		-
-			message: '#^PHPDoc tag @phpstan\-sealed contains unknown class Doctrine\\Persistence\\Mapping\\Doctrine\\ODM\\PHPCR\\Mapping\\ClassMetadataFactory\.$#'
-			identifier: class.notFound
-			count: 2
-			path: src/Mapping/AbstractClassMetadataFactory.php
-
-		-
-			message: '#^PHPDoc tag @phpstan\-sealed contains unknown class Doctrine\\Persistence\\Mapping\\Doctrine\\ORM\\Mapping\\ClassMetadataFactory\.$#'
-			identifier: class.notFound
-			count: 2
-			path: src/Mapping/AbstractClassMetadataFactory.php
-
-		-
 			message: '#^Call to an undefined static method T of object\:\:loadMetadata\(\)\.$#'
 			identifier: staticMethod.notFound
 			count: 1
@@ -41,12 +23,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: src/Reflection/EnumReflectionProperty.php
-
-		-
-			message: '#^Type Doctrine\\Tests\\Persistence\\Mapping\\TestAbstractClassMetadataFactory is not allowed to be a subtype of Doctrine\\Persistence\\Mapping\\AbstractClassMetadataFactory\.$#'
-			identifier: class.disallowedSubtype
-			count: 1
-			path: tests/Mapping/AbstractClassMetadataFactoryTest.php
 
 		-
 			message: '#^PHPDoc tag @var with type Doctrine\\Persistence\\Mapping\\ClassMetadata\<object\> is not subtype of native type PHPUnit\\Framework\\MockObject\\Stub\.$#'
@@ -119,12 +95,6 @@ parameters:
 			identifier: staticMethod.impossibleType
 			count: 1
 			path: tests/Mapping/SymfonyFileLocatorTest.php
-
-		-
-			message: '#^Type Doctrine\\Tests\\Persistence\\Mapping\\TestClassMetadataFactory is not allowed to be a subtype of Doctrine\\Persistence\\Mapping\\AbstractClassMetadataFactory\.$#'
-			identifier: class.disallowedSubtype
-			count: 1
-			path: tests/Mapping/TestClassMetadataFactory.php
 
 		-
 			message: '#^Property Doctrine\\Tests\\Persistence\\Reflection\\TypedFoo\:\:\$id is never read, only written\.$#'
