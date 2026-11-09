@@ -7,7 +7,7 @@ namespace Doctrine\Persistence\Mapping;
 /**
  * Contract for a Doctrine persistence layer ClassMetadata class to implement.
  *
- * @template T of ClassMetadata
+ * @template-covariant T of ClassMetadata
  */
 interface ClassMetadataFactory
 {
@@ -48,7 +48,7 @@ interface ClassMetadataFactory
      * @param class-string $className
      * @phpstan-param T $class
      */
-    public function setMetadataFor(string $className, ClassMetadata $class): void;
+    public function setMetadataFor(string $className, ClassMetadata $class): void; // @phpstan-ignore generics.variance
 
     /**
      * Returns whether the class with the specified name should have its metadata loaded.
