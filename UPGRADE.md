@@ -14,6 +14,14 @@ This class now explicitly is an internal, shared implementation detail of Doctri
 or type-hinting it outside of Doctrine projects is not supported. Clients should refer to the `ClassMetadataFactory`
 interface or more specific sub-interfaces or sub-classes from individual Doctrine projects only.
 
+## Deprecated `ClassMetadataFactory::hasMetadataFor()`
+
+The method `Doctrine\Persistence\Mapping\ClassMetadataFactory::hasMetadataFor()` is
+deprecated without direct replacement. It exposes an implementation detail — whether
+a class's metadata has already been lazily loaded from the mapping driver in the
+current process — that does not apply to every `ClassMetadataFactory` implementation,
+such as one backed by a precompiled/snapshot-based metadata source.
+
 # Upgrade to 4.2
 
 ## Add `getFieldValue` and `setFieldValue` to `ClassMetadata` implementation

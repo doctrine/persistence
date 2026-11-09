@@ -229,6 +229,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         return $this->loadedMetadata[$className];
     }
 
+    /** @deprecated since 4.3. This method will be removed without direct replacement in a future major version. */
     public function hasMetadataFor(string $className): bool
     {
         $className = $this->normalizeClassName($className);
