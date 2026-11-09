@@ -34,3 +34,11 @@ parameters:
         -
             message: '#Class Foo not found#'
             path: 'tests/Mapping/ClassMetadataFactoryTest.php'
+
+        # Sealed classes that we want to declare without installing the packages, and for which we don't want to expose test classes
+        -
+            message: '~^PHPDoc tag @phpstan-sealed contains unknown class~'
+            path: src/Mapping/AbstractClassMetadataFactory.php
+        -
+            message: '~^Type .* is not allowed to be a subtype of .*~'
+            path: tests/

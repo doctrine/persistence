@@ -8,6 +8,12 @@ awareness about deprecated code.
 
 # Upgrade to 4.3
 
+## `Doctrine\Persistence\Mapping\AbstractClassMetadataFactory` is considered internal to Doctrine projects
+
+This class now explicitly is an internal, shared implementation detail of Doctrine projects. Extending
+or type-hinting it outside of Doctrine projects is not supported. Clients should refer to the `ClassMetadataFactory`
+interface or more specific sub-interfaces or sub-classes from individual Doctrine projects only.
+
 ## Deprecated `ClassMetadataFactory::hasMetadataFor()`
 
 The method `Doctrine\Persistence\Mapping\ClassMetadataFactory::hasMetadataFor()` is
